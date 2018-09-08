@@ -1,10 +1,9 @@
 # ASPECT
 ## Discord Bot built using [D4J](https://github.com/Discord4J/Discord4J)
 
+Revamped. V2.0
+
 To add Aspect to your discord server, shoot me a dm on Discord **@Requiem#8148**, and I'll provide an OAuth2 URL
-
-For any ideas/suggestions, feel free to let me know by shooting a dm on discord, or issuing a requset here.
-
 
 All commands are prefixed by "$", unless manually changed by the discord server admin.
 All commands are formatted as: "$\[command name\] param1, param2, ....". Note the space between the command name and the first param
@@ -120,6 +119,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] League: "suggestions" :)
 - [x] Warframe: detailed item information
 - [ ] Warframe: relic drop locations
+- [ ] General: fetch: command that searches google and compiles keywords and top image
 
 
 #### non-command features
