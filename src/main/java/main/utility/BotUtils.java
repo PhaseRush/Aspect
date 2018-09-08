@@ -29,6 +29,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BotUtils {
@@ -353,6 +354,21 @@ public class BotUtils {
 
     private static String getCharFromInt(int i) {
         return i > -1 && i < 26 ? String.valueOf((char) (i + 'a')) : null; //super fucking janky
+    }
+
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(Map<K, V> map, boolean smallestToLargest) {
+        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+        list.sort(Entry.comparingByValue());
+
+        if (!smallestToLargest)
+            Collections.reverse(list);
+
+        Map<K, V> result = new LinkedHashMap<>();
+        for (Entry<K, V> entry : list) {
+            result.put(entry.getKey(), entry.getValue());
+        }
+
+        return result;
     }
 
     @Override

@@ -8,6 +8,7 @@ import main.commands.fortnite.FortniteShopSelect;
 import main.commands.fortnite.FortniteStats;
 import main.commands.humor.CuteImg;
 import main.commands.humor.Insult;
+import main.commands.humor.OofCounter;
 import main.commands.humor.Ship;
 import main.commands.league.*;
 import main.commands.music.*;
@@ -26,6 +27,7 @@ import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.handle.obj.StatusType;
 import sx.blah.discord.util.EmbedBuilder;
+import sx.blah.discord.util.RateLimitException;
 
 import java.time.LocalTime;
 import java.util.*;
@@ -40,6 +42,7 @@ public class CommandManager {
         commandMap.put("cute", new CuteImg());
         commandMap.put("ship", new Ship());
         commandMap.put("insult", new Insult());
+        commandMap.put("count", new OofCounter());
 
         //music
         SongInfo songInfo = new SongInfo();
@@ -196,8 +199,12 @@ public class CommandManager {
         try {
             for (IEmoji e : event.getGuild().getEmojis()) {
                 if (event.getMessage().getFormattedContent().contains(e.getName())) {
-                    event.getMessage().addReaction(e);
-                    break;
+                    try {
+                        event.getMessage().addReaction(e);
+                        break;
+                    } catch (RateLimitException exception) {
+                        break;
+                    }
                 }
             }
         } catch (NullPointerException e) {

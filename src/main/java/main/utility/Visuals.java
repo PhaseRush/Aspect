@@ -31,7 +31,7 @@ public class Visuals {
     public static Color analyizeImageColor(BufferedImage bi) {
         long sumR = 0, sumG = 0, sumB = 0;
 
-        for (int i = 0; i < bi.getWidth(); i++) {
+        for (int i = 0; i < bi.getWidth(); i++) { // gets fucked at some urls
             for (int j = 0; j < bi.getHeight(); j++) {
                 Color pixelColor = new Color(bi.getRGB(i,j));
                 sumR += pixelColor.getRed();
