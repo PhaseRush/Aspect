@@ -1,4 +1,4 @@
-package main.commands;
+package main.commands.dontopendeadinside;
 
 import com.google.gson.Gson;
 import main.Command;

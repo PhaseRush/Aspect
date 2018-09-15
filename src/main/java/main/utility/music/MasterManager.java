@@ -205,13 +205,16 @@ public class MasterManager {
         BotUtils.sendMessage(channel, "Skipped to next track.");
     }
 
-    public synchronized static void skipNumTracks(IChannel channel, int num) {
+    public synchronized static void skipNumTracks(IChannel channel, int numToSkip) {
         GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-        for (int i = 0; i < num; i++) {
+        List<AudioTrack> tracklist = musicManager.getScheduler().getQueue();
+        tracklist = tracklist.subList(numToSkip, tracklist.size() - 1);
+
+        for (int i = 0; i < numToSkip; i++) {
             musicManager.getScheduler().nextTrack();
         }
 
-        BotUtils.sendMessage(channel, "Skipped " + num + (num == 1 ? " track" : " tracks"));
+        BotUtils.sendMessage(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
     }
 
 

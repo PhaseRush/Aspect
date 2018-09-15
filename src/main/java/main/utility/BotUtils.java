@@ -1,8 +1,6 @@
 package main.utility;
 
-import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import main.utility.warframe.dynamic.WarframeSolNode;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -11,11 +9,8 @@ import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.handle.obj.*;
 import sx.blah.discord.handle.obj.IMessage.Attachment;
-import sx.blah.discord.handle.obj.IVoiceChannel;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
@@ -25,7 +20,6 @@ import java.io.BufferedInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
@@ -56,45 +50,8 @@ public class BotUtils {
     public static String WOLFRAM_API_KEY;
     public static String YOUTUBE_API_KEY;
 
-    //todo this thing please help
-    public String[] timeEvents =
-            {"It's midnight!", //0
-                    "Time I should be headed to bed", //1
-                    "I'm tired stap", //2
-                    "",//3
-                    "",//4
-                    "",//5
-                    "",//6
-                    "Time to grab covfefe",//7
-                    "",//8
-                    "",//9
-                    "",//10
-                    "",//11
-                    "",//12
-                    "",//13
-                    "",//14
-                    "",//15
-                    "",//16
-                    "",//17
-                    "",//18
-                    "",//19
-                    "",//20
-                    "",//21
-                    "",//22
-                    "",};//23
-
-    //warframe
-    public static Map<String, WarframeSolNode> solNodeMap = new LinkedHashMap<>();
-
-    static {
-        String solNodeUrl = "https://raw.githubusercontent.com/WFCD/warframe-worldstate-data/master/data/solNodes.json";
-        String solNodeJson = getStringFromUrl(solNodeUrl);
-
-        Type type = new TypeToken<LinkedHashMap<String, WarframeSolNode>>() {
-        }.getType();
-        solNodeMap = gson.fromJson(solNodeJson, type);
-    }
-
+    //lock Util
+    public static Set<IUser> bannedUsers = new LinkedHashSet<>();
 
     public static String getPrefix(IGuild iGuild) {
         try {

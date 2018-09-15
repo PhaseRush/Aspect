@@ -1,15 +1,13 @@
 package main;
 
-import main.commands.Help;
-import main.commands.Imaging;
-import main.commands.Summarize;
+import main.commands.dontopendeadinside.Asciify;
+import main.commands.dontopendeadinside.Help;
+import main.commands.dontopendeadinside.Imaging;
+import main.commands.dontopendeadinside.Summarize;
 import main.commands.fortnite.FortniteShopDetail;
 import main.commands.fortnite.FortniteShopSelect;
 import main.commands.fortnite.FortniteStats;
-import main.commands.humor.CuteImg;
-import main.commands.humor.Insult;
-import main.commands.humor.OofCounter;
-import main.commands.humor.Ship;
+import main.commands.humor.*;
 import main.commands.league.*;
 import main.commands.music.*;
 import main.commands.nasa.BlueMarble;
@@ -38,11 +36,18 @@ public class CommandManager {
     //talked to hec about using a static initializer but constructor is fine
 
     public CommandManager() {
+        //dontdeadopeninside
+        commandMap.put("ascii", new Asciify());
+        commandMap.put("help", new Help());
+        commandMap.put("summarize", new Summarize());
+        commandMap.put("img", new Imaging());
+
         //humor
         commandMap.put("cute", new CuteImg());
         commandMap.put("ship", new Ship());
         commandMap.put("insult", new Insult());
-        commandMap.put("count", new OofCounter());
+        commandMap.put("count", new WordCounter());
+        commandMap.put("lyze", new AnalyzeUser());
 
         //music
         SongInfo songInfo = new SongInfo();
@@ -52,7 +57,7 @@ public class CommandManager {
         commandMap.put("play", new SongPlay());
         commandMap.put("nowplaying", songInfo);
         commandMap.put("currentsong", songInfo);
-        commandMap.put("skip", new SongSkip());
+        commandMap.put("skip", new    SongSkip());
         commandMap.put("queue", new SongQueue());
         commandMap.put("loop", new SongLoop());
         commandMap.put("shuffle", new ShuffleQueue());
@@ -75,10 +80,6 @@ public class CommandManager {
         commandMap.put("time", new CurrentTime());
         commandMap.put("deletemsg", new DeleteMsg());
 
-        //cool stuff
-        commandMap.put("summarize", new Summarize());
-        commandMap.put("img", new Imaging());
-
         //Fortnite
         commandMap.put("fn", new FortniteStats());
         commandMap.put("fnshop", new FortniteShopSelect());
@@ -86,12 +87,13 @@ public class CommandManager {
 
         //meta
         commandMap.put("setprefix", new SetPrefix());
+        commandMap.put("ban", new BanUser());
         commandMap.put("ping", new Ping());
         commandMap.put("dev", new Dev());
-        commandMap.put("help", new Help());
         commandMap.put("membercount", new MemberCount());
         commandMap.put("poll", new Poll());
         commandMap.put("cpuload", new SystemLoad());
+        commandMap.put("makerole", new RoleGenerate());
 
         //League of Legends
         commandMap.put("lollevel", new BasicLeague());
@@ -123,6 +125,7 @@ public class CommandManager {
         commandMap.put("wolfram", wolframGeneral);
         commandMap.put("answer", wolframGeneral);
         commandMap.put("solve", wolframGeneral);
+        commandMap.put("_", wolframGeneral);
         commandMap.put(" ", wolframGeneral);
     }
 

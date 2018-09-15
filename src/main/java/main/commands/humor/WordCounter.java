@@ -16,16 +16,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class OofCounter implements Command {
+public class WordCounter implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+
+        if(event.getAuthor().getStringID().equals("187328584698953728")) {
+            IChannel channel = event.getChannel();
+            String s1 = "who tf this";
+            String s2 = "yall think im just slaving away here in this dark ass cellar in seattle somewhere. im not paid enough for this";
+            String s3 = "bot lives matter too.";
+
+            BotUtils.sendMessage(channel, s1);
+            BotUtils.sendMessage(channel, s2);
+            BotUtils.sendMessage(channel, s3);
+            BotUtils.sendMessage(channel, "okay fine ill run the");
+
+            System.out.println("Kait's whack line");
+            return;
+        }
+
         long startTime = System.currentTimeMillis();
-        Map<IUser, Integer> oofMap = new HashMap<>();
+        Map<IUser, Integer> userWordCountMap = new HashMap<>();
         IChannel channel = event.getChannel();
 
         if (args.size() < 1) {
             BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for. It also takes an optional parameter for server wide scans. " +
-                    "\nWARNING USING ALL CAN *DRASTICALLY* INCREASE RUN TIME" +
+                    "\nWARNING ::: USING ALL CAN *DRASTICALLY* INCREASE RUN TIME" +
                     "\nEx: $count hello" +
                     "\nEx: $count oof, all");
             return;
@@ -46,21 +62,18 @@ public class OofCounter implements Command {
                 for (IMessage m : textChannel.getFullMessageHistory()) {
                     if (m.getContent().contains(args.get(0))) {
                         IUser author = m.getAuthor();
-                        try {
-                            oofMap.put(author, oofMap.get(author) + 1);
-                        } catch (NullPointerException e) {
-                            oofMap.putIfAbsent(author, 1); //initialize with 1.
-                        }
+                        //userWordCountMap.put(author, userWordCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
+                        userWordCountMap.merge(author, 1, (v, $) -> v + 1); //@Phanta#1328
                     }
                     messageCounter++;
                 }
             } catch (MissingPermissionsException e) {
-                BotUtils.sendMessage(channel, "Aspect is missing READ_MESSAGES permission in " + textChannel.getName() + ". Trying to forcibly continue execution.");
+                BotUtils.sendMessage(channel, "Aspect is missing READ_MESSAGES permission in " + textChannel.getName() + ". Attempting to forcibly continue execution.");
             }
         }
 
-        oofMap = BotUtils.sortMapByValue(oofMap, false);
-        Entry<IUser, Integer> mostGoodPerson = oofMap.entrySet().iterator().next();
+        userWordCountMap = BotUtils.sortMapByValue(userWordCountMap, false);
+        Entry<IUser, Integer> mostGoodPerson = userWordCountMap.entrySet().iterator().next();
         String nick = mostGoodPerson.getKey().getNicknameForGuild(event.getGuild());
 
 
@@ -77,7 +90,7 @@ public class OofCounter implements Command {
                         messageCounter + " messages in " + (scanAllChannels? textChannels.size() + " channels" : channel.getName()));
 
         int rankCounter = 1;
-        for (Entry<IUser, Integer> entry : oofMap.entrySet()) {
+        for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
             try {
                 String eachNick = entry.getKey().getNicknameForGuild(event.getGuild());
                 eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick), args.get(0) + " count: " + entry.getValue().toString(), false);
