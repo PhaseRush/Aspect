@@ -46,4 +46,9 @@ public class SkinDetail implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "League - Displays image of skin";
+    }
 }

@@ -33,4 +33,9 @@ public class SongStop implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Stops current playing songs. Clears queue.";
+    }
 }

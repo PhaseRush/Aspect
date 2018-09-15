@@ -92,4 +92,9 @@ public class LeaguePlayerEmbed implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Generates visual for a player";
+    }
 }

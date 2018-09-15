@@ -34,4 +34,9 @@ public class WarframeCetusCycle implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Warframe - Current Cetus cycle. (PC only)";
+    }
 }

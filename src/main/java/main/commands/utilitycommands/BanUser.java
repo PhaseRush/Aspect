@@ -24,4 +24,9 @@ public class BanUser implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "doesn't do too much right now";
+    }
 }

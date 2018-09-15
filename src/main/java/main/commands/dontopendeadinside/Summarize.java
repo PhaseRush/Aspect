@@ -66,4 +66,9 @@ public class Summarize implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Uses SMMRY to summarize any text article.";
+    }
 }

@@ -147,4 +147,9 @@ public class WarframeItemInfo implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "info about item drop rates.";
+    }
 }

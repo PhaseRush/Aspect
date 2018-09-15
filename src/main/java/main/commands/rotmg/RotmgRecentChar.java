@@ -31,4 +31,8 @@ public class RotmgRecentChar implements Command {
         Character mostRecentChar = player.getCharacters().get(0); //gets first (most recent character)
         mostRecentChar.toEmbed(iChannel, author, playerIGN, realmEyeUrl, startTime);
     }
+    @Override
+    public String getDescription() {
+        return "ROTMG";
+    }
 }

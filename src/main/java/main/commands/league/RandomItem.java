@@ -37,4 +37,9 @@ public class RandomItem implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Shows one (or more, if specified) random items";
+    }
 }

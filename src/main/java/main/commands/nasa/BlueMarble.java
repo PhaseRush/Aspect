@@ -45,4 +45,9 @@ public class BlueMarble implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "NASA - Shows most recent \"Blue Marble\"";
+    }
 }

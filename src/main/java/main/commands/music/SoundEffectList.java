@@ -24,4 +24,9 @@ public class SoundEffectList implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Lists available sound effects";
+    }
 }

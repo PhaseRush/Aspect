@@ -34,4 +34,9 @@ public class SetPrefix implements Command {
     public boolean requiresElevation() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        return "Broken :(";
+    }
 }

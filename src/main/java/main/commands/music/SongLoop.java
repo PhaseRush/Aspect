@@ -22,4 +22,9 @@ public class SongLoop implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "WIP - loops current song infinitely, or x times";
+    }
 }

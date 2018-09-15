@@ -28,4 +28,8 @@ public class RotmgPets implements Command {
         Pet highestLevelPet = pets.findHighestLevelPet();
         highestLevelPet.toEmbed(iChannel, author, playerIGN, realmEyeUrl); //can throw NPE
     }
+    @Override
+    public String getDescription() {
+        return "ROTMG";
+    }
 }

@@ -53,4 +53,9 @@ public class WarframeVoidFissures implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Lists current void fissures. Able to filter based on input. ```$wfvoid lith```";
+    }
 }

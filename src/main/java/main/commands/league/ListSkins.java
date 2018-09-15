@@ -38,4 +38,9 @@ public class ListSkins implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Lists skins for a champion";
+    }
 }

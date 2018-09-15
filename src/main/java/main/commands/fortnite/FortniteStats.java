@@ -31,6 +31,11 @@ public class FortniteStats implements Command {
         return false;
     }
 
+    @Override
+    public String getDescription() {
+        return "Temporarily Deprecated - Displays Fortnite stats for a player. ```$fn AmperianLoop, squad```";
+    }
+
     private void handleFortniteStatsEmbed(String json, String gameType, IChannel channel) {
         //'solo', 'duo', 'squad', 'all'
         FPlayer fp = new Gson().fromJson(json, FPlayer.class);

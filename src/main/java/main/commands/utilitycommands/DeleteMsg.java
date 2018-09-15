@@ -23,4 +23,9 @@ public class DeleteMsg implements Command {
     public boolean requiresElevation() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        return "Deletes message by user. $deletemsg userId, [minutes to delete from]";
+    }
 }

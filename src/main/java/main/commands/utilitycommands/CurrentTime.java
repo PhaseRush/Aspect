@@ -15,10 +15,9 @@ import java.util.TimeZone;
  */
 public class CurrentTime implements Command {
 
-    private final Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("America/Vancouver"));
-
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+        Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("America/Vancouver"));
         BotUtils.sendMessage(event.getChannel(),
                 "In Vancouver, it is currently " +
                         calendar.get(Calendar.HOUR_OF_DAY) + ":" +
@@ -28,5 +27,10 @@ public class CurrentTime implements Command {
     @Override
     public boolean requiresElevation() {
         return false;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Shows shows current time in Vancouver, Canada";
     }
 }

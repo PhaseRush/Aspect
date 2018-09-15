@@ -43,4 +43,9 @@ public class NasaApod implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "NASA - shows Astronomy Picture of the Day";
+    }
 }

@@ -26,4 +26,9 @@ public class WarframeItems implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "dev use";
+    }
 }

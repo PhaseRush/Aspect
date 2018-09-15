@@ -27,4 +27,9 @@ public class SystemLoad implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "How hard I'm working.";
+    }
 }

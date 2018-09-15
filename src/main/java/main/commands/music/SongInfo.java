@@ -38,4 +38,9 @@ public class SongInfo implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Shows info about current song";
+    }
 }

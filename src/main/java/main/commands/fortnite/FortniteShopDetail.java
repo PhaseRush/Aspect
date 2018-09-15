@@ -39,4 +39,9 @@ public class FortniteShopDetail implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "DEPRECATED - returns detailed infomation about a fortnite shop category";
+    }
 }

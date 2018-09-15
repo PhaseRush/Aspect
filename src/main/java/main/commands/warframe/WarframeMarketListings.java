@@ -168,4 +168,9 @@ public class WarframeMarketListings implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "retrieves market listings for item. can filter based on online ingame and offline";
+    }
 }

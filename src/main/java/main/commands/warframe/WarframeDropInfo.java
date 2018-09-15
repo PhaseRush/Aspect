@@ -45,4 +45,9 @@ public class WarframeDropInfo implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "info about item drops";
+    }
 }

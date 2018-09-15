@@ -83,7 +83,12 @@ public class Asciify implements Command {
                 ascii.append("\n");
             }
 
-            BotUtils.sendMessage(event.getChannel(), ascii.append("```").toString());
+            if (ascii.length() > 1997)
+                BotUtils.sendMessage(event.getChannel(), "Ascii art is > 2000 characters, and discord will shit on me. Use a higher skip count.\n" +
+                        "$ascii [url], [increase this number]");
+            else
+                BotUtils.sendMessage(event.getChannel(), ascii.append("```").toString());
+
         } catch (IOException e) {
             BotUtils.sendMessage(event.getChannel(), "Invalid URL. Make sure it is directly linking a picture. Make sure the url ends in .png, .jpg, or any image file extension.");
         }
@@ -114,5 +119,10 @@ public class Asciify implements Command {
     @Override
     public boolean requiresElevation() {
         return false;
+    }
+
+    @Override
+    public String getDescription() {
+        return "Asciify an art piece.";
     }
 }

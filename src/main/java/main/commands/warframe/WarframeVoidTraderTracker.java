@@ -35,4 +35,9 @@ public class WarframeVoidTraderTracker implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "displays info about void trader";
+    }
 }

@@ -20,4 +20,9 @@ public class MemberCount implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Counts total members in this server";
+    }
 }

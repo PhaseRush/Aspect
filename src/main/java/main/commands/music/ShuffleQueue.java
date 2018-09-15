@@ -25,4 +25,9 @@ public class ShuffleQueue implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Shuffles queue. Uses java.util.Collections#shuffle, so don't blame me if the shuffling doesn't seem random";
+    }
 }

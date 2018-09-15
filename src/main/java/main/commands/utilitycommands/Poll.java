@@ -52,4 +52,9 @@ public class Poll implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Constructs a Poll with an arbitrary number of options. ```$poll [question], [option1], [option2],...";
+    }
 }

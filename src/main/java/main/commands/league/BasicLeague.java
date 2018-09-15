@@ -24,6 +24,11 @@ public class BasicLeague implements Command {
         return false;
     }
 
+    @Override
+    public String getDescription() {
+        return "Shows summoner level";
+    }
+
     private void testing() {
         Summoner summoner = Orianna.summonerNamed("Danman96").get();
 

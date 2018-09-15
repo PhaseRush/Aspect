@@ -35,4 +35,9 @@ public class AvailableRegions implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Lists supported regions";
+    }
 }

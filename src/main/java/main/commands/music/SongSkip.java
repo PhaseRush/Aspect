@@ -25,4 +25,9 @@ public class SongSkip implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "skips to next song, or next x songs if specified";
+    }
 }

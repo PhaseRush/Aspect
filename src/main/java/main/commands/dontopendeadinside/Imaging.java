@@ -193,4 +193,9 @@ public class Imaging implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Cloudsight Image Recognition";
+    }
 }

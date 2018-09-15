@@ -20,4 +20,9 @@ public class WarframeAlerts implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Displays all alerts";
+    }
 }

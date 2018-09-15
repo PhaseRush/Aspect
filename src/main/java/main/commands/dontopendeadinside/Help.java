@@ -17,4 +17,9 @@ public class Help implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Details at: " + BotUtils.GITHUB_URL;
+    }
 }

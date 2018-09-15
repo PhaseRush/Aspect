@@ -26,6 +26,11 @@ public class CuteImg implements Command {
         return false;
     }
 
+    @Override
+    public String getDescription() {
+        return "Displays a cute Image. Baka and headpats. ";
+    }
+
 
     public String helpMsg() {
         return null;

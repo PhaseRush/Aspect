@@ -38,4 +38,9 @@ public class WarframeDailyDeals implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "warframe daily deals";
+    }
 }

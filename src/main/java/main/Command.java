@@ -9,6 +9,7 @@ public interface Command {
 
     boolean requiresElevation();
 
-    //String getDescription();
+    String getDescription();
     //String getSyntax();
+
 }

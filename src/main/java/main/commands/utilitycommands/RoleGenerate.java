@@ -48,4 +48,9 @@ public class RoleGenerate implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "Generates a role with user's permission hierarchy ```$makerole [name], r, g, b";
+    }
 }

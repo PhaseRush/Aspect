@@ -33,4 +33,9 @@ public class FortniteShopSelect implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "DEPRECATED - Fortnite - lists shops";
+    }
 }

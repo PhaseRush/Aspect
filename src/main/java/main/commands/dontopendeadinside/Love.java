@@ -45,5 +45,10 @@ public class Love implements Command {
         return false;
     }
 
+    @Override
+    public String getDescription() {
+        return "One of the OG commands.";
+    }
+
 
 }

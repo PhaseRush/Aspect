@@ -47,6 +47,11 @@ public class PreviousMatch implements Command {
     }
 
     @Override
+    public String getDescription() {
+        return "WIP, displays detail about previous match for given player";
+    }
+
+    @Override
     public String toString() {
         return "Hello friends";
     }

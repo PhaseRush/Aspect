@@ -17,6 +17,11 @@ public class Insult implements Command {
         return false;
     }
 
+    @Override
+    public String getDescription() {
+        return "Dishes an insult. ~~Slightly NSFW~~.";
+    }
+
 
     public String helpMsg() {
         return null;

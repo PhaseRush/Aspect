@@ -29,4 +29,9 @@ public class SoundEffect implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "plays a specified sound effect. use $listsfx to find list.";
+    }
 }

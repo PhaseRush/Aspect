@@ -33,4 +33,9 @@ public class SongQueue implements Command {
     public boolean requiresElevation() {
         return false;
     }
+
+    @Override
+    public String getDescription() {
+        return "lists current queue for this voice channel";
+    }
 }

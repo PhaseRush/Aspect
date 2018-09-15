@@ -24,6 +24,11 @@ public class Dev implements Command {
         return false;
     }
 
+    @Override
+    public String getDescription() {
+        return "me.";
+    }
+
     private EmbedBuilder createKatEmbed() {
         EmbedBuilder temp = new EmbedBuilder();
 

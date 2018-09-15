@@ -24,4 +24,9 @@ public class SetKatInv implements Command {
     public boolean requiresElevation() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        return "ROTMG";
+    }
 }
