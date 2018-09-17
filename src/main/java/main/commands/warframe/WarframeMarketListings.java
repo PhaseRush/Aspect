@@ -31,11 +31,12 @@ public class WarframeMarketListings implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         List<String> intendedItemNames = WarframeUtil.getIntendedStrings(args.get(0));
+        String filterOnline = (args.size() == 2? args.get(1) : "");
 
         if (intendedItemNames.get(0).equals("Index 1 is a perfect match"))
-            finishCommand(intendedItemNames.get(1), event, args.get(0));
+            finishCommand(intendedItemNames.get(1), event, filterOnline);
         else {
-            handleUserReactionWait(intendedItemNames, event, args.get(0));
+            handleUserReactionWait(intendedItemNames, event, filterOnline);
         }
     }
 
@@ -54,7 +55,7 @@ public class WarframeMarketListings implements Command {
 
         // default : filter out users that are not ingame
         // if user provides second argument, do not filter.
-        if (filterParam.equals("all"))
+        if (filterParam.equals("ingame"))
             listings.removeIf(warframeTradeListing -> {
                 WarframeListingUser user = warframeTradeListing.getUser();
                 return !user.getStatus().equals("ingame");

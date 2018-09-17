@@ -13,11 +13,12 @@ public class SystemLoad implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String msg = "Arch: " + osBean.getArch() +
+        String msg =
+                "1 min running Avg Load: " + osBean.getSystemLoadAverage() +
+                "\nArch: " + osBean.getArch() +
                 "\nName: " + osBean.getName() +
-                "\nSys Avg Load: " + osBean.getSystemLoadAverage() +
                 "\nVersion: " + osBean.getVersion() +
-                "\n Avail Processors: " + osBean.getAvailableProcessors();
+                "\nAvail Processors: " + osBean.getAvailableProcessors();
 
         BotUtils.sendMessage(event.getChannel(), msg);
 
