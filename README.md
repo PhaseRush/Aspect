@@ -120,6 +120,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [x] Warframe: detailed item information
 - [ ] Warframe: relic drop locations
 - [ ] General: fetch: command that searches google and compiles keywords and top image
+- [ ] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
 
 
 #### non-command features
