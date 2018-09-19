@@ -12,13 +12,17 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 ## All available commands:
 - examples with params in round brackets indicate optional params. Square brackets indicate a placeholder. Do not use the round or square brackets if you choose to use that parameter
 
-#### Humour
+#### Humour // Don't dead open inside
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
 | cute | 1 | displays a cute image | $cute baka |
 | ship | 2 | Ships two people | $ship @Aspect, @Requiem |
 | insult | 0 | says an insult (slight nsfw) | $insult |
+| ascii | 1,2 | Ascii-fy an image. Can specify font size| $ascii https://goo.gl/5dx7VS, 4 |
+| ascii2 | 2 | Ascii-fy, old. Specify font size | $ascii https://goo.gl/5dx7VS, 10 |
+| count | 1, 2 | Counts # of occurences of word in channel, or entire server | $count word, all |
+
 
 #### Music
 
@@ -52,6 +56,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | help | 0, 1 | sends pm for help, or specific help for 1 command | $help (poll) |
 | membercount | 0 | displays number of members in current server | $membercount |
 | poll | 2..* | constructs poll | $poll Question, option1, op2,... |
+| cpuload | 0 | displays system info | $cpuload |
 
 #### League of Legends
 
@@ -89,7 +94,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-|wolfram/solve/(space literal) | 1..* | Querys WA | $ tell me a comp sci joke |
+|wolfram/solve/_ | 1..* | Querys WA | $ tell me a comp sci joke |
 
 #### Misc.
 
@@ -120,18 +125,21 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [x] Warframe: detailed item information
 - [ ] Warframe: relic drop locations
 - [ ] General: fetch: command that searches google and compiles keywords and top image
-- [ ] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
+- [x] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
 
 
 #### non-command features
-- Warframe :: Automatically updates alerts and posts to channel every 30 minutes.
+- Warframe :: Automatically updates alerts and posts to channel every 30 minutes
 - Warframe :: Has automatic spell correction. "abkroncoe prwime blurewpint" -> "akbronco prime blueprint"
+- Music :: Calling $play without valid url triggers Youtube search
+- Music :: Calling $play with "music" starts a generic playlist
+- Music :: Calling $play with "nb3" starts a NightBlue3's playlist
 
 #### Notes
-- time command displays wrong time (not time in Vancouver). This is due to the bot using the time of the server its being hosted on.
 - command prefix cannot be changed as of 8/25
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
-- Icons used curtesy of [Mike Winkelmann](https://www.beeple-crap.com/about). 
+- Icons used curtesy of [Mike Winkelmann](https://www.beeple-crap.com/about).
+- $bulkdelete temporarily disabled for security purposes
 
 
 
