@@ -140,6 +140,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
 - Icons used curtesy of [Mike Winkelmann](https://www.beeple-crap.com/about).
 - $bulkdelete temporarily disabled for security purposes
+- League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
 
 
 
