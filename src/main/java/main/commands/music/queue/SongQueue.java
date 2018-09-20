@@ -1,4 +1,4 @@
-package main.commands.music;
+package main.commands.music.queue;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.Command;

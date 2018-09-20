@@ -1,4 +1,4 @@
-package main.commands.humor;
+package main.commands.dontopendeadinside;
 
 import main.Command;
 import main.utility.BotUtils;
@@ -32,7 +32,6 @@ public class WordCounter implements Command {
             BotUtils.sendMessage(channel, "okay fine ill run the");
 
             System.out.println("Kait's whack line");
-            return;
         }
 
         long startTime = System.currentTimeMillis();
@@ -47,7 +46,18 @@ public class WordCounter implements Command {
             return;
         }
 
-        boolean scanAllChannels = args.size() == 2;
+        boolean scanAllChannels = false;
+        boolean useRegex = false;
+
+        if (args.size() > 1) {
+            if (args.size() == 2) {
+                scanAllChannels = args.get(1).equals("all");
+            } else if (args.size() == 3) {
+                useRegex = true;
+            }
+        }
+
+
 
         List<IChannel> textChannels = new ArrayList<>();
         if (scanAllChannels)
@@ -60,10 +70,16 @@ public class WordCounter implements Command {
         for (IChannel textChannel : textChannels) {
             try {
                 for (IMessage m : textChannel.getFullMessageHistory()) {
-                    if (m.getContent().contains(args.get(0))) {
-                        IUser author = m.getAuthor();
-                        //userWordCountMap.put(author, userWordCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
-                        userWordCountMap.merge(author, 1, (v, $) -> v + 1); //@Phanta#1328
+                    if(useRegex) {
+                        if (m.getContent().matches(args.get(2))) {
+                            IUser author = m.getAuthor();
+                            userWordCountMap.put(author, userWordCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
+                        }
+                    } else {
+                        if (m.getContent().contains(args.get(0))) {
+                            IUser author = m.getAuthor();
+                            userWordCountMap.merge(author, 1, (v, $) -> v + 1); //@Phanta#1328
+                        }
                     }
                     messageCounter++;
                 }

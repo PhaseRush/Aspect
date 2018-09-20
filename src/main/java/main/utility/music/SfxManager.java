@@ -12,11 +12,7 @@ public class SfxManager {
         sfxMap.put("kms", "https://www.youtube.com/watch?v=bulsXLM_2KE");
         sfxMap.put("garbage", "https://www.youtube.com/watch?v=FZUcpVmEHuk");
 
-
-        String reee = "https://www.youtube.com/watch?v=8wbhDhnsqE0";
-        sfxMap.put("reee", reee);
-        sfxMap.put("ree", reee);
-        sfxMap.put("reeee", reee);
+        sfxMap.put("ree", "https://www.youtube.com/watch?v=8wbhDhnsqE0");
         sfxMap.put("BANT", "https://www.youtube.com/watch?v=_05CzBgyv7M");
     }
 }

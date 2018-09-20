@@ -15,6 +15,7 @@ import java.util.Collection;
 
 /**
  * boilerplate code for google stuffs
+ * A hard fucking ree. took a good few hours to refactor code that didnt work (thanks google)
  * <p>
  * basically copy pasta from: https://developers.google.com/youtube/v3/docs/search/list
  * adjusted for clarity
@@ -44,7 +45,7 @@ public class GoogleUtil {
         return youtube;
     }
 
-    public static void prettyPrint(Collection<SearchResult> searchResults, String query) {
+    public static void prettyPrintYoutube(Collection<SearchResult> searchResults, String query) {
 
         System.out.println("\n=============================================================");
         System.out.println(

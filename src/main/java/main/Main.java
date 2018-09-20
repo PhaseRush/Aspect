@@ -46,6 +46,7 @@ public class Main {
 
         // Register a listener via the EventSubscriber annotation which allows for organisation and delegation of events
         client.getDispatcher().registerListener(new CommandManager());
+        client.getDispatcher().registerListener(new PassiveListener());
 
         // Only login after all events are registered otherwise some may be missed.
         client.login();

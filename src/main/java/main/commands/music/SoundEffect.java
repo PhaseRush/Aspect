@@ -19,6 +19,11 @@ public class SoundEffect implements Command {
             BotUtils.joinVC(event);
         }
 
+        if (args.get(0).matches("re+")) {
+            MasterManager.loadAndPlay(event.getChannel(), sfxMap.get("ree"), event);
+            return;
+        }
+
         if (sfxMap.keySet().contains(args.get(0)))
             MasterManager.loadAndPlay(event.getChannel(), sfxMap.get(args.get(0)), event);
         else

@@ -16,7 +16,7 @@ import java.util.Map;
  * Refactored from: Eric Mikulin, 2015
  * https://gist.github.com/ErisMik/f497e041a955f41f7a6a
  */
-public class Asciify implements Command {
+public class AsciifyOld implements Command {
 
     static Map<Integer, Character> asciiMap = new HashMap<>();
 
@@ -123,6 +123,6 @@ public class Asciify implements Command {
 
     @Override
     public String getDescription() {
-        return "Asciify an art piece.";
+        return "AsciifyOld an art piece.";
     }
 }

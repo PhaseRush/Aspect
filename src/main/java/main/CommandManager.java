@@ -1,15 +1,17 @@
 package main;
 
-import main.commands.dontopendeadinside.Asciify;
-import main.commands.dontopendeadinside.Help;
-import main.commands.dontopendeadinside.Imaging;
-import main.commands.dontopendeadinside.Summarize;
+import main.commands.dontopendeadinside.*;
 import main.commands.fortnite.FortniteShopDetail;
 import main.commands.fortnite.FortniteShopSelect;
 import main.commands.fortnite.FortniteStats;
-import main.commands.humor.*;
+import main.commands.humor.AnalyzeUser;
+import main.commands.humor.CuteImg;
+import main.commands.humor.Insult;
+import main.commands.humor.Ship;
 import main.commands.league.*;
 import main.commands.music.*;
+import main.commands.music.queue.ShuffleQueue;
+import main.commands.music.queue.SongQueue;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
 import main.commands.rotmg.*;
@@ -20,12 +22,8 @@ import main.utility.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.obj.ActivityType;
-import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.handle.obj.StatusType;
-import sx.blah.discord.util.EmbedBuilder;
-import sx.blah.discord.util.RateLimitException;
 
 import java.time.LocalTime;
 import java.util.*;
@@ -37,7 +35,8 @@ public class CommandManager {
 
     public CommandManager() {
         //dontdeadopeninside
-        commandMap.put("ascii", new Asciify());
+        commandMap.put("ascii2", new AsciifyOld());
+        commandMap.put("ascii", new Asciimg());
         commandMap.put("help", new Help());
         commandMap.put("summarize", new Summarize());
         commandMap.put("img", new Imaging());
@@ -180,77 +179,6 @@ public class CommandManager {
 //            commandMap.get("wolfram").runCommand(event, Collections.singletonList(query));
 //            System.out.println("Triggered: Wolfram. Query: " + query);
         }
-    }
-
-    @EventSubscriber
-    public void kaitlynsHangOut(MessageReceivedEvent event) {
-        //please, no one ask. please please please please please
-        if (event.getGuild().getStringID().equals("197158565004312576")) {
-            String message = event.getMessage().getFormattedContent().toLowerCase();
-            if (message.contains("penis")) {
-                BotUtils.sendMessage(event.getChannel(), "penis.");
-            }
-            //not exclusive
-            if (message.contains("turtle")) {
-                BotUtils.sendMessage(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
-            }
-        }
-    }
-
-    @EventSubscriber
-    public void reactToEmojiMessage(MessageReceivedEvent event) {
-        try {
-            for (IEmoji e : event.getGuild().getEmojis()) {
-                if (event.getMessage().getFormattedContent().contains(e.getName())) {
-                    try {
-                        event.getMessage().addReaction(e);
-                        break;
-                    } catch (RateLimitException exception) {
-                        break;
-                    }
-                }
-            }
-        } catch (NullPointerException e) {
-            //caught if in server with no custom emojis. (ie. pms)
-        }
-    }
-
-//    @EventSubscriber
-//    public void warframeAlert(ReadyEvent event) {
-//        //String path = "C:\\Users\\Positron\\IdeaProjects\\Aspect\\txtfiles\\Warframe\\WarframeAlertSubscribers.txt";
-//        String path = "~/AspectTextFiles/subscribedServers.txt"; //no idea how linux works :)
-//        List<String> subscribedChannels = ReadWrite.readFromFileToStringList(path);
-//
-//        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/alerts");
-//
-//        Type alertListType = new TypeToken<LinkedList<WarframeAlert>>() {
-//        }.getType();
-//        LinkedList<WarframeAlert> alerts = new Gson().fromJson(json, alertListType);
-//
-//        //scheduler code;
-//        final ScheduledExecutorService scheduler =
-//                Executors.newScheduledThreadPool(2);
-//
-//        final Runnable alertEmbedSender = new Runnable() {
-//            public void run() {
-//                for (String s : subscribedChannels)
-//                    new MessageBuilder(event.getClient()).withEmbed(WarframeUtil.generateAlertsEmbed().withTitle("Warframe | Alerts - (automated message)").build()).withChannel(Long.valueOf(s)).send();
-//
-//                int minute = LocalDateTime.now().getMinute();
-//                System.out.println("Automated Warframe Alerts " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute) + "\nSubscribed servers list: " + path);
-//            }
-//        };
-//        final ScheduledFuture<?> alertHandler = scheduler.scheduleAtFixedRate(alertEmbedSender, 0, 30, MINUTES);
-//        scheduler.schedule(new Runnable() {
-//            public void run() {
-//                alertHandler.cancel(false);
-//            }
-//        }, 24, HOURS);
-//    }
-
-    @EventSubscriber
-    public void userJoin(UserJoinEvent event) {
-        BotUtils.sendMessage(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
     }
 
     @Override

@@ -37,6 +37,7 @@ public class MasterManager {
 
     //thanks to decc the hecc
     static {
+        playerManager.setFrameBufferDuration(5000); //5 second audio buffer
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
     }
@@ -82,12 +83,19 @@ public class MasterManager {
             @Override
             public void noMatches() {
                 //check if it is a preinit playlist
-                if (trackUrl.equals("music2")) {
-                    loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE", event);
-                    return;
-                } else if (trackUrl.equals("tier2")) {
-                    loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X", event);
-                    return;
+                switch (trackUrl) {
+                    case "music":
+                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE", event);
+                        return;
+                    case "tier2":
+                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X", event);
+                        return;
+                    case "nb3all":
+                        loadAndPlay(channel, "https://www.youtube.com/watch?v=BwEZaariQQ4&list=PLEgNqLmZpLuI9ajUy3Hg97NrpssG4repu", event);
+                        return;
+                    case "nb3":
+                        loadAndPlay(channel, "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD", event);
+                        return;
                 }
 
                 YouTube youtube = GoogleUtil.getYoutube();
