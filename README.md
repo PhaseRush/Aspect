@@ -104,7 +104,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
 | fn -DEPRECATED- | 2 | displays fortnite stats | `$fn AmperianLoop, \[one of: all, squad, solo, duo\]` |
 
-#### Realm of the Mad God
+#### Realm of the Mad God - Deprecated
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
