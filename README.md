@@ -134,7 +134,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Music :: Calling $play without valid url triggers Youtube search
 - Music :: Calling $play with "music" starts a generic playlist
 - Music :: Calling $play with "nb3" starts a NightBlue3's playlist
-- Count :: Supports regular expression matching. Begin Regex pattern with "r/[regex]" (subject to change)
+- Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 
 #### Notes
 - command prefix cannot be changed as of 8/25
