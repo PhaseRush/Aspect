@@ -80,6 +80,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | wfvoid | 0,1 | shows all void fissures, or filters accordingly | `$wfvoid (meso)` |
 | wfinfo | 1 | shows basic info about item (has spellcheck) | `$wfinfo abkroncoe prwime blurewpint` |
 | wfaco | 0 | shows info about all currentl acolytes | `$wfaco` |
+| wfdropinfo | 1 | shows drop locations of materials | `$wfdropinfo polymer bundle` |
 | wfvoidtrader | 0 | shows info about current or upcomming void trader | `$wfvoidtrader` |
 | wfmarket | 1,2 | shows current listings for item | `$wfmarket flow, all` |
 
