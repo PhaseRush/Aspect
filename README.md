@@ -127,6 +127,10 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Warframe: relic drop locations
 - [ ] General: fetch: command that searches google and compiles keywords and top image
 - [x] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
+- [ ] Wikipedia: integrate wikipedia searches and article summaries
+- [ ] Urban Dictionary: use [this api](https://github.com/zdict/zdict/wiki/Urban-dictionary-API-documentation)
+- [ ] Google image search
+- [ ] Imgur upload/integration
 
 
 #### non-command features
