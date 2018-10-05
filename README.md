@@ -52,7 +52,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | --- | --- | --- | --- |
 | setprefix | 1 | sets prefix for disc server | `$setprefix ! (next time use !setprefix $)`|
 | ping | 0 | pretty useless | `$ping` |
-| dev | 0 | also pretty useless :) | `$dev` |
+| info | 1 | shows info about a person. Ask for details | `$info @Requiem` |
 | help | 0, 1 | sends pm for help, or specific help for 1 command | `$help (poll)` |
 | membercount | 0 | displays number of members in current server | `$membercount` |
 | poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
