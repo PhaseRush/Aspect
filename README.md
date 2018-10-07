@@ -16,106 +16,107 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| cute | 1 | displays a cute image | $cute baka |
-| ship | 2 | Ships two people | $ship @Aspect, @Requiem |
-| insult | 0 | says an insult (slight nsfw) | $insult |
-| ascii | 1,2 | Ascii-fy an image. Can specify font size| $ascii https://goo.gl/5dx7VS, 4 |
-| ascii2 | 2 | Ascii-fy, old. Specify font size | $ascii https://goo.gl/5dx7VS, 10 |
-| count | 1, 2 | Counts # of occurences of word in channel, or entire server | $count word, all |
+| cute | 1 | displays a cute image | `$cute baka` |
+| ship | 2 | Ships two people | `$ship @Aspect, @Requiem` |
+| insult | 0 | says an insult (slight nsfw) | `$insult` |
+| ascii | 1,2 | Ascii-fy an image. Can specify font size| `$ascii https://goo.gl/5dx7VS, 4` |
+| ascii2 | 2 | Ascii-fy, old. Specify font size | `$ascii2 https://goo.gl/5dx7VS, 10` |
+| count | 1, 2 | Counts # of occurences of word/regex in channel, or entire server | `$count word, all` |
 
 
 #### Music
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| stop/lvoice | 0 | Stops current song, leaves voice | $stop, $lvoice |
-| play | 1 | Adds param to Queue | $play \[YT song/plist] |
-| nowplaying/currentsong| 0 | Displays info about current song | $nowplaying |
-| skip | 0, 1 | skips 1 song, or \[param\] songs | $skip (15) |
-| queue | 0 | lists the first 15 songs in queue | $queue |
-| loop | 0, 1 | loops indefinetly, or \[param\] times | $loop (3) |
-| shuffle | 0 | shuffles current queue | $shuffle |
-| sfx | 1 | plays \[param\] sound effect | $sfx purple | 
-| listsfx | 0 | lists all available sound effects | $listsfx |
+| stop/lvoice | 0 | Stops current song, leaves voice | `$stop, $lvoice` |
+| play | 1 | Adds param to Queue | `$play \[YT song/plist]` |
+| nowplaying/currentsong| 0 | Displays info about current song | `$nowplaying` |
+| skip | 0, 1 | skips 1 song, or \[param\] songs | `$skip (15)` |
+| queue | 0 | lists the first 15 songs in queue | `$queue` |
+| loop - WIP| 0, 1 | loops indefinetly, or \[param\] times | `$loop (3)` |
+| shuffle | 0 | shuffles current queue | `$shuffle` |
+| sfx | 1 | plays \[param\] sound effect | `$sfx purple` | 
+| listsfx | 0 | lists all available sound effects | `$listsfx` |
 
 #### General Commands
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| bulkdelete | 1 | deletes all msg in channel up to x mins | $bulkdelete 3 |
-| time | 0 | displays time in Vancouver, Canada | $time |
-| deletemsg | 2 | deletes msg by \[x] in past \[y] mins | $deletemsg 264213620026638336, 10 |
+| bulkdelete | 1 | deletes all msg in channel up to x mins | `$bulkdelete 3` |
+| time | 0 | displays time in Vancouver, Canada | `$time` |
+| deletemsg | 2 | deletes msg by \[x] in past \[y] mins | `$deletemsg 264213620026638336, 10` |
 
 #### Meta
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| setprefix | 1 | sets prefix for disc server | $setprefix ! (next time use !setprefix $)|
-| ping | 0 | pretty useless | $ping |
-| dev | 0 | also pretty useless :) | $dev |
-| help | 0, 1 | sends pm for help, or specific help for 1 command | $help (poll) |
-| membercount | 0 | displays number of members in current server | $membercount |
-| poll | 2..* | constructs poll | $poll Question, option1, op2,... |
-| cpuload | 0 | displays system info | $cpuload |
+| setprefix | 1 | sets prefix for disc server | `$setprefix ! (next time use !setprefix $)`|
+| ping | 0 | pretty useless | `$ping` |
+| info | 1 | shows info about a person. Ask for details | `$info @Requiem` |
+| help | 0, 1 | sends pm for help, or specific help for 1 command | `$help (poll)` |
+| membercount | 0 | displays number of members in current server | `$membercount` |
+| poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
+| cpuload | 0 | displays system info | `$cpuload` |
 
 #### League of Legends
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| lollevel | 1 | shows level of summoner | $lollevel SchrödingersKat |
-| lolsum | 1 | shows info of summoner | $lolsum SchrödingersKat |
-| lolregions | 0 | shows available regions | $lolregions | 
-| lolitem | 0, 1| shows info about item, or \[x] items | $lolitem (3) |
-| lolrecent | 1 | WIP - shows recent match | $lolrecent SchrödingersKat |
-| allskins | 1 | lists all skins for \[champion] | $allskins katarina |
-| skin | 2 | shows picture of skin | $skin katarina, \[4 or Kitty Cat Katarina\] |
+| lollevel | 1 | shows level of summoner | `$lollevel SchrödingersKat` |
+| lolsum | 1 | shows info of summoner | `$lolsum SchrödingersKat` |
+| lolregions | 0 | shows available regions | `$lolregions` | 
+| lolitem | 0, 1| shows info about item, or \[x] items | `$lolitem (3)` |
+| lolrecent | 1 | WIP - shows recent match | `$lolrecent SchrödingersKat` |
+| allskins | 1 | lists all skins for \[champion] | `$allskins katarina` |
+| skin | 2 | shows picture of skin | `$skin katarina, \[4 or Kitty Cat Katarina\]` |
 
 #### Warframe
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| wfdaily | 0 | shows daily deals | $wfdaily |
-| wfcetus | 0 | shows time in cetus | $wfcetus |
-| wfalerts | 0 | shows all alerts | $wfalert |
-| wfvoid | 0,1 | shows all void fissures, or filters accordingly | $wfvoid (meso) |
-| wfinfo | 1 | shows basic info about item (has spellcheck) | $wfinfo abkroncoe prwime blurewpint |
-| wfaco | 0 | shows info about all currentl acolytes | $wfaco |
-| wfvoidtrader | 0 | shows info about current or upcomming void trader | $wfvoidtrader |
-| wfmarket | 1,2 | shows current listings for item | $wfmarket flow, all |
+| wfdaily | 0 | shows daily deals | `$wfdaily` |
+| wfcetus | 0 | shows time in cetus | `$wfcetus` |
+| wfalerts | 0 | shows all alerts | `$wfalert` |
+| wfvoid | 0,1 | shows all void fissures, or filters accordingly | `$wfvoid (meso)` |
+| wfinfo | 1 | shows basic info about item (has spellcheck) | `$wfinfo abkroncoe prwime blurewpint` |
+| wfaco | 0 | shows info about all currentl acolytes | `$wfaco` |
+| wfdropinfo | 1 | shows drop locations of materials | `$wfdropinfo polymer bundle` |
+| wfvoidtrader | 0 | shows info about current or upcomming void trader | `$wfvoidtrader` |
+| wfmarket | 1,2 | shows current listings for item | `$wfmarket flow, all` |
 
 #### NASA
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| apod | 0 | NASA's Astronomy Picture of the Day | $apod |
-| bluemarble | 0, 1 | NASA's image of the earth, updated frequently | $bluemarble (natural) |
+| apod | 0 | NASA's Astronomy Picture of the Day | `$apod` |
+| bluemarble | 0, 1 | NASA's image of the earth, updated frequently | `$bluemarble (natural)` |
 
 #### Wolfram Alpha
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-|wolfram/solve/_ | 1..* | Querys WA | $ tell me a comp sci joke |
+|wolfram/solve/_ | 1..* | Querys WA | `$_ tell me a comp sci joke` |
 
 #### Misc.
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| summarize | 1 | summarizes webpage article | $summarize https://goo.gl/oei2cu |
-| img | 1 | image recognition | $img https://goo.gl/5dx7VS |
-| fn -DEPRECATED- | 2 | displays fortnite stats | $fn AmperianLoop, \[one of: all, squad, solo, duo\] |
+| summarize | 1 | summarizes webpage article | `$summarize https://goo.gl/oei2cu` |
+| img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
+| fn -DEPRECATED- | 2 | displays fortnite stats | `$fn AmperianLoop, \[one of: all, squad, solo, duo\]` |
 
-#### Realm of the Mad God
+#### Realm of the Mad God - Deprecated
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| katinv | 0 | Lists kat's inventory | $katinv |
-| rguild | 1 | Rates guild | $rguild Black Bullet |
-| rpet | 1 | Rates player's pet | $rpet SexySelfie |
-| rrate | 1 | Rates player | $rrate SexySelfie |
-| rdesc | 1 | Shows player's realmeye desc | $rdesc SexySelfie |
-| rrecentchar | 1 | Shows player's most recent char | $rrecentchar SexySelfie|
-| rscore | 1 | Scores player | $rscore SexySelfie |
-| setinv | - | For use by dev only | $setinv \[x] |
+| katinv | 0 | Lists kat's inventory | `$katinv` |
+| rguild | 1 | Rates guild | `$rguild Black Bullet` |
+| rpet | 1 | Rates player's pet | `$rpet SexySelfie` |
+| rrate | 1 | Rates player | `$rrate SexySelfie` |
+| rdesc | 1 | Shows player's realmeye desc | `$rdesc SexySelfie` |
+| rrecentchar | 1 | Shows player's most recent char | `$rrecentchar SexySelfie`|
+| rscore | 1 | Scores player | `$rscore SexySelfie` |
+| setinv | - | For use by dev only | `$setinv \[x]` |
 
 
 #### WIP Commands:
@@ -126,6 +127,10 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Warframe: relic drop locations
 - [ ] General: fetch: command that searches google and compiles keywords and top image
 - [x] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
+- [ ] Wikipedia: integrate wikipedia searches and article summaries
+- [ ] Urban Dictionary: use [this api](https://github.com/zdict/zdict/wiki/Urban-dictionary-API-documentation)
+- [ ] Google image search
+- [ ] Imgur upload/integration
 
 
 #### non-command features
@@ -134,6 +139,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Music :: Calling $play without valid url triggers Youtube search
 - Music :: Calling $play with "music" starts a generic playlist
 - Music :: Calling $play with "nb3" starts a NightBlue3's playlist
+- Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 
 #### Notes
 - command prefix cannot be changed as of 8/25
