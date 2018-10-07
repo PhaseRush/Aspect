@@ -48,6 +48,6 @@ public class WarframeDropInfo implements Command {
 
     @Override
     public String getDescription() {
-        return "info about item drops";
+        return "info about material drops";
     }
 }

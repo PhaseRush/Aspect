@@ -1,5 +1,7 @@
 package main;
 
+import com.ibm.watson.developer_cloud.language_translator.v3.LanguageTranslator;
+import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import main.utility.BotUtils;
@@ -7,17 +9,24 @@ import sx.blah.discord.api.IDiscordClient;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
+import java.time.Instant;
 
 /**
  * 8/26/18
  */
 public class Main {
+    public static IDiscordClient client;
+
+    public static long startTime;
+    public static Instant startInstant;
     public static OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
+    public static LanguageTranslator translator;
 
     public static void main(String[] args){
-        long startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
+        startInstant = Instant.now();
 
-        if (args.length != 10) {
+        if (args.length != 12) {
             System.out.println("You screwed up the runtime config params!");
             System.exit(9001);
             return;
@@ -41,8 +50,16 @@ public class Main {
         Orianna.setRiotAPIKey(args[3]);
         Orianna.setDefaultRegion(Region.NORTH_AMERICA);
 
+        //IBM Watson
+        IamOptions options = new IamOptions.Builder().apiKey(args[10]).build(); //api key
+        translator = new LanguageTranslator("2018-05-01", options);
+        translator.setEndPoint("https://gateway-wdc.watsonplatform.net/language-translator/api");
+
+        //Warframe - bottom text id
+        BotUtils.WF_BOTTOM_TEXT_ID = args[11];
+
         //client
-        IDiscordClient client = BotUtils.getBuiltDiscordClient(args[1]);
+        client = BotUtils.getBuiltDiscordClient(args[1]);
 
         // Register a listener via the EventSubscriber annotation which allows for organisation and delegation of events
         client.getDispatcher().registerListener(new CommandManager());

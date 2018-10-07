@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
-import main.utility.warframe.WarframeUtil;
+import main.utility.WarframeUtil;
 import main.utility.warframe.market.marketlistings.WarframeListingUser;
 import main.utility.warframe.market.marketlistings.WarframeListingsPayloadContainer;
 import main.utility.warframe.market.marketlistings.WarframeTradeListing;

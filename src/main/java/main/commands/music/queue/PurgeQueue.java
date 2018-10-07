@@ -13,18 +13,23 @@ public class PurgeQueue implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
-        List<AudioTrack> audioTracks = guildMusicManager.getScheduler().getQueue();
+        List<AudioTrack> audioTracks;
 
-        try {
-            if (audioTracks.size() < Integer.valueOf(args.get(0))) {
-                BotUtils.sendMessage(event.getChannel(), "Invalid index");
-            } else {
-                audioTracks = audioTracks.subList(0, Integer.valueOf(args.get(0)));
-                BotUtils.sendMessage(event.getChannel(), "Queue has been purged");
+        synchronized (audioTracks = guildMusicManager.getScheduler().getQueue()) { //added this synchronized block
+            try {
+                if (Integer.valueOf(args.get(0)) > audioTracks.size()) {
+                    BotUtils.sendMessage(event.getChannel(), "There are only " + audioTracks.size() + " tracks!");
+                    return;
+                }
+
+                guildMusicManager.getScheduler().setQueue(audioTracks.subList(Integer.valueOf(args.get(0)), audioTracks.size()));
+                BotUtils.sendMessage(event.getChannel(), "Queue has been purged from " + args.get(0) + " onwards.");
+            } catch (NumberFormatException e) {
+                BotUtils.sendMessage(event.getChannel(), "Need a number for the index number");
             }
-        } catch (NumberFormatException e) {
-            BotUtils.sendMessage(event.getChannel(), "Need a number for the index number");
         }
+
+
     }
 
     @Override

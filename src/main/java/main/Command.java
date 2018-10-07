@@ -11,5 +11,4 @@ public interface Command {
 
     String getDescription();
     //String getSyntax();
-
 }

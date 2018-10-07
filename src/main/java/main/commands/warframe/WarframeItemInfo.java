@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
-import main.utility.warframe.WarframeUtil;
+import main.utility.WarframeUtil;
 import main.utility.warframe.market.itemdetail.WarframeDetailedDrop;
 import main.utility.warframe.market.itemdetail.WarframeDetailedItem;
 import main.utility.warframe.market.itemdetail.WarframeItemDetailPayloadContainer;
@@ -45,7 +45,18 @@ public class WarframeItemInfo implements Command {
     private void finishCommand(String itemName) {
         String jsonURL = "https://api.warframe.market/v1/items/" + WarframeUtil.getItemUrlName(itemName);
         WarframeItemDetailPayloadContainer payloadContainer = new Gson().fromJson(BotUtils.getStringFromUrl(jsonURL), WarframeItemDetailPayloadContainer.class);
-        WarframeDetailedItem item = payloadContainer.getPayload().getItem().getItems_in_set()[0];
+        //WarframeDetailedItem item = payloadContainer.getPayload().getItem().getItems_in_set()[0]; //@todo problem here. assuming is first item.
+
+        WarframeDetailedItem[] items = payloadContainer.getPayload().getItem().getItems_in_set();
+        WarframeDetailedItem item = items[0]; //assume default
+
+
+        //try to find exact name match
+        for (WarframeDetailedItem i : items) {
+            if (i.getEn().getItem_name().equalsIgnoreCase(itemName)) {
+                item = i;
+            }
+        }
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | " + itemName)

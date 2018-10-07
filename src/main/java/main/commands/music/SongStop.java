@@ -25,7 +25,11 @@ public class SongStop implements Command {
 
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
         AudioTrack currentTrack = scheduler.getCurrentTrack();
-        currentTrack.setPosition(currentTrack.getDuration()); //sets it to the end of this song
+        try {
+            currentTrack.setPosition(currentTrack.getDuration()); //sets it to the end of this song
+        } catch (Exception e) {
+            System.out.println("SongStop - currentTrack.setPos(end of track) error");
+        }
         scheduler.getQueue().clear();
     }
 

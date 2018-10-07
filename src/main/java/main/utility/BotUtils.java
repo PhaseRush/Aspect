@@ -1,6 +1,7 @@
 package main.utility;
 
 import com.google.gson.Gson;
+import main.Main;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -38,7 +39,7 @@ public class BotUtils {
 
     //guildID, commandPrefix
     private static final String mapFilePath = "";//get rid of this
-    private static Map<Long, String> PREFIX_MAP = new HashMap();
+    private static Map<Long, String> PREFIX_MAP = new HashMap<>(); //adding angle brackets surpress warnings :)
 
     //API keys
     public static String DEFAULT_BOT_PREFIX = "!";
@@ -49,9 +50,12 @@ public class BotUtils {
     public static String FORTNITE_API_KEY; //service "temp" deprecated?
     public static String WOLFRAM_API_KEY;
     public static String YOUTUBE_API_KEY;
+    public static String WF_BOTTOM_TEXT_ID;
+    public static IChannel BOTTOM_TEXT;
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
+
 
     public static String getPrefix(IGuild iGuild) {
         try {
@@ -63,6 +67,10 @@ public class BotUtils {
 
     public static void setPrefix(IGuild iGuild, String prefix) {
         PREFIX_MAP.put(Long.valueOf(iGuild.getStringID()), prefix);
+    }
+
+    public static void setBottomText(){
+        BOTTOM_TEXT = Main.client.getChannelByID(Long.valueOf(WF_BOTTOM_TEXT_ID));
     }
 
     public static void savePrefixMap() {
@@ -126,6 +134,20 @@ public class BotUtils {
         });
     }
 
+    public static void sendMessage(IChannel channel, List<String> messages) {
+        RequestBuffer.request(() -> {
+            try {
+                for (String s : messages)
+                    channel.sendMessage(s);
+            } catch (DiscordException e) {
+                System.err.println("Message could not be sent with error: ");
+                e.printStackTrace();
+            } catch (MissingPermissionsException e) {
+                System.out.println("Missing Permissions for message list: " + channel.getName());
+            }
+        });
+    }
+
     public static void sendMessage(IChannel channel, EmbedBuilder embed) {
         RequestBuffer.request(() -> {
             try {
@@ -163,6 +185,30 @@ public class BotUtils {
             URL url = new URL(jsonURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setConnectTimeout(5000); //parameter?
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            connection.setRequestMethod("GET"); //might make parameter later
+
+            // read the response
+            InputStream in = new BufferedInputStream(connection.getInputStream());
+            userJson = IOUtils.toString(in, "UTF-8");
+            in.close();
+            connection.disconnect();
+
+            return userJson;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public static String getJson(String jsonURL, int timeoutMillis) {
+        try {
+            String userJson;
+            URL url = new URL(jsonURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(timeoutMillis);
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             connection.setDoOutput(true);
             connection.setDoInput(true);
@@ -266,6 +312,10 @@ public class BotUtils {
 
     public static void reactiWithEmoji(IMessage iMessage, ReactionEmoji e) {
         RequestBuffer.request(() -> iMessage.addReaction(e)).get();
+    }
+
+    public static void reactWithCheckMark(IMessage iMessage){
+        RequestBuffer.request(() -> iMessage.addReaction(ReactionEmoji.of("\u2705")));
     }
 
     public static String getRandomFromListString(List<String> listString) {

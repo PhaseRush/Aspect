@@ -29,7 +29,7 @@ public class WordCounter implements Command {
             BotUtils.sendMessage(channel, s1);
             BotUtils.sendMessage(channel, s2);
             BotUtils.sendMessage(channel, s3);
-            BotUtils.sendMessage(channel, "okay fine ill run the");
+            BotUtils.sendMessage(channel, "okay fine gimme sec.");
 
             System.out.println("Kait's whack line");
         }
@@ -39,39 +39,29 @@ public class WordCounter implements Command {
         IChannel channel = event.getChannel();
 
         if (args.size() < 1) {
-            BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for. It also takes an optional parameter for server wide scans. " +
-                    "\nWARNING ::: USING ALL CAN *DRASTICALLY* INCREASE RUN TIME" +
-                    "\nEx: $count hello" +
-                    "\nEx: $count oof, all");
+            BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
+                    "\nFind all occurrences of the word \"hello\" in all text channels: \n$count hello, all" +
+                    "\nMatch a greeting to all words that start with a capital R, K, or C, followed by at least 5 lower case letters: \n$count r/(hi\\s)[R|K|C][a-z]{5,}");
             return;
         }
 
-        boolean scanAllChannels = false;
-        boolean useRegex = false;
-
-        if (args.size() > 1) {
-            if (args.size() == 2) {
-                scanAllChannels = args.get(1).equals("all");
-            } else if (args.size() == 3) {
-                useRegex = true;
-            }
-        }
-
-
+        boolean useRegex = args.get(0).startsWith("\\");
+        String regexString = args.get(0).substring(1);
 
         List<IChannel> textChannels = new ArrayList<>();
-        if (scanAllChannels)
-            textChannels.addAll(event.getGuild().getChannels());
-        else
-            textChannels.add(event.getChannel());
-
+        if (args.size() == 2) {
+            if (args.get(1).equals("all"))
+                textChannels.addAll(event.getGuild().getChannels());
+            else
+                textChannels.add(event.getChannel());
+        }
 
         int messageCounter = 0;
         for (IChannel textChannel : textChannels) {
             try {
                 for (IMessage m : textChannel.getFullMessageHistory()) {
                     if(useRegex) {
-                        if (m.getContent().matches(args.get(2))) {
+                        if (m.getContent().matches(regexString)) {
                             IUser author = m.getAuthor();
                             userWordCountMap.put(author, userWordCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
                         }
@@ -103,13 +93,13 @@ public class WordCounter implements Command {
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
                 .withDesc("Winner: " + (nick == null ? mostGoodPerson.getKey().getName() : nick))
                 .withFooterText("It took me " + minutes +":"+ (seconds <10? "0" + seconds : seconds) + " to scan through " +
-                        messageCounter + " messages in " + (scanAllChannels? textChannels.size() + " channels" : channel.getName()));
+                        messageCounter + " messages in " +textChannels.size() + " channels");
 
         int rankCounter = 1;
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
             try {
                 String eachNick = entry.getKey().getNicknameForGuild(event.getGuild());
-                eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick), args.get(0) + " count: " + entry.getValue().toString(), false);
+                eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick), args.get(0).replaceAll("\\*", "\\\\*") + " count: " + entry.getValue().toString(), false);
                 rankCounter++;
             } catch (IllegalArgumentException e) {
                 break; //already at 25 fields. Since map is sorted, just break loop

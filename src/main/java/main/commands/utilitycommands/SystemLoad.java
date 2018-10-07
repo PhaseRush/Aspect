@@ -9,19 +9,25 @@ import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 
 public class SystemLoad implements Command {
-    OperatingSystemMXBean osBean = Main.osBean;
+    OperatingSystemMXBean osBean;
+    Runtime r;
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String msg =
-                "1 min running Avg Load: " + osBean.getSystemLoadAverage() +
-                "\nArch: " + osBean.getArch() +
-                "\nName: " + osBean.getName() +
-                "\nVersion: " + osBean.getVersion() +
-                "\nAvail Processors: " + osBean.getAvailableProcessors();
+        osBean = Main.osBean;
+        r = Runtime.getRuntime();
+        double maxM = r.maxMemory()/1E6;
+
+        String msg = "```"+
+                "System Load:  \t\t" + osBean.getSystemLoadAverage() +
+                "\nRam (MB): \t\t\t" + (int)(maxM - r.freeMemory()/1E6) + " / " + (int)maxM +
+                "\nArch: \t\t\t\t" + osBean.getArch() +
+                "\nName: \t\t\t\t" + osBean.getName() +
+                "\nVersion:  \t\t\t" + osBean.getVersion() +
+                "\nAvail Cores:  \t\t" + osBean.getAvailableProcessors()
+                + "```";
 
         BotUtils.sendMessage(event.getChannel(), msg);
-
     }
 
     @Override

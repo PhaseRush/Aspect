@@ -7,18 +7,26 @@ import main.utility.music.GuildMusicManager;
 import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
-import java.util.Collections;
 import java.util.List;
 
-public class ShuffleQueue implements Command {
+/**
+ * bug: need to insert twice for this to sort of work. @todo
+ */
+public class SongInsert implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+
+        String searchStr = String.join(" ", args);
+        MasterManager.loadAndPlay(event.getChannel(), searchStr, event);
+
         GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
         List<AudioTrack> audioTracks = guildMusicManager.getScheduler().getQueue();
-        Collections.shuffle(audioTracks);
+
+        AudioTrack trackToInsert = audioTracks.get(audioTracks.size() - 1);
+        audioTracks.add(0, trackToInsert);
+        audioTracks.remove(audioTracks.size()-1);
 
         BotUtils.reactWithCheckMark(event.getMessage());
-        //BotUtils.sendMessage(event.getChannel(), "Queue has been shuffled");
     }
 
     @Override
@@ -28,6 +36,6 @@ public class ShuffleQueue implements Command {
 
     @Override
     public String getDescription() {
-        return "Shuffles queue. Uses java.util.Collections#shuffle, so don't blame me if the shuffling doesn't seem random";
+        return null;
     }
 }

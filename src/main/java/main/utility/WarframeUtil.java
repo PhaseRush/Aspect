@@ -1,15 +1,13 @@
-package main.utility.warframe;
+package main.utility;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import info.debatty.java.stringsimilarity.Levenshtein;
-import main.utility.BotUtils;
-import main.utility.ReadWrite;
-import main.utility.Visuals;
 import main.utility.warframe.market.item.WarframeItem;
 import main.utility.warframe.market.item.WarframeItemPayloadContainer;
 import main.utility.warframe.market.itemdetail.WarframeDetailedItem;
 import main.utility.warframe.market.itemdetail.WarframeItemDetailPayloadContainer;
+import main.utility.warframe.wfstatus.WarframeCetusTimeObject;
 import main.utility.warframe.wfstatus.alerts.WarframeAlert;
 import main.utility.warframe.wfstatus.alerts.WarframeMission;
 import okhttp3.OkHttpClient;
@@ -23,10 +21,24 @@ import java.util.*;
 
 public class WarframeUtil {
     final static String path = "C:\\Users\\Positron\\IdeaProjects\\Aspect\\txtfiles\\Warframe\\AllWarframeItems.txt";
-
     public static List<String> readAllItems() {
         return ReadWrite.readFromFileToStringList(path);
     }
+    public static String[] dayActivities = {
+            "Go mining",
+            "Go do bounties", //finally fixed this fucking typo
+            "Go catch some Tralok.",
+            "Go catch some Mawfish."};
+
+    public static String[] nightActivities = {
+            "Go hunt some eidolons.",
+            "Go catch some Cuthol",
+            "Go catch some Glappid."
+    };
+    public static String[] alertFilters = {
+            "Nitain",
+            "Riven"
+    };
 
     public static List<String> getIntendedStrings(String userString) {
         Map<String, Double> levenMap = new HashMap<>();
@@ -73,10 +85,7 @@ public class WarframeUtil {
     }
 
     public static EmbedBuilder generateAlertsEmbed() {
-        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/alerts");
-        Type alertListType = new TypeToken<LinkedList<WarframeAlert>>() {
-        }.getType();
-        LinkedList<WarframeAlert> alerts = new Gson().fromJson(json, alertListType);
+        LinkedList<WarframeAlert> alerts = getCurrentAlerts();
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Alerts")
@@ -87,6 +96,13 @@ public class WarframeUtil {
             eb.appendField(mission.getNode() + " | " + mission.getType() + " | " + alert.getEta() + " remaining", mission.getReward().getAsString(), false);
         }
         return eb;
+    }
+
+    public static LinkedList<WarframeAlert> getCurrentAlerts() {
+        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/alerts");
+        Type alertListType = new TypeToken<LinkedList<WarframeAlert>>() {
+        }.getType();
+        return new Gson().fromJson(json, alertListType);
     }
 
     public static String getItemUrlName(String intended) {
@@ -148,5 +164,19 @@ public class WarframeUtil {
             allItemNames.add(i.getItem_name());
         }
         return allItemNames;
+    }
+
+    //Cetus cycle
+    public static String cetusCycleString(){
+        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
+        WarframeCetusTimeObject cetus = new Gson().fromJson(json, WarframeCetusTimeObject.class);
+        return "It is currently " + (cetus.isDay() ?
+                "day. It will be night in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandomFromStringArray(dayActivities) :
+                "night. It will be day in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandomFromStringArray(nightActivities));
+    }
+
+    public static WarframeCetusTimeObject getCetus(){
+        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
+        return new Gson().fromJson(json, WarframeCetusTimeObject.class);
     }
 }

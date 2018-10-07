@@ -10,7 +10,9 @@ import main.commands.humor.Insult;
 import main.commands.humor.Ship;
 import main.commands.league.*;
 import main.commands.music.*;
+import main.commands.music.queue.PurgeQueue;
 import main.commands.music.queue.ShuffleQueue;
+import main.commands.music.queue.SongInsert;
 import main.commands.music.queue.SongQueue;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
@@ -55,11 +57,13 @@ public class CommandManager {
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
         commandMap.put("nowplaying", songInfo);
-        commandMap.put("currentsong", songInfo);
+        commandMap.put("current", songInfo);
         commandMap.put("skip", new    SongSkip());
         commandMap.put("queue", new SongQueue());
         commandMap.put("loop", new SongLoop());
         commandMap.put("shuffle", new ShuffleQueue());
+        commandMap.put("purge", new PurgeQueue());
+        commandMap.put("insert", new SongInsert());
 
         commandMap.put("sfx", new SoundEffect());
         commandMap.put("listsfx", new SoundEffectList());
@@ -74,10 +78,11 @@ public class CommandManager {
         commandMap.put("rscore", new RotmgTotalScore());
         commandMap.put("setinv", new SetKatInv());
 
-        //general commands
+        //Utility
         commandMap.put("bulkdelete", new BulkDelete());
         commandMap.put("time", new CurrentTime());
         commandMap.put("deletemsg", new DeleteMsg());
+        commandMap.put("trans", new Translate());
 
         //Fortnite
         commandMap.put("fn", new FortniteStats());
@@ -88,11 +93,15 @@ public class CommandManager {
         commandMap.put("setprefix", new SetPrefix());
         commandMap.put("ban", new BanUser());
         commandMap.put("ping", new Ping());
-        commandMap.put("dev", new Dev());
+        commandMap.put("info", new PersonalEmbed());
         commandMap.put("membercount", new MemberCount());
         commandMap.put("poll", new Poll());
         commandMap.put("cpuload", new SystemLoad());
         commandMap.put("makerole", new RoleGenerate());
+        commandMap.put("shutdown", new ForceShutdown());
+        commandMap.put("uptime", new Uptime());
+
+        commandMap.put("write", new Testing());
 
         //League of Legends
         commandMap.put("lollevel", new BasicLeague());
@@ -114,6 +123,7 @@ public class CommandManager {
         commandMap.put("wfvoidtrader", new WarframeVoidTraderTracker());
         commandMap.put("wfmarket", new WarframeMarketListings());
         commandMap.put("wfdropinfo", new WarframeDropInfo());
+        commandMap.put("wfrelic", new WarframeRelicInfo());
 
         //Nasa
         commandMap.put("apod", new NasaApod());
@@ -173,11 +183,6 @@ public class CommandManager {
 
             }
             System.out.println("run: " + commandStr + (argsList.size() != 0 ? " args: " + sb.toString() : ""));
-//        } else { //else just assume wolfram
-//            String query = event.getMessage().getFormattedContent().substring(BotUtils.DEFAULT_BOT_PREFIX.length());
-//            //BotUtils.sendMessage(event.getChannel(), "Interpreting: " + query);
-//            commandMap.get("wolfram").runCommand(event, Collections.singletonList(query));
-//            System.out.println("Triggered: Wolfram. Query: " + query);
         }
     }
 
