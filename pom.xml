@@ -30,10 +30,8 @@
     <dependencies>
         <dependency>
             <groupId>WolframAlpha-1.1</groupId>
-            <artifactId>WolframAlpha-1.1</artifactId>
+            <artifactId>WolframAlpha</artifactId>
             <version>1.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/WolframAlpha-1.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.discord4j</groupId> <!-- However our packages are all under sx.blah in version 2.x! -->
@@ -93,50 +91,6 @@
             <version>1.6.0</version>
         </dependency>
 
-        <!-- Google Custom Search API
-        <dependency>
-            <groupId>com.google.apis</groupId>
-            <artifactId>google-api-services-customsearch</artifactId>
-            <version>v1-rev73-1.25.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-servlet</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-appengine</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-gson</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-jackson2</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-java6</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-protobuf</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.api-client</groupId>
-            <artifactId>google-api-client-xml</artifactId>
-            <version>1.25.0</version>
-        </dependency>
-        -->
-
         <!--IBM Watson -->
         <dependency>
             <groupId>com.ibm.watson.developer_cloud</groupId>
@@ -188,6 +142,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
