@@ -93,7 +93,7 @@
             <version>1.6.0</version>
         </dependency>
 
-        <!-- Google Custom Search API -->
+        <!-- Google Custom Search API
         <dependency>
             <groupId>com.google.apis</groupId>
             <artifactId>google-api-services-customsearch</artifactId>
@@ -135,6 +135,7 @@
             <artifactId>google-api-client-xml</artifactId>
             <version>1.25.0</version>
         </dependency>
+        -->
 
         <!--IBM Watson -->
         <dependency>
@@ -173,7 +174,7 @@
                     <archive>
                         <manifest>
                             <!-- Specify your own main class here: {package}.{class} -->
-                            <mainClass>Aspect.main.Main</mainClass>
+                            <mainClass>main.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
