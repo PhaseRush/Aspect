@@ -22,7 +22,7 @@ public class CurrentTime implements Command {
         BotUtils.sendMessage(event.getChannel(),
                 "In Vancouver, it is currently " +
                         calendar.get(Calendar.HOUR_OF_DAY) + ":" +
-                        (minute < 10? "0" + minute : minute));
+                        (minute < 10 ? "0" + minute : minute));
     }
 
     @Override

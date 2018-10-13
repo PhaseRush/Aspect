@@ -24,6 +24,11 @@ public class TrackScheduler {
 
     private IMessage currentSongEmbed;
     private boolean looping = false; //might need to make AtomicBoolean
+    private int loopCount;
+    private int maxLoop = -1;
+    private AudioTrack previousTrack;
+
+    //private volatile IChannel currentCallChannel;
 
     public TrackScheduler(AudioPlayer player) {
         // Because we will be removing from the "head" of the queue frequently, a LinkedList is a better implementation
@@ -36,14 +41,28 @@ public class TrackScheduler {
         player.addListener(new AudioEventAdapter() {
             @Override //@todo make looping here possibly.... and update info currently playing embed.
             public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
+                //always update lastTrack before anything else, so will never be null
+                previousTrack = track;
                 // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
                 if(endReason.mayStartNext) {
-                    nextTrack();
+                    //check looping condition
+                    if (looping) {
+                        if (loopCount == maxLoop) { //end loop, behave as if else below
+                            nextTrack();
+                            loopCount = 0;
+                            maxLoop = -1;
+                            currentSongEmbed.delete();
+                        } else {
+                            player.startTrack(previousTrack.makeClone(), false);
+                            loopCount++;
+                        }
+                    } else { //not looping
+                        nextTrack();
+                        loopCount = 0;
+                        maxLoop = -1;
+                        currentSongEmbed.delete();
+                    }
                 }
-
-
-                currentSongEmbed.delete();
-
             }
         });
     }
@@ -82,6 +101,7 @@ public class TrackScheduler {
 
     /**
      * overriden with event for currentSong embed
+     *
      * @param channel text channel that called $play or skip etc.
      * @return
      */
@@ -101,9 +121,9 @@ public class TrackScheduler {
     }
 
     private void handleFloatingPlayer(AudioTrack nextTrack, IChannel channel) {
-        if (nextTrack == null) return;
+        if (nextTrack == null || channel == null) return;
         AudioTrackInfo info = nextTrack.getInfo();
-        String desc = info.title + "\nby:\t" +info.author + "\nlength:\t" + info.length;
+        String desc = info.title + "\nby:\t" + info.author + "\nlength:\t" + getFormattedSongLength(info);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect :: Floating Music Player")
@@ -121,15 +141,34 @@ public class TrackScheduler {
     }
 
 
-    private String trackProgress(long startTime) {
+    private StringBuilder trackProgress(long startTime) {
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
+        long percent = position / (duration * 2); //*2
+        String marker = ":red_circle:";
 
-        StringBuilder sb = new StringBuilder("```");
+        StringBuilder sb = new StringBuilder("```\n[");
+        //.append("--------------------------------------------------"); //48 dashes
 
+        for (double d = 0; d < percent; d++)
+            sb.append("-");
 
-        sb.append("```");
-        return null;
+        sb.append(marker);
+
+        for (double d = percent; d < 100; d++)
+            sb.append("-");
+
+        sb.append("]```");
+        return sb;
+    }
+
+    public void setLooping(boolean b, int loopCount) {
+        looping = b;
+        this.maxLoop = loopCount;
+    }
+
+    public boolean isLooping() {
+        return looping;
     }
 
     /**
@@ -147,6 +186,17 @@ public class TrackScheduler {
         queue = newQueue;
     }
 
+    public void clearQueue() {
+        queue = Collections.synchronizedList(new LinkedList<>());
+    }
+
+    private String getFormattedSongLength(AudioTrackInfo songInfo) {
+        long millis = songInfo.length;
+        int mins = (int) (millis / 1000 / 60);
+        int secs = (int) ((millis / 1000) % 60);
+
+        return mins + ":" + (secs < 10 ? "0" + secs : secs);
+    }
     /**
      * Gets the current Track for the current song info command
      *
@@ -154,5 +204,24 @@ public class TrackScheduler {
      */
     public AudioTrack getCurrentTrack() {
         return player.getPlayingTrack();
+    }
+
+    public long getQueueDurationMillis() {
+        long l = 0;
+        for (AudioTrack a : queue) {
+            l += a.getDuration();
+        }
+        return l;
+    }
+
+    public String getQueueHMS() {
+        long milliseconds = getQueueDurationMillis();
+        int seconds = (int) (milliseconds / 1000) % 60;
+        int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
+        int hours = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+
+        return (hours == 0 ? "" : String.valueOf(hours) + ":") +
+                (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
+                (seconds < 10 ? "0" + seconds : seconds);
     }
 }

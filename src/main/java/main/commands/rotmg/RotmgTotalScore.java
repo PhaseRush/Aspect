@@ -32,6 +32,7 @@ public class RotmgTotalScore implements Command {
 
         RequestBuffer.request(() -> channel.sendMessage(embed.withFooterText("This operation took me " + (System.currentTimeMillis() - startTime) + "ms to compute :3").build()));
     }
+
     @Override
     public String getDescription() {
         return "ROTMG";

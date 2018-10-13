@@ -37,7 +37,7 @@ public class RotmgGuildInfo  implements Command {
             return;
         }
 
-        EmbedBuilder eb = Visuals.getEmbedBuilderNoField(founder + ", Founder","https://realmeye.com/player/"+ founder,"desc", Visuals.getVibrantColor(),System.currentTimeMillis(),
+        EmbedBuilder eb = Visuals.getEmbedBuilderNoField(founder + ", Founder", "https://realmeye.com/player/" + founder, "desc", Visuals.getVibrantColor(), System.currentTimeMillis(),
                 "", realmGuild.getName(), "https://www.realmeye.com/s/c7/img/eye-big.png",
                 "https://realmeye.com/guild/"+ (realmGuild.getName().contains(" ") ? realmGuild.getName().replaceAll(" ", "%20") : realmGuild.getName()));
 
@@ -50,6 +50,7 @@ public class RotmgGuildInfo  implements Command {
         channel.sendMessage(eb.withFooterText("This operation took me " + String.valueOf((System.currentTimeMillis() - startTime)) + "ms to compute :3").build());
         System.out.println("triggered guildinfo highlight");
     }
+
     @Override
     public String getDescription() {
         return "ROTMG";

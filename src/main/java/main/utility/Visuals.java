@@ -19,10 +19,11 @@ public class Visuals {
         // this always generates the same color on startup.
         return Color.getHSBColor(rs.nextFloat(), .9f, 1.0f);
     }
+
     /*
     generate random vibrant color with seed
      */
-    public static Color getVibrantColor(String seed){
+    public static Color getVibrantColor(String seed) {
         return null;
     }
 

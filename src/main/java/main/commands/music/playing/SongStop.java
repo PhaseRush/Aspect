@@ -1,4 +1,4 @@
-package main.commands.music;
+package main.commands.music.playing;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.Command;
@@ -31,6 +31,8 @@ public class SongStop implements Command {
             System.out.println("SongStop - currentTrack.setPos(end of track) error");
         }
         scheduler.getQueue().clear();
+
+        BotUtils.reactWithCheckMark(event.getMessage());
     }
 
     @Override

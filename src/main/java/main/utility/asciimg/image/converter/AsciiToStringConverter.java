@@ -11,61 +11,59 @@ import java.util.Map.Entry;
  */
 public class AsciiToStringConverter extends AsciiConverter<StringBuffer> {
 
-	/**
-	 * Instantiates a new ascii to string converter.
-	 *
-	 * @param characterCacher
-	 *            the character cacher
-	 * @param characterFitStrategy
-	 *            the character fit strategy
-	 */
-	public AsciiToStringConverter(final AsciiImgCache characterCacher,
-			final BestCharacterFitStrategy characterFitStrategy) {
-		super(characterCacher, characterFitStrategy);
-	}
+    /**
+     * Instantiates a new ascii to string converter.
+     *
+     * @param characterCacher      the character cacher
+     * @param characterFitStrategy the character fit strategy
+     */
+    public AsciiToStringConverter(final AsciiImgCache characterCacher,
+                                  final BestCharacterFitStrategy characterFitStrategy) {
+        super(characterCacher, characterFitStrategy);
+    }
 
-	/**
-	 * Creates an empty string buffer;
-	 * 
-	 * @see io.korhner.asciimg.image.converter.AsciiConverter#initializeOutput(int,
-	 *      int)
-	 */
-	@Override
-	protected StringBuffer initializeOutput(final int imageWidth,
-			final int imageHeight) {
-		return new StringBuffer();
-	}
+    /**
+     * Creates an empty string buffer;
+     *
+     * @see io.korhner.asciimg.image.converter.AsciiConverter#initializeOutput(int,
+     * int)
+     */
+    @Override
+    protected StringBuffer initializeOutput(final int imageWidth,
+                                            final int imageHeight) {
+        return new StringBuffer();
+    }
 
-	/**
-	 * @see io.korhner.asciimg.image.converter.AsciiConverter#finalizeOutput(int[],
-	 *      int, int)
-	 */
-	@Override
-	protected void finalizeOutput(final int[] sourceImagePixels,
-			final int imageWidth, int imageHeight) {
+    /**
+     * @see io.korhner.asciimg.image.converter.AsciiConverter#finalizeOutput(int[],
+     * int, int)
+     */
+    @Override
+    protected void finalizeOutput(final int[] sourceImagePixels,
+                                  final int imageWidth, int imageHeight) {
 
-	}
+    }
 
-	/**
-	 * Append choosen character to StringBuffer.
-	 * 
-	 * @see io.korhner.asciimg.image.converter.AsciiConverter#addCharacterToOutput(Entry,
-	 *      int[], int, int, int)
-	 */
-	@Override
-	public void addCharacterToOutput(
-			final Entry<Character, GrayscaleMatrix> characterEntry,
-			final int[] sourceImagePixels, final int tileX, final int tileY,
-			final int imageWidth) {
+    /**
+     * Append choosen character to StringBuffer.
+     *
+     * @see io.korhner.asciimg.image.converter.AsciiConverter#addCharacterToOutput(Entry,
+     * int[], int, int, int)
+     */
+    @Override
+    public void addCharacterToOutput(
+            final Entry<Character, GrayscaleMatrix> characterEntry,
+            final int[] sourceImagePixels, final int tileX, final int tileY,
+            final int imageWidth) {
 
-		this.output.append(characterEntry.getKey());
+        this.output.append(characterEntry.getKey());
 
-		// append new line at the end of the row
-		if ((tileX + 1)
-				* this.characterCache.getCharacterImageSize().getWidth() == imageWidth) {
-			this.output.append(System.lineSeparator());
-		}
+        // append new line at the end of the row
+        if ((tileX + 1)
+                * this.characterCache.getCharacterImageSize().getWidth() == imageWidth) {
+            this.output.append(System.lineSeparator());
+        }
 
-	}
+    }
 
 }

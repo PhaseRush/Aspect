@@ -1,16 +1,19 @@
-package main.commands.warframe;
+package main.commands.music;
 
 import main.Command;
-import main.utility.BotUtils;
-import main.utility.WarframeUtil;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.List;
 
-public class WarframeCetusCycle implements Command {
+public class PlayerReset implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.sendMessage(event.getChannel(), WarframeUtil.cetusCycleString());
+
+//        GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
+//        TrackScheduler scheduler = guildMusicManager.getScheduler();
+//        scheduler.clearQueue();
+//        guildMusicManager.player.destroy();
+
     }
 
     @Override
@@ -20,6 +23,6 @@ public class WarframeCetusCycle implements Command {
 
     @Override
     public String getDescription() {
-        return "Warframe - Current Cetus cycle. (PC only)";
+        return null;
     }
 }

@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WarframeVoidFissures implements Command {
+public class WfVoidFissures implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/fissures");

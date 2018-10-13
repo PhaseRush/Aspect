@@ -1,4 +1,4 @@
-package main.commands.music;
+package main.commands.music.playing;
 
 import main.Command;
 import main.utility.BotUtils;

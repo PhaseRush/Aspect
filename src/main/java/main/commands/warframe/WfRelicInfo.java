@@ -8,7 +8,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 import java.util.List;
 
-public class WarframeRelicInfo implements Command {
+public class WfRelicInfo implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String parsedUserInput = args.get(0);

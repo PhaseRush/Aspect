@@ -12,7 +12,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class WarframeAcolyteTracker implements Command {
+public class WfAcolyteTracker implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/persistentEnemies");

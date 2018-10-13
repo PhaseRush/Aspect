@@ -16,11 +16,11 @@ public class SystemLoad implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         osBean = Main.osBean;
         r = Runtime.getRuntime();
-        double maxM = r.maxMemory()/1E6;
+        double maxM = r.maxMemory() / 1E6;
 
-        String msg = "```"+
+        String msg = "```" +
                 "System Load:  \t\t" + osBean.getSystemLoadAverage() +
-                "\nRam (MB): \t\t\t" + (int)(maxM - r.freeMemory()/1E6) + " / " + (int)maxM +
+                "\nRam (MB): \t\t\t" + (int) (maxM - r.freeMemory() / 1E6) + " / " + (int) maxM +
                 "\nArch: \t\t\t\t" + osBean.getArch() +
                 "\nName: \t\t\t\t" + osBean.getName() +
                 "\nVersion:  \t\t\t" + osBean.getVersion() +

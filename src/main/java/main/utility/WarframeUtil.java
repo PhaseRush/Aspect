@@ -20,10 +20,6 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class WarframeUtil {
-    final static String path = "C:\\Users\\Positron\\IdeaProjects\\Aspect\\txtfiles\\Warframe\\AllWarframeItems.txt";
-    public static List<String> readAllItems() {
-        return ReadWrite.readFromFileToStringList(path);
-    }
     public static String[] dayActivities = {
             "Go mining",
             "Go do bounties", //finally fixed this fucking typo
@@ -37,7 +33,8 @@ public class WarframeUtil {
     };
     public static String[] alertFilters = {
             "Nitain",
-            "Riven"
+            "Riven",
+            "Kavat"
     };
 
     public static List<String> getIntendedStrings(String userString) {
@@ -167,7 +164,7 @@ public class WarframeUtil {
     }
 
     //Cetus cycle
-    public static String cetusCycleString(){
+    public static String cetusCycleString() {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
         WarframeCetusTimeObject cetus = new Gson().fromJson(json, WarframeCetusTimeObject.class);
         return "It is currently " + (cetus.isDay() ?
@@ -175,7 +172,7 @@ public class WarframeUtil {
                 "night. It will be day in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandomFromStringArray(nightActivities));
     }
 
-    public static WarframeCetusTimeObject getCetus(){
+    public static WarframeCetusTimeObject getCetus() {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
         return new Gson().fromJson(json, WarframeCetusTimeObject.class);
     }

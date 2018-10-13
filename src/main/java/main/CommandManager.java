@@ -9,11 +9,10 @@ import main.commands.humor.CuteImg;
 import main.commands.humor.Insult;
 import main.commands.humor.Ship;
 import main.commands.league.*;
-import main.commands.music.*;
-import main.commands.music.queue.PurgeQueue;
-import main.commands.music.queue.ShuffleQueue;
-import main.commands.music.queue.SongInsert;
-import main.commands.music.queue.SongQueue;
+import main.commands.music.SoundEffect;
+import main.commands.music.SoundEffectList;
+import main.commands.music.playing.*;
+import main.commands.music.queue.*;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
 import main.commands.rotmg.*;
@@ -58,12 +57,13 @@ public class CommandManager {
         commandMap.put("play", new SongPlay());
         commandMap.put("nowplaying", songInfo);
         commandMap.put("current", songInfo);
-        commandMap.put("skip", new    SongSkip());
+        commandMap.put("skip", new SongSkip());
         commandMap.put("queue", new SongQueue());
         commandMap.put("loop", new SongLoop());
         commandMap.put("shuffle", new ShuffleQueue());
         commandMap.put("purge", new PurgeQueue());
         commandMap.put("insert", new SongInsert());
+        commandMap.put("pause", new SongPause());
 
         commandMap.put("sfx", new SoundEffect());
         commandMap.put("listsfx", new SoundEffectList());
@@ -113,17 +113,19 @@ public class CommandManager {
         commandMap.put("lolrecent", new PreviousMatch());
 
         //Warframe
-        commandMap.put("wfdaily", new WarframeDailyDeals());
-        commandMap.put("wfcetus", new WarframeCetusCycle());
-        commandMap.put("wfalerts", new WarframeAlerts());
-        commandMap.put("wfvoid", new WarframeVoidFissures());
-        //commandMap.put("wfitems", new WarframeItems()); //dev use
-        commandMap.put("wfinfo", new WarframeItemInfo());
-        commandMap.put("wfaco", new WarframeAcolyteTracker());
-        commandMap.put("wfvoidtrader", new WarframeVoidTraderTracker());
-        commandMap.put("wfmarket", new WarframeMarketListings());
-        commandMap.put("wfdropinfo", new WarframeDropInfo());
-        commandMap.put("wfrelic", new WarframeRelicInfo());
+        commandMap.put("wfdaily", new WfDailyDeals());
+        commandMap.put("wfcetus", new WfCetusCycle());
+        commandMap.put("wfalerts", new WfAlerts());
+        commandMap.put("wfvoid", new WfVoidFissures());
+        //commandMap.put("wfitems", new WfItems()); //dev use
+        commandMap.put("wfinfo", new WfItemInfo());
+        commandMap.put("wfaco", new WfAcolyteTracker());
+        commandMap.put("wfbaro", new WfBaro());
+        commandMap.put("wfmarket", new WfMarketListing());
+        commandMap.put("wfdropinfo", new WfDropInfo());
+        commandMap.put("wfrelic", new WfRelicInfo());
+
+        commandMap.put("wfmod", new WfModInfo());
 
         //Nasa
         commandMap.put("apod", new NasaApod());

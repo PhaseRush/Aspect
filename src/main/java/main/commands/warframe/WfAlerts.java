@@ -7,7 +7,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 import java.util.List;
 
-public class WarframeAlerts implements Command {
+public class WfAlerts implements Command {
     //private final String nodesJSON = "https://raw.githubusercontent.com/WFCD/warframe-worldstate-data/master/data/solNodes.json";
 
     @Override

@@ -25,9 +25,7 @@ public class AnalyzeUser implements Command {
                 String[] spaceSplit = fullMessage.split(" ");
 
 
-
-
-                if (fullMessage.substring(0,1).matches("^[^a-z]"))
+                if (fullMessage.substring(0, 1).matches("^[^a-z]"))
                     totalMsgWithCapitalization++;
                 totalMsgCount++;
             }

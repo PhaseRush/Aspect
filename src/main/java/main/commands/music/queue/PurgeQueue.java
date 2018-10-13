@@ -22,7 +22,7 @@ public class PurgeQueue implements Command {
                     return;
                 }
 
-                guildMusicManager.getScheduler().setQueue(audioTracks.subList(Integer.valueOf(args.get(0)), audioTracks.size()));
+                guildMusicManager.getScheduler().setQueue(audioTracks.subList(0, Integer.valueOf(args.get(0))));
                 BotUtils.sendMessage(event.getChannel(), "Queue has been purged from " + args.get(0) + " onwards.");
             } catch (NumberFormatException e) {
                 BotUtils.sendMessage(event.getChannel(), "Need a number for the index number");

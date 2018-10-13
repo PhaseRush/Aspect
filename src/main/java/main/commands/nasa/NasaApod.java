@@ -14,7 +14,7 @@ public class NasaApod implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String json  = BotUtils.getJson("https://api.nasa.gov/planetary/apod?api_key="+ BotUtils.NASA_API);
+        String json = BotUtils.getJson("https://api.nasa.gov/planetary/apod?api_key=" + BotUtils.NASA_API);
         APOD apod = new Gson().fromJson(json, APOD.class);
 
         EmbedBuilder eb = new EmbedBuilder()

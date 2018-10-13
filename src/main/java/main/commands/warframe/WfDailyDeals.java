@@ -11,7 +11,7 @@ import sx.blah.discord.util.EmbedBuilder;
 
 import java.util.List;
 
-public class WarframeDailyDeals implements Command {
+public class WfDailyDeals implements Command {
 
 
     @Override

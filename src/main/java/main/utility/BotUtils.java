@@ -69,7 +69,7 @@ public class BotUtils {
         PREFIX_MAP.put(Long.valueOf(iGuild.getStringID()), prefix);
     }
 
-    public static void setBottomText(){
+    public static void setBottomText() {
         BOTTOM_TEXT = Main.client.getChannelByID(Long.valueOf(WF_BOTTOM_TEXT_ID));
     }
 
@@ -314,7 +314,7 @@ public class BotUtils {
         RequestBuffer.request(() -> iMessage.addReaction(e)).get();
     }
 
-    public static void reactWithCheckMark(IMessage iMessage){
+    public static void reactWithCheckMark(IMessage iMessage) {
         RequestBuffer.request(() -> iMessage.addReaction(ReactionEmoji.of("\u2705")));
     }
 
@@ -344,7 +344,7 @@ public class BotUtils {
             return response.body().string();
         } catch (IOException e) {
             //kys
-            return "error - url status request";
+            return "error - url status request - getstringfromurl";
         }
     }
 

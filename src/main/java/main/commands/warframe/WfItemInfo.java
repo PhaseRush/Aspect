@@ -5,9 +5,9 @@ import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
 import main.utility.WarframeUtil;
-import main.utility.warframe.market.marketlistings.WarframeListingUser;
-import main.utility.warframe.market.marketlistings.WarframeListingsPayloadContainer;
-import main.utility.warframe.market.marketlistings.WarframeTradeListing;
+import main.utility.warframe.market.itemdetail.WarframeDetailedDrop;
+import main.utility.warframe.market.itemdetail.WarframeDetailedItem;
+import main.utility.warframe.market.itemdetail.WarframeItemDetailPayloadContainer;
 import sx.blah.discord.api.events.EventDispatcher;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -19,75 +19,61 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RequestBuffer;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Predicate;
 
-public class WarframeMarketListings implements Command {
-    //might declare a field MessageReceivedEvent e;
+
+public class WfItemInfo implements Command {
+    MessageReceivedEvent e;
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+        e = event;
         List<String> intendedItemNames = WarframeUtil.getIntendedStrings(args.get(0));
-        String filterOnline = (args.size() == 2? args.get(1) : "");
 
-        if (intendedItemNames.get(0).equals("Index 1 is a perfect match"))
-            finishCommand(intendedItemNames.get(1), event, filterOnline);
-        else {
-            handleUserReactionWait(intendedItemNames, event, filterOnline);
+        //if its a perfect match, just use the first String - WHICH IS IN INDEX 1
+        if (intendedItemNames.get(0).equals("Index 1 is a perfect match")) {
+            finishCommand(intendedItemNames.get(1)); //changed this
+            System.out.println("perfect match trigger");
+        } else { //ask user first before getting url name
+            handleUserReactionWait(intendedItemNames);
         }
+        //put end of this function in helper: "finishCommand"
     }
 
-    private void finishCommand(String intendedItemName, MessageReceivedEvent event, String filterParam) { //@todo change args to something more reasonable later
-        String urlName = WarframeUtil.getItemUrlName(intendedItemName);
+    private void finishCommand(String itemName) {
+        String jsonURL = "https://api.warframe.market/v1/items/" + WarframeUtil.getItemUrlName(itemName);
+        WarframeItemDetailPayloadContainer payloadContainer = new Gson().fromJson(BotUtils.getStringFromUrl(jsonURL), WarframeItemDetailPayloadContainer.class);
+        //WarframeDetailedItem item = payloadContainer.getPayload().getItem().getItems_in_set()[0]; //@todo problem here. assuming is first item.
 
-        String json = BotUtils.getStringFromUrl("https://api.warframe.market/v1/items/" + urlName + "/orders");
-        WarframeListingsPayloadContainer payload = new Gson().fromJson(json, WarframeListingsPayloadContainer.class);
+        WarframeDetailedItem[] items = payloadContainer.getPayload().getItem().getItems_in_set();
+        WarframeDetailedItem item = items[0]; //assume default
+
+
+        //try to find exact name match
+        for (WarframeDetailedItem i : items) {
+            if (i.getEn().getItem_name().equalsIgnoreCase(itemName)) {
+                item = i;
+            }
+        }
 
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Warframe Market | Price check for " + intendedItemName)
-                .withColor(Visuals.getVibrantColor())
-                .withThumbnail(WarframeUtil.getItemImageUrl(intendedItemName));
-        List<WarframeTradeListing> listings = payload.getPayload().getOrders();
+                .withTitle("Warframe | " + itemName)
+                .withUrl(item.getEn().getWiki_link())
+                .withThumbnail(WarframeUtil.getItemImageUrl(itemName))
+                .withColor(Visuals.getVibrantColor());
 
-
-        // default : filter out users that are not ingame
-        // if user provides second argument, do not filter.
-        if (filterParam.equals("ingame"))
-            listings.removeIf(warframeTradeListing -> {
-                WarframeListingUser user = warframeTradeListing.getUser();
-                return !user.getStatus().equals("ingame");
-            });
-
-        //filter out the wtb
-        listings.removeIf(new Predicate<WarframeTradeListing>() {
-            @Override
-            public boolean test(WarframeTradeListing warframeTradeListing) {
-                return warframeTradeListing.getOrder_type().equals("buy");
-            }
-        });
-
-        listings.sort(new Comparator<WarframeTradeListing>() {
-            @Override
-            public int compare(WarframeTradeListing o1, WarframeTradeListing o2) {
-                return Integer.compare(o1.getPlatinum(), o2.getPlatinum()); //i actaully have no idea if this is what youre supposed to do. I will now assume it is correct and move on
-            }
-        });
-
-        for (int i = 0; i < (listings.size() < 11 ? listings.size() : 10); i++) { //display 10 cheapest listings
-            WarframeTradeListing listing = listings.get(i);
-            WarframeListingUser seller = listing.getUser();
-            eb.appendField(seller.getIngame_nmae() + " | " + seller.getStatus() + " | plat: " + listing.getPlatinum(),
-                    ///w HyperfluousKat Hi! I want to buy: Nano-Applicator for 100 platinum. (warframe.market)
-                    "/w " + seller.getIngame_nmae() + " Hi! I want to buy your " + intendedItemName + " for " + listing.getPlatinum() + " platinum.", false);
+        StringBuilder drops = new StringBuilder();
+        for (WarframeDetailedDrop d : item.getEn().getDrop()) {
+            drops.append(d.getName() + ", ");
         }
+        eb.appendField("Drops", (drops.toString().equals("") ? "not found in drop tables" : drops.toString()), false);
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.sendMessage(e.getChannel(), eb);
     }
 
-    private void handleUserReactionWait(List<String> intendedItemNames, MessageReceivedEvent e, String filterParam) {
+    private void handleUserReactionWait(List<String> intendedItemNames) {
         IUser userToWaitFor = e.getAuthor();
         IChannel channelToWaitFor = e.getChannel();
         final int numOptions = 5;
@@ -118,25 +104,25 @@ public class WarframeMarketListings implements Command {
                     String emojiName = reactionEvent.getReaction().getEmoji().getName();
                     switch (emojiName) {
                         case "\uD83C\uDDE6":
-                            finishCommand(intendedItemNames.get(0), e, filterParam);
+                            finishCommand(intendedItemNames.get(0));
                             break;
                         case "\uD83C\uDDE7":
-                            finishCommand(intendedItemNames.get(1), e, filterParam);
+                            finishCommand(intendedItemNames.get(1));
                             break;
                         case "\uD83C\uDDE8":
-                            finishCommand(intendedItemNames.get(2), e, filterParam);
+                            finishCommand(intendedItemNames.get(2));
                             break;
                         case "\uD83C\uDDE9":
-                            finishCommand(intendedItemNames.get(3), e, filterParam);
+                            finishCommand(intendedItemNames.get(3));
                             break;
                         case "\uD83C\uDDEA":
-                            finishCommand(intendedItemNames.get(4), e, filterParam);
+                            finishCommand(intendedItemNames.get(4));
                             break;
-                        case "❌":
-                            BotUtils.sendMessage(e.getChannel(), "Command terminated.");
+                        case "\u274C": //changed from red cross literal
+                            send("Command terminated.");
                             break;
                         default:
-                            BotUtils.sendMessage(e.getChannel(), "Not a valid reaction; command will be terminated.");
+                            send("Not a valid reaction; command will be terminated.");
                             break;
                     }
                     if (!embedMessage.isDeleted()) //just in case
@@ -165,6 +151,9 @@ public class WarframeMarketListings implements Command {
         executorService.execute(removeListener);
     }
 
+    private void send(String message) {
+        BotUtils.sendMessage(e.getChannel(), message);
+    }
     @Override
     public boolean requiresElevation() {
         return false;
@@ -172,6 +161,6 @@ public class WarframeMarketListings implements Command {
 
     @Override
     public String getDescription() {
-        return "retrieves market listings for item. can filter based on online ingame and offline";
+        return "info about item drop rates.";
     }
 }

@@ -60,8 +60,8 @@ public class AsciifyOld implements Command {
     /**
      * @param args url,
      *             "Line Skip Coefficient"
-     *                  Basically, this is the amount the x and y values of the coordinate increase each time. Larger = smaller image.
-     * 		            Anything above 2 usually doesn't work too well
+     *             Basically, this is the amount the x and y values of the coordinate increase each time. Larger = smaller image.
+     *             Anything above 2 usually doesn't work too well
      */
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -71,14 +71,14 @@ public class AsciifyOld implements Command {
             int imgWidth = image.getWidth();
             int imgHeight = image.getHeight();
             int skipC = 1;
-            if(args.size() == 2) {
+            if (args.size() == 2) {
                 skipC = Integer.valueOf(args.get(1));
             }
 
             StringBuilder ascii = new StringBuilder("```");
-            for (int x = 0; x < imgWidth; x+= 2*skipC) {
-                for (int y = 0; y < imgHeight; y+= skipC) {
-                    ascii.append(convert(image.getRGB(x,y)));
+            for (int x = 0; x < imgWidth; x += 2 * skipC) {
+                for (int y = 0; y < imgHeight; y += skipC) {
+                    ascii.append(convert(image.getRGB(x, y)));
                 }
                 ascii.append("\n");
             }
@@ -97,16 +97,16 @@ public class AsciifyOld implements Command {
     /**
      * Converts the RGB int value to a char, based on the amount of color in the pixel
      */
-    private char convert(int value){
+    private char convert(int value) {
         //Grab the three values for each red, green and blue (and alpha)
         int alpha = (value >> 24) & 0xFF;
-        int red =   (value >> 16) & 0xFF;
-        int green = (value >>  8) & 0xFF;
-        int blue =  (value      ) & 0xFF;
+        int red = (value >> 16) & 0xFF;
+        int green = (value >> 8) & 0xFF;
+        int blue = (value) & 0xFF;
 
         //Covert to a unified integer value between 0 and 26.
         //This is done by averaging, then dividing by 10 (RGB values range from 0 to 255)
-        int darkness = ((int)((0.21*red)+(0.72*green)+(0.07*blue) / 3) / 10);
+        int darkness = ((int) ((0.21 * red) + (0.72 * green) + (0.07 * blue) / 3) / 10);
 
         //If alpha is completely clear, assume white
         if (alpha == 0)

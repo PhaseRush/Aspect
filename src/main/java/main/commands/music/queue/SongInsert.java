@@ -24,7 +24,8 @@ public class SongInsert implements Command {
 
         AudioTrack trackToInsert = audioTracks.get(audioTracks.size() - 1);
         audioTracks.add(0, trackToInsert);
-        audioTracks.remove(audioTracks.size()-1);
+        audioTracks.remove(audioTracks.size() - 1);
+        guildMusicManager.getScheduler().setQueue(audioTracks); //newly added
 
         BotUtils.reactWithCheckMark(event.getMessage());
     }

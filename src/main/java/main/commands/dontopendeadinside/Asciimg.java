@@ -66,7 +66,7 @@ public class Asciimg implements Command {
         StringBuffer asciiString = stringConverter.convertImage(userImage);
         File outputAsciiTxt = new File("Temp Ascii txt file by " + event.getAuthor().getName() + ".txt");
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputAsciiTxt))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(outputAsciiTxt))) {
             bw.write(asciiString.toString());
 
             event.getChannel().sendFile(outputAsciiTxt);
@@ -77,7 +77,7 @@ public class Asciimg implements Command {
         }
     }
 
-        @Override
+    @Override
     public boolean requiresElevation() {
         return false;
     }

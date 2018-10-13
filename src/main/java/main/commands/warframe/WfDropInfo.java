@@ -12,7 +12,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class WarframeDropInfo implements Command {
+public class WfDropInfo implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String parsedUserInput = args.get(0).replaceAll("\\s", "%20");

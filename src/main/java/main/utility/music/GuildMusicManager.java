@@ -5,7 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventListener;
 
 public class GuildMusicManager {
-    private final AudioPlayer player;
+    public final AudioPlayer player;
     private final AudioProvider provider;
     private final TrackScheduler scheduler;
 

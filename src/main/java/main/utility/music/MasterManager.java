@@ -206,20 +206,22 @@ public class MasterManager {
         musicManager.getScheduler().queue(track);
     }
 
-    public synchronized static void skipTrack(IChannel channel) {
-        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
-        musicManager.getScheduler().nextTrack(channel);
+    public synchronized static void skipTrack(MessageReceivedEvent event) {
+        GuildMusicManager musicManager = getGuildAudioPlayer(event.getGuild());
+        musicManager.getScheduler().nextTrack(event.getChannel());
 
-        BotUtils.sendMessage(channel, "Skipped to next track.");
+        BotUtils.reactWithCheckMark(event.getMessage());
+        // BotUtils.sendMessage(channel, "Skipped to next track.");
     }
 
-    public synchronized static void skipNumTracks(IChannel channel, int numToSkip) {
-        GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+    public synchronized static void skipNumTracks(MessageReceivedEvent event, int numToSkip) {
+        GuildMusicManager musicManager = getGuildAudioPlayer(event.getGuild());
         //
         List<AudioTrack> tracklist = musicManager.getScheduler().getQueue();
         musicManager.getScheduler().setQueue(tracklist.subList(numToSkip, tracklist.size())); //removed size - 1
 
-        BotUtils.sendMessage(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
+        BotUtils.reactWithCheckMark(event.getMessage());
+        //BotUtils.sendMessage(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
     }
 
 

@@ -20,7 +20,7 @@ public class WordCounter implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
-        if(event.getAuthor().getStringID().equals("187328584698953728")) {
+        if (event.getAuthor().getStringID().equals("187328584698953728")) {
             IChannel channel = event.getChannel();
             String s1 = "who tf this";
             String s2 = "yall think im just slaving away here in this dark ass cellar in seattle somewhere. im not paid enough for this";
@@ -40,8 +40,8 @@ public class WordCounter implements Command {
 
         if (args.size() < 1) {
             BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
-                    "\nFind all occurrences of the word \"hello\" in all text channels: \n$count hello, all" +
-                    "\nMatch a greeting to all words that start with a capital R, K, or C, followed by at least 5 lower case letters: \n$count r/(hi\\s)[R|K|C][a-z]{5,}");
+                    "\nFind all occurrences of the word \"hello\" in all text channels: \n```\n$count hello, all```" +
+                    "\nMatch a greeting to all names that start with a capital R, K, or C, followed by at least 5 lower case letters: \n```\n$count \\(hi\\s)[R|K|C][a-z]{5,}```");
             return;
         }
 
@@ -60,7 +60,7 @@ public class WordCounter implements Command {
         for (IChannel textChannel : textChannels) {
             try {
                 for (IMessage m : textChannel.getFullMessageHistory()) {
-                    if(useRegex) {
+                    if (useRegex) {
                         if (m.getContent().matches(regexString)) {
                             IUser author = m.getAuthor();
                             userWordCountMap.put(author, userWordCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
@@ -84,16 +84,16 @@ public class WordCounter implements Command {
 
 
         long timeElapsed = System.currentTimeMillis() - startTime;
-        int minutes = (int) (timeElapsed/60000);
-        int seconds = (int) (timeElapsed % 60000)/1000;
+        int minutes = (int) (timeElapsed / 60000);
+        int seconds = (int) (timeElapsed % 60000) / 1000;
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("very high tech counter")
                 //.withColor(Visuals.analyizeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
                 .withColor(Visuals.getVibrantColor())
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
                 .withDesc("Winner: " + (nick == null ? mostGoodPerson.getKey().getName() : nick))
-                .withFooterText("It took me " + minutes +":"+ (seconds <10? "0" + seconds : seconds) + " to scan through " +
-                        messageCounter + " messages in " +textChannels.size() + " channels");
+                .withFooterText("It took me " + minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " to scan through " +
+                        messageCounter + " messages in " + textChannels.size() + " channels");
 
         int rankCounter = 1;
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {

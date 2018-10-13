@@ -11,7 +11,7 @@ import sx.blah.discord.util.EmbedBuilder;
 
 import java.util.List;
 
-public class WarframeVoidTraderTracker implements Command {
+public class WfBaro implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/voidTrader");

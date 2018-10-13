@@ -26,6 +26,7 @@ public class RotmgRatePlayer implements Command {
         RealmEyePlayer player = new Gson().fromJson(userJson, RealmEyePlayer.class);
         iChannel.sendMessage(player.getName() + " has a total of " + player.getTotalOutOf8() + " maxed stats over " + player.getNumChars() + " characters.");
     }
+
     @Override
     public String getDescription() {
         return "ROTMG";

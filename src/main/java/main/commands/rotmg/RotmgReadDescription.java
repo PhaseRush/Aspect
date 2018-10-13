@@ -34,6 +34,7 @@ public class RotmgReadDescription implements Command {
         sb.append("```");
         channel.sendMessage(sb.toString());
     }
+
     @Override
     public String getDescription() {
         return "ROTMG";

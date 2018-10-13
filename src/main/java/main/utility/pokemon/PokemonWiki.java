@@ -6,5 +6,4 @@ package main.utility.pokemon;
 public class PokemonWiki {
 
 
-
 }

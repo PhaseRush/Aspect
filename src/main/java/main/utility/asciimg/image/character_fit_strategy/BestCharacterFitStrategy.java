@@ -7,17 +7,15 @@ import main.utility.asciimg.image.matrix.GrayscaleMatrix;
  */
 public interface BestCharacterFitStrategy {
 
-	/**
-	 * Returns the error between the character and tile matrices. The character
-	 * with minimun error wins.
-	 *
-	 * @param character
-	 *            the character
-	 * @param tile
-	 *            the tile
-	 * @return error. Less values mean better fit. Least value character will be
-	 *         chosen as best fit.
-	 */
-	float calculateError(final GrayscaleMatrix character,
+    /**
+     * Returns the error between the character and tile matrices. The character
+     * with minimun error wins.
+     *
+     * @param character the character
+     * @param tile      the tile
+     * @return error. Less values mean better fit. Least value character will be
+     * chosen as best fit.
+     */
+    float calculateError(final GrayscaleMatrix character,
                          final GrayscaleMatrix tile);
 }
