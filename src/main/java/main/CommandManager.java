@@ -15,7 +15,7 @@ import main.commands.music.playing.*;
 import main.commands.music.queue.*;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
-import main.commands.pokemon.setup.ImageTransposer;
+import main.commands.pokemon.setup.TransparentTrimmer;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
@@ -38,7 +38,8 @@ public class CommandManager {
     public CommandManager() {
         //Actual Testing
         //commandMap.put("bulba", new BulbapediaScraper());
-        commandMap.put("transpose", new ImageTransposer());
+        //commandMap.put("transpose", new ImageTransposer());
+        commandMap.put("trim", new TransparentTrimmer());
 
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());

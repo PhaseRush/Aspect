@@ -14,12 +14,14 @@ import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
+import sx.blah.discord.util.RequestBuffer;
 
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
@@ -125,9 +127,10 @@ public class PassiveListener {
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
         long startTime = System.currentTimeMillis();
-        if (!(event.getAuthor().getStringID().equals("365975655608745985") || event.getAuthor().getStringID().equals("264213620026638336"))) return;
-        //if (event.getMessage().getEmbeds().size() == 0) return;
+        if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
+        if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have
 
+        boolean shouldSendDiff = true;
         String targetUrl = "";
         if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) {
             targetUrl = event.getMessage().getFormattedContent();
@@ -136,37 +139,36 @@ public class PassiveListener {
             targetUrl = embed.getImage().getUrl(); //event.getMessage().getFormattedContent();
         } else return;
 
-
         System.out.println("Starting pokemon identification");
 
-
-        BotUtils.sendMessage(event.getChannel(), "Attempting match on: " + targetUrl);
-        BufferedImage target = Visuals.urlToBufferedImageWithAgentHeader(targetUrl); //important
+        StringBuilder logBuilder = new StringBuilder("Attempting match on: " + targetUrl + "\n");
+        BufferedImage target = Visuals.cropTransparent(Visuals.urlToBufferedImageWithAgentHeader(targetUrl)); //important
 
         HashMap<String, Double> similarityMap = new HashMap<>();
         BufferedImage testImg = null;
         Entry answer = null;
+
         int counter = 1;
         for (String s : PokemonUtil.pokemonArray) {
             try {
-                System.out.println("Path:" + PokemonUtil.baseDir + s + ".png");
+                if (counter%100 == 0)
+                    System.out.println(counter + " Path:" + PokemonUtil.baseDir + s + ".png");
                 testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png")); //change dir here @todo
                 double sim = calcSim(target, testImg);
-                String log = "Imaging #" + counter + " : " + s + " score: " + sim + "\n";
-                BotUtils.writeToFile("/home/positron/AspectTextFiles/RecentPokemonMatch.txt", log, false);
+                logBuilder.append("Imaging #" + counter + " : " + s + " score: " + sim + "\n");
+                BotUtils.writeToFile("/home/positron/AspectTextFiles/RecentPokemonMatch.txt", logBuilder.toString(), false);//@todo
                 similarityMap.put(s, sim);
                 if (sim == 0) { //if this is already perfect match, dont do any more
+                    shouldSendDiff = false;
                     break;
                 }
             } catch (IOException e) {
-                System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
+                //System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
             }
             counter++;
         }
-        Map<String, Double> sortedSimilarity = new LinkedHashMap<>();
-        sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
-
-        answer = sortedSimilarity.entrySet().iterator().next();
+        Map<String, Double> sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
+        answer = sortedSimilarity.entrySet().iterator().next(); //first entry
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect | Pokédex")
@@ -176,7 +178,29 @@ public class PassiveListener {
 
         closestMatches(eb, sortedSimilarity);
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
+        //difference image
+        if (shouldSendDiff && (double)answer.getValue() > 0.01) {
+            BufferedImage diffImg = calcDifference(target, (String) answer.getKey());
+            File diffImgFile = new File("Diff Img.png");
+            try {
+                ImageIO.write(diffImg, "png", diffImgFile);
+            } catch (IOException e) {
+                System.out.println("IOException writing difference file");
+            }
+            RequestBuffer.request(() -> {
+                try {
+                    return event.getChannel().sendFile("Difference Image: ", diffImgFile);
+                } catch (FileNotFoundException e) {
+                    System.out.println("Could not find difference image");
+                }
+                return null;
+            }).get();
+
+            diffImgFile.delete();
+        }
+
+        //BotUtils.sendMessage(event.getChannel(), eb);
     }
 
     private void closestMatches(EmbedBuilder eb, Map<String, Double> sortedSimilarity) {
@@ -209,14 +233,17 @@ public class PassiveListener {
         double targetWidth = target.getWidth();
         double testHeight = answerImg.getHeight();
         double testWidth = answerImg.getWidth();
-        BufferedImage scaledAnswer = target;
+        System.out.println("Target W x H: " + targetWidth + " x " + targetHeight);
+        System.out.println("Ans before W x H: " + testWidth + " x " + testHeight);
+        BufferedImage scaledAnswer = answerImg; //changed this
         if (testHeight != targetHeight || testWidth != targetWidth) {
             scaledAnswer = new BufferedImage((int)targetWidth, (int)targetHeight, BufferedImage.TYPE_INT_ARGB);
             AffineTransform at = new AffineTransform();
             at.scale(targetWidth/testWidth, targetHeight/testHeight);
             AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //want pixel perfect scaling
-            scaledAnswer = scaleOp.filter(target, scaledAnswer);
+            scaledAnswer = scaleOp.filter(answerImg, scaledAnswer);
         }
+        System.out.println("Ans after W x H: " + scaledAnswer.getWidth() + " x " + scaledAnswer.getHeight());
 
 
         for (int x = 0; x < target.getWidth(); x++) {
