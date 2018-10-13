@@ -10,7 +10,6 @@ import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
-import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
@@ -129,29 +128,38 @@ public class PassiveListener {
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
         long startTime = System.currentTimeMillis();
-        if (!event.getAuthor().getStringID().equals("365975655608745985") ||
-                !event.getAuthor().getStringID().equals("264213620026638336")) return;
+        if (!(event.getAuthor().getStringID().equals("365975655608745985") || event.getAuthor().getStringID().equals("264213620026638336"))) return;
 
-        IEmbed embed = event.getMessage().getEmbeds().get(0);
-        if (embed == null) return;
+        System.out.println("Starting pokemon identification");
 
-        String targetUrl = embed.getImage().getUrl();
-        BufferedImage target = Visuals.urlToBufferedImage(targetUrl);
+        if (event.getMessage().getEmbeds().size() == 0) {}//return;
+        //IEmbed embed = event.getMessage().getEmbeds().get(0);
+
+        String targetUrl = event.getMessage().getFormattedContent();//embed.getImage().getUrl();
+        BufferedImage target = Visuals.urlToBufferedImageWithAgentHeader(targetUrl); //important
 
         HashMap<String, Double> similarityMap = new HashMap<>();
         BufferedImage testImg = null;
+        Entry answer = null;
+        int counter = 0;
         for (String s : PokemonUtil.pokemonArray) {
             try {
-                testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png"));
+                testImg = ImageIO.read(new File(PokemonUtil.winBaseDir + s + ".png")); //change dir here @todo
+                System.out.println("Imaging #" + counter + " : " + s);
+                double sim = calcSim(target, testImg);
+                similarityMap.put(s, sim);
+                if (sim == 0) { //if this is already perfect match, dont do any more
+                    break;
+                }
             } catch (IOException e) {
                 System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
             }
-            similarityMap.put(s, calcSim(target, testImg));
+            counter++;
         }
         Map<String, Double> sortedSimilarity = new LinkedHashMap<>();
         sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
 
-        Entry answer = sortedSimilarity.entrySet().iterator().next();
+        answer = sortedSimilarity.entrySet().iterator().next();
         BufferedImage differenceImage = calcDifference(target, (String) answer.getKey());
         File diffImgFile = new File("diffImgFile.png");
         try {
@@ -164,7 +172,7 @@ public class PassiveListener {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect | Pokémon Predictor")
                 .withColor(Visuals.analyizeImageColor(target))
-                .withDesc("I am ```" + answer.getValue() + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```\nDifference image:")
+                .withDesc("I am ```" + (100 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```\nDifference image:")
                 .withFooterText("This operation took " + (System.currentTimeMillis() - startTime) + " ms.");
 
         RequestBuffer.request(() -> {
@@ -185,13 +193,29 @@ public class PassiveListener {
         BufferedImage answerImg = null;
         BufferedImage diffImg = new BufferedImage(target.getWidth(), target.getHeight(), BufferedImage.TYPE_INT_ARGB);
         try {
-            answerImg = ImageIO.read(new File(PokemonUtil.baseDir + answer + ".png"));
+            answerImg = ImageIO.read(new File(PokemonUtil.winBaseDir + answer + ".png")); //@todo fix dir
         } catch (IOException ignored) { return null;}
+
+        //scale answerImg if not same size
+        //resize
+        double targetHeight = target.getHeight();
+        double targetWidth = target.getWidth();
+        double testHeight = answerImg.getHeight();
+        double testWidth = answerImg.getWidth();
+        BufferedImage scaledAnswer = target;
+        if (testHeight != targetHeight || testWidth != targetWidth) {
+            scaledAnswer = new BufferedImage((int)targetWidth, (int)targetHeight, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at = new AffineTransform();
+            at.scale(targetWidth/testWidth, targetHeight/testHeight);
+            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //want pixel perfect scaling
+            scaledAnswer = scaleOp.filter(target, scaledAnswer);
+        }
+
 
         for (int x = 0; x < target.getWidth(); x++) {
             for (int y = 0; y < target.getHeight(); y++) {
                 int argb0 = target.getRGB(x, y);
-                int argb1 = answerImg.getRGB(x, y);
+                int argb1 = scaledAnswer.getRGB(x, y);
 
                 int a0 = (argb0 >> 24) & 0xFF;
                 int r0 = (argb0 >> 16) & 0xFF;
@@ -225,7 +249,7 @@ public class PassiveListener {
 
         //resize
         if (testHeight != targetHeight || testWidth != targetWidth) {
-            scaledTest = new BufferedImage((int)testWidth, (int)testHeight, BufferedImage.TYPE_INT_ARGB);
+            scaledTest = new BufferedImage((int)targetWidth, (int)targetHeight, BufferedImage.TYPE_INT_ARGB);
             AffineTransform at = new AffineTransform();
             at.scale(targetWidth/testWidth, targetHeight/testHeight);
             AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //want pixel perfect scaling
@@ -237,23 +261,28 @@ public class PassiveListener {
         for (int x = 0; x < targetWidth; x++) {
             for (int y = 0; y < targetHeight; y++) {
                 //check transparency first
-                if (target.getTransparency() == scaledTest.getTransparency()) continue;
+                //if (target.getTransparency() == scaledTest.getTransparency()) continue;
 
                 int rgbA = target.getRGB(x, y);
                 int rgbB = scaledTest.getRGB(x, y);
+                int alpA = (rgbA >> 24) & 0xff;
+                int alpB =  (rgbB >> 24) & 0xff;
+
                 int redA = (rgbA >> 16) & 0xff; //bunch of masking
                 int greenA = (rgbA >> 8) & 0xff;
                 int blueA = (rgbA) & 0xff;
                 int redB = (rgbB >> 16) & 0xff;
                 int greenB = (rgbB >> 8) & 0xff;
                 int blueB = (rgbB) & 0xff;
+
+                difference += Math.abs(alpA - alpB);
                 difference += Math.abs(redA - redB);
                 difference += Math.abs(greenA - greenB);
                 difference += Math.abs(blueA - blueB);
             }
         } //exit outer for
 
-        double totalPixels = targetWidth * targetHeight * 3;
+        double totalPixels = targetWidth * targetHeight * 4;
         double avgDiff = difference/totalPixels;
 
         return avgDiff * 100 / 255;

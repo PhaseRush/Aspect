@@ -811,6 +811,7 @@ public class PokemonUtil {
                     "Zeraora";
 
     public static String baseDir = "/home/positron/pokemons/";
+    public static String winBaseDir = "C:\\Users\\leozh\\Desktop\\pokemons\\";
     public static String[] pokemonArray;
     static {
         pokemonArray = allPokemon.split("\n");
