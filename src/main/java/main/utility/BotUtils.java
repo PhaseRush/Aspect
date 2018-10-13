@@ -17,10 +17,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RequestBuffer;
 
-import java.io.BufferedInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
@@ -118,6 +115,16 @@ public class BotUtils {
                 .withRecommendedShardCount()
                 .build();
 
+    }
+
+    public static boolean writeToFile(String absolutePath, String text, boolean append) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(absolutePath, append))) {
+            writer.append("\n").append(text);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     // Helper functions to make certain aspects of the bot easier to use.

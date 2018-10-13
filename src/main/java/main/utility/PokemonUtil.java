@@ -786,10 +786,10 @@ public class PokemonUtil {
                     "Jangmo-o\n" +
                     "Hakamo-o\n" +
                     "Kommo-o\n" +
-                    "Tapu Koko\n" +
-                    "Tapu Lele\n" +
-                    "Tapu Bulu\n" +
-                    "Tapu Fini\n" +
+                    "Tapu_Koko\n" +
+                    "Tapu_Lele\n" +
+                    "Tapu_Bulu\n" +
+                    "Tapu_Fini\n" +
                     "Cosmog\n" +
                     "Cosmoem\n" +
                     "Solgaleo\n" +

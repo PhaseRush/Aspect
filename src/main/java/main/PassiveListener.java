@@ -21,10 +21,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,6 +29,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 
 public class PassiveListener {
 
@@ -127,24 +125,35 @@ public class PassiveListener {
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
         long startTime = System.currentTimeMillis();
-        if (!(event.getAuthor().getStringID().equals("365975655608745985"))) return;
-        if (event.getMessage().getEmbeds().size() == 0) return;
+        if (!(event.getAuthor().getStringID().equals("365975655608745985") || event.getAuthor().getStringID().equals("264213620026638336"))) return;
+        //if (event.getMessage().getEmbeds().size() == 0) return;
+
+        String targetUrl = "";
+        if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) {
+            targetUrl = event.getMessage().getFormattedContent();
+        }else if (event.getAuthor().getStringID().equals("365975655608745985")){
+            IEmbed embed = event.getMessage().getEmbeds().get(0);
+            targetUrl = embed.getImage().getUrl(); //event.getMessage().getFormattedContent();
+        } else return;
+
+
         System.out.println("Starting pokemon identification");
 
-        IEmbed embed = event.getMessage().getEmbeds().get(0);
 
-        String targetUrl = embed.getImage().getUrl();
+        BotUtils.sendMessage(event.getChannel(), "Attempting match on: " + targetUrl);
         BufferedImage target = Visuals.urlToBufferedImageWithAgentHeader(targetUrl); //important
 
         HashMap<String, Double> similarityMap = new HashMap<>();
         BufferedImage testImg = null;
         Entry answer = null;
-        int counter = 0;
+        int counter = 1;
         for (String s : PokemonUtil.pokemonArray) {
             try {
+                System.out.println("Path:" + PokemonUtil.baseDir + s + ".png");
                 testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png")); //change dir here @todo
-                System.out.println("Imaging #" + counter + " : " + s);
                 double sim = calcSim(target, testImg);
+                String log = "Imaging #" + counter + " : " + s + " score: " + sim + "\n";
+                BotUtils.writeToFile("/home/positron/AspectTextFiles/RecentPokemonMatch.txt", log, false);
                 similarityMap.put(s, sim);
                 if (sim == 0) { //if this is already perfect match, dont do any more
                     break;
@@ -160,12 +169,25 @@ public class PassiveListener {
         answer = sortedSimilarity.entrySet().iterator().next();
 
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Aspect | Pokémon Predictor")
+                .withTitle("Aspect | Pokédex")
                 .withColor(Visuals.analyizeImageColor(target))
-                .withDesc("I am ```" + (99.99 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```\nDifference image:")
+                .withDesc("I am ```" + (99.99 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```")
                 .withFooterText("This operation took " + (System.currentTimeMillis() - startTime) + " ms.");
 
+        closestMatches(eb, sortedSimilarity);
+
         BotUtils.sendMessage(event.getChannel(), eb);
+    }
+
+    private void closestMatches(EmbedBuilder eb, Map<String, Double> sortedSimilarity) {
+        List<Entry<String, Double>> topSix = new LinkedList<>();
+
+        Iterator<Entry<String, Double>> iter = sortedSimilarity.entrySet().iterator();
+        for (int i = 0; i < 6; i++)
+            topSix.add(iter.next());
+
+        for (Entry<String, Double> entry : topSix.subList(1, topSix.size())) //ignore first
+            eb.appendField(new EmbedField(entry.getKey(), (99.99 - entry.getValue()) + "%", false));
     }
 
     /**
