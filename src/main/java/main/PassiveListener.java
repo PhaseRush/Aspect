@@ -10,17 +10,16 @@ import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
+import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
-import sx.blah.discord.util.RequestBuffer;
 
 import javax.imageio.ImageIO;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -128,14 +127,13 @@ public class PassiveListener {
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
         long startTime = System.currentTimeMillis();
-        if (!(event.getAuthor().getStringID().equals("365975655608745985") || event.getAuthor().getStringID().equals("264213620026638336"))) return;
-
+        if (!(event.getAuthor().getStringID().equals("365975655608745985"))) return;
+        if (event.getMessage().getEmbeds().size() == 0) return;
         System.out.println("Starting pokemon identification");
 
-        if (event.getMessage().getEmbeds().size() == 0) {}//return;
-        //IEmbed embed = event.getMessage().getEmbeds().get(0);
+        IEmbed embed = event.getMessage().getEmbeds().get(0);
 
-        String targetUrl = event.getMessage().getFormattedContent();//embed.getImage().getUrl();
+        String targetUrl = embed.getImage().getUrl();
         BufferedImage target = Visuals.urlToBufferedImageWithAgentHeader(targetUrl); //important
 
         HashMap<String, Double> similarityMap = new HashMap<>();
@@ -144,7 +142,7 @@ public class PassiveListener {
         int counter = 0;
         for (String s : PokemonUtil.pokemonArray) {
             try {
-                testImg = ImageIO.read(new File(PokemonUtil.winBaseDir + s + ".png")); //change dir here @todo
+                testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png")); //change dir here @todo
                 System.out.println("Imaging #" + counter + " : " + s);
                 double sim = calcSim(target, testImg);
                 similarityMap.put(s, sim);
@@ -160,40 +158,27 @@ public class PassiveListener {
         sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
 
         answer = sortedSimilarity.entrySet().iterator().next();
-        BufferedImage differenceImage = calcDifference(target, (String) answer.getKey());
-        File diffImgFile = new File("diffImgFile.png");
-        try {
-            ImageIO.write(differenceImage, "png", diffImgFile);
-        } catch (IOException e) {
-            System.out.println("problem in saving difference image");
-            e.printStackTrace();
-        }
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect | Pokémon Predictor")
                 .withColor(Visuals.analyizeImageColor(target))
-                .withDesc("I am ```" + (100 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```\nDifference image:")
+                .withDesc("I am ```" + (99.99 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```\nDifference image:")
                 .withFooterText("This operation took " + (System.currentTimeMillis() - startTime) + " ms.");
 
-        RequestBuffer.request(() -> {
-            try {
-                return event.getChannel().sendFile(eb.build(), diffImgFile);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            return null;
-        });
-
-        diffImgFile.delete();
-
-
+        BotUtils.sendMessage(event.getChannel(), eb);
     }
 
+    /**
+     * deprecated. Does work.
+     * @param target
+     * @param answer
+     * @return
+     */
     private BufferedImage calcDifference(BufferedImage target, String answer) {
         BufferedImage answerImg = null;
         BufferedImage diffImg = new BufferedImage(target.getWidth(), target.getHeight(), BufferedImage.TYPE_INT_ARGB);
         try {
-            answerImg = ImageIO.read(new File(PokemonUtil.winBaseDir + answer + ".png")); //@todo fix dir
+            answerImg = ImageIO.read(new File(PokemonUtil.baseDir + answer + ".png")); //@todo fix dir
         } catch (IOException ignored) { return null;}
 
         //scale answerImg if not same size
