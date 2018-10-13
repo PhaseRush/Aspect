@@ -15,6 +15,7 @@ import main.commands.music.playing.*;
 import main.commands.music.queue.*;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
+import main.commands.pokemon.setup.ImageTransposer;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
@@ -35,6 +36,10 @@ public class CommandManager {
     //talked to hec about using a static initializer but constructor is fine
 
     public CommandManager() {
+        //Actual Testing
+        //commandMap.put("bulba", new BulbapediaScraper());
+        commandMap.put("transpose", new ImageTransposer());
+
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
         commandMap.put("ascii", new Asciimg());

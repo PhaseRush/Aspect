@@ -6,8 +6,13 @@ import sx.blah.discord.util.EmbedBuilder;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,6 +38,39 @@ public class Visuals {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public static byte[] urlToImageByteArray(String url) {
+        try( InputStream in = new BufferedInputStream(new URL(url).openStream());
+             ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+
+            byte[] buf = new byte[1024];
+            int n = 0;
+            while (-1!=(n=in.read(buf)))
+                out.write(buf, 0, n);
+            return out.toByteArray();
+        } catch (MalformedURLException e) {
+            System.out.println("bad url - visuals.urlToByteArray");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("io exception - visuals.urlToByteArray");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static BufferedImage urlToBufferedImageWithAgentHeader(String url) {
+        try {
+            URLConnection connection = new URL(url).openConnection();
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0"); //also try .addRequestProperty()
+            InputStream inputStream = connection.getInputStream();
+            return ImageIO.read(inputStream);
+        } catch (IOException e) {
+            System.out.println("url to buff img w/agent header - visuals");
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static Color analyizeImageColor(BufferedImage bi) {
