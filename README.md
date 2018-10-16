@@ -12,17 +12,6 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 ## All available commands:
 - examples with params in round brackets indicate optional params. Square brackets indicate a placeholder. Do not use the round or square brackets if you choose to use that parameter
 
-#### Humour // Don't dead open inside
-
-| Command | #Params | Description | Example |
-| --- | --- | --- | --- |
-| cute | 1 | displays a cute image | `$cute baka` |
-| ship | 2 | Ships two people | `$ship @Aspect, @Requiem` |
-| insult | 0 | says an insult (slight nsfw) | `$insult` |
-| ascii | 1,2 | Ascii-fy an image. Can specify font size| `$ascii https://goo.gl/5dx7VS, 4` |
-| ascii2 | 2 | Ascii-fy, old. Specify font size | `$ascii2 https://goo.gl/5dx7VS, 10` |
-| count | 1, 2 | Counts # of occurences of word/regex in channel, or entire server | `$count word, all` |
-
 
 #### Music
 
@@ -30,13 +19,14 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | --- | --- | --- | --- |
 | stop/lvoice | 0 | Stops current song, leaves voice | `$stop, $lvoice` |
 | play | 1 | Adds param to Queue | `$play \[YT song/plist]` |
-| nowplaying/currentsong| 0 | Displays info about current song | `$nowplaying` |
+| nowplaying/current/np| 0 | Displays info about current song | `$nowplaying` |
 | skip | 0, 1 | skips 1 song, or \[param\] songs | `$skip (15)` |
 | queue | 0 | lists the first 15 songs in queue | `$queue` |
 | loop - WIP| 0, 1 | loops indefinetly, or \[param\] times | `$loop (3)` |
 | shuffle | 0 | shuffles current queue | `$shuffle` |
 | sfx | 1 | plays \[param\] sound effect | `$sfx purple` | 
 | listsfx | 0 | lists all available sound effects | `$listsfx` |
+| qdel | 1 | removes song in position x from queue | `$qdel 4` |
 
 #### General Commands
 
@@ -57,6 +47,17 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | membercount | 0 | displays number of members in current server | `$membercount` |
 | poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
 | cpuload | 0 | displays system info | `$cpuload` |
+
+#### Humour // Don't dead open inside
+
+| Command | #Params | Description | Example |
+| --- | --- | --- | --- |
+| cute | 1 | displays a cute image | `$cute baka` |
+| ship | 2 | Ships two people | `$ship @Aspect, @Requiem` |
+| insult | 0 | says an insult (slight nsfw) | `$insult` |
+| ascii | 1,2 | Ascii-fy an image. Can specify font size| `$ascii https://goo.gl/5dx7VS, 4` |
+| ascii2 | 2 | Ascii-fy, old. Specify font size | `$ascii2 https://goo.gl/5dx7VS, 10` |
+| count | 1, 2 | Counts # of occurences of word/regex in channel, or entire server | `$count word, all` |
 
 #### League of Legends
 
@@ -105,7 +106,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
 | fn -DEPRECATED- | 2 | displays fortnite stats | `$fn AmperianLoop, \[one of: all, squad, solo, duo\]` |
 
-#### Realm of the Mad God - Deprecated
+#### Realm of the Mad God - Temporarily Deprecated
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
@@ -124,21 +125,23 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] League: full match analysis
 - [ ] League: "suggestions" :)
 - [x] Warframe: detailed item information
-- [ ] Warframe: relic drop locations
+- [x] Warframe: relic drop locations
 - [ ] General: fetch: command that searches google and compiles keywords and top image
 - [x] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
 - [ ] Wikipedia: integrate wikipedia searches and article summaries
 - [ ] Urban Dictionary: use [this api](https://github.com/zdict/zdict/wiki/Urban-dictionary-API-documentation)
 - [ ] Google image search
 - [ ] Imgur upload/integration
+- [ ] Microsoft Azure/Cloud integration for image recognition
 
 
 #### non-command features
 - Warframe :: Automatically updates alerts and posts to channel every 30 minutes
 - Warframe :: Has automatic spell correction. "abkroncoe prwime blurewpint" -> "akbronco prime blueprint"
+- Warframe :: Status is constantly updating to display current time and solar cycle on Cetus
 - Music :: Calling $play without valid url triggers Youtube search
 - Music :: Calling $play with "music" starts a generic playlist
-- Music :: Calling $play with "nb3" starts a NightBlue3's playlist
+- Music :: Calling $play with "nb3" starts a NightBlue3 playlist
 - Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 
 #### Notes
@@ -147,6 +150,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Icons used curtesy of [Mike Winkelmann](https://www.beeple-crap.com/about).
 - $bulkdelete temporarily disabled for security purposes
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
+- Fortnite integration is deprecated due to the API being shutdown.
 
 
 
