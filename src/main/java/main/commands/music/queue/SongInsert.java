@@ -1,9 +1,7 @@
 package main.commands.music.queue;
 
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.Command;
 import main.utility.BotUtils;
-import main.utility.music.GuildMusicManager;
 import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
@@ -17,15 +15,15 @@ public class SongInsert implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
         String searchStr = String.join(" ", args);
-        MasterManager.loadAndPlay(event.getChannel(), searchStr, event);
+        MasterManager.loadAndPlay(event.getChannel(), searchStr, event, true);
 
-        GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
-        List<AudioTrack> audioTracks = guildMusicManager.getScheduler().getQueue();
-
-        AudioTrack trackToInsert = audioTracks.get(audioTracks.size() - 1);
-        audioTracks.add(0, trackToInsert);
-        audioTracks.remove(audioTracks.size() - 1);
-        guildMusicManager.getScheduler().setQueue(audioTracks); //newly added
+//        GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
+//        List<AudioTrack> audioTracks = guildMusicManager.getScheduler().getQueue();
+//
+//        AudioTrack trackToInsert = audioTracks.get(audioTracks.size() - 1);
+//        audioTracks.add(0, trackToInsert);
+//        audioTracks.remove(audioTracks.size() - 1);
+//        guildMusicManager.getScheduler().setQueue(audioTracks); //newly added
 
         BotUtils.reactWithCheckMark(event.getMessage());
     }

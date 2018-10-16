@@ -47,6 +47,9 @@ public class WordCounter implements Command {
 
         boolean useRegex = args.get(0).startsWith("\\");
         String regexString = args.get(0).substring(1);
+        if (useRegex) {
+            BotUtils.sendMessage(event.getChannel(), "Attempting to use regex: ```" + regexString + "```");
+        }
 
         List<IChannel> textChannels = new ArrayList<>();
         if (args.size() == 2) {
@@ -91,7 +94,7 @@ public class WordCounter implements Command {
                 //.withColor(Visuals.analyizeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
                 .withColor(Visuals.getVibrantColor())
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
-                .withDesc("Winner: " + (nick == null ? mostGoodPerson.getKey().getName() : nick))
+                .withDesc("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick))
                 .withFooterText("It took me " + minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " to scan through " +
                         messageCounter + " messages in " + textChannels.size() + " channels");
 

@@ -17,7 +17,7 @@ public class SongPlay implements Command {
         }
 
         String searchStr = String.join(" ", args);
-        MasterManager.loadAndPlay(event.getChannel(), searchStr, event);
+        MasterManager.loadAndPlay(event.getChannel(), searchStr, event, false);
     }
 
     @Override

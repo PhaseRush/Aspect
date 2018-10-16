@@ -1,5 +1,6 @@
 package main;
 
+import com.google.common.math.BigIntegerMath;
 import main.utility.BotUtils;
 import main.utility.PokemonUtil;
 import main.utility.Visuals;
@@ -23,17 +24,21 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 
 public class PassiveListener {
+    private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
 
 
     @EventSubscriber
@@ -320,6 +325,23 @@ public class PassiveListener {
         double avgDiff = difference/totalPixels;
 
         return avgDiff * 100 / 255;
+    }
+
+    @EventSubscriber
+    public void unexpectedFactorial(MessageReceivedEvent event) {
+        String msg = event.getMessage().getFormattedContent();
+        Matcher matcher = unexpFactRegex.matcher(msg);
+
+        String group = "";
+        if (matcher.find()) {
+            group = matcher.group();
+        } else return;
+
+        int num = Integer.valueOf(group.substring(0, group.length()-1));
+        if (num > 797) return;
+        BigInteger fact = BigIntegerMath.factorial(num);
+
+        BotUtils.sendMessage(event.getChannel(), "Did you know that `" + num + "!` is `" + fact + "`?");
     }
 
 

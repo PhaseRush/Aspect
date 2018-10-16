@@ -85,6 +85,16 @@ public class TrackScheduler {
         return playing;
     }
 
+    public synchronized boolean queueFront(AudioTrack track) {
+        boolean playing = player.startTrack(track, true);
+
+        if(!playing) {
+            queue.add(0,track);
+        }
+
+        return playing;
+    }
+
     /**
      * Starts the next track, stopping the current one if it is playing.
      * @return The track that was stopped, null if there wasn't anything playing
@@ -218,7 +228,7 @@ public class TrackScheduler {
         long milliseconds = getQueueDurationMillis();
         int seconds = (int) (milliseconds / 1000) % 60;
         int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
-        int hours = (int) ((milliseconds / (1000 * 60 * 60)) % 24);
+        int hours = (int) (milliseconds / (1000 * 60 * 60));
 
         return (hours == 0 ? "" : String.valueOf(hours) + ":") +
                 (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
