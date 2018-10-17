@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import main.utility.Visuals;
+import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
@@ -152,20 +153,25 @@ public class TrackScheduler {
 
 
     public StringBuilder trackProgress() {
+        int lengthFactor = 5;
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
-        long percent = 100*position / (duration*2); //*2
+        long percent = 100*position / (duration*lengthFactor); //*2
+        System.out.println();ReactionEmoji.of("ncat1", 501972187524366336L).isUnicode();
         String marker = ":red_circle:";
+        String marker2 = ":cat:";
+        String filler = "-";
+        String filler2 = ":gay_pride_flag:";
 
         StringBuilder sb = new StringBuilder("\n[0:00][");
 
         for (double d = 0; d < percent; d++)
-            sb.append("-");
+            sb.append(filler);
 
         sb.append(marker);
 
-        for (double d = percent; d < 100/2; d++)
-            sb.append("-");
+        for (double d = percent; d < 100/lengthFactor; d++)
+            sb.append(filler);
 
         sb.append("]["+ getFormattedSongLength(getCurrentTrack().getInfo()) + "]");
         return sb;
