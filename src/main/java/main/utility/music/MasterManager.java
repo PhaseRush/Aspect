@@ -56,13 +56,13 @@ public class MasterManager {
         return musicManager;
     }
 
-    public synchronized static void loadAndPlay(final IChannel channel, final String trackUrl, MessageReceivedEvent event, boolean insertFront) {
+    public synchronized static void loadAndPlay(final IChannel channel, final String trackUrl, MessageReceivedEvent event, boolean insertFront, String confirmMsg) {
         GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                BotUtils.sendMessage(channel, "Playing: " + track.getInfo().title);
+                BotUtils.sendMessage(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
                 play(musicManager, track, insertFront);
             }
 
@@ -84,16 +84,16 @@ public class MasterManager {
                 //check if it is a preinit playlist
                 switch (trackUrl) {
                     case "music":
-                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE", event, insertFront);
+                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE", event, insertFront, "");
                         return;
                     case "tier2":
-                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X", event, insertFront);
+                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X", event, insertFront, "");
                         return;
                     case "nb3all":
-                        loadAndPlay(channel, "https://www.youtube.com/watch?v=BwEZaariQQ4&list=PLEgNqLmZpLuI9ajUy3Hg97NrpssG4repu", event, insertFront);
+                        loadAndPlay(channel, "https://www.youtube.com/watch?v=BwEZaariQQ4&list=PLEgNqLmZpLuI9ajUy3Hg97NrpssG4repu", event, insertFront, "");
                         return;
                     case "nb3":
-                        loadAndPlay(channel, "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD", event, insertFront);
+                        loadAndPlay(channel, "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD", event, insertFront, "");
                         return;
                 }
 
@@ -140,19 +140,19 @@ public class MasterManager {
                             String emojiName = reactionEvent.getReaction().getEmoji().getName();
                             switch (emojiName) {
                                 case "\uD83C\uDDE6":
-                                    loadAndPlay(channel, searchResults.get(0).getId().getVideoId(), event, insertFront);
+                                    loadAndPlay(channel, searchResults.get(0).getId().getVideoId(), event, insertFront, "");
                                     break;
                                 case "\uD83C\uDDE7":
-                                    loadAndPlay(channel, searchResults.get(1).getId().getVideoId(), event, insertFront);
+                                    loadAndPlay(channel, searchResults.get(1).getId().getVideoId(), event, insertFront, "");
                                     break;
                                 case "\uD83C\uDDE8":
-                                    loadAndPlay(channel, searchResults.get(2).getId().getVideoId(), event, insertFront);
+                                    loadAndPlay(channel, searchResults.get(2).getId().getVideoId(), event, insertFront, "");
                                     break;
                                 case "\uD83C\uDDE9":
-                                    loadAndPlay(channel, searchResults.get(3).getId().getVideoId(), event, insertFront);
+                                    loadAndPlay(channel, searchResults.get(3).getId().getVideoId(), event, insertFront, "");
                                     break;
                                 case "\uD83C\uDDEA":
-                                    loadAndPlay(channel, searchResults.get(4).getId().getVideoId(), event, insertFront);
+                                    loadAndPlay(channel, searchResults.get(4).getId().getVideoId(), event, insertFront, "");
                                     break;
                                 case "\u274C": //changed from red cross literal
                                     BotUtils.sendMessage(channel, "Search terminated");

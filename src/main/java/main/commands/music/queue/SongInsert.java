@@ -15,7 +15,7 @@ public class SongInsert implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
         String searchStr = String.join(" ", args);
-        MasterManager.loadAndPlay(event.getChannel(), searchStr, event, true);
+        MasterManager.loadAndPlay(event.getChannel(), searchStr, event, true, "Inserting track to front of queue");
 
 //        GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
 //        List<AudioTrack> audioTracks = guildMusicManager.getScheduler().getQueue();

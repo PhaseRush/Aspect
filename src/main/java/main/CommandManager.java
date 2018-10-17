@@ -58,10 +58,12 @@ public class CommandManager {
         //music
         SongInfo songInfo = new SongInfo();
         SongStop songStop = new SongStop();
+        SongDelete songDelete = new SongDelete();
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
         commandMap.put("nowplaying", songInfo);
+        commandMap.put("np", songInfo);
         commandMap.put("current", songInfo);
         commandMap.put("skip", new SongSkip());
         commandMap.put("queue", new SongQueue());
@@ -70,6 +72,8 @@ public class CommandManager {
         commandMap.put("purge", new PurgeQueue());
         commandMap.put("insert", new SongInsert());
         commandMap.put("pause", new SongPause());
+        commandMap.put("qdel", songDelete);
+        commandMap.put("songdel", songDelete);
 
         commandMap.put("sfx", new SoundEffect());
         commandMap.put("listsfx", new SoundEffectList());

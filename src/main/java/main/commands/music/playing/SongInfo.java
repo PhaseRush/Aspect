@@ -20,7 +20,7 @@ public class SongInfo implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withColor(Visuals.getVibrantColor())
                 .withTitle(songInfo.title)
-                .withDesc("By: " + songInfo.author + "\nDuration: " + getFormattedSongLength(songInfo))
+                .withDesc("By: " + songInfo.author + "\n" + testmanager.getScheduler().trackProgress())
                 .withUrl(songInfo.uri);
 
         BotUtils.sendMessage(event.getChannel(), eb);

@@ -151,24 +151,23 @@ public class TrackScheduler {
     }
 
 
-    private StringBuilder trackProgress(long startTime) {
+    public StringBuilder trackProgress() {
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
-        long percent = position / (duration * 2); //*2
+        long percent = 100*position / (duration*2); //*2
         String marker = ":red_circle:";
 
-        StringBuilder sb = new StringBuilder("```\n[");
-        //.append("--------------------------------------------------"); //48 dashes
+        StringBuilder sb = new StringBuilder("\n[0:00][");
 
         for (double d = 0; d < percent; d++)
             sb.append("-");
 
         sb.append(marker);
 
-        for (double d = percent; d < 100; d++)
+        for (double d = percent; d < 100/2; d++)
             sb.append("-");
 
-        sb.append("]```");
+        sb.append("]["+ getFormattedSongLength(getCurrentTrack().getInfo()) + "]");
         return sb;
     }
 

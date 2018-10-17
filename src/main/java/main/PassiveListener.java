@@ -1,10 +1,12 @@
 package main;
 
 import com.google.common.math.BigIntegerMath;
+import info.debatty.java.stringsimilarity.Levenshtein;
 import main.utility.BotUtils;
 import main.utility.PokemonUtil;
 import main.utility.Visuals;
 import main.utility.WarframeUtil;
+import main.utility.music.MasterManager;
 import main.utility.warframe.wfstatus.alerts.WarframeAlert;
 import main.utility.warframe.wfstatus.alerts.WarframeMission;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -39,6 +41,7 @@ import static sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 
 public class PassiveListener {
     private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
+    private static Levenshtein levenshtein = new Levenshtein();
 
 
     @EventSubscriber
@@ -343,6 +346,24 @@ public class PassiveListener {
 
         BotUtils.sendMessage(event.getChannel(), "Did you know that `" + num + "!` is `" + fact + "`?");
     }
+
+
+    @EventSubscriber
+    public void alexaPlayD(MessageReceivedEvent event) {
+        String msg = event.getMessage().getFormattedContent();
+        String alexa = "alexa play despacito";
+
+        //BotUtils.sendMessage(event.getChannel(), String.valueOf(levenshtein.distance(msg,alexa)));
+        if (levenshtein.distance(msg, alexa) < 3 || msg.contains(alexa)) {
+            if (event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel()
+                    != event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()) {
+
+                BotUtils.joinVC(event);
+            }
+            MasterManager.loadAndPlay(event.getChannel(), "https://www.youtube.com/watch?v=kJQP7kiw5Fk", event, false, "I'm not Alexa, but I can play despacito.");
+        }
+    }
+
 
 
     @EventSubscriber

@@ -20,12 +20,12 @@ public class SoundEffect implements Command {
         }
 
         if (args.get(0).matches("re+")) {
-            MasterManager.loadAndPlay(event.getChannel(), sfxMap.get("ree"), event, true);
+            MasterManager.loadAndPlay(event.getChannel(), sfxMap.get("ree"), event, true, "");
             return;
         }
 
         if (sfxMap.keySet().contains(args.get(0)))
-            MasterManager.loadAndPlay(event.getChannel(), sfxMap.get(args.get(0)), event, true);
+            MasterManager.loadAndPlay(event.getChannel(), sfxMap.get(args.get(0)), event, true, "");
         else
             BotUtils.sendMessage(event.getChannel(), "This sound effect does not exist. Check your spelling or go bother kat to add it");
     }
