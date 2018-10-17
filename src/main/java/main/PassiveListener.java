@@ -217,7 +217,7 @@ public class PassiveListener {
 
         //@todo using this thread impl. to test out priority setting
         Thread iden = new Thread(pokemonIdentifiers, identifier, "identifier");
-        iden.setPriority(-1); //might want to make this daemon
+        iden.setPriority(3); //might want to make this daemon
         iden.start();
         //then execute this guy
         //executor.execute(identifier);
@@ -355,7 +355,7 @@ public class PassiveListener {
         if (num > 797) return;
         BigInteger fact = BigIntegerMath.factorial(num);
 
-        BotUtils.sendMessage(event.getChannel(), "Did you know that `" + num + "!` is `" + fact + "`?");
+        BotUtils.sendMessage(event.getChannel(), "Did you know that `" + num + "! = " + fact + "`");
     }
 
 
@@ -371,7 +371,7 @@ public class PassiveListener {
 
                 BotUtils.joinVC(event);
             }
-            MasterManager.loadAndPlay(event.getChannel(), "https://www.youtube.com/watch?v=kJQP7kiw5Fk", event, false, "I'm not Alexa, but I can play despacito.");
+            MasterManager.loadAndPlay(event.getChannel(), "https://www.youtube.com/watch?v=kJQP7kiw5Fk", event, true, "I'm not Alexa, but I can play despacito.");
         }
     }
 

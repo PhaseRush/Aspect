@@ -103,6 +103,13 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!--OCR https://github.com/bytedeco/javacpp-presets/tree/master/tesseract
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>tesseract-platform</artifactId>
+            <version>4.0.0-rc3-1.4.4-SNAPSHOT</version>
+        </dependency>
+        -->
 
 
     </dependencies>
