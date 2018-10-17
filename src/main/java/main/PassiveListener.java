@@ -38,6 +38,7 @@ import static sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 
 public class PassiveListener {
     private static ExecutorService executor = Executors.newFixedThreadPool(2);
+    private static ThreadGroup pokemonIdentifiers = new ThreadGroup("Pokemon Identifiers");
     private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
     private static Levenshtein levenshtein = new Levenshtein();
 
@@ -190,7 +191,7 @@ public class PassiveListener {
 
             RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
             //difference image
-            if (shouldSendDiff && (double)answer.getValue() > 0.01) {
+            if (shouldSendDiff) { //removed 2nd condition:   && (double)answer.getValue() > 0.01
                 BufferedImage diffImg = calcDifference(target, (String) answer.getKey());
                 File diffImgFile = new File("Diff Img.png");
                 try {
@@ -213,8 +214,13 @@ public class PassiveListener {
             //BotUtils.sendMessage(event.getChannel(), eb);
 
         };
+
+        //@todo using this thread impl. to test out priority setting
+        Thread iden = new Thread(pokemonIdentifiers, identifier, "identifier");
+        iden.setPriority(-1); //might want to make this daemon
+        iden.start();
         //then execute this guy
-        executor.execute(identifier);
+        //executor.execute(identifier);
     }
 
     private void closestMatches(EmbedBuilder eb, Map<String, Double> sortedSimilarity) {
