@@ -249,13 +249,7 @@ public class PassiveListener {
         System.out.println("Target W x H: " + targetWidth + " x " + targetHeight);
         System.out.println("Ans before W x H: " + testWidth + " x " + testHeight);
         BufferedImage scaledAnswer = answerImg; //changed this
-        if (testHeight != targetHeight || testWidth != targetWidth) {
-            scaledAnswer = new BufferedImage((int)targetWidth, (int)targetHeight, BufferedImage.TYPE_INT_ARGB);
-            AffineTransform at = new AffineTransform();
-            at.scale(targetWidth/testWidth, targetHeight/testHeight);
-            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //want pixel perfect scaling
-            scaledAnswer = scaleOp.filter(answerImg, scaledAnswer);
-        }
+        scaledAnswer = getScaledWithNearestNeighbour(answerImg, targetHeight, targetWidth, testHeight, testWidth, scaledAnswer);
         System.out.println("Ans after W x H: " + scaledAnswer.getWidth() + " x " + scaledAnswer.getHeight());
 
 
@@ -286,6 +280,17 @@ public class PassiveListener {
         return diffImg;
     }
 
+    private BufferedImage getScaledWithNearestNeighbour(BufferedImage answerImg, double targetHeight, double targetWidth, double testHeight, double testWidth, BufferedImage scaledAnswer) {
+        if (testHeight != targetHeight || testWidth != targetWidth) {
+            scaledAnswer = new BufferedImage((int)targetWidth, (int)targetHeight, BufferedImage.TYPE_INT_ARGB);
+            AffineTransform at = new AffineTransform();
+            at.scale(targetWidth/testWidth, targetHeight/testHeight);
+            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //want pixel perfect scaling
+            scaledAnswer = scaleOp.filter(answerImg, scaledAnswer);
+        }
+        return scaledAnswer;
+    }
+
     private Double calcSim(BufferedImage target, BufferedImage testImg) {
         if (testImg == null) return 0d; //probs wont reach here, but just in case
         double targetHeight = target.getHeight();
@@ -295,13 +300,7 @@ public class PassiveListener {
         BufferedImage scaledTest = testImg;
 
         //resize
-        if (testHeight != targetHeight || testWidth != targetWidth) {
-            scaledTest = new BufferedImage((int)targetWidth, (int)targetHeight, BufferedImage.TYPE_INT_ARGB);
-            AffineTransform at = new AffineTransform();
-            at.scale(targetWidth/testWidth, targetHeight/testHeight);
-            AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR); //want pixel perfect scaling
-            scaledTest = scaleOp.filter(testImg, scaledTest);
-        }
+        scaledTest = getScaledWithNearestNeighbour(testImg, targetHeight, targetWidth, testHeight, testWidth, scaledTest);
 
         //now the comparison
         long difference = 0;
