@@ -175,6 +175,7 @@ public class PassiveListener {
                     //System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
                 }
                 counter++;
+                Thread.yield(); //@todo newly added yield in attempt to spread out cpu usage. Keep eye on this.
             }
             Map<String, Double> sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
             answer = sortedSimilarity.entrySet().iterator().next(); //first entry
