@@ -190,10 +190,9 @@ public class CommandManager {
             commandMap.get(commandStr).runCommand(event, argsList);
 
             StringBuilder sb = new StringBuilder();
-            for (String s : argsList) {
+            for (String s : argsList)
                 sb.append(s + "\t");
 
-            }
             System.out.println("run: " + commandStr + (argsList.size() != 0 ? " args: " + sb.toString() : ""));
         }
     }
