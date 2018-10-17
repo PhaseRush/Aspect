@@ -322,7 +322,13 @@ public class BotUtils {
     }
 
     public static void reactWithCheckMark(IMessage iMessage) {
+        if (iMessage == null) return;
         RequestBuffer.request(() -> iMessage.addReaction(ReactionEmoji.of("\u2705")));
+    }
+
+    public static void reactWithX(IMessage iMessage) {
+        if (iMessage == null) return;
+        RequestBuffer.request(() -> iMessage.addReaction(ReactionEmoji.of("\u274C")));
     }
 
     public static String getRandomFromListString(List<String> listString) {

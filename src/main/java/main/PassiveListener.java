@@ -15,6 +15,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.handle.obj.IEmoji;
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
@@ -189,7 +190,10 @@ public class PassiveListener {
 
             closestMatches(eb, sortedSimilarity);
 
+            IMessage outboundMsg = null;
             RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
+            BotUtils.reactWithCheckMark(outboundMsg);
+            BotUtils.reactWithX(outboundMsg);
             //difference image
             if (shouldSendDiff) { //removed 2nd condition:   && (double)answer.getValue() > 0.01
                 BufferedImage diffImg = calcDifference(target, (String) answer.getKey());
