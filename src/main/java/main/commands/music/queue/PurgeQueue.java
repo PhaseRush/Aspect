@@ -29,7 +29,6 @@ public class PurgeQueue implements Command {
             }
         }
 
-
     }
 
     @Override
