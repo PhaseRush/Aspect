@@ -29,10 +29,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.Map.Entry;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +37,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 import static sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 
 public class PassiveListener {
+    private static ExecutorService executor = Executors.newFixedThreadPool(2);
     private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
     private static Levenshtein levenshtein = new Levenshtein();
 
@@ -134,82 +132,88 @@ public class PassiveListener {
 
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
-        long startTime = System.currentTimeMillis();
-        double threshold = 0.1;
-        if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
-        if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have
 
-        boolean shouldSendDiff = true;
-        String targetUrl = "";
-        if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) {
-            targetUrl = event.getMessage().getFormattedContent();
-        }else if (event.getAuthor().getStringID().equals("365975655608745985")){
-            IEmbed embed = event.getMessage().getEmbeds().get(0);
-            targetUrl = embed.getImage().getUrl(); //event.getMessage().getFormattedContent();
-        } else return;
+        Runnable identifier = () -> {
+            long startTime = System.currentTimeMillis();
+            double threshold = 0.1;
+            if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
+            if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have
 
-        System.out.println("Starting pokemon identification");
+            boolean shouldSendDiff = true;
+            String targetUrl = "";
+            if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) {
+                targetUrl = event.getMessage().getFormattedContent();
+            }else if (event.getAuthor().getStringID().equals("365975655608745985")){
+                IEmbed embed = event.getMessage().getEmbeds().get(0);
+                targetUrl = embed.getImage().getUrl(); //event.getMessage().getFormattedContent();
+            } else return;
 
-        StringBuilder logBuilder = new StringBuilder("Attempting match on: " + targetUrl + "\n");
-        BufferedImage target = Visuals.cropTransparent(Visuals.urlToBufferedImageWithAgentHeader(targetUrl)); //important
+            System.out.println("Starting pokemon identification");
 
-        HashMap<String, Double> similarityMap = new HashMap<>();
-        BufferedImage testImg = null;
-        Entry answer = null;
+            StringBuilder logBuilder = new StringBuilder("Attempting match on: " + targetUrl + "\n");
+            BufferedImage target = Visuals.cropTransparent(Visuals.urlToBufferedImageWithAgentHeader(targetUrl)); //important
 
-        int counter = 1;
-        for (String s : PokemonUtil.pokemonArray) {
-            try {
-                if (counter%100 == 0)
-                    System.out.println(counter + " Path:" + PokemonUtil.baseDir + s + ".png");
-                testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png")); //change dir here @todo
-                double sim = calcSim(target, testImg);
-                logBuilder.append("Imaging #" + counter + " : " + s + " score: " + sim + "\n");
-                BotUtils.writeToFile("/home/positron/AspectTextFiles/RecentPokemonMatch.txt", logBuilder.toString(), false);//@todo
-                similarityMap.put(s, sim);
-                if (sim < threshold) { //if this is already ~perfect~ close enough match, dont do any more
-                    shouldSendDiff = false;
-                    break;
-                }
-            } catch (IOException e) {
-                //System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
-            }
-            counter++;
-        }
-        Map<String, Double> sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
-        answer = sortedSimilarity.entrySet().iterator().next(); //first entry
+            HashMap<String, Double> similarityMap = new HashMap<>();
+            BufferedImage testImg = null;
+            Entry answer = null;
 
-        EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Aspect | Pokédex")
-                .withColor(Visuals.analyizeImageColor(target))
-                .withDesc("I am ```" + (99.99 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```")
-                .withFooterText("This operation took " + (System.currentTimeMillis() - startTime) + " ms.");
-
-        closestMatches(eb, sortedSimilarity);
-
-        RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
-        //difference image
-        if (shouldSendDiff && (double)answer.getValue() > 0.01) {
-            BufferedImage diffImg = calcDifference(target, (String) answer.getKey());
-            File diffImgFile = new File("Diff Img.png");
-            try {
-                ImageIO.write(diffImg, "png", diffImgFile);
-            } catch (IOException e) {
-                System.out.println("IOException writing difference file");
-            }
-            RequestBuffer.request(() -> {
+            int counter = 1;
+            for (String s : PokemonUtil.pokemonArray) {
                 try {
-                    return event.getChannel().sendFile("Difference Image: ", diffImgFile);
-                } catch (FileNotFoundException e) {
-                    System.out.println("Could not find difference image");
+                    if (counter%100 == 0)
+                        System.out.println(counter + " Path:" + PokemonUtil.baseDir + s + ".png");
+                    testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png")); //change dir here @todo
+                    double sim = calcSim(target, testImg);
+                    logBuilder.append("Imaging #" + counter + " : " + s + " score: " + sim + "\n");
+                    BotUtils.writeToFile("/home/positron/AspectTextFiles/RecentPokemonMatch.txt", logBuilder.toString(), false);//@todo
+                    similarityMap.put(s, sim);
+                    if (sim < threshold) { //if this is already ~perfect~ close enough match, dont do any more
+                        shouldSendDiff = false;
+                        break;
+                    }
+                } catch (IOException e) {
+                    //System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
                 }
-                return null;
-            }).get();
+                counter++;
+            }
+            Map<String, Double> sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
+            answer = sortedSimilarity.entrySet().iterator().next(); //first entry
 
-            diffImgFile.delete();
-        }
+            EmbedBuilder eb = new EmbedBuilder()
+                    .withTitle("Aspect | Pokédex")
+                    .withColor(Visuals.analyizeImageColor(target))
+                    .withDesc("I am ```" + (99.99 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```")
+                    .withFooterText("This operation took " + (System.currentTimeMillis() - startTime) + " ms.");
 
-        //BotUtils.sendMessage(event.getChannel(), eb);
+            closestMatches(eb, sortedSimilarity);
+
+            RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
+            //difference image
+            if (shouldSendDiff && (double)answer.getValue() > 0.01) {
+                BufferedImage diffImg = calcDifference(target, (String) answer.getKey());
+                File diffImgFile = new File("Diff Img.png");
+                try {
+                    ImageIO.write(diffImg, "png", diffImgFile);
+                } catch (IOException e) {
+                    System.out.println("IOException writing difference file");
+                }
+                RequestBuffer.request(() -> {
+                    try {
+                        return event.getChannel().sendFile("Difference Image: ", diffImgFile);
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Could not find difference image");
+                    }
+                    return null;
+                }).get();
+
+                diffImgFile.delete();
+            }
+
+            //BotUtils.sendMessage(event.getChannel(), eb);
+
+        };
+        //then execute this guy
+        executor.execute(identifier);
     }
 
     private void closestMatches(EmbedBuilder eb, Map<String, Double> sortedSimilarity) {

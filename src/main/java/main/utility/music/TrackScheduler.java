@@ -52,7 +52,7 @@ public class TrackScheduler {
                             nextTrack();
                             loopCount = 0;
                             maxLoop = -1;
-                            currentSongEmbed.delete();
+                            currentSongEmbed.delete(); //or update later on @todo pooptonight at 8:00
                         } else {
                             player.startTrack(previousTrack.makeClone(), false);
                             loopCount++;
