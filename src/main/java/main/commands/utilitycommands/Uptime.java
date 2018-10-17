@@ -17,7 +17,9 @@ public class Uptime implements Command {
         int hr = (int) ((millis / (1000 * 60 * 60)) % 24);
 
         int days = (int) TimeUnit.MILLISECONDS.toDays(millis);
-        String s = "Uptime: " + days + " d\t " + hr + ":" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) + "\t=\t" + millis + " ms\nStart instant:\t" + Main.startInstant.toString();
+        String s = "```Uptime: \t\t  " + days + " d\t" + hr + ":" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) +
+                "\t=\t" + millis + " ms" +
+                "\nStart instant:\t" + Main.startInstant.toString() + "```";
         BotUtils.sendMessage(event.getChannel(), s);
     }
 
@@ -28,6 +30,6 @@ public class Uptime implements Command {
 
     @Override
     public String getDescription() {
-        return null;
+        return "shows uptime";
     }
 }
