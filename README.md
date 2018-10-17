@@ -134,6 +134,8 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Imgur upload/integration
 - [ ] Microsoft Azure/Cloud integration for image recognition
 
+#### WIP Features:
+- [ ] Floating music player - Live embed with current song info, track progress, and reactions for pause, stop, or next
 
 #### non-command features
 - Warframe :: Automatically updates alerts and posts to channel every 30 minutes
