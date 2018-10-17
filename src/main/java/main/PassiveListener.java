@@ -135,6 +135,7 @@ public class PassiveListener {
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
         long startTime = System.currentTimeMillis();
+        double threshold = 0.1;
         if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
         if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have
 
@@ -166,7 +167,7 @@ public class PassiveListener {
                 logBuilder.append("Imaging #" + counter + " : " + s + " score: " + sim + "\n");
                 BotUtils.writeToFile("/home/positron/AspectTextFiles/RecentPokemonMatch.txt", logBuilder.toString(), false);//@todo
                 similarityMap.put(s, sim);
-                if (sim == 0) { //if this is already perfect match, dont do any more
+                if (sim < threshold) { //if this is already ~perfect~ close enough match, dont do any more
                     shouldSendDiff = false;
                     break;
                 }
