@@ -135,13 +135,12 @@ public class PassiveListener {
 
     @EventSubscriber
     public void pokemonIdentifier(MessageReceivedEvent event) {
+        if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
+        if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have
 
         Runnable identifier = () -> {
             long startTime = System.currentTimeMillis();
             double threshold = 10; //changed from .1 -> 10
-            if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
-            if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have
-
             boolean shouldSendDiff = true;
             String targetUrl = "";
 
