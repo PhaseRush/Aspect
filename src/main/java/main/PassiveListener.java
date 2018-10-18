@@ -178,7 +178,7 @@ public class PassiveListener {
                     //System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
                 }
                 counter++;
-                Thread.yield(); //@todo newly added yield in attempt to spread out cpu usage. Keep eye on this.
+                Thread.yield(); //@todo newly added yield in attempt to spread out cpu usage. Keep eye on this. -- WORKS FINE
             }
             Map<String, Double> sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
             answer = sortedSimilarity.entrySet().iterator().next(); //first entry
@@ -236,14 +236,8 @@ public class PassiveListener {
             eb.appendField(new EmbedField(entry.getKey(), (99.99 - entry.getValue()) + "%", false));
     }
 
-    /**
-     * deprecated. Does work.
-     * @param target
-     * @param answer
-     * @return
-     */
     private BufferedImage calcDifference(BufferedImage target, String answer) {
-        BufferedImage answerImg = null;
+        BufferedImage answerImg;
         BufferedImage diffImg = new BufferedImage(target.getWidth(), target.getHeight(), BufferedImage.TYPE_INT_ARGB);
         try {
             answerImg = ImageIO.read(new File(PokemonUtil.baseDir + answer + ".png")); //@todo fix dir

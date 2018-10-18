@@ -28,6 +28,7 @@ public class FortniteStats implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Fortnite Stats: " + ign + " : " + platform)
                 .withUrl("https://fortnitetracker.com/profile/" + platform + "/" + ign)
+                //.withThumbnail("https://vignette.wikia.nocookie.net/fortnite/images/5/54/Icon_Monthly_VIP_Badge.png/revision/latest?cb=20170806011009")
                 .withDesc(generateRanking(stats));
 
         BotUtils.sendMessage(event.getChannel(), eb);
@@ -41,28 +42,30 @@ public class FortniteStats implements Command {
         FortniteTrackerPx duo = stats.getStats().getCurr_p10();
         FortniteTrackerPx squad = stats.getStats().getCurr_p9();
 
+        //rating
+        sb.append(generateRow("Rating", solo.getTrnRating().getDisplayValue(), duo.getTrnRating().getDisplayValue(), squad.getTrnRating().getDisplayValue())).append("\n");
+
+        //percentile
+        sb.append(generateRow("Top %", String.valueOf(solo.getTrnRating().getPercentile()), String.valueOf(duo.getTrnRating().getPercentile()), String.valueOf(squad.getTrnRating().getPercentile()))).append("\n");
+
+        sb.append("\n");
         //win count
-        //sb.append("Wins :\t\t" + solo.getTop1().getValue() + "\t\t" + duo.getTop1().getValue() + "\t\t" + squad.getTop1().getValue() +"\n");
         sb.append(generateRow("Wins", solo.getTop1().getValue(), duo.getTop1().getValue(), squad.getTop1().getValue())).append("\n");
 
         //win %
-        sb.append("Win %:\t\t" + solo.getWinRatio().getValue() + "\t\t" + duo.getWinRatio().getValue() + "\t\t" + squad.getWinRatio().getValue() +"\n");
+        sb.append(generateRow("Win %", solo.getWinRatio().getValue(), duo.getWinRatio().getValue(), squad.getWinRatio().getValue())).append("\n");
 
         //kills
-        sb.append("Kills:\t\t" + solo.getKills().getValue() + "\t\t" + duo.getKills().getValue() + "\t\t" + squad.getKills().getValue() +"\n");
+        sb.append(generateRow("Kills",solo.getKills().getValue(),  duo.getKills().getValue(), squad.getKills().getValue())).append("\n");
 
         //kills/match
-        sb.append("Kills/Game:\t" + solo.getKpg().getValue() + "\t\t" + duo.getKpg().getValue() + "\t\t" + squad.getKpg().getValue() +"\n");
+        sb.append(generateRow("Kills/Game", solo.getKpg().getValue(), duo.getKpg().getValue(), squad.getKpg().getValue())).append("\n");
 
         //kd ratio
-        sb.append("K/D ratio:\t" + solo.getKd().getValue() + "\t\t" + duo.getKd().getValue() + "\t\t" + squad.getKd().getValue() +"\n");
+        sb.append(generateRow("K/D ratio", solo.getKd().getValue(), duo.getKd().getValue(), squad.getKd().getValue())).append("\n");
 
         //Score/match
-        sb.append("Score/Game:\t" + solo.getScorePerMatch().getValue() + "\t" + duo.getScorePerMatch().getValue() + "\t\t" + squad.getScorePerMatch().getValue() +"\n");
-
-
-
-
+        sb.append(generateRow("Score/Game", solo.getScorePerMatch().getValue(), duo.getScorePerMatch().getValue(), squad.getScorePerMatch().getValue())).append("\n");
 
         return sb.append("```").toString();
     }
@@ -72,6 +75,7 @@ public class FortniteStats implements Command {
      */
     private StringBuilder generateRow(String category, String soloVal, String duoVal, String squadVal) {
         int totalLength = 45;
+        int catLen = category.length();
         int firstS = 13;
         int firstE = 19;
         int secondS = 25;
@@ -79,12 +83,17 @@ public class FortniteStats implements Command {
         int thirdS = 39;
         int thirdE = 45;
 
-
         StringBuilder sb = new StringBuilder(category);
-        for (int i = category.length(); i < totalLength; i++) sb.append(" ");
 
+        //fill with blanks
+        for (int i = catLen; i < totalLength; i++) sb.append(" ");
 
-        return null;
+        //replace each
+        sb.replace(firstE-soloVal.length(),firstE, soloVal);
+        sb.replace(secondE-duoVal.length(),secondE,duoVal);
+        sb.replace(thirdE-squadVal.length(),thirdE,squadVal);
+
+        return sb;
     }
 
     private StringBuilder initHeader(StringBuilder sb, int width) {
