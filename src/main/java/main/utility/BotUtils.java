@@ -44,7 +44,7 @@ public class BotUtils {
     public static String DARK_SKY_API;
     public static String CLOUDSIGHT_API_KEY;
     public static String SMMRY_API_KEY;
-    public static String FORTNITE_API_KEY; //service "temp" deprecated?
+    public static String FORTNITE_API_KEY; //updated key with fortnitetracker.com/site-api
     public static String WOLFRAM_API_KEY;
     public static String YOUTUBE_API_KEY;
     public static String WF_BOTTOM_TEXT_ID;
@@ -358,6 +358,19 @@ public class BotUtils {
         } catch (IOException e) {
             //kys
             return "error - url status request - getstringfromurl";
+        }
+    }
+
+    public static String getStringFromUrl(String url, String headerName, String headerValue) {
+        Request request = new Request.Builder()
+                .url(url)
+                .header(headerName, headerValue)
+                .build();//Response response = client.newCall(request).execute()
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            //kys
+            return "error - url status request - getstringfromurl - with header";
         }
     }
 

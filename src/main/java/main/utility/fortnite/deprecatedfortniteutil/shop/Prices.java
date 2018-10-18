@@ -1,4 +1,4 @@
-package main.utility.fortnite.shop;
+package main.utility.fortnite.deprecatedfortniteutil.shop;
 
 public class Prices {
     String currencyType;

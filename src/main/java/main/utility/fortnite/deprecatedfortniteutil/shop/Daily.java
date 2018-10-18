@@ -1,6 +1,6 @@
-package main.utility.fortnite.shop;
+package main.utility.fortnite.deprecatedfortniteutil.shop;
 
-public class Weekly {
+public class Daily {
     String name;
     String imgURL;
     String imgPNGURL;
@@ -10,6 +10,4 @@ public class Weekly {
     String cosmeticType;
     String type;
     String templateID;
-    String displayAssetPath;
-
 }

@@ -1,8 +1,6 @@
 package main;
 
 import main.commands.dontopendeadinside.*;
-import main.commands.fortnite.FortniteShopDetail;
-import main.commands.fortnite.FortniteShopSelect;
 import main.commands.fortnite.FortniteStats;
 import main.commands.humor.AnalyzeUser;
 import main.commands.humor.CuteImg;
@@ -15,7 +13,6 @@ import main.commands.music.playing.*;
 import main.commands.music.queue.*;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
-import main.commands.pokemon.setup.TransparentTrimmer;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
@@ -39,7 +36,7 @@ public class CommandManager {
         //Actual Testing
         //commandMap.put("bulba", new BulbapediaScraper());
         //commandMap.put("transpose", new ImageTransposer());
-        commandMap.put("trim", new TransparentTrimmer());
+        //commandMap.put("trim", new TransparentTrimmer());
 
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
@@ -96,8 +93,8 @@ public class CommandManager {
 
         //Fortnite
         commandMap.put("fn", new FortniteStats());
-        commandMap.put("fnshop", new FortniteShopSelect());
-        commandMap.put("fnselect", new FortniteShopDetail());
+        //commandMap.put("fnshop", new FortniteShopSelect());
+        //commandMap.put("fnselect", new FortniteShopDetail());
 
         //meta
         commandMap.put("setprefix", new SetPrefix());

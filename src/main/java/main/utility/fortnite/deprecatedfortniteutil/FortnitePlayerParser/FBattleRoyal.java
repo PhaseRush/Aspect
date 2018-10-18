@@ -1,4 +1,4 @@
-package main.utility.fortnite.FortnitePlayerParser;
+package main.utility.fortnite.deprecatedfortniteutil.FortnitePlayerParser;
 
 public class FBattleRoyal {
     private FProfile profile;

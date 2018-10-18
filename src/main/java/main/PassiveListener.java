@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
@@ -143,14 +144,15 @@ public class PassiveListener {
 
             boolean shouldSendDiff = true;
             String targetUrl = "";
-            if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) {
+
+            if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) { //for use by dev for testing
                 targetUrl = event.getMessage().getFormattedContent();
             }else if (event.getAuthor().getStringID().equals("365975655608745985")){
                 IEmbed embed = event.getMessage().getEmbeds().get(0);
                 targetUrl = embed.getImage().getUrl(); //event.getMessage().getFormattedContent();
             } else return;
 
-            System.out.println("Starting pokemon identification");
+            System.out.println("Starting pokemon identification at " + LocalDateTime.now().toString());
 
             StringBuilder logBuilder = new StringBuilder("Attempting match on: " + targetUrl + "\n");
             BufferedImage target = Visuals.cropTransparent(Visuals.urlToBufferedImageWithAgentHeader(targetUrl)); //important
@@ -214,14 +216,11 @@ public class PassiveListener {
 
                 diffImgFile.delete();
             }
-
-            //BotUtils.sendMessage(event.getChannel(), eb);
-
         };
 
         //@todo using this thread impl. to test out priority setting
         Thread iden = new Thread(pokemonIdentifiers, identifier, "identifier");
-        iden.setPriority(3); //might want to make this daemon
+        iden.setPriority(3); //5 is default priority. might want to make this daemon
         iden.start();
         //then execute this guy
         //executor.execute(identifier);

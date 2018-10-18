@@ -1,13 +1,13 @@
-package main.commands.fortnite;
+package main.commands.fortnite.deprecatedFortnite;
 
 import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
-import main.utility.fortnite.shop.CatalogEntry;
-import main.utility.fortnite.shop.FortniteShopJson;
-import main.utility.fortnite.shop.Prices;
-import main.utility.fortnite.shop.Storefront;
+import main.utility.fortnite.deprecatedfortniteutil.shop.CatalogEntry;
+import main.utility.fortnite.deprecatedfortniteutil.shop.FortniteShopJson;
+import main.utility.fortnite.deprecatedfortniteutil.shop.Prices;
+import main.utility.fortnite.deprecatedfortniteutil.shop.Storefront;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
