@@ -131,12 +131,10 @@ public class MasterManager {
                     itemOptionEmbed.withDesc("Youtube search results.\n React with the corresponding letter to add song to queue\n\n" + BotUtils.buildOptions(optionsForEmbed, 5));
 
                     IMessage embedMessage = RequestBuffer.request(() -> channel.sendMessage(itemOptionEmbed.build())).get();
-                    List<ReactionEmoji> reactionEmojis = BotUtils.initializeRegionals().subList(0, 5);
-                    reactionEmojis.add(ReactionEmoji.of("\u274C"));
-                    BotUtils.reactAllEmojis(embedMessage, reactionEmojis);
+
 
                     IListener reactionListener = (IListener<ReactionAddEvent>) reactionEvent -> {
-                        if (reactionEvent.getUser().equals(event.getAuthor()) && reactionEvent.getChannel().equals(event.getChannel())) {
+                        if (reactionEvent.getUser().equals(event.getAuthor()) && reactionEvent.getMessage().getStringID().equals(embedMessage.getStringID())) {
                             String emojiName = reactionEvent.getReaction().getEmoji().getName();
                             switch (emojiName) {
                                 case "\uD83C\uDDE6":
@@ -169,18 +167,20 @@ public class MasterManager {
                     //register this listener
                     event.getClient().getDispatcher().registerListener(reactionListener);
 
+                    //react with emojis after registering listener
+                    List<ReactionEmoji> reactionEmojis = BotUtils.initializeRegionals().subList(0, 5);
+                    reactionEmojis.add(ReactionEmoji.of("\u274C"));
+                    BotUtils.reactAllEmojis(embedMessage, reactionEmojis);
+
                     ExecutorService executorService = Executors.newFixedThreadPool(1);//no idea how many i need. seems like a relatively simple task?
-                    Runnable removeListener = new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(10000);
-                            } catch (InterruptedException e1) {
-                                System.out.println("guess this is fucked");
-                            } finally { //please just execute this no matter what
-                                event.getClient().getDispatcher().unregisterListener(reactionListener);
-                                System.out.println("Listener Deleted");
-                            }
+                    Runnable removeListener = () -> {
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e1) {
+                            System.out.println("guess this is fucked");
+                        } finally { //please just execute this no matter what
+                            event.getClient().getDispatcher().unregisterListener(reactionListener);
+                            System.out.println("Listener Deleted");
                         }
                     };
                     executorService.execute(removeListener);

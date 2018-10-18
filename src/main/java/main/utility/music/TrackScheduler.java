@@ -153,7 +153,7 @@ public class TrackScheduler {
 
 
     public StringBuilder trackProgress() {
-        int lengthFactor = 5;
+        int lengthFactor = 2;
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
         long percent = 100*position / (duration*lengthFactor); //*2
