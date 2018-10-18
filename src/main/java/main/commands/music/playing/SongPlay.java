@@ -1,5 +1,6 @@
 package main.commands.music.playing;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.music.MasterManager;
@@ -15,7 +16,11 @@ public class SongPlay implements Command {
 
             BotUtils.joinVC(event);
         }
-
+        AudioPlayer player = MasterManager.getGuildAudioPlayer(event.getGuild()).player;
+        if (player.isPaused()) {
+            player.setPaused(false);
+            BotUtils.sendMessage(event.getChannel(), "Player is now unpaused.");
+        }
         String searchStr = String.join(" ", args);
         MasterManager.loadAndPlay(event.getChannel(), searchStr, event, false, "");
     }

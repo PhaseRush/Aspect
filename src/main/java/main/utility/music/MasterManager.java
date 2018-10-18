@@ -132,7 +132,6 @@ public class MasterManager {
 
                     IMessage embedMessage = RequestBuffer.request(() -> channel.sendMessage(itemOptionEmbed.build())).get();
 
-
                     IListener reactionListener = (IListener<ReactionAddEvent>) reactionEvent -> {
                         if (reactionEvent.getUser().equals(event.getAuthor()) && reactionEvent.getMessage().getStringID().equals(embedMessage.getStringID())) {
                             String emojiName = reactionEvent.getReaction().getEmoji().getName();
