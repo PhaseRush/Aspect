@@ -10,7 +10,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 
 ## All available commands:
-- examples with params in round brackets indicate optional params. Square brackets indicate a placeholder. Do not use the round or square brackets if you choose to use that parameter
+- examples with params in round brackets indicate optional params. Square brackets indicate a placeholder. Do not use the round or square bracket characters if you choose to use that parameter
 
 
 #### Music
@@ -47,17 +47,6 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | membercount | 0 | displays number of members in current server | `$membercount` |
 | poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
 | cpuload | 0 | displays system info | `$cpuload` |
-
-#### Humour // Don't dead open inside
-
-| Command | #Params | Description | Example |
-| --- | --- | --- | --- |
-| cute | 1 | displays a cute image | `$cute baka` |
-| ship | 2 | Ships two people | `$ship @Aspect, @Requiem` |
-| insult | 0 | says an insult (slight nsfw) | `$insult` |
-| ascii | 1,2 | Ascii-fy an image. Can specify font size| `$ascii https://goo.gl/5dx7VS, 4` |
-| ascii2 | 2 | Ascii-fy, old. Specify font size | `$ascii2 https://goo.gl/5dx7VS, 10` |
-| count | 1, 2 | Counts # of occurences of word/regex in channel, or entire server | `$count word, all` |
 
 #### League of Legends
 
@@ -98,13 +87,29 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | --- | --- | --- | --- |
 |wolfram/solve/_ | 1..* | Querys WA | `$_ tell me a comp sci joke` |
 
+#### Humour // Don't dead open inside
+
+| Command | #Params | Description | Example |
+| --- | --- | --- | --- |
+| cute | 1 | displays a cute image | `$cute baka` |
+| ship | 2 | Ships two people | `$ship @Aspect, @Requiem` |
+| insult | 0 | says an insult (slight nsfw) | `$insult` |
+| ascii | 1,2 | Ascii-fy an image. Can specify font size| `$ascii https://goo.gl/5dx7VS, 4` |
+| ascii2 | 2 | Ascii-fy, old. Specify font size | `$ascii2 https://goo.gl/5dx7VS, 10` |
+| count | 1, 2 | Counts # of occurences of word/regex in channel, or entire server | `$count word, all` |
+
 #### Misc.
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
 | summarize | 1 | summarizes webpage article | `$summarize https://goo.gl/oei2cu` |
 | img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
-| fn -DEPRECATED- | 2 | displays fortnite stats | `$fn AmperianLoop, \[one of: all, squad, solo, duo\]` |
+
+#### Stats
+| Command | #Params | Description | Example |
+| --- | --- | --- | --- |
+| ow | 2 | displays overwatch stats| `$ow cats, 11481` |
+| fn | 1,2 | displays fortnite stats | `$fn AmperianLoop [,xbox]` |
 
 #### Realm of the Mad God - Temporarily Deprecated
 
@@ -113,7 +118,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | katinv | 0 | Lists kat's inventory | `$katinv` |
 | rguild | 1 | Rates guild | `$rguild Black Bullet` |
 | rpet | 1 | Rates player's pet | `$rpet SexySelfie` |
-| rrate | 1 | Rates player | `$rrate SexySelfie` |
+| rrate | 1 | Rates player | `$rrate SexySelfie` | |
 | rdesc | 1 | Shows player's realmeye desc | `$rdesc SexySelfie` |
 | rrecentchar | 1 | Shows player's most recent char | `$rrecentchar SexySelfie`|
 | rscore | 1 | Scores player | `$rscore SexySelfie` |
@@ -133,6 +138,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Google image search
 - [ ] Imgur upload/integration
 - [ ] Microsoft Azure/Cloud integration for image recognition
+= [ ] Remind me bot (timezones op?)
 
 #### WIP Features:
 - [ ] Floating music player - Live embed with current song info, track progress, and reactions for pause, stop, or next
@@ -153,7 +159,6 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - $bulkdelete temporarily disabled for security purposes
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
 - Fortnite integration is deprecated due to the API being shutdown.
-
 
 
 
