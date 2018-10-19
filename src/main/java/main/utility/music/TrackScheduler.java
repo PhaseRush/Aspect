@@ -6,7 +6,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import main.utility.Visuals;
-import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
@@ -157,7 +156,7 @@ public class TrackScheduler {
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
         long percent = 100*position / (duration*lengthFactor); //*2
-        System.out.println();ReactionEmoji.of("ncat1", 501972187524366336L).isUnicode();
+        //ReactionEmoji.of("ncat1", 501972187524366336L).isUnicode();
         String marker = ":red_circle:";
         String marker2 = ":cat:";
         String filler = "-";
