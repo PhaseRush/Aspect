@@ -76,6 +76,8 @@ public class PassiveListener {
                     subR = afterR.substring(0, afterR.indexOf(" "));
                 else subR = afterR;
 
+                subR = subR.replaceAll("[.,/#!$%^&*;:{}=\\-_`~()]","");
+
                 BotUtils.sendMessage(event.getChannel(), "https://www.reddit.com/" + subR);
             }
         }
@@ -101,7 +103,7 @@ public class PassiveListener {
 
 
     @EventSubscriber
-    public void alexaPlayD(MessageReceivedEvent event) {
+    public void alexaPlayTheD(MessageReceivedEvent event) {
         String msg = event.getMessage().getFormattedContent();
         String alexa = "alexa play despacito";
 
