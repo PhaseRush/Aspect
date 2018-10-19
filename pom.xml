@@ -103,6 +103,12 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <!-- tesseract -->
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>3.2.1</version>
+        </dependency>
         <!--OCR https://github.com/bytedeco/javacpp-presets/tree/master/tesseract
         <dependency>
             <groupId>org.bytedeco.javacpp-presets</groupId>

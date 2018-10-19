@@ -1,5 +1,6 @@
-package main;
+package main.passive;
 
+import main.Main;
 import main.utility.BotUtils;
 import main.utility.WarframeUtil;
 import main.utility.warframe.wfstatus.WarframeCetusTimeObject;

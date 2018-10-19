@@ -4,6 +4,8 @@ import com.ibm.watson.developer_cloud.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
+import main.passive.PassiveListener;
+import main.passive.WfPassive;
 import main.utility.BotUtils;
 import sx.blah.discord.api.IDiscordClient;
 
@@ -63,8 +65,8 @@ public class Main {
 
         // Register a listener via the EventSubscriber annotation which allows for organisation and delegation of events
         client.getDispatcher().registerListener(new main.CommandManager());
-        client.getDispatcher().registerListener(new main.PassiveListener());
-        client.getDispatcher().registerListener(new main.WfPassive());
+        client.getDispatcher().registerListener(new PassiveListener());
+        client.getDispatcher().registerListener(new WfPassive());
 
         // Only login after all events are registered otherwise some may be missed.
         client.login();
