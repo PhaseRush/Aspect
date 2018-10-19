@@ -13,6 +13,7 @@ import main.commands.music.playing.*;
 import main.commands.music.queue.*;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
+import main.commands.overwatch.OverwatchStats;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
@@ -95,6 +96,9 @@ public class CommandManager {
         commandMap.put("fn", new FortniteStats());
         //commandMap.put("fnshop", new FortniteShopSelect());
         //commandMap.put("fnselect", new FortniteShopDetail());
+
+        //Overwatch
+        commandMap.put("ow", new OverwatchStats());
 
         //meta
         commandMap.put("setprefix", new SetPrefix());

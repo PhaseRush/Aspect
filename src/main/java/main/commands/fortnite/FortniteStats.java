@@ -3,6 +3,7 @@ package main.commands.fortnite;
 import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
+import main.utility.StatsFactory;
 import main.utility.fortnite.fornitetracker.FortniteTrackerJsonObj;
 import main.utility.fortnite.fornitetracker.stats.FortniteTrackerPx;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -11,6 +12,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.util.List;
 
 public class FortniteStats implements Command {
+    private static Gson gson = new Gson();
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String platform = "pc";
@@ -22,20 +24,20 @@ public class FortniteStats implements Command {
 
         String json = BotUtils.getStringFromUrl("https://api.fortnitetracker.com/v1/profile/" + platform  + "/" + ign,
                 "TRN-Api-Key", BotUtils.FORTNITE_API_KEY);
-        FortniteTrackerJsonObj stats = new Gson().fromJson(json, FortniteTrackerJsonObj.class);
+        FortniteTrackerJsonObj stats = gson.fromJson(json, FortniteTrackerJsonObj.class);
 
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Fortnite Stats: " + BotUtils.capitalizeFirst(ign) + " : " + platform)
                 .withUrl("https://fortnitetracker.com/profile/" + platform + "/" + ign)
                 //.withThumbnail("https://vignette.wikia.nocookie.net/fortnite/images/5/54/Icon_Monthly_VIP_Badge.png/revision/latest?cb=20170806011009")
-                .withDesc(generateRanking(stats))
+                .withDesc(generateDesc(stats))
                 .withFooterText("(*) indicates an estimated value; click title for more details");
 
         BotUtils.sendMessage(event.getChannel(), eb);
     }
 
-    private String generateRanking(FortniteTrackerJsonObj stats) {
+    private String generateDesc(FortniteTrackerJsonObj stats) {
         int width = 53;
         StringBuilder sb = initHeader(new StringBuilder("```\n"), width);
 
@@ -56,22 +58,21 @@ public class FortniteStats implements Command {
 
         sb.append("\n");
         //win count
-        sb.append(generateRow("Wins", solo.getTop1().getValue(), duo.getTop1().getValue(), squad.getTop1().getValue())).append("\n");
+        sb.append(StatsFactory.generateRow("Wins", solo.getTop1().getValue(), duo.getTop1().getValue(), squad.getTop1().getValue(),width)).append("\n");
 
-        //win %
-        sb.append(generateRow("Win %", solo.getWinRatio().getValue(), duo.getWinRatio().getValue(), squad.getWinRatio().getValue())).append("\n");
+        //win %StatsFactory.
+        sb.append(StatsFactory.generateRow("Win %", solo.getWinRatio().getValue(), duo.getWinRatio().getValue(), squad.getWinRatio().getValue(),width)).append("\n");
 
-        //kills
-        sb.append(generateRow("Kills",solo.getKills().getValue(),  duo.getKills().getValue(), squad.getKills().getValue())).append("\n");
+        //StatsFactory.
+        sb.append(StatsFactory.generateRow("Kills",solo.getKills().getValue(),  duo.getKills().getValue(), squad.getKills().getValue(),width)).append("\n");
 
-        //kills/match
-        sb.append(generateRow("Kills/Game", solo.getKpg().getValue(), duo.getKpg().getValue(), squad.getKpg().getValue())).append("\n");
+        //kills/StatsFactory.tch
+        sb.append(StatsFactory.generateRow("Kills/Game", solo.getKpg().getValue(), duo.getKpg().getValue(), squad.getKpg().getValue(),width)).append("\n");
 
-        //kd ratio
-        sb.append(generateRow("K/D ratio", solo.getKd().getValue(), duo.getKd().getValue(), squad.getKd().getValue())).append("\n");
-
-        //Score/match
-        sb.append(generateRow("Score/Game", solo.getScorePerMatch().getValue(), duo.getScorePerMatch().getValue(), squad.getScorePerMatch().getValue())).append("\n");
+        //kd StatsFactory.
+        sb.append(StatsFactory.generateRow("K/D ratio", solo.getKd().getValue(), duo.getKd().getValue(), squad.getKd().getValue(),width)).append("\n");
+        //Score/StatsFactory.tch
+        sb.append(StatsFactory.generateRow("Score/Game", solo.getScorePerMatch().getValue(), duo.getScorePerMatch().getValue(), squad.getScorePerMatch().getValue(),width)).append("\n");
 
         return sb.append("```").toString();
     }
@@ -86,24 +87,21 @@ public class FortniteStats implements Command {
      * Actually format the f-ing rows correctly
      */
     private StringBuilder generateRow(String category, String soloVal, String duoVal, String squadVal) {
-        int totalLength = 45;
+        int totalWidth = 45;
         int catLen = category.length();
-        int firstS = 13;
         int firstE = 19;
-        int secondS = 25;
         int secondE = 31;
-        int thirdS = 39;
         int thirdE = 45;
 
         StringBuilder sb = new StringBuilder(category);
 
         //fill with blanks
-        for (int i = catLen; i < totalLength; i++) sb.append(" ");
+        for (int i = catLen; i < totalWidth; i++) sb.append(" ");
 
         //replace each
         sb.replace(firstE-soloVal.length(),firstE, soloVal);
         sb.replace(secondE-duoVal.length(),secondE,duoVal);
-        sb.replace(thirdE-squadVal.length(),thirdE,squadVal);
+        sb.replace(thirdE-squadVal.length(),thirdE, squadVal);
 
         return sb;
     }
