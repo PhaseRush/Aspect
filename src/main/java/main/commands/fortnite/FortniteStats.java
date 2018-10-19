@@ -26,10 +26,11 @@ public class FortniteStats implements Command {
 
 
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Fortnite Stats: " + ign + " : " + platform)
+                .withTitle("Fortnite Stats: " + BotUtils.capitalizeFirst(ign) + " : " + platform)
                 .withUrl("https://fortnitetracker.com/profile/" + platform + "/" + ign)
                 //.withThumbnail("https://vignette.wikia.nocookie.net/fortnite/images/5/54/Icon_Monthly_VIP_Badge.png/revision/latest?cb=20170806011009")
-                .withDesc(generateRanking(stats));
+                .withDesc(generateRanking(stats))
+                .withFooterText("(*) indicates an estimated value; click title for more details");
 
         BotUtils.sendMessage(event.getChannel(), eb);
     }
@@ -46,7 +47,12 @@ public class FortniteStats implements Command {
         sb.append(generateRow("Rating", solo.getTrnRating().getDisplayValue(), duo.getTrnRating().getDisplayValue(), squad.getTrnRating().getDisplayValue())).append("\n");
 
         //percentile
-        sb.append(generateRow("Top %", String.valueOf(solo.getTrnRating().getPercentile()), String.valueOf(duo.getTrnRating().getPercentile()), String.valueOf(squad.getTrnRating().getPercentile()))).append("\n");
+        String duoPercentile = String.valueOf(duo.getTrnRating().getPercentile());
+        if (duo.getTrnRating().getPercentile() == 0) {
+            double totalPlayers = calcTotalPlayers(stats);
+            duoPercentile = "*" + String.valueOf(100 * duo.getTrnRating().getRank() / totalPlayers);
+        }
+        sb.append(generateRow("Top %", String.valueOf(solo.getTrnRating().getPercentile()), (duoPercentile.length()>5? duoPercentile.substring(0,5): duoPercentile), String.valueOf(squad.getTrnRating().getPercentile()))).append("\n");
 
         sb.append("\n");
         //win count
@@ -68,6 +74,12 @@ public class FortniteStats implements Command {
         sb.append(generateRow("Score/Game", solo.getScorePerMatch().getValue(), duo.getScorePerMatch().getValue(), squad.getScorePerMatch().getValue())).append("\n");
 
         return sb.append("```").toString();
+    }
+
+    private double calcTotalPlayers(FortniteTrackerJsonObj stats) {
+        int rank = stats.getStats().getCurr_p10().getScore().getRank();
+        double percentile = stats.getStats().getCurr_p10().getScore().getPercentile()/100;
+        return rank/percentile;
     }
 
     /**
