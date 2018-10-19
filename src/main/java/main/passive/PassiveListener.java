@@ -3,13 +3,8 @@ package main.passive;
 import com.google.common.math.BigIntegerMath;
 import info.debatty.java.stringsimilarity.Levenshtein;
 import main.utility.BotUtils;
-import main.utility.Visuals;
-import main.utility.WarframeUtil;
 import main.utility.music.MasterManager;
-import main.utility.warframe.wfstatus.alerts.WarframeAlert;
-import main.utility.warframe.wfstatus.alerts.WarframeMission;
 import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.obj.IEmoji;
@@ -17,12 +12,11 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 
 import java.math.BigInteger;
-import java.util.LinkedList;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class PassiveListener {
     private static ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -70,37 +64,6 @@ public class PassiveListener {
         }
     }
 
-
-    @EventSubscriber
-    public void alertFilter(ReadyEvent event) {
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
-        final Runnable alertFilter = () -> {
-            LinkedList<WarframeAlert> alerts = WarframeUtil.getCurrentAlerts();
-            alerts.removeIf(warframeAlert -> {
-                boolean containsKeyword = false;
-                for (String s : WarframeUtil.alertFilters)
-                    if (warframeAlert.getMission().getReward().getAsString().contains(s))
-                        containsKeyword = true;
-
-                return !containsKeyword;
-            });
-
-            EmbedBuilder eb = new EmbedBuilder()
-                    .withTitle("Warframe | Filtered Alerts")
-                    .withColor(Visuals.getVibrantColor());
-
-            if (alerts.size() == 0) return;
-
-            for (WarframeAlert alert : alerts) {
-                WarframeMission mission = alert.getMission();
-                eb.appendField(mission.getNode() + " | " + mission.getType() + " | " + alert.getEta() + " remaining", mission.getReward().getAsString(), false);
-            }
-            BotUtils.sendMessage(BotUtils.BOTTOM_TEXT, eb);
-        };
-
-        final ScheduledFuture<?> alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);
-    }
 
     @EventSubscriber
     public void subredditLinker(MessageReceivedEvent event) {
