@@ -40,10 +40,17 @@ public class PassiveListener {
     }
 
     @EventSubscriber
-    public void owo(MessageReceivedEvent event) {
-        if (event.getMessage().getContent().equalsIgnoreCase("owo"))
-            if (ThreadLocalRandom.current().nextInt(100) == 1)
-                BotUtils.sendMessage(event.getChannel(), "degenerate");
+    public void owo(MessageReceivedEvent event) throws Exception{
+        try {
+            if (event.getMessage().getContent().equalsIgnoreCase("owo")){
+                if (ThreadLocalRandom.current().nextInt(100) == 1)
+                    BotUtils.sendMessage(event.getChannel(), "degenerate");
+            }else {
+                throw new Exception();
+            }
+        }catch(Exception e){
+            System.out.println("no message");
+        }
     }
 
     @EventSubscriber
@@ -129,4 +136,7 @@ public class PassiveListener {
     public String toString() {
         return "This is janky asf";
     }
+
+    //THIS IS JUST A JOKE. If youre a recruiter plz understand that i have a good sense of humour;
+    @Override public boolean equals(Object o) {return true;}
 }
