@@ -6,6 +6,7 @@ import main.commands.humor.AnalyzeUser;
 import main.commands.humor.CuteImg;
 import main.commands.humor.Insult;
 import main.commands.humor.Ship;
+import main.commands.kaitlyn_is_needy.ReNickName;
 import main.commands.league.*;
 import main.commands.music.SoundEffect;
 import main.commands.music.SoundEffectList;
@@ -38,6 +39,7 @@ public class CommandManager {
         //commandMap.put("bulba", new BulbapediaScraper());
         //commandMap.put("transpose", new ImageTransposer());
         //commandMap.put("trim", new TransparentTrimmer());
+        commandMap.put("nick", new ReNickName());
 
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
