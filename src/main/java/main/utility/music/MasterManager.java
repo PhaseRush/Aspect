@@ -175,11 +175,11 @@ public class MasterManager {
                     Runnable removeListener = () -> {
                         try {
                             Thread.sleep(10000);
-                        } catch (InterruptedException e1) {
-                            System.out.println("guess this is fucked");
+                        } catch (InterruptedException ignored) {
                         } finally { //please just execute this no matter what
                             event.getClient().getDispatcher().unregisterListener(reactionListener);
-                            System.out.println("Listener Deleted");
+                            if (!embedMessage.isDeleted()) embedMessage.delete();
+
                         }
                     };
                     executorService.execute(removeListener);
