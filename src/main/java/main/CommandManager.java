@@ -60,13 +60,15 @@ public class CommandManager {
         SongStop songStop = new SongStop();
         SongDelete songDelete = new SongDelete();
         SongQueue songQueue = new SongQueue();
+        SongSkip songSkip = new SongSkip();
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
         commandMap.put("nowplaying", songInfo);
         commandMap.put("np", songInfo);
         commandMap.put("current", songInfo);
-        commandMap.put("skip", new SongSkip());
+        commandMap.put("skip", songSkip);
+        commandMap.put(">", songSkip);
         commandMap.put("queue", songQueue);
         commandMap.put("q", songQueue);
         commandMap.put("loop", new SongLoop());
