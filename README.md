@@ -40,10 +40,10 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| setprefix | 1 | sets prefix for disc server | `$setprefix ! (next time use !setprefix $)`|
+| setprefix | 1 | sets prefix for disc server | `$setprefix ! (next time: !setprefix $)`|
 | ping | 0 | pretty useless | `$ping` |
 | info | 1 | shows info about a person. Ask for details | `$info @Requiem` |
-| help | 0, 1 | sends pm for help, or specific help for 1 command | `$help (poll)` |
+| help | 0, 1 | sends pm for help, or specific help a cmd | `$help (poll)` |
 | membercount | 0 | displays number of members in current server | `$membercount` |
 | poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
 | cpuload | 0 | displays system info | `$cpuload` |
@@ -109,7 +109,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
 | ow | 2 | displays overwatch stats| `$ow cats, 11481` |
-| fn | 1,2 | displays fortnite stats | `$fn AmperianLoop [,xbox]` |
+| fn | 1 | displays fortnite stats | `$fn ninja` |
 
 #### Realm of the Mad God - Temporarily Deprecated
 
@@ -138,7 +138,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Google image search
 - [ ] Imgur upload/integration
 - [ ] Microsoft Azure/Cloud integration for image recognition
-= [ ] Remind me bot (timezones op?)
+- [ ] Remind me bot (timezones op?)
 
 #### WIP Features:
 - [ ] Floating music player - Live embed with current song info, track progress, and reactions for pause, stop, or next
@@ -153,12 +153,11 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 
 #### Notes
-- command prefix cannot be changed as of 8/25
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
 - Icons used curtesy of [Mike Winkelmann](https://www.beeple-crap.com/about).
 - $bulkdelete temporarily disabled for security purposes
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
-- Fortnite integration is deprecated due to the API being shutdown.
+- command prefix cannot be changed as of 8/25
 
 
 
