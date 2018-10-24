@@ -40,10 +40,10 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| setprefix | 1 | sets prefix for disc server | `$setprefix ! (next time use !setprefix $)`|
+| setprefix | 1 | sets prefix for disc server | `$setprefix ! (next time: !setprefix $)`|
 | ping | 0 | pretty useless | `$ping` |
 | info | 1 | shows info about a person. Ask for details | `$info @Requiem` |
-| help | 0, 1 | sends pm for help, or specific help for 1 command | `$help (poll)` |
+| help | 0, 1 | sends pm for help, or specific help a cmd | `$help (poll)` |
 | membercount | 0 | displays number of members in current server | `$membercount` |
 | poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
 | cpuload | 0 | displays system info | `$cpuload` |
