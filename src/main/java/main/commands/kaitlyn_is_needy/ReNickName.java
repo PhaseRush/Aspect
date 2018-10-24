@@ -14,7 +14,8 @@ import java.util.Map;
 public class ReNickName implements Command {
     private Gson gson = new Gson();
     private String winBasedir = "C:\\Users\\leozh\\Desktop\\nick.txt";
-    private String basedir;
+    private String basedir; //some linux shit here
+
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         IGuild iGuild = event.getGuild();
