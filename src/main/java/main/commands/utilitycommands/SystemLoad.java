@@ -31,7 +31,7 @@ public class SystemLoad implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

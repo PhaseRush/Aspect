@@ -155,7 +155,7 @@ public class WfItemInfo implements Command {
         BotUtils.sendMessage(e.getChannel(), message);
     }
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

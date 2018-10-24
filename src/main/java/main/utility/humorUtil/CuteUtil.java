@@ -8,7 +8,7 @@ public class CuteUtil {
 
     static {
         cuteUrls.put("baka", "http://pm1.narvii.com/6511/5f5c48c50768d5ac75a9e7ff6239e41fbcabcff2_00.jpg");
-        cuteUrls.put("headpat", "https://c  dnb.artstation.com/p/assets/images/images/010/608/879/large/aoi-ogata-pat-me2.jpg?1525303993");
+        cuteUrls.put("headpat", "https://cdnb.artstation.com/p/assets/images/images/010/608/879/large/aoi-ogata-pat-me2.jpg?1525303993");
         cuteUrls.put("butt", "no");
         cuteUrls.put("chinrest", "https://pbs.twimg.com/media/Do5KSXmUwAEymPV.jpg:large");
         cuteUrls.put("eevee", "https://twitter.com/i/status/1045518180238716928");

@@ -1,4 +1,4 @@
-package main.commands.music;
+package main.commands.music.sfx;
 
 import main.Command;
 import main.utility.BotUtils;
@@ -21,7 +21,7 @@ public class SoundEffectList implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

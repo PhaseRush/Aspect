@@ -1,4 +1,4 @@
-package main.commands.music;
+package main.commands.music.sfx;
 
 import main.Command;
 import main.utility.BotUtils;
@@ -15,6 +15,11 @@ public class SoundEffect implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+        if (args.size()>0 && args.get(0).equalsIgnoreCase("list")) {
+            BotUtils.sendMessage(event.getChannel(), "Did you mean `$listsfx`");
+            return;
+        }
+
         if (event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel() == null) {
             BotUtils.joinVC(event);
         }
@@ -31,7 +36,7 @@ public class SoundEffect implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

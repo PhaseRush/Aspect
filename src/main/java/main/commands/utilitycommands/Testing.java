@@ -22,7 +22,7 @@ public class Testing implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

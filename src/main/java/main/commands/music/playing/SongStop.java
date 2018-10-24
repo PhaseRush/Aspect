@@ -36,7 +36,7 @@ public class SongStop implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

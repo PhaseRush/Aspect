@@ -222,9 +222,8 @@ public class TrackScheduler {
 
     public long getQueueDurationMillis() {
         long l = 0;
-        for (AudioTrack a : queue) {
+        for (AudioTrack a : queue)
             l += a.getDuration();
-        }
         return l;
     }
 

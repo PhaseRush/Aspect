@@ -166,7 +166,7 @@ public class WfMarketListing implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

@@ -31,7 +31,7 @@ public class SetPrefix implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return true;
     }
 

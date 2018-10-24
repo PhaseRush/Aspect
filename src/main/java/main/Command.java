@@ -7,7 +7,7 @@ import java.util.List;
 public interface Command {
     void runCommand(MessageReceivedEvent event, List<String> args);
 
-    boolean requiresElevation();
+    boolean canRun();
 
     String getDescription();
     //String getSyntax();

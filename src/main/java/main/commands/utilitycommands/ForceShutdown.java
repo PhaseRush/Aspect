@@ -21,7 +21,7 @@ public class ForceShutdown implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 

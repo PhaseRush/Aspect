@@ -113,7 +113,7 @@ public class WordCounter implements Command {
     }
 
     @Override
-    public boolean requiresElevation() {
+    public boolean canRun() {
         return false;
     }
 
