@@ -10,8 +10,7 @@ import java.io.IOException;
 
 public class IntTypeAdaptor extends TypeAdapter<Number> {
     @Override
-    public void write(JsonWriter out, Number value)
-            throws IOException {
+    public void write(JsonWriter out, Number value) throws IOException {
         out.value(value);
     }
 
@@ -24,7 +23,7 @@ public class IntTypeAdaptor extends TypeAdapter<Number> {
         try {
             String result = in.nextString();
             if ("".equals(result)) {
-                return null;
+                return null; //this is the juicy part
             }
             return Integer.parseInt(result);
         } catch (NumberFormatException e) {

@@ -39,7 +39,7 @@ public class TrackScheduler {
 
         // For encapsulation, keep the listener anonymous.
         player.addListener(new AudioEventAdapter() {
-            @Override //@todo make looping here possibly.... and update info currently playing embed.
+            @Override
             public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
                 //always update lastTrack before anything else, so will never be null
                 previousTrack = track;
@@ -51,7 +51,7 @@ public class TrackScheduler {
                             nextTrack();
                             loopCount = 0;
                             maxLoop = -1;
-                            currentSongEmbed.delete(); //or update later on @todo pooptonight at 8:00
+                            currentSongEmbed.delete(); //or update later on @todo pooptonight at 8:00 (thanks luis)
                         } else {
                             player.startTrack(previousTrack.makeClone(), false);
                             loopCount++;
