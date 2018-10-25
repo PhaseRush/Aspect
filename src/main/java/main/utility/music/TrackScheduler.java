@@ -21,6 +21,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * This class schedules tracks for the audio player. It contains the queue of tracks.
+ *
+ * ----
+ * HEAVILY MODIFIED
+ * ----
  */
 public class TrackScheduler {
     private volatile List<AudioTrack> queue; //dannie said to make volatile
@@ -33,8 +37,10 @@ public class TrackScheduler {
     private AudioTrack previousTrack;
     private IChannel lastEmbedChannel;
 
+    //fancy shmancy stuff
     private static ThreadGroup floatingPlayer = new ThreadGroup("Floating Music Player");
-    final ScheduledExecutorService floatingPlayerScheduler = Executors.newScheduledThreadPool(1);//not sure @todo
+    private final ScheduledExecutorService floatingPlayerScheduler = Executors.newScheduledThreadPool(1);//not sure @todo
+    ScheduledFuture<?> trackEmbedUpdater;
 
     //private volatile IChannel currentCallChannel;
 
@@ -133,43 +139,29 @@ public class TrackScheduler {
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);
 
-        // TODO: 2018-07-22
+        // TODO: 2018-07-22 <- immortalize this
         //handle songinfo for next track
         handleFloatingPlayer(nextTrack, channel);
 
         return currentTrack;
     }
 
+    //gets called once per track
     private void handleFloatingPlayer(AudioTrack nextTrack, IChannel channel) {
+        trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
         if (nextTrack == null || channel == null) return;
-        AudioTrackInfo info = nextTrack.getInfo();
 
         EmbedBuilder eb = generateCurrentTrackEmbed(nextTrack);
-        try {
-            currentSongEmbed = channel.sendMessage(eb.build());
-
-        } catch (RateLimitException e) {
-            //person skipping too much, triggered rate limitation
+        try { currentSongEmbed = channel.sendMessage(eb.build());
+        } catch (RateLimitException e) { //person skipping too much, triggered rate limitation
         }
-        //currentSongEmbed.edit(eb.withDesc(desc).build()); //???
-    }
 
-
-    private void livePlayerUpdater() {
-        try {
-            final Runnable trackTimelineUpdater = () -> {
-                if (currentSongEmbed != null)
-                    currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
-            };
-
-            //this should run ~100 times for each song.
-            long onePercentDuration = getCurrentTrack().getDuration()/100;
-            final ScheduledFuture<?> trackEmbedUpdater =
-                    floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration, TimeUnit.MILLISECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Track timeline schedule error");
-        }
+        //make the timeline updater
+        final Runnable trackTimelineUpdater = () ->
+                currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
+        long onePercentDuration = getCurrentTrack().getDuration()/100;
+        //set the current updater to this update runner
+        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration, TimeUnit.MILLISECONDS);
     }
 
     public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {
