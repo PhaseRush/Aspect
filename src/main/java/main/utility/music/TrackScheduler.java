@@ -164,8 +164,9 @@ public class TrackScheduler {
         } catch (RateLimitException e) { //person skipping too much, triggered rate limitation
         }
 
-
         handleTimelineUpdate();
+
+        //handle reactions on currentSongEmbed
 
     }
 
