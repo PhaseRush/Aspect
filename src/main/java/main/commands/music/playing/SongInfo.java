@@ -14,13 +14,13 @@ import java.util.List;
 public class SongInfo implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        GuildMusicManager testmanager = MasterManager.getGuildAudioPlayer(event.getGuild());
-        AudioTrackInfo songInfo = testmanager.getScheduler().getCurrentTrack().getInfo();
+        GuildMusicManager musicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
+        AudioTrackInfo songInfo = musicManager.getScheduler().getCurrentTrack().getInfo();
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withColor(Visuals.getVibrantColor())
                 .withTitle(songInfo.title)
-                .withDesc("By: " + songInfo.author + "\n" + testmanager.getScheduler().trackProgress())
+                .withDesc("By: " + songInfo.author + "\n" + musicManager.getScheduler().trackProgress())
                 .withUrl(songInfo.uri);
 
         BotUtils.sendMessage(event.getChannel(), eb);

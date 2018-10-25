@@ -45,6 +45,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * ---------------------------------------------------------------
+ * THIS IS FROM THE OLD BOT. NONE OF THIS CLASS IS IN USE ANYMORE.
+ * ---------------------------------------------------------------
+ */
 public class AnnotationListener {
     private IDiscordClient client;
     private List<String> bannedUsers = new ArrayList<>();

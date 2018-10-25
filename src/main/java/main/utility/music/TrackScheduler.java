@@ -14,6 +14,10 @@ import sx.blah.discord.util.RateLimitException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class schedules tracks for the audio player. It contains the queue of tracks.
@@ -27,6 +31,10 @@ public class TrackScheduler {
     private int loopCount;
     private int maxLoop = -1;
     private AudioTrack previousTrack;
+    private IChannel lastEmbedChannel;
+
+    private static ThreadGroup floatingPlayer = new ThreadGroup("Floating Music Player");
+    final ScheduledExecutorService floatingPlayerScheduler = Executors.newScheduledThreadPool(1);//not sure @todo
 
     //private volatile IChannel currentCallChannel;
 
@@ -106,6 +114,7 @@ public class TrackScheduler {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);
+        handleFloatingPlayer(nextTrack, lastEmbedChannel); //newly added
         return currentTrack;
     }
 
@@ -116,6 +125,7 @@ public class TrackScheduler {
      * @return
      */
     public synchronized AudioTrack nextTrack(IChannel channel) {
+        this.lastEmbedChannel = channel;
         AudioTrack currentTrack = player.getPlayingTrack();
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
 
@@ -133,34 +143,58 @@ public class TrackScheduler {
     private void handleFloatingPlayer(AudioTrack nextTrack, IChannel channel) {
         if (nextTrack == null || channel == null) return;
         AudioTrackInfo info = nextTrack.getInfo();
-        String desc = info.title + "\nby:\t" + info.author + "\nlength:\t" + getFormattedSongLength(info);
 
-        EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Aspect :: Floating Music Player")
-                .withUrl(info.uri)
-                .withDesc(desc)
-                .withColor(Visuals.getVibrantColor());
-
-        //channel.getGuild().getDefaultChannel() //or something
+        EmbedBuilder eb = generateCurrentTrackEmbed(nextTrack);
         try {
             currentSongEmbed = channel.sendMessage(eb.build());
+
         } catch (RateLimitException e) {
             //person skipping too much, triggered rate limitation
         }
-        currentSongEmbed.edit(eb.withDesc(desc).build());
+        //currentSongEmbed.edit(eb.withDesc(desc).build()); //???
     }
 
+
+    private void livePlayerUpdater() {
+        try {
+            final Runnable trackTimelineUpdater = () -> {
+                if (currentSongEmbed != null)
+                    currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
+            };
+
+            //this should run ~100 times for each song.
+            long onePercentDuration = getCurrentTrack().getDuration()/100;
+            final ScheduledFuture<?> trackEmbedUpdater =
+                    floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Track timeline schedule error");
+        }
+    }
+
+    public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {
+        AudioTrackInfo songInfo = audioTrack.getInfo();
+//        String desc = songInfo.title + "\nby:\t" + songInfo.author;
+//        EmbedBuilder eb = new EmbedBuilder()
+//                .withTitle("Aspect :: Floating Music Player")
+//                .withUrl(songInfo.uri)
+//                .withDesc(desc)
+//                .withColor(Visuals.getVibrantColor());
+
+        return new EmbedBuilder()
+                .withColor(Visuals.getVibrantColor())
+                .withTitle(songInfo.title)
+                .withDesc("By: " + songInfo.author + "\n" + trackProgress())
+                .withUrl(songInfo.uri);
+    }
 
     public StringBuilder trackProgress() {
         int lengthFactor = 2;
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
         long percent = 100*position / (duration*lengthFactor); //*2
-        //ReactionEmoji.of("ncat1", 501972187524366336L).isUnicode();
         String marker = ":red_circle:";
-        String marker2 = ":cat:";
         String filler = "-";
-        String filler2 = ":gay_pride_flag:";
 
         StringBuilder sb = new StringBuilder("\n[0:00][");
 
