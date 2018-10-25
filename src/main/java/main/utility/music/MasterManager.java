@@ -58,6 +58,7 @@ public class MasterManager {
 
     public synchronized static void loadAndPlay(final IChannel channel, final String trackUrl, MessageReceivedEvent event, boolean insertFront, String confirmMsg) {
         GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
+        musicManager.getScheduler().lastEmbedChannel = channel; //set embed channel for floating player
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override

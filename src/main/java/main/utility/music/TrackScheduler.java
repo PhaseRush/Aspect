@@ -35,7 +35,7 @@ public class TrackScheduler {
     private int loopCount;
     private int maxLoop = -1;
     private AudioTrack previousTrack;
-    private IChannel lastEmbedChannel;
+    public IChannel lastEmbedChannel; //public so accessible from masterManager
 
     //fancy shmancy stuff
     private static ThreadGroup floatingPlayer = new ThreadGroup("Floating Music Player");
@@ -92,6 +92,9 @@ public class TrackScheduler {
         // track goes to the queue instead.
         boolean playing = player.startTrack(track, true);
 
+        if (playing)
+            handleFloatingPlayer(track);
+
         if(!playing) {
             queue.add(track);
         }
@@ -101,6 +104,9 @@ public class TrackScheduler {
 
     public synchronized boolean queueFront(AudioTrack track) {
         boolean playing = player.startTrack(track, true);
+
+        if(playing)
+            handleFloatingPlayer(track);
 
         if(!playing) {
             queue.add(0,track);
@@ -120,7 +126,7 @@ public class TrackScheduler {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);
-        handleFloatingPlayer(nextTrack, lastEmbedChannel); //newly added
+        handleFloatingPlayer(nextTrack); //newly added
         return currentTrack;
     }
 
@@ -141,27 +147,37 @@ public class TrackScheduler {
 
         // TODO: 2018-07-22 <- immortalize this
         //handle songinfo for next track
-        handleFloatingPlayer(nextTrack, channel);
+        handleFloatingPlayer(nextTrack);
 
         return currentTrack;
     }
 
     //gets called once per track
-    private void handleFloatingPlayer(AudioTrack nextTrack, IChannel channel) {
-        trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
-        if (nextTrack == null || channel == null) return;
+    private void handleFloatingPlayer(AudioTrack nextTrack) {
+        if (trackEmbedUpdater != null) //will be null on the very first call (no prev. embed)
+            trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
+
+        if (nextTrack == null || lastEmbedChannel == null) return;
 
         EmbedBuilder eb = generateCurrentTrackEmbed(nextTrack);
-        try { currentSongEmbed = channel.sendMessage(eb.build());
+        try { currentSongEmbed = lastEmbedChannel.sendMessage(eb.build());
         } catch (RateLimitException e) { //person skipping too much, triggered rate limitation
         }
 
+
+        handleTimelineUpdate();
+
+    }
+
+    private void handleTimelineUpdate() {
         //make the timeline updater
-        final Runnable trackTimelineUpdater = () ->
-                currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
+        final Runnable trackTimelineUpdater = () -> {
+            currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
+            System.out.println("ran update");
+        };
         long onePercentDuration = getCurrentTrack().getDuration()/100;
         //set the current updater to this update runner
-        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration, TimeUnit.MILLISECONDS);
+        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration*2, TimeUnit.MILLISECONDS);
     }
 
     public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {
