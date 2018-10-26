@@ -35,6 +35,7 @@ public class WarframeUtil {
             "Nitain",
             "Riven",
             "Kavat"
+            //"skin"
     };
 
     public static List<String> getIntendedStrings(String userString) {
@@ -113,6 +114,7 @@ public class WarframeUtil {
         return s;
     }
 
+    @org.jetbrains.annotations.NotNull
     public static String getItemImageUrl(String intendedName) {
         //https://warframe.market/static/assets/icons/en/thumbs/Akbronco_Prime_Set.34b5a7f99e5f8c15cc2039a76c725069.128x128.png
         String jsonURL = "https://api.warframe.market/v1/items/" + getItemUrlName(intendedName);

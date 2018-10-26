@@ -109,6 +109,12 @@
             <artifactId>tess4j</artifactId>
             <version>3.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
         <!--OCR https://github.com/bytedeco/javacpp-presets/tree/master/tesseract
         <dependency>
             <groupId>org.bytedeco.javacpp-presets</groupId>
