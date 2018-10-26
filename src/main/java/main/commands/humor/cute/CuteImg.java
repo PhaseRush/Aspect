@@ -1,4 +1,4 @@
-package main.commands.humor;
+package main.commands.humor.cute;
 
 import main.Command;
 import main.utility.BotUtils;

@@ -3,9 +3,10 @@ package main;
 import main.commands.dontopendeadinside.*;
 import main.commands.fortnite.FortniteStats;
 import main.commands.humor.AnalyzeUser;
-import main.commands.humor.CuteImg;
 import main.commands.humor.Insult;
 import main.commands.humor.Ship;
+import main.commands.humor.cute.CuteImg;
+import main.commands.humor.cute.ListCuties;
 import main.commands.kaitlyn_is_needy.ReNickName;
 import main.commands.league.*;
 import main.commands.music.playing.*;
@@ -50,6 +51,7 @@ public class CommandManager {
 
         //humor
         commandMap.put("cute", new CuteImg());
+        commandMap.put("listcute", new ListCuties());
         commandMap.put("ship", new Ship());
         commandMap.put("insult", new Insult());
         commandMap.put("count", new WordCounter());
