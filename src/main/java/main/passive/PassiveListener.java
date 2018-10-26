@@ -41,7 +41,7 @@ public class PassiveListener {
 
     @EventSubscriber
     public void owo(MessageReceivedEvent event) throws Exception{
-        if(event.getAuthor().isBot()) return; //added for auto music updater (seems to trigger this every time or something
+        //if(event.getAuthor().isBot()) return; //added for auto music updater (seems to trigger this every time or something
         try {
             if (event.getMessage().getContent().equalsIgnoreCase("owo")){
                 if (ThreadLocalRandom.current().nextInt(100) == 1)
@@ -50,7 +50,7 @@ public class PassiveListener {
                 throw new Exception();
             }
         }catch(Exception e){
-            System.out.println("no message");
+            //System.out.println("no message"); get rid of thissssssss
         }
     }
 
@@ -77,14 +77,12 @@ public class PassiveListener {
     public void subredditLinker(MessageReceivedEvent event) {
         String[] msgSplit = event.getMessage().getFormattedContent().split(" ");
         for (String s : msgSplit) {
-            if (s.matches("(.*\\s)*(r/).*")) {
+            if (s.matches("(.*\\s)*/?(r/).*")) {
                 String afterR = s.substring(s.indexOf("r/"));
                 String subR = "";
                 if (afterR.contains(" "))
                     subR = afterR.substring(0, afterR.indexOf(" "));
-                else subR = afterR;
-
-                subR = subR.replaceAll("[.,/#!$%^&*;:{}=\\-_`~()]","");
+                else subR = afterR.replaceAll("[.,/#!$%^&*;:{}=\\-_`~()]","");
 
                 BotUtils.sendMessage(event.getChannel(), "https://www.reddit.com/" + subR);
             }

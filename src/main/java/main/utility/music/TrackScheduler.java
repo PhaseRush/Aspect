@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import main.utility.BotUtils;
 import main.utility.Visuals;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
@@ -170,7 +171,7 @@ public class TrackScheduler {
         handleTimelineUpdate();
 
         //handle reactions on currentSongEmbed
-
+        BotUtils.reactAllEmojis(currentSongEmbed, MusicUtils.floatingReactions);
     }
 
     private void handleTimelineUpdate() {
