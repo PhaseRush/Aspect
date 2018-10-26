@@ -125,7 +125,6 @@ public class PassiveListener {
     }
 
 
-
     @EventSubscriber
     public void userJoin(UserJoinEvent event) {
         BotUtils.sendMessage(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");

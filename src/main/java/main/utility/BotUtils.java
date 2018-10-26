@@ -39,7 +39,7 @@ public class BotUtils {
     private static Map<Long, String> PREFIX_MAP = new HashMap<>(); //adding angle brackets surpress warnings :)
 
     //API keys
-    public static String DEFAULT_BOT_PREFIX = "!";
+    public static String DEFAULT_BOT_PREFIX = "$";
     public static String NASA_API;
     public static String DARK_SKY_API;
     public static String CLOUDSIGHT_API_KEY;
@@ -52,7 +52,6 @@ public class BotUtils {
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
-
 
     public static String getPrefix(IGuild iGuild) {
         try {

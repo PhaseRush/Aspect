@@ -172,6 +172,8 @@ public class TrackScheduler {
 
         //handle reactions on currentSongEmbed
         BotUtils.reactAllEmojis(currentSongEmbed, MusicUtils.floatingReactions);
+        //handle reaction listener
+
     }
 
     private void handleTimelineUpdate() {
@@ -184,12 +186,6 @@ public class TrackScheduler {
 
     public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {
         AudioTrackInfo songInfo = audioTrack.getInfo();
-//        String desc = songInfo.title + "\nby:\t" + songInfo.author;
-//        EmbedBuilder eb = new EmbedBuilder()
-//                .withTitle("Aspect :: Floating Music Player")
-//                .withUrl(songInfo.uri)
-//                .withDesc(desc)
-//                .withColor(Visuals.getVibrantColor());
 
         return new EmbedBuilder()
                 .withColor(Visuals.getVibrantColor())
