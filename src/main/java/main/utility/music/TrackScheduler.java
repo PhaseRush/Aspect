@@ -175,10 +175,7 @@ public class TrackScheduler {
 
     private void handleTimelineUpdate() {
         //make the timeline updater
-        final Runnable trackTimelineUpdater = () -> {
-            currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
-            //System.out.println("ran update");
-        };
+        final Runnable trackTimelineUpdater = () -> currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
         long onePercentDuration = getCurrentTrack().getDuration()/100;
         //set the current updater to this update runner
         trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration*2, TimeUnit.MILLISECONDS);
