@@ -41,6 +41,7 @@ public class PassiveListener {
 
     @EventSubscriber
     public void owo(MessageReceivedEvent event) throws Exception{
+        if(event.getAuthor().isBot()) return; //added for auto music updater (seems to trigger this every time or something
         try {
             if (event.getMessage().getContent().equalsIgnoreCase("owo")){
                 if (ThreadLocalRandom.current().nextInt(100) == 1)

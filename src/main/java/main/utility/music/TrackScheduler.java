@@ -63,18 +63,21 @@ public class TrackScheduler {
                     if (looping) {
                         if (loopCount == maxLoop) { //end loop, behave as if else below
                             nextTrack();
+                            System.out.println("called nextTrack (is looping, but reached max loop)");
                             loopCount = 0;
                             maxLoop = -1;
-                            currentSongEmbed.delete(); //or update later on @todo pooptonight at 8:00 (thanks luis)
+                            //currentSongEmbed.delete(); //@TODO MIGHT BE ISSUE WITH MULTITHREADING  or update later on @todo pooptonight at 8:00 (thanks luis)
                         } else {
                             player.startTrack(previousTrack.makeClone(), false);
+                            System.out.println("called player.startTrack is looping");
                             loopCount++;
                         }
                     } else { //not looping
                         nextTrack();
+                        System.out.println("called nextTrack (not looping)");
                         loopCount = 0;
                         maxLoop = -1;
-                        currentSongEmbed.delete();
+                        //currentSongEmbed.delete(); //TODO MIGHT BE ISSUE WITH MULTITHREADING
                     }
                 }
             }
@@ -119,14 +122,14 @@ public class TrackScheduler {
      * Starts the next track, stopping the current one if it is playing.
      * @return The track that was stopped, null if there wasn't anything playing
      */
-    public synchronized AudioTrack nextTrack() {
+    public synchronized AudioTrack nextTrack() { //TEMP: trace 1
         AudioTrack currentTrack = player.getPlayingTrack();
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);
-        handleFloatingPlayer(nextTrack); //newly added
+        handleFloatingPlayer(nextTrack); //newly added <- TRACE to 2
         return currentTrack;
     }
 
@@ -136,7 +139,7 @@ public class TrackScheduler {
      * @param channel text channel that called $play or skip etc.
      * @return
      */
-    public synchronized AudioTrack nextTrack(IChannel channel) {
+    public synchronized AudioTrack nextTrack(IChannel channel) { //called from skip - FLOATING PLAYER WORKS CORRECTLY - 2018-10-25
         this.lastEmbedChannel = channel;
         AudioTrack currentTrack = player.getPlayingTrack();
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
@@ -153,7 +156,7 @@ public class TrackScheduler {
     }
 
     //gets called once per track
-    private void handleFloatingPlayer(AudioTrack nextTrack) {
+    private void handleFloatingPlayer(AudioTrack nextTrack) { //TRACE 2
         if (trackEmbedUpdater != null) //will be null on the very first call (no prev. embed)
             trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
 
@@ -174,7 +177,7 @@ public class TrackScheduler {
         //make the timeline updater
         final Runnable trackTimelineUpdater = () -> {
             currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
-            System.out.println("ran update");
+            //System.out.println("ran update");
         };
         long onePercentDuration = getCurrentTrack().getDuration()/100;
         //set the current updater to this update runner
