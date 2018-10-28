@@ -77,7 +77,7 @@ public class RealmEyePlayer {
                 c.determineClass();
 
             runningTotalFame += c.getFame();
-            eb.appendField(charEmbedField(c));
+            eb.appendField(new EmbedField(":arrow_forward:" + c.get_class() + ", " +c.getStats_maxed(), String.valueOf((long)(c.katScore() * 1e3) / 1e3), false));
         }
         eb.appendField("Total Fame", String.valueOf(runningTotalFame), false);
 
@@ -87,10 +87,4 @@ public class RealmEyePlayer {
         eb.appendField("Average Score per Character", String.valueOf((long) ((totalScore/characters.size())* 1e3) / 1e3), false);
         return eb;
     }
-
-    private EmbedField charEmbedField(Character character) {
-        Visuals visuals = new Visuals();
-        return visuals.getEmbedField(":arrow_forward: " + character.get_class() + ", " +character.getStats_maxed(), String.valueOf((long)(character.katScore() * 1e3) / 1e3), false);
-    }
-
 }
