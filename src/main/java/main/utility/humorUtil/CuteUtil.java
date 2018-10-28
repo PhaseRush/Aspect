@@ -11,6 +11,6 @@ public class CuteUtil {
         cuteUrls.put("headpat", "https://cdnb.artstation.com/p/assets/images/images/010/608/879/large/aoi-ogata-pat-me2.jpg?1525303993");
         cuteUrls.put("butt", "no");
         cuteUrls.put("chinrest", "https://pbs.twimg.com/media/Do5KSXmUwAEymPV.jpg:large");
-        cuteUrls.put("eevee", "https://video.twimg.com/tweet_video/DoJtPVuU8AEuABj.mp4"); //updated url
+        cuteUrls.put("eevee", "https://video.twimg.com/tweet_video/DoJtPVuU8AEuABj.mp4"); //@todo updated url (still doesnt work)
     }
 }

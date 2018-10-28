@@ -261,10 +261,11 @@ public class TrackScheduler {
     }
 
     public long getQueueDurationMillis() {
-        long l = 0;
-        for (AudioTrack a : queue)
-            l += a.getDuration();
-        return l;
+        return queue.stream().mapToLong(AudioTrack::getDuration).sum();
+//        long l = 0;
+//        for (AudioTrack a : queue)
+//            l += a.getDuration();
+//        return l;
     }
 
     public String getQueueHMS() {
