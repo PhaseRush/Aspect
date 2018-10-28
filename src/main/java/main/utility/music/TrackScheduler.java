@@ -7,18 +7,18 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import main.utility.BotUtils;
 import main.utility.Visuals;
+import org.jetbrains.annotations.NotNull;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
+import java.util.concurrent.*;
 
 /**
  * This class schedules tracks for the audio player. It contains the queue of tracks.
@@ -31,10 +31,13 @@ public class TrackScheduler {
     private volatile List<AudioTrack> queue; //dannie said to make volatile
     private final AudioPlayer player;
 
-    private IMessage currentSongEmbed;
+    private Random r = ThreadLocalRandom.current();
+
     private boolean looping = false; //might need to make AtomicBoolean
     private int loopCount;
     private int maxLoop = -1;
+
+    private IMessage currentSongEmbed;
     private AudioTrack previousTrack;
     public IChannel lastEmbedChannel; //public so accessible from masterManager
 
@@ -188,10 +191,21 @@ public class TrackScheduler {
         AudioTrackInfo songInfo = audioTrack.getInfo();
 
         return new EmbedBuilder()
-                .withColor(Visuals.getVibrantColor())
+                .withColor(generateBiasedColor())
                 .withTitle(songInfo.title)
                 .withDesc("By: " + songInfo.author + "\n" + trackProgress())
                 .withUrl(songInfo.uri);
+    }
+
+    @NotNull
+    private Color generateBiasedColor() {
+        if (currentSongEmbed == null) {
+            return Visuals.getVibrantColor();
+        }else {
+            Color color = currentSongEmbed.getEmbeds().get(0).getColor();
+            float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
+            return Color.getHSBColor(hsb[0] + r.nextFloat()/10, hsb[1], hsb[2]); //hsb[1] = 0.9f, hsb[2] = 1.0f
+        }
     }
 
     public StringBuilder trackProgress() {
