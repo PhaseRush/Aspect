@@ -227,7 +227,7 @@ public class TrackScheduler {
 
         sb.append(marker);
 
-        for (double d = percent; d < 100/lengthFactor; d++)
+        for (double d = percent; d < 100/lengthFactor - 1; d++) //-1 for the auto track updater
             sb.append(filler);
 
         sb.append("]["+ getFormattedSongLength(getCurrentTrack().getInfo()) + "]");
