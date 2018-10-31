@@ -39,7 +39,8 @@ public class TrackScheduler {
 
     private IMessage currentSongEmbed;
     private IMessage lastSongEmbed; //added as temp to delete previous embed
-    private AudioTrack previousTrack;
+    private AudioTrack previousTrack; //keep track for looping -- debug
+    private AudioTrack currentTrack;
     public IChannel lastEmbedChannel; //public so accessible from masterManager
 
 
@@ -74,7 +75,8 @@ public class TrackScheduler {
                             maxLoop = -1;
                             //currentSongEmbed.delete(); //@TODO MIGHT BE ISSUE WITH MULTITHREADING  or update later on @todo pooptonight at 8:00 (thanks luis)
                         } else {
-                            player.startTrack(previousTrack.makeClone(), false);
+                            //player.startTrack(previousTrack.makeClone(), false);
+                            player.startTrack(currentTrack.makeClone(), false); //new attempt at looping
                             //System.out.println("called player.startTrack is looping");
                             loopCount++;
                         }
@@ -135,6 +137,7 @@ public class TrackScheduler {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);
+        currentTrack = nextTrack;
         handleFloatingPlayer(nextTrack); //newly added <- TRACE to 2
         return currentTrack;
     }
@@ -153,6 +156,7 @@ public class TrackScheduler {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);
+        currentTrack = nextTrack; //for looping
 
         // TODO: 2018-07-22 <- immortalize this
         //handle songinfo for next track

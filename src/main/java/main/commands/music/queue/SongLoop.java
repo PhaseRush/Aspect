@@ -26,8 +26,10 @@ public class SongLoop implements Command {
                 maxLoop = Integer.valueOf(args.get(0));
         } catch (NumberFormatException e) {
             BotUtils.sendMessage(event.getChannel(), "Invalid integer");
+            return;
         }
 
+        //toggle looping
         if (scheduler.isLooping()) {
             scheduler.setLooping(false, 0);
             BotUtils.sendMessage(event.getChannel(), "Stopped loop");
