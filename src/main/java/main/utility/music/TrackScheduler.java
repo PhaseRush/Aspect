@@ -33,13 +33,15 @@ public class TrackScheduler {
 
     private Random r = ThreadLocalRandom.current();
 
-    private boolean looping = false; //might need to make AtomicBoolean
+    private volatile boolean looping = false; //might need to make AtomicBoolean --//added volatile
     private int loopCount;
     private int maxLoop = -1;
 
     private IMessage currentSongEmbed;
+    private IMessage lastSongEmbed; //added as temp to delete previous embed
     private AudioTrack previousTrack;
     public IChannel lastEmbedChannel; //public so accessible from masterManager
+
 
     //fancy shmancy stuff
     private static ThreadGroup floatingPlayer = new ThreadGroup("Floating Music Player");
@@ -67,18 +69,18 @@ public class TrackScheduler {
                     if (looping) {
                         if (loopCount == maxLoop) { //end loop, behave as if else below
                             nextTrack();
-                            System.out.println("called nextTrack (is looping, but reached max loop)");
+                            //System.out.println("called nextTrack (is looping, but reached max loop)");
                             loopCount = 0;
                             maxLoop = -1;
                             //currentSongEmbed.delete(); //@TODO MIGHT BE ISSUE WITH MULTITHREADING  or update later on @todo pooptonight at 8:00 (thanks luis)
                         } else {
                             player.startTrack(previousTrack.makeClone(), false);
-                            System.out.println("called player.startTrack is looping");
+                            //System.out.println("called player.startTrack is looping");
                             loopCount++;
                         }
                     } else { //not looping
                         nextTrack();
-                        System.out.println("called nextTrack (not looping)");
+                        //System.out.println("called nextTrack (not looping)");
                         loopCount = 0;
                         maxLoop = -1;
                         //currentSongEmbed.delete(); //TODO MIGHT BE ISSUE WITH MULTITHREADING
@@ -205,7 +207,7 @@ public class TrackScheduler {
             Color color = currentSongEmbed.getEmbeds().get(0).getColor();
             float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
             try {
-                return Color.getHSBColor(hsb[0] + r.nextFloat() / 10, hsb[1], hsb[2]); //hsb[1] = 0.9f, hsb[2] = 1.0f
+                return Color.getHSBColor(hsb[0] + r.nextFloat() / 25, hsb[1], hsb[2]); //hsb[1] = 0.9f, hsb[2] = 1.0f
             } catch (Exception e) { //catch if hue is > 1 (there is a chance, so just reset it with random color)
                 return Visuals.getVibrantColor();
             }
@@ -227,7 +229,7 @@ public class TrackScheduler {
 
         sb.append(marker);
 
-        for (double d = percent; d < 100/lengthFactor - 1; d++) //-1 for the auto track updater
+        for (double d = percent; d < 100/lengthFactor - 1; d++) //-1 for the auto track updater not reaching the end
             sb.append(filler);
 
         sb.append("]["+ getFormattedSongLength(getCurrentTrack().getInfo()) + "]");
