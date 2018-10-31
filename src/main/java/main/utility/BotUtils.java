@@ -1,6 +1,7 @@
 package main.utility;
 
 import com.google.gson.Gson;
+import info.debatty.java.stringsimilarity.Levenshtein;
 import main.Main;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,6 +31,9 @@ public class BotUtils {
     private static Random tlr = ThreadLocalRandom.current();
     private static Gson gson = new Gson();
     private static OkHttpClient client = new OkHttpClient();
+
+    //leven
+    private static Levenshtein leven = new Levenshtein();
 
     // Constants for use throughout the bot
     public final static String GITHUB_URL = "https://github.com/PhaseRush/Aspect";
@@ -263,7 +267,7 @@ public class BotUtils {
         return stringArray[new Random().nextInt(stringArray.length)];
     }
 
-    public static String printStringList(List<String> list) {
+    public static String buildString(List<String> list) {
         StringBuilder sb = new StringBuilder();
         for (String s : list) {
             sb.append(s).append(", ");
@@ -403,11 +407,14 @@ public class BotUtils {
             Collections.reverse(list);
 
         Map<K, V> result = new LinkedHashMap<>();
-        for (Entry<K, V> entry : list) {
+        for (Entry<K, V> entry : list)
             result.put(entry.getKey(), entry.getValue());
-        }
 
         return result;
+    }
+
+    public static double stringSimilarity(String s1, String s2) {
+        return leven.distance(s1, s2);
     }
 
     @Override
