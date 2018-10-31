@@ -47,7 +47,7 @@ public class TrackScheduler {
     //fancy shmancy stuff
     private static ThreadGroup floatingPlayer = new ThreadGroup("Floating Music Player");
     private final ScheduledExecutorService floatingPlayerScheduler = Executors.newScheduledThreadPool(1);//not sure @todo
-    ScheduledFuture<?> trackEmbedUpdater;
+    private ScheduledFuture<?> trackEmbedUpdater;
 
     //private volatile IChannel currentCallChannel;
 
@@ -261,6 +261,7 @@ public class TrackScheduler {
     }
 
     public void setQueue(List<AudioTrack> newQueue) {
+        //synchronized (queue = newQueue){} //lol does this work???
         queue = newQueue;
     }
 

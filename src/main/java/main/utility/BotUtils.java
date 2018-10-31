@@ -298,17 +298,24 @@ public class BotUtils {
         return emojis;
     }
 
-    public static boolean isAPicture(IMessage iMessage) {
+    /**
+     * was originall BotUtils#isAPicture
+     * now returns num of pictures (untested)
+     * @param iMessage
+     * @return
+     */
+    public static int numPictures(IMessage iMessage) {
+        int imageCount = 0;
         if (iMessage.getFormattedContent().contains("gyazo.com")) {
-            return true;
+            imageCount++;
         } else {
             for (Attachment a : iMessage.getAttachments()) {
                 if (a.getUrl().endsWith(".png") || a.getUrl().endsWith(".jpeg") || a.getUrl().equals(".jpg")) {
-                    return true;
+                    imageCount++;
                 }
             }
         }
-        return false;
+        return imageCount;
     }
 
     public static void reactAllEmojis(IMessage iMessage, List<ReactionEmoji> emojis) {
