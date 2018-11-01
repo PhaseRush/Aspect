@@ -303,4 +303,8 @@ public class TrackScheduler {
                 (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
                 (seconds < 10 ? "0" + seconds : seconds);
     }
+
+    public AudioPlayer getPlayer() {
+        return player;
+    }
 }
