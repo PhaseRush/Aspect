@@ -82,7 +82,7 @@ public class PassiveListener {
                 String subR = "";
                 if (afterR.contains(" "))
                     subR = afterR.substring(0, afterR.indexOf(" "));
-                else subR = afterR.replaceAll("[.,/#!$%^&*;:{}=\\-_`~()]","");
+                else subR = afterR.replaceAll("[.,#!$%^&*;:{}=\\-_`~()]",""); //dont replace '/'
 
                 BotUtils.sendMessage(event.getChannel(), "https://www.reddit.com/" + subR);
             }
