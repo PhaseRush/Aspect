@@ -14,8 +14,9 @@ public class CuteImg implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         try {
             String url = CuteUtil.cuteUrls.get(args.get(0));
-            BotUtils.sendMessage(event.getChannel(),
-                    new EmbedBuilder().withImage(url));
+            if (url.startsWith("~"))
+                BotUtils.sendMessage(event.getChannel(), new EmbedBuilder().withImage(url));
+            else BotUtils.sendMessage(event.getChannel(), url);
         } catch (Exception e) {
             BotUtils.sendMessage(event.getChannel(), "Cuteness doesn't exist!");
         }

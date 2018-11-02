@@ -211,7 +211,7 @@ public class CommandManager {
                     .append(event.getAuthor().getName()).append("\t")
                     .append(event.getAuthor().getStringID()).append("\t")
                     .append("cmd: " + commandStr).append("\t")
-                    .append((argsList.size() != 0 ? " args: " + commandArgs.toString() : ""));
+                    .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
 
             System.out.println(commandPrint);
         }
