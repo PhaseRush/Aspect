@@ -27,6 +27,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.StatusType;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -201,11 +202,18 @@ public class CommandManager {
         if (commandMap.containsKey(commandStr)) {
             commandMap.get(commandStr).runCommand(event, argsList);
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder commandArgs = new StringBuilder();
             for (String s : argsList)
-                sb.append(s + "\t");
+                commandArgs.append(s + "\t");
 
-            System.out.println("run: " + commandStr + (argsList.size() != 0 ? " args: " + sb.toString() : ""));
+            StringBuilder commandPrint = new StringBuilder();
+            commandPrint.append(LocalDateTime.now().toString()).append("\t")
+                    .append(event.getAuthor().getName()).append("\t")
+                    .append(event.getAuthor().getStringID()).append("\t")
+                    .append("cmd: " + commandStr).append("\t")
+                    .append((argsList.size() != 0 ? " args: " + commandArgs.toString() : ""));
+
+            System.out.println(commandPrint);
         }
     }
 
