@@ -12,6 +12,7 @@ public class CuteImg implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+        if (CuteUtil.banned.contains(event.getAuthor().getStringID())) return; //put this guy on a watchlist
         try {
             String url = CuteUtil.cuteUrls.get(args.get(0));
             if (url.startsWith("~"))
