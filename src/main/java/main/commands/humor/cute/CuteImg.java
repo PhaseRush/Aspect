@@ -29,7 +29,7 @@ public class CuteImg implements Command {
 
     @Override
     public String getDescription() {
-        return "Displays a cute Image. Baka and headpats. ";
+        return "Displays a cute Image. Use `listcute` to get a list of valid cuteness";
     }
 
 
