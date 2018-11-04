@@ -139,6 +139,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Imgur upload/integration
 - [ ] Microsoft Azure/Cloud integration for image recognition
 - [ ] Remind me bot (timezones op?)
+- [ ] Get the URL/photo from someone's profile picture.
 
 #### WIP Features:
 - [ ] Floating music player - Live embed with current song info, track progress, and reactions for pause, stop, or next
