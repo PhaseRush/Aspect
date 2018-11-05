@@ -32,6 +32,7 @@ import sx.blah.discord.handle.obj.StatusType;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.*;
 
 public class CommandManager {
@@ -212,7 +213,7 @@ public class CommandManager {
                 commandArgs.append(s + "\t");
 
             StringBuilder commandPrint = new StringBuilder();
-            commandPrint.append(LocalDateTime.now().toString()).append("\t")
+            commandPrint.append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toString()).append("\t")
                     .append(event.getAuthor().getName()).append("\t")
                     .append(event.getAuthor().getStringID()).append("\t")
                     .append("cmd: " + commandStr).append("\t")
