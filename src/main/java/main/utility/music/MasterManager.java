@@ -13,6 +13,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.utility.BotUtils;
 import main.utility.GoogleUtil;
 import main.utility.Visuals;
+import main.utility.state_json.MasterJsonUtil;
+import main.utility.state_json.json_container.reload_playlists.MusicStats;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionAddEvent;
@@ -57,6 +59,9 @@ public class MasterManager {
     }
 
     public synchronized static void loadAndPlay(final IChannel channel, final String trackUrl, MessageReceivedEvent event, boolean insertFront, String confirmMsg) {
+        //MasterState json;
+        MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
+
         GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
         musicManager.getScheduler().lastEmbedChannel = channel; //set embed channel for floating player
 
@@ -65,19 +70,26 @@ public class MasterManager {
             public void trackLoaded(AudioTrack track) {
                 BotUtils.sendMessage(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
                 play(musicManager, track, insertFront);
+                stats.incrNumSongsQueued();
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
                 int counter = 0;
+                long duration = 0;
                 List<AudioTrack> audioTrackList = playlist.getTracks();
                 if (audioTrackList != null) {
                     for (AudioTrack track : audioTrackList) {
                         play(musicManager, track, insertFront);
                         counter++;
+                        duration += track.getDuration();
                     }
                 }
                 BotUtils.sendMessage(channel, "Adding " + counter + " songs to queue from " + playlist.getName() + " (first song: " + playlist.getTracks().get(0).getInfo().title + ")");
+
+                //update MasterState json
+                stats.setNumSongsQueued(stats.getNumSongsQueued() + counter);
+                stats.setNumMillisQueued(stats.getNumMillisQueued() + duration);
             }
 
             @Override
@@ -212,6 +224,9 @@ public class MasterManager {
 
         BotUtils.reactWithCheckMark(event.getMessage());
         // BotUtils.sendMessage(channel, "Skipped to next track.");
+
+        //update state json
+        MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats().incrNumSongsSkipped();
     }
 
     public synchronized static void skipNumTracks(MessageReceivedEvent event, int numToSkip) {
@@ -222,6 +237,10 @@ public class MasterManager {
 
         BotUtils.reactWithCheckMark(event.getMessage());
         //BotUtils.sendMessage(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
+
+        //state update
+        MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
+        stats.setNumSongsSkipped(stats.getNumSongsSkipped() + numToSkip);
     }
 
 

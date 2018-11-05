@@ -3,31 +3,48 @@ package main.utility.state_json.json_container.reload_playlists;
 //this belongs to an EnhancedIUser
 public class MusicStats {
 
-    private long totalMillisQueued;
-    private long totalMillisPlayed;
-    private int totalSongsQueued;
+    private long numMillisQueued;
+    private long numMillisPlayed;
+    private int numSongsQueued;
+    private int numSongsSkipped;
 
-    public long getTotalMillisQueued() {
-        return totalMillisQueued;
+    public int getNumSongsSkipped() {
+        return numSongsSkipped;
     }
 
-    public void setTotalMillisQueued(long totalMillisQueued) {
-        this.totalMillisQueued = totalMillisQueued;
+    public void setNumSongsSkipped(int numSongsSkipped) {
+        this.numSongsSkipped = numSongsSkipped;
     }
 
-    public long getTotalMillisPlayed() {
-        return totalMillisPlayed;
+    public void incrNumSongsSkipped() {
+        numSongsSkipped++;
     }
 
-    public void setTotalMillisPlayed(long totalMillisPlayed) {
-        this.totalMillisPlayed = totalMillisPlayed;
+    public long getNumMillisQueued() {
+        return numMillisQueued;
     }
 
-    public int getTotalSongsQueued() {
-        return totalSongsQueued;
+    public void setNumMillisQueued(long numMillisQueued) {
+        this.numMillisQueued = numMillisQueued;
     }
 
-    public void setTotalSongsQueued(int totalSongsQueued) {
-        this.totalSongsQueued = totalSongsQueued;
+    public long getNumMillisPlayed() {
+        return numMillisPlayed;
+    }
+
+    public void setNumMillisPlayed(long numMillisPlayed) {
+        this.numMillisPlayed = numMillisPlayed;
+    }
+
+    public int getNumSongsQueued() {
+        return numSongsQueued;
+    }
+
+    public void setNumSongsQueued(int numSongsQueued) {
+        this.numSongsQueued = numSongsQueued;
+    }
+
+    public void incrNumSongsQueued() {
+        numSongsQueued++;
     }
 }
