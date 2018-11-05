@@ -21,7 +21,7 @@ public class ForceShutdown implements Command {
         try {
             MasterJsonUtil.writeState();
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "Error writing MasterState json." +
+            BotUtils.sendMessage(event.getChannel(), "Error writing MasterState json.\n" +
                     (force? "Forcing shutdown" : "Use `-f` to force."));
         } finally {
             if (force) {
