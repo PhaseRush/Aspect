@@ -16,11 +16,14 @@ import main.commands.music.sfx.SoundEffectList;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
 import main.commands.overwatch.OverwatchStats;
+import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
 import main.commands.wolfram.WolframGeneral;
 import main.utility.BotUtils;
+import main.utility.state_json.MasterJsonUtil;
+import main.utility.state_json.json_container.CommandStats;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -33,6 +36,7 @@ import java.util.*;
 
 public class CommandManager {
     private long readyTime = System.currentTimeMillis();
+
     public Map<String, Command> commandMap = new LinkedHashMap<>();
     //talked to hec about using a static initializer but constructor is fine
 
@@ -49,6 +53,7 @@ public class CommandManager {
         commandMap.put("help", new Help());
         commandMap.put("summarize", new Summarize());
         commandMap.put("img", new Imaging());
+        commandMap.put("Identify", new PokemonIdentifier());
 
         //humor
         commandMap.put("cute", new CuteImg());
@@ -214,6 +219,14 @@ public class CommandManager {
                     .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
 
             System.out.println(commandPrint);
+
+            //handle state json
+            try {
+                CommandStats cmdStats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getCommandStats();
+                cmdStats.setCallCount(cmdStats.getCallCount() + 1);
+            } catch (Exception e) {
+                System.out.println("CommandManager - error updating CommandStats json");
+            }
         }
     }
 

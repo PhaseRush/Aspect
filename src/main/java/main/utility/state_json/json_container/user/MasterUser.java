@@ -1,6 +1,6 @@
-package main.utility.state_json.user;
+package main.utility.state_json.json_container.user;
 
-import main.utility.state_json.Reminder;
+import main.utility.state_json.json_container.Reminder;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 
