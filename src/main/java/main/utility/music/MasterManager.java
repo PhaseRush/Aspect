@@ -95,20 +95,31 @@ public class MasterManager {
             @Override
             public void noMatches() {
                 //check if it is a preinit playlist
-                switch (trackUrl) {
-                    case "music":
-                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE", event, insertFront, "");
-                        return;
-                    case "tier2":
-                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X", event, insertFront, "");
-                        return;
-                    case "nb3all":
-                        loadAndPlay(channel, "https://www.youtube.com/watch?v=BwEZaariQQ4&list=PLEgNqLmZpLuI9ajUy3Hg97NrpssG4repu", event, insertFront, "");
-                        return;
-                    case "nb3":
-                        loadAndPlay(channel, "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD", event, insertFront, "");
-                        return;
+
+                //not needed anymore
+//                switch (trackUrl) {
+//                    case "music":
+//                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE", event, insertFront, "");
+//                        return;
+//                    case "tier2":
+//                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X", event, insertFront, "");
+//                        return;
+//                    case "nb3all":
+//                        loadAndPlay(channel, "https://www.youtube.com/watch?v=BwEZaariQQ4&list=PLEgNqLmZpLuI9ajUy3Hg97NrpssG4repu", event, insertFront, "");
+//                        return;
+//                    case "nb3":
+//                        loadAndPlay(channel, "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD", event, insertFront, "");
+//                        return;
+//                }
+
+                //use customUrl map
+                if (MusicUtils.customUrls.containsKey(trackUrl)) {
+                    loadAndPlay(channel, MusicUtils.customUrls.get(trackUrl), event, insertFront, "");
+                    return; //Don't need to search Youtube
                 }
+
+
+                //Search Youtube and listen for return result
 
                 YouTube youtube = GoogleUtil.getYoutube();
                 YouTube.Search.List search;

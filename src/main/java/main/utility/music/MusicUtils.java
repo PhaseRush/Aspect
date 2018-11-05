@@ -4,11 +4,14 @@ import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class MusicUtils {
 
     public static List<ReactionEmoji> floatingReactions;
     public static char[] nextTrackUnicodeArray = {'\u23ED', '\uFE0F'}; //no bueno
+
+    public static Map<String, String> customUrls;
 
     static {
 
@@ -18,6 +21,13 @@ public class MusicUtils {
         //floatingReactions.add(ReactionEmoji.of(String.valueOf(nextTrackUnicodeArray)));
         floatingReactions.add(ReactionEmoji.of(String.valueOf("\u23E9"))); //also next track emoji
         floatingReactions.add(ReactionEmoji.of("\uD83C\uDDF6")); //regional Q
+
+
+
+        customUrls.put("music", "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE");
+        customUrls.put("tier2", "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X");
+        customUrls.put("nb3all", "https://www.youtube.com/watch?v=BwEZaariQQ4&list=PLEgNqLmZpLuI9ajUy3Hg97NrpssG4repu");
+        customUrls.put("nb3", "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD");
 
     }
 }
