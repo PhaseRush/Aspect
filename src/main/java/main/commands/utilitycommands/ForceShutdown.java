@@ -10,6 +10,8 @@ public class ForceShutdown implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+       // dump MasterState json
+
         if (args.size() != 1)
             BotUtils.sendMessage(event.getChannel(), "need to force");
 
