@@ -20,10 +20,9 @@ import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
+import main.commands.webquery.UrbanDictionary;
 import main.commands.wolfram.WolframGeneral;
 import main.utility.BotUtils;
-import main.utility.state_json.MasterJsonUtil;
-import main.utility.state_json.json_container.CommandStats;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -47,6 +46,9 @@ public class CommandManager {
         //commandMap.put("transpose", new ImageTransposer());
         //commandMap.put("trim", new TransparentTrimmer());
         commandMap.put("nick", new ReNickName());
+
+        //webquery
+        commandMap.put("dic", new UrbanDictionary());
 
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
@@ -222,12 +224,12 @@ public class CommandManager {
             System.out.println(commandPrint);
 
             //handle state json
-            try {
-                CommandStats cmdStats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getCommandStats();
-                cmdStats.setCallCount(cmdStats.getCallCount() + 1);
-            } catch (Exception e) {
-                System.out.println("CommandManager - error updating CommandStats json");
-            }
+//            try {
+//                CommandStats cmdStats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getCommandStats();
+//                cmdStats.setCallCount(cmdStats.getCallCount() + 1);
+//            } catch (Exception e) {
+//                System.out.println("CommandManager - error updating CommandStats json");
+//            }
         }
     }
 

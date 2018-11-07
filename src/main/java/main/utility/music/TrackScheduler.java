@@ -7,7 +7,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import main.utility.BotUtils;
 import main.utility.Visuals;
-import org.jetbrains.annotations.NotNull;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
@@ -19,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
+
+//import org.jetbrains.annotations.NotNull;
 
 /**
  * This class schedules tracks for the audio player. It contains the queue of tracks.
@@ -203,7 +204,7 @@ public class TrackScheduler {
                 .withUrl(songInfo.uri);
     }
 
-    @NotNull
+    //@NotNull //got rid of this and the import
     private Color generateBiasedColor() {
         if (currentSongEmbed == null) {
             return Visuals.getVibrantColor();

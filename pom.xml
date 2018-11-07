@@ -80,6 +80,8 @@
             <artifactId>google-api-services-youtube</artifactId>
             <version>v3-rev205-1.25.0</version>
         </dependency>
+
+        <!--other-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -103,18 +105,20 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-        <!-- tesseract -->
-        <dependency>
-            <groupId>net.sourceforge.tess4j</groupId>
-            <artifactId>tess4j</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
+        <!-- tesseract - about 40 mb-->
+        <!--<dependency>-->
+            <!--<groupId>net.sourceforge.tess4j</groupId>-->
+            <!--<artifactId>tess4j</artifactId>-->
+            <!--<version>3.2.1</version>-->
+        <!--</dependency>-->
+
+        <!--jetbrains annotations-->
+        <!--<dependency>-->
+            <!--<groupId>org.jetbrains</groupId>-->
+            <!--<artifactId>annotations</artifactId>-->
+            <!--<version>RELEASE</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
         <!--OCR https://github.com/bytedeco/javacpp-presets/tree/master/tesseract
         <dependency>
             <groupId>org.bytedeco.javacpp-presets</groupId>

@@ -417,6 +417,10 @@ public class BotUtils {
         return leven.distance(s1, s2);
     }
 
+//    public static <T extends Number> getMin(T first, T second) {
+//        return (first > second? second : first);
+//    }
+
     @Override
     public String toString() {
         return "Baka don't touch me!";

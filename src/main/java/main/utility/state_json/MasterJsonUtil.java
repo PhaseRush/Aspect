@@ -16,7 +16,7 @@ public class MasterJsonUtil {
         String winJson = ReadWrite.readFromFile(winDirPath);
         String linJson = ReadWrite.readFromFile(linDirPath);
 
-        jsonObj = gson.fromJson(winJson, MasterState.class);
+        //jsonObj = gson.fromJson(winJson, MasterState.class);
     }
 
     //dump state

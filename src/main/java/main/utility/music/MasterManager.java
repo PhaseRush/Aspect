@@ -13,8 +13,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.utility.BotUtils;
 import main.utility.GoogleUtil;
 import main.utility.Visuals;
-import main.utility.state_json.MasterJsonUtil;
-import main.utility.state_json.json_container.reload_playlists.MusicStats;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionAddEvent;
@@ -60,7 +58,6 @@ public class MasterManager {
 
     public synchronized static void loadAndPlay(final IChannel channel, final String trackUrl, MessageReceivedEvent event, boolean insertFront, String confirmMsg) {
         //MasterState json;
-        MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
 
         GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
         musicManager.getScheduler().lastEmbedChannel = channel; //set embed channel for floating player
@@ -70,7 +67,9 @@ public class MasterManager {
             public void trackLoaded(AudioTrack track) {
                 BotUtils.sendMessage(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
                 play(musicManager, track, insertFront);
-                stats.incrNumSongsQueued();
+//                try {
+//                    MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats().incrNumSongsQueued();
+//                } catch (Exception ignored) {}
             }
 
             @Override
@@ -88,8 +87,11 @@ public class MasterManager {
                 BotUtils.sendMessage(channel, "Adding " + counter + " songs to queue from " + playlist.getName() + " (first song: " + playlist.getTracks().get(0).getInfo().title + ")");
 
                 //update MasterState json
-                stats.setNumSongsQueued(stats.getNumSongsQueued() + counter);
-                stats.setNumMillisQueued(stats.getNumMillisQueued() + duration);
+//                try {
+//                    MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
+//                    stats.setNumSongsQueued(stats.getNumSongsQueued() + counter);
+//                    stats.setNumMillisQueued(stats.getNumMillisQueued() + duration);
+//                } catch (Exception ignored) {}
             }
 
             @Override
@@ -110,9 +112,12 @@ public class MasterManager {
 //                    case "nb3":
 //                        loadAndPlay(channel, "https://www.youtube.com/watch?v=yLxsJpgvkfo&list=PLwMEL7UNT4o9iMzrvNBXZqXbNPFfT6rVD", event, insertFront, "");
 //                        return;
+//                    case "dank":
+//                        loadAndPlay(channel, "https://www.youtube.com/playlist?list=PLSbBQFh_CUqufnCqVuAfjw7pwJzuu2UNe", event, insertFront, "");
+//                        return;
 //                }
 
-                //use customUrl map
+                //use customUrl map --TODO BROKEN
                 if (MusicUtils.customUrls.containsKey(trackUrl)) {
                     loadAndPlay(channel, MusicUtils.customUrls.get(trackUrl), event, insertFront, "");
                     return; //Don't need to search Youtube
@@ -237,7 +242,9 @@ public class MasterManager {
         // BotUtils.sendMessage(channel, "Skipped to next track.");
 
         //update state json
-        MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats().incrNumSongsSkipped();
+//        try {
+//            MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats().incrNumSongsSkipped();
+//        } catch (Exception ignored) {}
     }
 
     public synchronized static void skipNumTracks(MessageReceivedEvent event, int numToSkip) {
@@ -250,8 +257,11 @@ public class MasterManager {
         //BotUtils.sendMessage(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
 
         //state update
-        MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
-        stats.setNumSongsSkipped(stats.getNumSongsSkipped() + numToSkip);
+
+//        try {
+//            MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
+//            stats.setNumSongsSkipped(stats.getNumSongsSkipped() + numToSkip);
+//        } catch (Exception ignored) {}
     }
 
 
