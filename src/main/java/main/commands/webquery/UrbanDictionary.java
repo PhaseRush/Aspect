@@ -19,7 +19,6 @@ public class UrbanDictionary implements Command {
 
         DefinitionContainer definition = gson.fromJson(json, DefinitionContainer.class);
 
-        System.out.println("hi");
         if (definition.getList().size() == 0) {
             BotUtils.sendMessage(event.getChannel(), "No definitions found :(");
             return;
@@ -42,19 +41,18 @@ public class UrbanDictionary implements Command {
     }
 
     private String generateDesc(UDDefinition topDef) {
-        StringBuilder sb
-                = new StringBuilder("Top definition by: " + topDef.getAuthor() + "\n")
-                .append(removeBrackets(topDef.getDefinition()))
-                .append("\nExample: ")
-                .append(removeBrackets(topDef.getExample()));
-
-        return sb.toString();
+        return "Top definition by: " + topDef.getAuthor() + "\n" +
+                removeBrackets(topDef.getDefinition()) +
+                "\nExample: " +
+                removeBrackets(topDef.getExample());
     }
 
     private String removeBrackets(String s) {
         return s.replaceAll("\\[", "")
-                .replaceAll("\\]", "");
+                .replaceAll("]", "");
     }
+
+
     @Override
     public boolean canRun() {
         return false;
