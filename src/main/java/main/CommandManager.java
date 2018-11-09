@@ -21,6 +21,7 @@ import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
 import main.commands.webquery.UrbanDictionary;
+import main.commands.webquery.Wikipedia;
 import main.commands.wolfram.WolframGeneral;
 import main.utility.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -51,6 +52,7 @@ public class CommandManager {
         UrbanDictionary urbanDictionary = new UrbanDictionary();
         commandMap.put("dic", urbanDictionary);
         commandMap.put("def", urbanDictionary);
+        commandMap.put("wiki", new Wikipedia());
 
 
         //dontdeadopeninside
