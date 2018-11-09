@@ -1,6 +1,5 @@
 package main.commands.nasa;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.nasa.APOD;
@@ -15,7 +14,7 @@ public class NasaApod implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String json = BotUtils.getJson("https://api.nasa.gov/planetary/apod?api_key=" + BotUtils.NASA_API);
-        APOD apod = new Gson().fromJson(json, APOD.class);
+        APOD apod = BotUtils.gson.fromJson(json, APOD.class);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withAuthorName("Nasa :: Astronomy Picture of the Day")

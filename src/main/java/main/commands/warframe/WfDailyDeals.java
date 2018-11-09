@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
@@ -17,7 +16,7 @@ public class WfDailyDeals implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String fullWorldState = BotUtils.getStringFromUrl("http://content.warframe.com/dynamic/worldState.php");
-        WorldState worldState = new Gson().fromJson(fullWorldState, WorldState.class);
+        WorldState worldState = BotUtils.gson.fromJson(fullWorldState, WorldState.class);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withDesc("Warframe Daily Deals")

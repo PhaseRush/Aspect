@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
@@ -44,7 +43,7 @@ public class WfMarketListing implements Command {
         String urlName = WarframeUtil.getItemUrlName(intendedItemName);
 
         String json = BotUtils.getStringFromUrl("https://api.warframe.market/v1/items/" + urlName + "/orders");
-        WarframeListingsPayloadContainer payload = new Gson().fromJson(json, WarframeListingsPayloadContainer.class);
+        WarframeListingsPayloadContainer payload = BotUtils.gson.fromJson(json, WarframeListingsPayloadContainer.class);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe Market | Price check for " + intendedItemName)

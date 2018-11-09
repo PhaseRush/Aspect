@@ -1,6 +1,5 @@
 package main.commands.fortnite;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.StatsFactory;
@@ -12,7 +11,6 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.util.List;
 
 public class FortniteStats implements Command {
-    private static Gson gson = new Gson();
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String platform = "pc";
@@ -24,7 +22,7 @@ public class FortniteStats implements Command {
 
         String json = BotUtils.getStringFromUrl("https://api.fortnitetracker.com/v1/profile/" + platform  + "/" + ign,
                 "TRN-Api-Key", BotUtils.FORTNITE_API_KEY);
-        FortniteTrackerJsonObj stats = gson.fromJson(json, FortniteTrackerJsonObj.class);
+        FortniteTrackerJsonObj stats = BotUtils.gson.fromJson(json, FortniteTrackerJsonObj.class);
 
 
         EmbedBuilder eb = new EmbedBuilder()

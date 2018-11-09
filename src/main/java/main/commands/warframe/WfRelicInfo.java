@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.warframe.wfcd.relics.RelicWrapper;
@@ -20,7 +19,7 @@ public class WfRelicInfo implements Command {
         String url = "https://raw.githubusercontent.com/WFCD/warframe-drop-data/gh-pages/data/relics.json";
         String json = BotUtils.getStringFromUrl(url);
 
-        RelicWrapper relics = new Gson().fromJson(json, RelicWrapper.class);
+        RelicWrapper relics = BotUtils.gson.fromJson(json, RelicWrapper.class);
         relics.getRelics().get(0).get_id();
 
     }

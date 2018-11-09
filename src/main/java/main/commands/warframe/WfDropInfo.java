@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import main.Command;
 import main.utility.BotUtils;
@@ -21,7 +20,7 @@ public class WfDropInfo implements Command {
 
         Type listOfDropInfo = new TypeToken<List<WarframeDropInfoEntity>>() {
         }.getType();
-        List<WarframeDropInfoEntity> drops = new Gson().fromJson(json, listOfDropInfo);
+        List<WarframeDropInfoEntity> drops = BotUtils.gson.fromJson(json, listOfDropInfo);
         drops.sort((o1, o2) -> Float.compare(o2.getChance(), o1.getChance()));
 
 

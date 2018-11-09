@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import main.Command;
 import main.utility.BotUtils;
@@ -19,7 +18,7 @@ public class WfVoidFissures implements Command {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/fissures");
         Type fissureListType = new TypeToken<LinkedList<WarframeVoidFissure>>() {
         }.getType();
-        LinkedList<WarframeVoidFissure> fissures = new Gson().fromJson(json, fissureListType);
+        LinkedList<WarframeVoidFissure> fissures = BotUtils.gson.fromJson(json, fissureListType);
 
         fissures.removeIf(fissure -> fissure.isExpired());
 

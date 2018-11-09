@@ -1,6 +1,5 @@
 package main.commands.webquery;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.urbandictionary.DefinitionContainer;
@@ -11,13 +10,12 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.util.List;
 
 public class UrbanDictionary implements Command {
-    private Gson gson = new Gson();
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String url = "http://api.urbandictionary.com/v0/define?term={"+ args.get(0).trim() + "}";
         String json = BotUtils.getStringFromUrl(url);
 
-        DefinitionContainer definition = gson.fromJson(json, DefinitionContainer.class);
+        DefinitionContainer definition = BotUtils.gson.fromJson(json, DefinitionContainer.class);
 
         if (definition.getList().size() == 0) {
             BotUtils.sendMessage(event.getChannel(), "No definitions found :(");

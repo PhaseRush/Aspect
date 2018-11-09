@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.warframe.market.item.WarframeItem;
@@ -14,7 +13,7 @@ public class WfItems implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String json = BotUtils.getStringFromUrl("https://api.warframe.market/v1/items");
 
-        WarframeItemPayloadContainer obj = new Gson().fromJson(json, WarframeItemPayloadContainer.class);
+        WarframeItemPayloadContainer obj = BotUtils.gson.fromJson(json, WarframeItemPayloadContainer.class);
 
         for (WarframeItem i : obj.getPayload().getItems().getEn()) {
             System.out.println(i.getItem_name());

@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
@@ -44,7 +43,7 @@ public class WfItemInfo implements Command {
 
     private void finishCommand(String itemName) {
         String jsonURL = "https://api.warframe.market/v1/items/" + WarframeUtil.getItemUrlName(itemName);
-        WarframeItemDetailPayloadContainer payloadContainer = new Gson().fromJson(BotUtils.getStringFromUrl(jsonURL), WarframeItemDetailPayloadContainer.class);
+        WarframeItemDetailPayloadContainer payloadContainer = BotUtils.gson.fromJson(BotUtils.getStringFromUrl(jsonURL), WarframeItemDetailPayloadContainer.class);
         //WarframeDetailedItem item = payloadContainer.getPayload().getItem().getItems_in_set()[0]; //@todo problem here. assuming is first item.
 
         WarframeDetailedItem[] items = payloadContainer.getPayload().getItem().getItems_in_set();

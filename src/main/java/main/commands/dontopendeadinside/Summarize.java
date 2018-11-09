@@ -1,6 +1,5 @@
 package main.commands.dontopendeadinside;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.SmmryObject;
@@ -28,7 +27,7 @@ public class Summarize implements Command {
             BotUtils.sendMessage(event.getChannel(), "Malformed URL");
             return; //Don't proceed
         }
-        SmmryObject smmryObject = new Gson().fromJson(httpResponse, SmmryObject.class);
+        SmmryObject smmryObject = BotUtils.gson.fromJson(httpResponse, SmmryObject.class);
 
         //handle return errors
         if (smmryObject.hasError())

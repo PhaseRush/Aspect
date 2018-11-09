@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import main.Command;
 import main.utility.BotUtils;
@@ -18,7 +17,7 @@ public class WfAcolyteTracker implements Command {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/persistentEnemies");
         Type listOfAcolyteType = new TypeToken<List<WarframeAcolyte>>() {
         }.getType();
-        List<WarframeAcolyte> acolytes = new Gson().fromJson(json, listOfAcolyteType);
+        List<WarframeAcolyte> acolytes = BotUtils.gson.fromJson(json, listOfAcolyteType);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Acolytes")

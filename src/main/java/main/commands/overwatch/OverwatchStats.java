@@ -15,6 +15,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.util.List;
 
 public class OverwatchStats implements Command {
+    //need custom Gson parser
     private static Gson gson = new GsonBuilder()
             .registerTypeAdapter(int.class, new IntTypeAdaptor())
             .registerTypeAdapter(Integer.class, new IntTypeAdaptor()).create();

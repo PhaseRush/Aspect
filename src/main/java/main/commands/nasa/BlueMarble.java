@@ -1,6 +1,5 @@
 package main.commands.nasa;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.nasa.EPICMetadata;
@@ -15,7 +14,7 @@ public class BlueMarble implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String metadataJsonRaw = BotUtils.getJson("https://epic.gsfc.nasa.gov/api/natural");
-        EPICMetadata[] array = new Gson().fromJson(metadataJsonRaw, EPICMetadata[].class);
+        EPICMetadata[] array = BotUtils.gson.fromJson(metadataJsonRaw, EPICMetadata[].class);
 
         String imageIdentifier = array[0].getIdentifier();
         String year = imageIdentifier.substring(0,4);

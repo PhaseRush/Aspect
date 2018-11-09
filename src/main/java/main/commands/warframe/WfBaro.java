@@ -1,6 +1,5 @@
 package main.commands.warframe;
 
-import com.google.gson.Gson;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
@@ -15,7 +14,7 @@ public class WfBaro implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/voidTrader");
-        WarframeVoidTrader trader = new Gson().fromJson(json, WarframeVoidTrader.class);
+        WarframeVoidTrader trader = BotUtils.gson.fromJson(json, WarframeVoidTrader.class);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Void Trader " + trader.getCharacter())

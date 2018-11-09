@@ -29,7 +29,7 @@ public class BotUtils {
 
     //meta util
     private static Random tlr = ThreadLocalRandom.current();
-    private static Gson gson = new Gson();
+    public static Gson gson = new Gson();
     private static OkHttpClient client = new OkHttpClient();
 
     //leven
