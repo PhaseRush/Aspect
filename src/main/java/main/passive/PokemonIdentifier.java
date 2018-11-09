@@ -66,7 +66,7 @@ public class PokemonIdentifier {
                 counter++;
                 Thread.yield(); //@todo newly added yield in attempt to spread out cpu usage. Keep eye on this. -- WORKS FINE
             }
-            Map<String, Double> sortedSimilarity = BotUtils.sortMapByValue(similarityMap, true);
+            Map<String, Double> sortedSimilarity = BotUtils.sortMap(similarityMap, true, true);
             answer = sortedSimilarity.entrySet().iterator().next(); //first entry
 
             EmbedBuilder eb = new EmbedBuilder()

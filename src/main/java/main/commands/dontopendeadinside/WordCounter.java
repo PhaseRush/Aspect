@@ -81,7 +81,7 @@ public class WordCounter implements Command {
             }
         }
 
-        userWordCountMap = BotUtils.sortMapByValue(userWordCountMap, false);
+        userWordCountMap = BotUtils.sortMap(userWordCountMap, false, true);
         Entry<IUser, Integer> mostGoodPerson = userWordCountMap.entrySet().iterator().next();
         String nick = mostGoodPerson.getKey().getNicknameForGuild(event.getGuild());
 

@@ -400,9 +400,13 @@ public class BotUtils {
         return i > -1 && i < 26 ? String.valueOf((char) (i + 'a')) : null; //super fucking janky
     }
 
-    public static <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(Map<K, V> map, boolean smallestToLargest) {
+    //needs work for sortin by key
+    public static <K, V extends Comparable<? super V>> Map<K, V> sortMap(Map<K, V> map, boolean smallestToLargest, boolean sortByValue) {
         List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
-        entryList.sort(Entry.comparingByValue());
+        if (sortByValue)
+            entryList.sort(Entry.comparingByValue());
+        else
+            //entryList.sort(Entry.comparingByKey());
 
         if (!smallestToLargest) Collections.reverse(entryList);
 

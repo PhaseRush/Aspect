@@ -48,7 +48,10 @@ public class CommandManager {
         commandMap.put("nick", new ReNickName());
 
         //webquery
-        commandMap.put("dic", new UrbanDictionary());
+        UrbanDictionary urbanDictionary = new UrbanDictionary();
+        commandMap.put("dic", urbanDictionary);
+        commandMap.put("def", urbanDictionary);
+
 
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
