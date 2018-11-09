@@ -61,7 +61,8 @@ public class BotUtils {
         try {
             return PREFIX_MAP.get(Long.valueOf(iGuild.getStringID()));
         } catch (NullPointerException e) {
-            return "This key doesn't exist";
+            System.out.println("This key doesn't exist");
+            return null;
         }
     }
 
@@ -388,9 +389,9 @@ public class BotUtils {
     public static String buildOptions(List<String> intendedItemNames, int numOptions) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < numOptions; i++) {
+        for (int i = 0; i < numOptions; i++)
             sb.append(":regional_indicator_" + getCharFromInt(i) + ":\t\t" + intendedItemNames.get(i) + "\n");
-        }
+
         sb.append("\n:x: cancel this request");
         return sb.toString();
     }
@@ -400,15 +401,14 @@ public class BotUtils {
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(Map<K, V> map, boolean smallestToLargest) {
-        List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Entry.comparingByValue());
+        List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
+        entryList.sort(Entry.comparingByValue());
 
-        if (!smallestToLargest)
-            Collections.reverse(list);
+        if (!smallestToLargest) Collections.reverse(entryList);
 
         Map<K, V> result = new LinkedHashMap<>();
-        for (Entry<K, V> entry : list)
-            result.put(entry.getKey(), entry.getValue());
+
+        entryList.forEach(e -> result.put(e.getKey(), e.getValue()));
 
         return result;
     }
