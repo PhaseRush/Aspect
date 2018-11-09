@@ -114,6 +114,7 @@ public class CommandManager {
         commandMap.put("time", new CurrentTime());
         commandMap.put("deletemsg", new DeleteMsg());
         commandMap.put("trans", new Translate());
+        commandMap.put("pfp", new GetUserPfp());
 
         //Fortnite
         commandMap.put("fn", new FortniteStats());
