@@ -42,7 +42,7 @@ public class PreviousMatch implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
 

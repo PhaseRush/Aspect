@@ -33,7 +33,7 @@ public class PersonalEmbed implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
 

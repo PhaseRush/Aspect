@@ -32,7 +32,7 @@ public class AvailableRegions implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
 

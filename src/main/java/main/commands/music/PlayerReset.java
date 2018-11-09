@@ -17,7 +17,7 @@ public class PlayerReset implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
 

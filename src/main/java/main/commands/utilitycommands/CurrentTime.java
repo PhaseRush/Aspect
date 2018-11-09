@@ -26,7 +26,7 @@ public class CurrentTime implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
 

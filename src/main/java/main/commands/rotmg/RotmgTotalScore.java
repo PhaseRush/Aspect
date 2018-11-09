@@ -23,7 +23,7 @@ public class RotmgTotalScore implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
     private void handleRealmEyeTotalCharScore(String json, IChannel channel, IUser author, double startTime) {

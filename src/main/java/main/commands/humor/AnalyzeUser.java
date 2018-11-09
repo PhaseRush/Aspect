@@ -35,7 +35,7 @@ public class AnalyzeUser implements Command {
     }
 
     @Override
-    public boolean canRun() {
+    public boolean canRun(MessageReceivedEvent event) {
         return false;
     }
 
