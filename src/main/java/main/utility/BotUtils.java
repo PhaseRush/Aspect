@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BotUtils {
 
-    //meta util
+    //meta util -- Gson now public
     private static Random tlr = ThreadLocalRandom.current();
     public static Gson gson = new Gson();
     private static OkHttpClient client = new OkHttpClient();
@@ -392,8 +392,7 @@ public class BotUtils {
         for (int i = 0; i < numOptions; i++)
             sb.append(":regional_indicator_" + getCharFromInt(i) + ":\t\t" + intendedItemNames.get(i) + "\n");
 
-        sb.append("\n:x: cancel this request");
-        return sb.toString();
+        return sb.append("\n:x: cancel this request").toString();
     }
 
     private static String getCharFromInt(int i) {
