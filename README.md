@@ -10,6 +10,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 
 ## All available commands:
+[Source for all commands](https://github.com/PhaseRush/Aspect/blob/e3016e4ee0c16d4a734a17a87fb7b4306eab27d2/src/main/java/main/CommandManager.java#L44)
 - examples with params in round brackets indicate optional params. Square brackets indicate a placeholder. Do not use the round or square bracket characters if you choose to use that parameter
 
 
