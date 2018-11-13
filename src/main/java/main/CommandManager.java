@@ -186,13 +186,15 @@ public class CommandManager {
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) {
+        if (!event.getMessage().getFormattedContent().startsWith(BotUtils.DEFAULT_BOT_PREFIX)) return;
 
         // Given a message "/test arg1, arg2", argArray will contain ["!test", "arg1, arg2, ...."]
         String[] argArray = event.getMessage().getContent().split(" ", 2);
 
         // Check if the first arg (the command) starts with the prefix defined in the utils class
-        if (!argArray[0].startsWith(BotUtils.DEFAULT_BOT_PREFIX))
-            return;
+        // Moved to top of method
+//        if (!argArray[0].startsWith(BotUtils.DEFAULT_BOT_PREFIX))
+//            return;
 
         //if(BotUtils.PREFIX_MAP.get(argArray[0]).equals())
 
