@@ -10,6 +10,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 
 ## All available commands:
+[Source for all commands](src/main/java/main/CommandManager.java)
 - examples with params in round brackets indicate optional params. Square brackets indicate a placeholder. Do not use the round or square bracket characters if you choose to use that parameter
 
 
