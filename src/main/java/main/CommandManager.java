@@ -9,6 +9,7 @@ import main.commands.humor.cute.CuteImg;
 import main.commands.humor.cute.ListCuties;
 import main.commands.kaitlyn_is_needy.ReNickName;
 import main.commands.league.*;
+import main.commands.music.CustomQueues;
 import main.commands.music.playing.*;
 import main.commands.music.queue.*;
 import main.commands.music.sfx.SoundEffect;
@@ -97,6 +98,7 @@ public class CommandManager {
         commandMap.put("pause", new SongPause());
         commandMap.put("qdel", songDelete);
         commandMap.put("songdel", songDelete);
+        commandMap.put("listqueue", new CustomQueues());
 
         commandMap.put("sfx", new SoundEffect());
         commandMap.put("listsfx", new SoundEffectList());

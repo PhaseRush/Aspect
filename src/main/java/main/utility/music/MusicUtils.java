@@ -12,7 +12,7 @@ public class MusicUtils {
     public static List<ReactionEmoji> floatingReactions;
     public static char[] nextTrackUnicodeArray = {'\u23ED', '\uFE0F'}; //no bueno
 
-    static Map<String, String> customUrls = new LinkedHashMap<>();
+    public static Map<String, String> customUrls = new LinkedHashMap<>();
 
     static {
 
