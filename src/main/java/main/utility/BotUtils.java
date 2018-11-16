@@ -53,6 +53,7 @@ public class BotUtils {
     public static String YOUTUBE_API_KEY;
     public static String WF_BOTTOM_TEXT_ID;
     public static IChannel BOTTOM_TEXT;
+    public static String PRIVATE_CHANNEL_INFO_URL;
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
@@ -162,7 +163,7 @@ public class BotUtils {
     public static void sendMessage(IChannel channel, EmbedBuilder embed) {
         RequestBuffer.request(() -> {
             try {
-                channel.sendMessage(embed.build());
+                    channel.sendMessage(embed.build());
             } catch (DiscordException e) {
                 System.err.println("Embed could not be sent with error: ");
                 e.printStackTrace();

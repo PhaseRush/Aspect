@@ -6,6 +6,7 @@ import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import main.passive.PassiveListener;
 import main.passive.PokemonIdentifier;
+import main.passive.PrivateChannelVerification;
 import main.passive.WfPassive;
 import main.utility.BotUtils;
 import sx.blah.discord.api.IDiscordClient;
@@ -29,7 +30,7 @@ public class Main {
         startTime = System.currentTimeMillis();
         startInstant = Instant.now();
 
-        if (args.length != 12) {
+        if (args.length != 13) {
             System.out.println("You screwed up the runtime config params!");
             System.exit(9001);
             return;
@@ -61,6 +62,9 @@ public class Main {
         //Warframe - bottom text id
         BotUtils.WF_BOTTOM_TEXT_ID = args[11];
 
+        //private server id/passwords
+        BotUtils.PRIVATE_CHANNEL_INFO_URL = args[12];
+
         //client
         client = BotUtils.getBuiltDiscordClient(args[1]);
 
@@ -69,6 +73,7 @@ public class Main {
         client.getDispatcher().registerListener(new PassiveListener());
         client.getDispatcher().registerListener(new WfPassive());
         client.getDispatcher().registerListener(new PokemonIdentifier());
+        client.getDispatcher().registerListener(new PrivateChannelVerification()); //Thanks Resuna!
 
         // Only login after all events are registered otherwise some may be missed.
         client.login();

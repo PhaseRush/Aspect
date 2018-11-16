@@ -25,7 +25,9 @@ public class PassiveListener {
 
 
     @EventSubscriber
+    @SuppressWarnings("ConstantConditions") //not working
     public void kaitlynsHangOut(MessageReceivedEvent event) {
+        if (event.getChannel().isPrivate()) return; //surpress errors
         //please, no one ask. please please please please please
         if (event.getGuild().getStringID().equals("197158565004312576")) {
             String message = event.getMessage().getFormattedContent().toLowerCase();
