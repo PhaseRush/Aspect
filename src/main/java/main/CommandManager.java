@@ -193,19 +193,6 @@ public class CommandManager {
         // Given a message "/test arg1, arg2", argArray will contain ["!test", "arg1, arg2, ...."]
         String[] argArray = event.getMessage().getContent().split(" ", 2);
 
-        // Check if the first arg (the command) starts with the prefix defined in the utils class
-        // Moved to top of method
-//        if (!argArray[0].startsWith(BotUtils.DEFAULT_BOT_PREFIX))
-//            return;
-
-        //if(BotUtils.PREFIX_MAP.get(argArray[0]).equals())
-
-        //String mappedPrefix = BotUtils.getPrefix(event.getGuild());
-        //if(!argArray[0].startsWith(mappedPrefix)) {
-        //    return;
-        //}
-
-
         // Extract the "command" part of the first arg out by ditching the amount of characters present in the prefix
         String commandStr = argArray[0].substring(BotUtils.DEFAULT_BOT_PREFIX.length());
 
@@ -216,7 +203,7 @@ public class CommandManager {
             argsList.addAll(Arrays.asList(argArray[1].split(", ")));
         }
 
-        // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists, or call wolfram general if it doesn't
+        // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
         if (commandMap.containsKey(commandStr)) {
             commandMap.get(commandStr).runCommand(event, argsList);
 
@@ -225,7 +212,7 @@ public class CommandManager {
                 commandArgs.append(s + "\t");
 
             StringBuilder commandPrint = new StringBuilder();
-            commandPrint.append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toString()).append("\t")
+            commandPrint.append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")
                     .append(event.getAuthor().getName()).append("\t")
                     .append(event.getAuthor().getStringID()).append("\t")
                     .append("cmd: " + commandStr).append("\t")
