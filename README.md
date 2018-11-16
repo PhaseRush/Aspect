@@ -157,6 +157,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Music :: Calling $play with "nb3" starts a NightBlue3 playlist
 - Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 - Pokemon Identification :: Due to request from server admin, the pokedex only works when `$identify` is called. This is to not ruin the fun of guessing pokemon
+- Privacy :: Can give users a role to access private channels if a custom password is pm'd to the bot. 
 
 #### Notes
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
@@ -168,6 +169,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 
 Special thanks to [decyg](https://github.com/decyg) for help with [basically everything](src/main/java/main/commands/dontopendeadinside/Imaging.java).
+Special thanks to [Drew Cornfield](https://github.com/Resoona) for the private channel/role/password idea.
 
 
 Aspect isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
