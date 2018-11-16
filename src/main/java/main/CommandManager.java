@@ -98,7 +98,7 @@ public class CommandManager {
         commandMap.put("pause", new SongPause());
         commandMap.put("qdel", songDelete);
         commandMap.put("songdel", songDelete);
-        commandMap.put("listqueue", new CustomQueues());
+        commandMap.put("listmusic", new CustomQueues());
 
         commandMap.put("sfx", new SoundEffect());
         commandMap.put("listsfx", new SoundEffectList());

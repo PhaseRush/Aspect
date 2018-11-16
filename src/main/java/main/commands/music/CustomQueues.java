@@ -2,7 +2,9 @@ package main.commands.music;
 
 import main.Command;
 import main.utility.BotUtils;
+import main.utility.Visuals;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.util.EmbedBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -12,12 +14,17 @@ import static main.utility.music.MusicUtils.customUrls;
 public class CustomQueues implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        StringBuilder sb = new StringBuilder("```\n");
+        StringBuilder sb = new StringBuilder("\n");
 
         for (Map.Entry e : customUrls.entrySet())
-            sb.append(e.getKey() + " : " + e.getValue()).append("\n");
+            sb.append("["+e.getKey() + "](" + e.getValue()).append(")\n");
 
-        BotUtils.sendMessage(event.getChannel(), sb.toString());
+        EmbedBuilder eb = new EmbedBuilder()
+                .withTitle("Preconfigured Playlists")
+                .withDesc(sb.toString())
+                .withColor(Visuals.getVibrantColor());
+
+        BotUtils.sendMessage(event.getChannel(), eb);
     }
 
     @Override

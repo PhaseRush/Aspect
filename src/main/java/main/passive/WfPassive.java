@@ -79,9 +79,12 @@ public class WfPassive {
                 WarframeMission mission = alert.getMission();
                 eb.appendField(mission.getNode() + " | " + mission.getType() + " | " + alert.getEta() + " remaining", mission.getReward().getAsString(), false);
             }
-            BotUtils.sendMessage(BotUtils.BOTTOM_TEXT, eb);
+
+            if (BotUtils.BOTTOM_TEXT != null) //bottom text is null on startup, throwing NPE.
+                BotUtils.sendMessage(BotUtils.BOTTOM_TEXT, eb);
         };
 
         final ScheduledFuture<?> alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);
+
     }
 }
