@@ -137,20 +137,18 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Dump MasterState json with command
 - [ ] use [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform) to detect "beat drops" etc.
 
-#### non-command features
+#### Other Features:
 - Warframe :: Automatically updates alerts and posts to channel every 30 minutes
 - Warframe :: Has automatic spell correction. "abkroncoe prwime blurewpint" -> "akbronco prime blueprint"
 - Warframe :: Status is constantly updating to display current time and solar cycle on Cetus
 - Music :: Calling $play without valid url triggers Youtube search
-- Music :: Calling $play with "music" starts a generic playlist
-- Music :: Calling $play with "nb3" starts a NightBlue3 playlist
+- Music :: $play supports various [keywords](src/main/java/main/utility/music/MusicUtils.java#L28)
 - Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 - Pokemon Identification :: Due to request from server admin, the pokedex only works when `$identify` is called. This is to not ruin the fun of guessing pokemon
 - Privacy :: Can give users a role to access private channels if a custom password is pm'd to the bot. Uses SHA-256 for encryption.
 
 #### Notes
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
-- Icons used curtesy of 
 - $bulkdelete restricted to people with a certain role/privilege
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
 - command prefix cannot be changed as of 8/25
