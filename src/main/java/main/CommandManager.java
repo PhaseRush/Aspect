@@ -7,7 +7,6 @@ import main.commands.humor.Insult;
 import main.commands.humor.Ship;
 import main.commands.humor.cute.CuteImg;
 import main.commands.humor.cute.ListCuties;
-import main.commands.kaitlyn_is_needy.ReNickName;
 import main.commands.league.*;
 import main.commands.music.CustomQueues;
 import main.commands.music.playing.*;
@@ -47,7 +46,7 @@ public class CommandManager {
         //commandMap.put("bulba", new BulbapediaScraper());
         //commandMap.put("transpose", new ImageTransposer());
         //commandMap.put("trim", new TransparentTrimmer());
-        commandMap.put("nick", new ReNickName());
+        //commandMap.put("nick", new ReNickName()); //for kaitlyn
 
         //webquery
         UrbanDictionary urbanDictionary = new UrbanDictionary();

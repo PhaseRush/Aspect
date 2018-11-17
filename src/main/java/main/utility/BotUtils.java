@@ -21,6 +21,9 @@ import sx.blah.discord.util.RequestBuffer;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
@@ -34,6 +37,9 @@ public class BotUtils {
 
     //leven
     private static Levenshtein leven = new Levenshtein();
+
+    //encryption
+    static MessageDigest messageDigest;
 
     // Constants for use throughout the bot
     public final static String GITHUB_URL = "https://github.com/PhaseRush/Aspect";
@@ -57,6 +63,15 @@ public class BotUtils {
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
+
+
+    // --- Static initializer --
+    static {
+        try {
+            messageDigest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException ignored){}
+    }
+
 
     public static String getPrefix(IGuild iGuild) {
         try {
@@ -419,6 +434,19 @@ public class BotUtils {
 
     public static double stringSimilarity(String s1, String s2) {
         return leven.distance(s1, s2);
+    }
+
+    public static String SHA256(String input) {
+        byte[] encodedBytes = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));
+
+        StringBuilder hexBuilder = new StringBuilder();
+        for (byte encodedByte : encodedBytes) {
+            String hex = Integer.toHexString(0xff & encodedByte);
+            if (hex.length() == 1) hexBuilder.append('0');
+            hexBuilder.append(hex);
+        }
+
+        return hexBuilder.toString();
     }
 
 //    public static <T extends Number> getMin(T first, T second) {
