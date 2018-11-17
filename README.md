@@ -154,10 +154,12 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - command prefix cannot be changed as of 8/25
 
 
-Special thanks: 
+#### Special thanks: 
 
 [decyg](https://github.com/decyg) for help with [basically everything](src/main/java/main/commands/dontopendeadinside/Imaging.java).
+
 [Drew Cornfield](https://github.com/Resoona) for the private channel/role/password idea.
+
 [Mike Winkelmann](https://www.beeple-crap.com/about) for permission to use their art as icons.
 
 
