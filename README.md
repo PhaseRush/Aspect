@@ -127,24 +127,13 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 
 #### WIP Commands:
-- [x] Fortnite shop - DEPRECATED
-- [ ] League: full match analysis
-- [ ] League: "suggestions" :)
-- [x] Warframe: detailed item information
-- [x] Warframe: relic drop locations
 - [ ] General: fetch: command that searches google and compiles keywords and top image
-- [x] Asciify: Use [korhner's asciimg](https://github.com/korhner/asciimg) to make better ascii images
-- [ ] Wikipedia: integrate wikipedia searches and article summaries
-- [ ] Urban Dictionary: use [this api](https://github.com/zdict/zdict/wiki/Urban-dictionary-API-documentation)
 - [ ] Google image search
 - [ ] Imgur upload/integration
 - [ ] Microsoft Azure/Cloud integration for image recognition
 - [ ] Remind me bot (timezones op?)
-- [ ] Get the URL/photo from someone's profile picture.
 
 #### WIP Features:
-- [ ] Floating music player - Live embed with current song info, track progress, and reactions for pause, stop, or next
-- [ ] Execute each command issued on a separate thread (High priority)
 - [ ] Dump MasterState json with command
 - [ ] use [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform) to detect "beat drops" etc.
 
@@ -161,15 +150,17 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 #### Notes
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
-- Icons used curtesy of [Mike Winkelmann](https://www.beeple-crap.com/about).
-- $bulkdelete temporarily disabled for security purposes
+- Icons used curtesy of 
+- $bulkdelete restricted to people with a certain role/privilege
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
 - command prefix cannot be changed as of 8/25
 
 
+Special thanks: 
 
-Special thanks to [decyg](https://github.com/decyg) for help with [basically everything](src/main/java/main/commands/dontopendeadinside/Imaging.java).
-Special thanks to [Drew Cornfield](https://github.com/Resoona) for the private channel/role/password idea.
+[decyg](https://github.com/decyg) for help with [basically everything](src/main/java/main/commands/dontopendeadinside/Imaging.java).
+[Drew Cornfield](https://github.com/Resoona) for the private channel/role/password idea.
+[Mike Winkelmann](https://www.beeple-crap.com/about) for permission to use their art as icons.
 
 
 Aspect isn’t endorsed by Riot Games and doesn’t reflect the views or opinions of Riot Games or anyone officially involved in producing or managing League of Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
