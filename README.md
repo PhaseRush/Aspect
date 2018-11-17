@@ -157,7 +157,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Music :: Calling $play with "nb3" starts a NightBlue3 playlist
 - Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 - Pokemon Identification :: Due to request from server admin, the pokedex only works when `$identify` is called. This is to not ruin the fun of guessing pokemon
-- Privacy :: Can give users a role to access private channels if a custom password is pm'd to the bot. 
+- Privacy :: Can give users a role to access private channels if a custom password is pm'd to the bot. Uses SHA-256 for encryption.
 
 #### Notes
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
