@@ -9,14 +9,14 @@ import java.util.Map;
 
 public class MusicUtils {
 
-    public static List<ReactionEmoji> floatingReactions;
+    public static List<ReactionEmoji> floatingReactions = new LinkedList<>();
     public static char[] nextTrackUnicodeArray = {'\u23ED', '\uFE0F'}; //no bueno
 
     public static Map<String, String> customUrls = new LinkedHashMap<>();
 
     static {
 
-        floatingReactions = new LinkedList<>();
+        
         floatingReactions.add(ReactionEmoji.of("\u25b6")); //play -- might also need to attack \ufe0f
         floatingReactions.add(ReactionEmoji.of("\u23f8")); //pause -- might also need to attack \ufe0f
         //floatingReactions.add(ReactionEmoji.of(String.valueOf(nextTrackUnicodeArray)));
