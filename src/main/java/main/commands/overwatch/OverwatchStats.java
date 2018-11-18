@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import main.Command;
 import main.utility.BotUtils;
-import main.utility.IntTypeAdaptor;
 import main.utility.StatsFactory;
+import main.utility.gsonModifiers.IntTypeAdaptor;
 import main.utility.overwatch.json.OWGames;
 import main.utility.overwatch.json.OWStats;
 import main.utility.overwatch.json.OverwatchJsonObj;
@@ -22,23 +22,22 @@ public class OverwatchStats implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String ign = "";
-        String identifer = "";
+        String ign, identifier;
         try {
             ign = args.get(0);
-            identifer = args.get(1);
+            identifier = args.get(1);
         } catch (Exception e) {
             BotUtils.sendMessage(event.getChannel(), "Usage:```\n$ow [ign],[identifier]```");
             return;
         }
 
-        String json = BotUtils.getStringFromUrl("https://ow-api.com/v1/stats/pc/us/" + ign + "-" + identifer + "/profile");
+        String json = BotUtils.getStringFromUrl("https://ow-api.com/v1/stats/pc/us/" + ign + "-" + identifier + "/profile");
         OverwatchJsonObj stats = gson.fromJson(json, OverwatchJsonObj.class);
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect - Basic Overwatch Profile")
                 //.withThumbnail(stats.getIcon()) @todo
-                .withUrl("https://www.overbuff.com/players/pc/"+ ign + "-" + identifer)
+                .withUrl("https://www.overbuff.com/players/pc/"+ ign + "-" + identifier)
                 .withDesc(generateDesc(stats));
 
         BotUtils.sendMessage(event.getChannel(), eb);

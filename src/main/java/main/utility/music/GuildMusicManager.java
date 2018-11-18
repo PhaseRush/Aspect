@@ -5,9 +5,10 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventListener;
 
 public class GuildMusicManager {
-    public final AudioPlayer player;
+    private final AudioPlayer player;
     private final AudioProvider provider;
     private final TrackScheduler scheduler;
+    private long thisStartTime;
 
     /**
      * Creates a player and a track scheduler.
@@ -46,5 +47,13 @@ public class GuildMusicManager {
      */
     public AudioProvider getAudioProvider() {
         return provider;
+    }
+
+    public AudioPlayer getPlayer() {
+        return player;
+    }
+
+    public void setThisStartTime(long thisStartTime) {
+        this.thisStartTime = thisStartTime;
     }
 }

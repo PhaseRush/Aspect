@@ -23,7 +23,7 @@ public class PrivateChannelVerification {
 
     @EventSubscriber
     public void verifyPassword(MessageReceivedEvent event) {
-        if (!event.getChannel().isPrivate()) return;
+        if (!event.getChannel().isPrivate()) return; //end if not private
         if (!event.getMessage().getFormattedContent().startsWith("::")) return; //special start case
 
         String hashedInput = BotUtils.SHA256(event.getMessage().getFormattedContent().substring(2));

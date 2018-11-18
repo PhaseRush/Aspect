@@ -1,4 +1,4 @@
-package main.utility;
+package main.utility.gsonModifiers;
 
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;

@@ -20,6 +20,7 @@ public class Wikipedia implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle(wiki.getDisplaytitle())
+                .withUrl(wiki.getDescription())
                 .withColor(Visuals.getVibrantColor())
                 .withDesc(generateDesc(wiki));
 

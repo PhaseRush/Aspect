@@ -1,4 +1,4 @@
-package main.commands.kaitlyn_is_needy;
+package main.commands.kaitlyn;
 
 import com.google.gson.Gson;
 import main.Command;
@@ -11,6 +11,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * idea that has been floating around to screw with nicknames in Kaitlyn's server
+ *
+ * first save all current nicks
+ * then change everyones nickname
+ * finally, change them back when everyone panics
+ */
 public class ReNickName implements Command {
     private Gson gson = new Gson();
     private String winBasedir = "C:\\Users\\leozh\\Desktop\\nick.txt";

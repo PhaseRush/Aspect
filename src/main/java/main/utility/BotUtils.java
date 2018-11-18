@@ -432,6 +432,16 @@ public class BotUtils {
         return result;
     }
 
+    public static String millisToHMS(long millis) {
+        int seconds = (int) (millis / 1000) % 60;
+        int minutes = (int) ((millis / (1000 * 60)) % 60);
+        int hours = (int) (millis / (1000 * 60 * 60));
+
+        return (hours == 0 ? "" : String.valueOf(hours) + ":") +
+                (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
+                (seconds < 10 ? "0" + seconds : seconds);
+    }
+
     public static double stringSimilarity(String s1, String s2) {
         return leven.distance(s1, s2);
     }

@@ -295,14 +295,7 @@ public class TrackScheduler {
     }
 
     public String getQueueHMS() {
-        long milliseconds = getQueueDurationMillis();
-        int seconds = (int) (milliseconds / 1000) % 60;
-        int minutes = (int) ((milliseconds / (1000 * 60)) % 60);
-        int hours = (int) (milliseconds / (1000 * 60 * 60));
-
-        return (hours == 0 ? "" : String.valueOf(hours) + ":") +
-                (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
-                (seconds < 10 ? "0" + seconds : seconds);
+        return BotUtils.millisToHMS(getQueueDurationMillis());
     }
 
     public AudioPlayer getPlayer() {

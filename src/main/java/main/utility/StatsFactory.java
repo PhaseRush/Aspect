@@ -4,7 +4,6 @@ public class StatsFactory {
 
 
     public static StringBuilder generateRow(String category, Object compVal, Object quickVal, int width) {
-        int totalWidth = width;
         int catLen = category.length();
         int firstE = 25;
         int secondE = 39;
@@ -12,7 +11,7 @@ public class StatsFactory {
         StringBuilder sb = new StringBuilder(category);
 
         //fill with blanks
-        for (int i = catLen; i < totalWidth; i++) sb.append(" ");
+        for (int i = catLen; i < width; i++) sb.append(" ");
 
         String compString = String.valueOf(compVal);
         String quickString = String.valueOf(quickVal);
@@ -24,7 +23,6 @@ public class StatsFactory {
     }
 
     public static StringBuilder generateRow(String category, String soloVal, String duoVal, String squadVal, int width) {
-        int totalWidth = width;
         int catLen = category.length();
         int firstE = 19;
         int secondE = 31;
@@ -33,7 +31,7 @@ public class StatsFactory {
         StringBuilder sb = new StringBuilder(category);
 
         //fill with blanks
-        for (int i = catLen; i < totalWidth; i++) sb.append(" ");
+        for (int i = catLen; i < width; i++) sb.append(" ");
 
         //replace each
         sb.replace(firstE-soloVal.length(),firstE, soloVal);

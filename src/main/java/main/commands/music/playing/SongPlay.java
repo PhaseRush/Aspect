@@ -5,22 +5,27 @@ import main.Command;
 import main.utility.BotUtils;
 import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.obj.IVoiceChannel;
 
 import java.util.List;
 
 public class SongPlay implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        if (event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel()
-                != event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()) {
+        IVoiceChannel aspectChannel = event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel();
+        IVoiceChannel userChannel = event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel();
+        AudioPlayer player = MasterManager.getGuildAudioPlayer(event.getGuild()).getPlayer();
 
+        if (!aspectChannel.equals(userChannel)) {
             BotUtils.joinVC(event);
+            MasterManager.getGuildAudioPlayer(event.getGuild()).setThisStartTime(System.currentTimeMillis());
         }
-        AudioPlayer player = MasterManager.getGuildAudioPlayer(event.getGuild()).player;
+
         if (player.isPaused()) {
             player.setPaused(false);
             BotUtils.sendMessage(event.getChannel(), "Player is now unpaused.");
         }
+
         String searchStr = String.join(" ", args);
         MasterManager.loadAndPlay(event.getChannel(), searchStr, event, false, "");
     }
