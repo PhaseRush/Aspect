@@ -31,28 +31,23 @@ public class PassiveListener {
         //please, no one ask. please please please please please
         if (event.getGuild().getStringID().equals("197158565004312576")) {
             String message = event.getMessage().getFormattedContent().toLowerCase();
-            if (message.contains("penis")) {
+            if (message.contains("penis"))
                 BotUtils.sendMessage(event.getChannel(), "penis.");
-            }
-            //not exclusive
-            if (message.contains("turtle")) {
+            //use embed to hide url in message
+            if (message.contains("turtle"))
                 BotUtils.sendMessage(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
-            }
         }
     }
 
     @EventSubscriber
-    public void owo(MessageReceivedEvent event) throws Exception{
-        //if(event.getAuthor().isBot()) return; //added for auto music updater (seems to trigger this every time or something
-        try {
-            if (event.getMessage().getContent().equalsIgnoreCase("owo")){
-                if (ThreadLocalRandom.current().nextInt(100) == 1)
-                    BotUtils.sendMessage(event.getChannel(), "degenerate");
-            }else {
-                throw new Exception();
-            }
-        }catch(Exception e){
-            //System.out.println("no message"); get rid of thissssssss
+    public void owo(MessageReceivedEvent event) {
+        if(event.getAuthor().isBot()) return; //bots get no owo :3
+
+        if (event.getMessage().getContent().equalsIgnoreCase("owo")) {
+            int rand = ThreadLocalRandom.current().nextInt(100);
+
+            if (rand == 1) BotUtils.sendMessage(event.getChannel(), "degenerate");
+            else if (rand % 2 == 0) BotUtils.sendMessage(event.getChannel(), "owo");
         }
     }
 

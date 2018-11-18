@@ -13,7 +13,7 @@ public class SongPause implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
-        AudioPlayer player = guildMusicManager.player;
+        AudioPlayer player = guildMusicManager.getPlayer();
 
         if (player.getPlayingTrack() == null) {
             BotUtils.sendMessage(event.getChannel(), "Currently not playing any track.");
