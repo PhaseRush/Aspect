@@ -33,7 +33,8 @@ public class SongStop implements Command {
         scheduler.getQueue().clear();
 
         BotUtils.reactWithCheckMark(event.getMessage());
-        BotUtils.sendMessage(event.getChannel(), "This music session lasted: " + BotUtils.millisToHMS(scheduler.getQueueDurationMillis()));
+        long startTime = MasterManager.getGuildAudioPlayer(event.getGuild()).getThisStartTime();
+        BotUtils.sendMessage(event.getChannel(), "This music session lasted `" + BotUtils.millisToHMS(System.currentTimeMillis() - startTime) + "`");
     }
 
     @Override

@@ -56,4 +56,8 @@ public class GuildMusicManager {
     public void setThisStartTime(long thisStartTime) {
         this.thisStartTime = thisStartTime;
     }
+
+    public long getThisStartTime() {
+        return thisStartTime;
+    }
 }
