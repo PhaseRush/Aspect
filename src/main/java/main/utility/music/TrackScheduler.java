@@ -40,7 +40,7 @@ public class TrackScheduler {
 
     private IMessage currentSongEmbed;
     private IMessage lastSongEmbed; //added as temp to delete previous embed
-    private AudioTrack previousTrack; //keep track for looping -- debug
+    private AudioTrack previousTrack; //track that just ended -- keep track for looping -- debug
     private AudioTrack currentTrack;
     public IChannel lastEmbedChannel; //public so accessible from masterManager
 
@@ -69,24 +69,30 @@ public class TrackScheduler {
                 if(endReason.mayStartNext) {
                     //check looping condition
                     if (looping) {
-                        if (loopCount == maxLoop) { //end loop, behave as if else below
-                            nextTrack();
+                        System.out.println("Looping, count = " + loopCount);
+                        if (loopCount == maxLoop) { //end loop, behave as if else below (WORKING)
                             //System.out.println("called nextTrack (is looping, but reached max loop)");
                             loopCount = 0;
                             maxLoop = -1;
-                            //currentSongEmbed.delete(); //@TODO MIGHT BE ISSUE WITH MULTITHREADING  or update later on @todo pooptonight at 8:00 (thanks luis)
-                        } else {
-                            //player.startTrack(previousTrack.makeClone(), false);
-                            player.startTrack(currentTrack.makeClone(), false); //new attempt at looping
+                            looping = false;
+                            currentSongEmbed.delete(); //@TODO MIGHT BE ISSUE WITH MULTITHREADING  or update later on @todo poop tonight at 8:00 (thanks luis)
+                            nextTrack();
+                        } else { //(NOT WORKING)
+                            //player.startTrack(previousTrack.makeClone(), false); //< -- could be this?
+                            currentSongEmbed.delete();
+                            queue.add(0, previousTrack.makeClone());
+                            //player.startTrack(currentTrack.makeClone(), false); //FAIL - deletes entire queue
+                            nextTrack();
+
                             //System.out.println("called player.startTrack is looping");
                             loopCount++;
                         }
-                    } else { //not looping
-                        nextTrack();
+                    } else { //not looping (WORKING)
                         //System.out.println("called nextTrack (not looping)");
                         loopCount = 0;
                         maxLoop = -1;
-                        //currentSongEmbed.delete(); //TODO MIGHT BE ISSUE WITH MULTITHREADING
+                        currentSongEmbed.delete();
+                        nextTrack();
                     }
                 }
             }
@@ -274,7 +280,7 @@ public class TrackScheduler {
         long millis = songInfo.length;
         int mins = (int) (millis / 1000 / 60);
         int secs = (int) ((millis / 1000) % 60);
-        
+
         return mins + ":" + (secs < 10 ? "0" + secs : secs);
     }
     /**

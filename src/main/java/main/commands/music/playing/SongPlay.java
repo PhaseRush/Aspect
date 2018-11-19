@@ -16,7 +16,7 @@ public class SongPlay implements Command {
         IVoiceChannel userChannel = event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel();
         AudioPlayer player = MasterManager.getGuildAudioPlayer(event.getGuild()).getPlayer();
 
-        if (!aspectChannel.equals(userChannel)) {
+        if (aspectChannel != userChannel) { //cant use .equals b/c could be null
             BotUtils.joinVC(event);
             MasterManager.getGuildAudioPlayer(event.getGuild()).setThisStartTime(System.currentTimeMillis());
         }

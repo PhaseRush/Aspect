@@ -20,7 +20,7 @@ public class SongLoop implements Command {
             return;
         }
 
-        int maxLoop = 0;
+        int maxLoop = Integer.MAX_VALUE; //todo : debate whether default (no params) should loop once or infinite times
         try {
             if (args.size() == 1)
                 maxLoop = Integer.valueOf(args.get(0));
