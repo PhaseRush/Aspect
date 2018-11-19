@@ -175,7 +175,7 @@ public class TrackScheduler {
 
     //gets called once per track
     private void handleFloatingPlayer(AudioTrack nextTrack) { //TRACE 2
-        if (trackEmbedUpdater != null) //will be null on the very first call (no prev. embed)
+        if (trackEmbedUpdater != null || currentSongEmbed == null) //will be null on the very first call (no prev. embed)
             trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
 
         if (nextTrack == null || lastEmbedChannel == null) return;
@@ -246,6 +246,10 @@ public class TrackScheduler {
 
         sb.append("]["+ getFormattedSongLength(getCurrentTrack().getInfo()) + "]");
         return sb;
+    }
+
+    public void deleteCurrentEmbed() {
+        if (currentSongEmbed != null) currentSongEmbed.delete();
     }
 
     public void setLooping(boolean b, int loopCount) {

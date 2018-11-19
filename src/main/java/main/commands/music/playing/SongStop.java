@@ -25,13 +25,13 @@ public class SongStop implements Command {
 
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
         AudioTrack currentTrack = scheduler.getCurrentTrack();
-        try {
-            currentTrack.setPosition(currentTrack.getDuration()); //sets it to the end of this song
-        } catch (Exception e) {
-            System.out.println("SongStop - currentTrack.setPos(end of track) error");
-        }
-        scheduler.getQueue().clear();
+        try {currentTrack.setPosition(currentTrack.getDuration());} //sets it to the end of this song
+        catch (Exception ignored) {}
 
+        scheduler.getQueue().clear(); //purge entire queue
+
+
+        scheduler.deleteCurrentEmbed(); //clean up the chat
         BotUtils.reactWithCheckMark(event.getMessage());
         long startTime = MasterManager.getGuildAudioPlayer(event.getGuild()).getThisStartTime();
         BotUtils.sendMessage(event.getChannel(), "This music session lasted `" + BotUtils.millisToHMS(System.currentTimeMillis() - startTime) + "`");
