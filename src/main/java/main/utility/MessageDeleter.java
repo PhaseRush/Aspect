@@ -16,6 +16,7 @@ public class MessageDeleter {
 
     private String[] params;
     private String intendedAuthorID;
+    private IUser intendedAuthor;
     private int minutesToDelete;
 
     boolean deletionRunning = false;
@@ -39,8 +40,10 @@ public class MessageDeleter {
     public MessageDeleter(String id, int minutesToDelete, IUser author, IChannel iChannel) {
         if (id.replaceAll(",","").equals("me"))
             intendedAuthorID = author.getStringID();
-        else
+        else {
             intendedAuthorID = id;
+            intendedAuthor = author;
+        }
 
         this.minutesToDelete = minutesToDelete;
         msgDeleter = author;
@@ -78,7 +81,12 @@ public class MessageDeleter {
         deletingMsg.delete();
 
         channel.bulkDelete(messagesToBulkDelete);
-        BotUtils.sendMessage(channel, "<@" + msgDeleter.getStringID() + "> deleted " + messagesToBulkDelete.size() + ((messagesToBulkDelete.size() == 1) ? " message" : " messages") + " sent by " + ((intendedAuthorID.equals("417925383762214912")) ? "me :( " : getDeletee().getNicknameForGuild(iGuild)) + " in the last " + ((minutesToDelete == 1) ? "minute." : minutesToDelete + " minutes."));
+
+        String nick = (getDeletee().getNicknameForGuild(iGuild) == null? intendedAuthor.getName() : getDeletee().getNicknameForGuild(iGuild));
+        BotUtils.sendMessage(channel, "<@" + msgDeleter.getStringID() + "> deleted " +
+                messagesToBulkDelete.size() + ((messagesToBulkDelete.size() == 1) ? " message" : " messages") +
+                " sent by " + ((intendedAuthorID.equals("417925383762214912")) ? "me :( " : nick) +
+                " in the last " + ((minutesToDelete == 1) ? "minute." : minutesToDelete + " minutes."));
     }
 
     public void runBulkDelete() {
