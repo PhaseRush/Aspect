@@ -24,7 +24,7 @@ public class UrbanDictionary implements Command {
         int numDefsToUse = (5 > definition.getList().size()? definition.getList().size() : 5);
         UDDefinition topDef = definition.getList().get(0);
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Aspect :: Urban Dictionary Query")
+                .withTitle("Urban Dictionary :: " + args.get(0).trim())
                 .withUrl(topDef.getPermalink())
                 .withDesc(generateDesc(topDef));
 

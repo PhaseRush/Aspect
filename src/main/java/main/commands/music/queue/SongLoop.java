@@ -22,10 +22,15 @@ public class SongLoop implements Command {
 
         int maxLoop = Integer.MAX_VALUE; //todo : debate whether default (no params) should loop once or infinite times
         try {
-            if (args.size() == 1)
-                maxLoop = Integer.valueOf(args.get(0));
+            if (args.size() == 1) {
+                int loopCount = Integer.valueOf(args.get(0));
+                if (loopCount < 1) throw new NumberFormatException();
+                maxLoop = loopCount;
+            }
         } catch (NumberFormatException e) {
-            BotUtils.sendMessage(event.getChannel(), "Invalid integer");
+            BotUtils.sendMessage(event.getChannel(),
+                    "Please use a number that is within the range [1 to " + Integer.MAX_VALUE + "], inclusive." +
+                    "\n If you want to loop indefinetly, use `" + BotUtils.getPrefix(event.getGuild()) + "loop`");
             return;
         }
 

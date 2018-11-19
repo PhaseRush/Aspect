@@ -23,6 +23,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class WfPassive {
+    public static ScheduledFuture<?> cetusStatusUpdater = null, alertFilterUpdater = null;
 
     @EventSubscriber
     public void warframeCetusUpdater(ReadyEvent event) {
@@ -46,7 +47,7 @@ public class WfPassive {
                 //System.out.println("Updated Cetus Status " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute));
             };
 
-            final ScheduledFuture<?> cetusStatusUpdater = scheduler.scheduleAtFixedRate(cetusTimeRunner, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
+           cetusStatusUpdater = scheduler.scheduleAtFixedRate(cetusTimeRunner, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("warframe cetus passive time error");
@@ -70,7 +71,7 @@ public class WfPassive {
             });
 
             EmbedBuilder eb = new EmbedBuilder()
-                    .withTitle("Warframe | Filtered Alerts")
+                    .withTitle("Warframe :: Filtered Alerts")
                     .withColor(Visuals.getVibrantColor());
 
             if (alerts.size() == 0) return;
@@ -84,7 +85,6 @@ public class WfPassive {
                 BotUtils.sendMessage(BotUtils.BOTTOM_TEXT, eb);
         };
 
-        final ScheduledFuture<?> alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);
-
+        alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);
     }
 }
