@@ -15,7 +15,7 @@ public class WikiContainer {
     //tid
     private String timestamp; // ISO 8601
     private String description;
-    //content_urls
+    private ContentUrls content_urls;
     private WikiApiUrls api_urls;
     private String extract;
     private String extract_html;
@@ -54,6 +54,10 @@ public class WikiContainer {
 
     public String getDescription() {
         return description;
+    }
+
+    public ContentUrls getContent_urls() {
+        return content_urls;
     }
 
     public WikiApiUrls getApi_urls() {

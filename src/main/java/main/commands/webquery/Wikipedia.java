@@ -20,12 +20,15 @@ public class Wikipedia implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle(wiki.getDisplaytitle())
-                .withUrl(wiki.getDescription())
+                .withUrl(wiki.getContent_urls().getDesktop().getPage())
                 .withColor(Visuals.getVibrantColor())
                 .withDesc(generateDesc(wiki));
 
+
         if (wiki.getOriginalimage() != null)
             eb.withImage(wiki.getOriginalimage().getSource());
+        else if (wiki.getThumbnail() != null) //else try the thumbnail
+            eb.withImage(wiki.getThumbnail().getSource());
 
         BotUtils.sendMessage(event.getChannel(), eb);
     }
