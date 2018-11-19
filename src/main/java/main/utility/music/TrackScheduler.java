@@ -162,6 +162,7 @@ public class TrackScheduler {
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
+        currentSongEmbed.delete(); //delete the embed before starting next song.
         player.startTrack(nextTrack, false);
         currentTrack = nextTrack; //for looping
 

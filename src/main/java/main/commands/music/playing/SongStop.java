@@ -17,7 +17,7 @@ public class SongStop implements Command {
 
         if (voiceChannel == null) {
             BotUtils.sendMessage(event.getChannel(), "Aspect is currently not in any voice channels." +
-                    " If you believe this is a mistake, please pm the mods or bot owner @ Requiem#8148");
+                    " If you believe this is a mistake, please pm the mods/admins, or bot owner @ Requiem#8148");
             return;
         }
 

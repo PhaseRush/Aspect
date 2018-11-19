@@ -237,9 +237,8 @@ public class MasterManager {
     public synchronized static void skipTrack(MessageReceivedEvent event) {
         GuildMusicManager musicManager = getGuildAudioPlayer(event.getGuild());
         musicManager.getScheduler().nextTrack(event.getChannel());
-
         BotUtils.reactWithCheckMark(event.getMessage());
-        // BotUtils.sendMessage(channel, "Skipped to next track.");
+        musicManager.getScheduler().setLooping(false, -1); //end looping
 
         //update state json
 //        try {
