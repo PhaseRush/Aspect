@@ -4,6 +4,8 @@ import main.Command;
 import main.utility.BotUtils;
 import main.utility.SmmryObject;
 import main.utility.Visuals;
+import main.utility.gist.GistUtils;
+import main.utility.gist.gist_json.GistContainer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -37,9 +39,24 @@ public class Summarize implements Command {
                     return;
             }
 
+        //if too big, put into a Gist and link it in the channel instead of sending it directly
+        if (Integer.valueOf(smmryObject.getSm_api_character_count()) > 1000) {
+            //try to favorably format string. (single line to multi-line) every sentence gets a new line.
+            String formattedSummary = smmryObject.getSm_api_content().replaceAll("\\. ", ".\n");
 
-        if (Integer.valueOf(smmryObject.getSm_api_character_count()) > 2048) {
-            BotUtils.sendMessage(event.getChannel(), "Text body too long; cannot shorten to 2048 characters");
+            //NOTE:: DO NOT CHANGE THE FILENAME OR THE JSON BREAKS. SMMRY has a terrible json response that has field names which are dependant on the input :(
+            String jsonUrl = GistUtils.makeGistGetUrl("Summary", smmryObject.getSm_api_title(), formattedSummary);
+            String json = BotUtils.getStringFromUrl(jsonUrl);
+            GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
+
+            EmbedBuilder eb = new EmbedBuilder()
+                    .withTitle(smmryObject.getSm_api_title())
+                    .withUrl(args.get(0))
+                    .withColor(Visuals.getVibrantColor())
+                    .withDesc("Since the summary was too long, please refer to this link\n" + gist.getHtmlUrl() +
+                            "\nVisit this page if you prefer raw\n" + gist.getFiles().getSummary().getRaw_url());
+
+            BotUtils.sendMessage(event.getChannel(), eb);
             return;
         }
 

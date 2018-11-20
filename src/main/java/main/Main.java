@@ -30,7 +30,7 @@ public class Main {
         startTime = System.currentTimeMillis();
         startInstant = Instant.now();
 
-        if (args.length != 13) {
+        if (args.length != 15) {
             System.out.println("You screwed up the runtime config params!");
             System.exit(9001);
             return;
@@ -65,6 +65,11 @@ public class Main {
         //private server id/passwords
         BotUtils.PRIVATE_CHANNEL_INFO_URL = args[12];
 
+        //github login
+        BotUtils.DEV_GITHUB_NAME = args[13];
+        BotUtils.DEV_GITHUB_PASSWORD = args[14];
+
+
         //client
         client = BotUtils.getBuiltDiscordClient(args[1]);
 
@@ -77,6 +82,10 @@ public class Main {
 
         // Only login after all events are registered otherwise some may be missed.
         client.login();
+
+        //testing
+        //GistUtils.makeGist("test.txt", "this is a description", "boop boop boop");
+
 
         //print init time
         System.out.println("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");

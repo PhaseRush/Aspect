@@ -61,6 +61,12 @@ public class BotUtils {
     public static IChannel BOTTOM_TEXT;
     public static String PRIVATE_CHANNEL_INFO_URL;
 
+
+
+    //dev meta
+    public static String DEV_GITHUB_NAME;
+    public static String DEV_GITHUB_PASSWORD;
+
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
 
