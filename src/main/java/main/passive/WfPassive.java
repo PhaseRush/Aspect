@@ -34,7 +34,7 @@ public class WfPassive {
         Instant instant = Instant.parse(WarframeUtil.getCetus().getExpiry());
         long elapseMillis = instant.toEpochMilli() - System.currentTimeMillis(); //millis to next day/night change -- CORRECT
 
-        System.out.println("elapseMillis: " + elapseMillis);
+        //System.out.println("elapseMillis: " + elapseMillis); //confusing output sometimes, just don't print anymore
 
         try {
             final Runnable cetusTimeRunner = () -> {

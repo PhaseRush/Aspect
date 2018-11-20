@@ -15,6 +15,7 @@ public class SongSkip implements Command {
         else {
             try {
                 MasterManager.skipNumTracks(event, Integer.valueOf(args.get(0)));
+                MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler().deleteCurrentEmbed(); //delete the floating player
             } catch (NumberFormatException e) {
                 BotUtils.sendMessage(event.getChannel(), "Use: ```\n" + BotUtils.DEFAULT_BOT_PREFIX + "help skip``` for proper formatting");
             }
