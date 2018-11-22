@@ -12,6 +12,8 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 
 import java.math.BigInteger;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
@@ -22,6 +24,8 @@ public class PassiveListener {
     private static ExecutorService executor = Executors.newFixedThreadPool(2);
     private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
     private static Levenshtein levenshtein = new Levenshtein();
+
+    private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
 
 
     @EventSubscriber
@@ -118,6 +122,22 @@ public class PassiveListener {
                 BotUtils.joinVC(event);
             }
             MasterManager.loadAndPlay(event.getChannel(), "https://www.youtube.com/watch?v=kJQP7kiw5Fk", event, true, "I'm not Alexa, but I can play despacito.");
+        }
+    }
+
+    @EventSubscriber
+    public void thanksgiving(MessageReceivedEvent event) {
+        long lastTime = lastThanksgivingMap.getOrDefault(event.getGuild().getLongID(), 0L);
+
+        if (System.currentTimeMillis() - lastTime < 1000*60) return;
+
+        String msg = event.getMessage().getFormattedContent();
+        double similarity = BotUtils.stringSimilarity(msg, "Happy Thanksgiving");
+
+        //BotUtils.sendMessage(event.getChannel(), String.valueOf(similarity));
+        if (similarity < 3) {
+            BotUtils.sendMessage(event.getChannel(), "Happy Thanksgiving!");
+            lastThanksgivingMap.put(event.getGuild().getLongID(), System.currentTimeMillis());
         }
     }
 

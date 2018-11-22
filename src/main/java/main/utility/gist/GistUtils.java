@@ -17,16 +17,17 @@ public class GistUtils {
     public static String makeGistGetUrl(String fileName, String fileDescription, String fileContent) {
         Gist gist = new Gist().setDescription(fileDescription);
         GistFile file = new GistFile().setContent(fileContent);
-        gist.setFiles(Collections.singletonMap(fileName, file));
+        gist.setFiles(Collections.singletonMap(fileName, file))
+                .setPublic(true);
 
         try {
             gist = new GistService(client).createGist(gist);
             System.out.println(gist.getUrl());
+            return gist.getUrl();
         } catch (IOException e) {
             System.out.println("make gist error");
             e.printStackTrace();
-        } finally {
-            return gist.getUrl();
         }
+        return null;
     }
 }
