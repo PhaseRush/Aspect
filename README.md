@@ -137,6 +137,9 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - [ ] Dump MasterState json with command
 - [ ] use [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform) to detect "beat drops" etc.
 
+#### @TODO
+- [ ] Summarize - gist needs to be public and should add footer for reduction % and time taken (like in embed)
+
 #### Other Features:
 - Warframe :: Automatically updates alerts and posts to channel every 30 minutes
 - Warframe :: Has automatic spell correction. "abkroncoe prwime blurewpint" -> "akbronco prime blueprint"
@@ -146,6 +149,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 - Count :: Supports regular expression matching. Begin Regex pattern with backslash: `$count \[regex]`
 - Pokemon Identification :: Due to request from server admin, the pokedex only works when `$identify` is called. This is to not ruin the fun of guessing pokemon
 - Privacy :: Can give users a role to access private channels if a custom password is pm'd to the bot. Uses SHA-256 for encryption.
+- Summarize :: If a summary exceeds a certain character count, Aspect will upload the summarized text to [Gist](https://gist.github.com/Aspection/)
 
 #### Notes
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
