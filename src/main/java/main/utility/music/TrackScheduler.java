@@ -176,9 +176,9 @@ public class TrackScheduler {
 
     //gets called once per track
     private void handleFloatingPlayer(AudioTrack nextTrack) { //TRACE 2
-        if (trackEmbedUpdater != null || currentSongEmbed == null) //will be null on the very first call (no prev. embed)
-            if (trackEmbedUpdater != null) //added to fix for first song in a playlist
-                trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
+        //simplification thanks to Dannie --https://discordapp.com/channels/208023865127862272/208296822156820481/515593523274448899
+        if (trackEmbedUpdater != null && currentSongEmbed == null) //will be null on the very first call (no prev. embed)
+            trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
 
         if (nextTrack == null || lastEmbedChannel == null) return;
 

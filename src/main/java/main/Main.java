@@ -4,10 +4,7 @@ import com.ibm.watson.developer_cloud.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
-import main.passive.PassiveListener;
-import main.passive.PokemonIdentifier;
-import main.passive.PrivateChannelVerification;
-import main.passive.WfPassive;
+import main.passive.*;
 import main.utility.BotUtils;
 import sx.blah.discord.api.IDiscordClient;
 
@@ -79,6 +76,7 @@ public class Main {
         client.getDispatcher().registerListener(new WfPassive());
         client.getDispatcher().registerListener(new PokemonIdentifier());
         client.getDispatcher().registerListener(new PrivateChannelVerification()); //Thanks Resuna!
+        client.getDispatcher().registerListener(new CutePassive());
 
         // Only login after all events are registered otherwise some may be missed.
         client.login();
