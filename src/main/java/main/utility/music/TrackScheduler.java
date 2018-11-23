@@ -110,8 +110,8 @@ public class TrackScheduler {
         // track goes to the queue instead.
         boolean playing = player.startTrack(track, true);
 
-//        if (playing)
-//            handleFloatingPlayer(track);
+        if (playing)
+            handleFloatingPlayer(track);
 
         if (!playing){
             queue.add(track);
@@ -177,7 +177,7 @@ public class TrackScheduler {
     //gets called once per track
     private void handleFloatingPlayer(AudioTrack nextTrack) { //TRACE 2
         if (trackEmbedUpdater != null || currentSongEmbed == null) //will be null on the very first call (no prev. embed)
-            if (trackEmbedUpdater != null) //added for debug (on first???)
+            if (trackEmbedUpdater != null) //added to fix for first song in a playlist
                 trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
 
         if (nextTrack == null || lastEmbedChannel == null) return;
@@ -186,7 +186,7 @@ public class TrackScheduler {
         try { currentSongEmbed = lastEmbedChannel.sendMessage(eb.build());
         } catch (RateLimitException e) { //person skipping too much, triggered rate limitation
             System.out.println("handlefloatingplayer getting ratelimited");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         handleTimelineUpdate();
