@@ -21,7 +21,7 @@ public class CutePassive {
     public void pat(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; //bot get no pat
         if (System.currentTimeMillis() - lastPat < 1000) return; //pat no more than 1/sec
-        if (!event.getMessage().getFormattedContent().contains("pat")) return; //if no pat, NO PAT FOR U
+        if (!event.getMessage().getFormattedContent().contains(" pat ")) return; //if no pat, NO PAT FOR U
 
         BotUtils.sendMessage(event.getChannel(), "*pet pet :3*");
         lastPat = System.currentTimeMillis();
