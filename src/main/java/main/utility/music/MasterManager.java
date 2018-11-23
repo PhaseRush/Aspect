@@ -228,8 +228,8 @@ public class MasterManager {
 
         });
     }
-    //updated with boolean insertFront
-    private synchronized static void play(GuildMusicManager musicManager, AudioTrack track, boolean insertFront) {
+    //updated with boolean insertFront //got rid of syncrh. (dannie)
+    private static void play(GuildMusicManager musicManager, AudioTrack track, boolean insertFront) {
         if (!insertFront) musicManager.getScheduler().queue(track);
         else musicManager.getScheduler().queueFront(track);
     }

@@ -110,10 +110,10 @@ public class TrackScheduler {
         // track goes to the queue instead.
         boolean playing = player.startTrack(track, true);
 
-        if (playing)
-            handleFloatingPlayer(track);
+//        if (playing)
+//            handleFloatingPlayer(track);
 
-        if(!playing) {
+        if (!playing){
             queue.add(track);
         }
 
@@ -162,7 +162,8 @@ public class TrackScheduler {
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
-        currentSongEmbed.delete(); //delete the embed before starting next song.
+        if (currentSongEmbed !=null) //debug purposes
+            currentSongEmbed.delete(); //delete the embed before starting next song.
         player.startTrack(nextTrack, false);
         currentTrack = nextTrack; //for looping
 
@@ -176,21 +177,22 @@ public class TrackScheduler {
     //gets called once per track
     private void handleFloatingPlayer(AudioTrack nextTrack) { //TRACE 2
         if (trackEmbedUpdater != null || currentSongEmbed == null) //will be null on the very first call (no prev. embed)
-            trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
+            if (trackEmbedUpdater != null) //added for debug (on first???)
+                trackEmbedUpdater.cancel(true); //clear out the last song's embed updater
 
         if (nextTrack == null || lastEmbedChannel == null) return;
 
         EmbedBuilder eb = generateCurrentTrackEmbed(nextTrack);
         try { currentSongEmbed = lastEmbedChannel.sendMessage(eb.build());
         } catch (RateLimitException e) { //person skipping too much, triggered rate limitation
+            System.out.println("handlefloatingplayer getting ratelimited");
+            e.printStackTrace();
         }
 
         handleTimelineUpdate();
 
         //handle reactions on currentSongEmbed
         BotUtils.reactAllEmojis(currentSongEmbed, MusicUtils.floatingReactions);
-        //handle reaction listener
-
     }
 
     private void handleTimelineUpdate() {
