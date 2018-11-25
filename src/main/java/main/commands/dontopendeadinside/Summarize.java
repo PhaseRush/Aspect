@@ -53,7 +53,7 @@ public class Summarize implements Command {
                     .withTitle(smmryObject.getSm_api_title())
                     .withUrl(args.get(0))
                     .withColor(Visuals.getVibrantColor())
-                    .withDesc("Since the summary was too long, please refer to this link\n" + gist.getHtml_url() + //hitmlURL is NULL
+                    .withDesc("Since the summary was too long, please refer to this link\n" + gist.getHtml_url() + //hitmlURL is NULL -- FIXED
                             "\nVisit this page if you prefer raw\n" + gist.getFiles().getSummary().getRaw_url());
 
             BotUtils.sendMessage(event.getChannel(), eb);

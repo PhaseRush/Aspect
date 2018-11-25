@@ -62,6 +62,7 @@ public class CommandManager {
         commandMap.put("summarize", new Summarize());
         commandMap.put("img", new Imaging());
         commandMap.put("identify", new PokemonIdentifier());
+        commandMap.put("roll", new RollDice());
 
         //humor
         commandMap.put("cute", new CuteImg());
