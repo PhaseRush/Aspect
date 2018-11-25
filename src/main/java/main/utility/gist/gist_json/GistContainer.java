@@ -14,7 +14,7 @@ public class GistContainer {
     private String nodeId;
     private String gitPullUrl;
     private String gitPushUrl;
-    private String htmlUrl;
+    private String html_url;
     private Files files;
     private Boolean _public;
     private String createdAt;
@@ -85,12 +85,12 @@ public class GistContainer {
         this.gitPushUrl = gitPushUrl;
     }
 
-    public String getHtmlUrl() {
-        return htmlUrl;
+    public String getHtml_url() {
+        return html_url;
     }
 
-    public void setHtmlUrl(String htmlUrl) {
-        this.htmlUrl = htmlUrl;
+    public void setHtml_url(String html_url) {
+        this.html_url = html_url;
     }
 
     public Files getFiles() {

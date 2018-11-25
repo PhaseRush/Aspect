@@ -168,7 +168,7 @@ public class TrackScheduler {
         currentTrack = nextTrack; //for looping
 
         // TODO: 2018-07-22 <- immortalize this
-        //handle songinfo for next track
+        //handle songinfo for next tracks
         handleFloatingPlayer(nextTrack);
 
         return currentTrack;
