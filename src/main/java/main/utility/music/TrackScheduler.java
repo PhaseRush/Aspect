@@ -191,8 +191,8 @@ public class TrackScheduler {
 
         handleTimelineUpdate();
 
-        //handle reactions on currentSongEmbed
-        BotUtils.reactAllEmojis(currentSongEmbed, MusicUtils.floatingReactions);
+        //handle reactions on currentSongEmbed -- get rid of this for now
+        //BotUtils.reactAllEmojis(currentSongEmbed, MusicUtils.floatingReactions);
     }
 
     private void handleTimelineUpdate() {
