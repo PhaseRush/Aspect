@@ -12,7 +12,9 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,12 +28,13 @@ public class PassiveListener {
     private static Levenshtein levenshtein = new Levenshtein();
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
+    private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L); //for Ohra's private server
 
 
     @EventSubscriber
     @SuppressWarnings("ConstantConditions") //not working
     public void kaitlynsHangOut(MessageReceivedEvent event) {
-        if (event.getChannel().isPrivate()) return; //surpress errors
+        if (event.getChannel().isPrivate()) return; //suppress errors
         //please, no one ask. please please please please please
         if (event.getGuild().getStringID().equals("197158565004312576")) {
             String message = event.getMessage().getFormattedContent().toLowerCase();
@@ -57,6 +60,8 @@ public class PassiveListener {
 
     @EventSubscriber
     public void reactToEmojiMessage(MessageReceivedEvent event) {
+        if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+
         try {
             for (IEmoji e : event.getGuild().getEmojis()) {
                 if (event.getMessage().getFormattedContent().contains(e.getName())) {

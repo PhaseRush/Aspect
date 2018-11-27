@@ -4,13 +4,13 @@ import main.utility.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class CutePassive {
 
     private long lastMeow, lastPat;
-    private static List<Long> cuteWhiteList = Collections.singletonList(417926479813279754L); //singleton list for now
+    private static List<Long> cuteWhiteList = Arrays.asList(417926479813279754L, 402728027223490572L); //singleton list for now
 
     @EventSubscriber
     public void meow(MessageReceivedEvent event) {
