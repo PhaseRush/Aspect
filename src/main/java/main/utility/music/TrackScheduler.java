@@ -25,7 +25,7 @@ import java.util.concurrent.*;
  * This class schedules tracks for the audio player. It contains the queue of tracks.
  *
  * ----
- * HEAVILY MODIFIED
+ * HEAVILY MODIFIED -- queue shouldnt jump anymore.
  * ----
  */
 public class TrackScheduler {
@@ -199,8 +199,9 @@ public class TrackScheduler {
         //make the timeline updater
         final Runnable trackTimelineUpdater = () -> currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
         long onePercentDuration = getCurrentTrack().getDuration()/100;
+        long refreshTime = (onePercentDuration > 1000 ? onePercentDuration : 1000); //use min of 1 second
         //set the current updater to this update runner
-        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, onePercentDuration, onePercentDuration*2, TimeUnit.MILLISECONDS);
+        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, refreshTime, refreshTime*2, TimeUnit.MILLISECONDS);
     }
 
     public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {

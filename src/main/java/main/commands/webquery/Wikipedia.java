@@ -34,7 +34,7 @@ public class Wikipedia implements Command {
     }
 
     private String generateDesc(WikiContainer wiki) {
-        String wikiDesc = wiki.getDescription() == null? "" : wiki.getDescription() + "\n\n";
+        String wikiDesc = wiki.getDescription() == null? "" : "*" + wiki.getDescription() + "*" + "\n\n";
         return wikiDesc+
                 "\t" + wiki.getExtract();
     }
