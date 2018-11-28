@@ -211,8 +211,8 @@ public class CommandManager {
             for (String s : argsList)
                 commandArgs.append(s + "\t");
 
-            StringBuilder commandPrint = new StringBuilder();
-            commandPrint.append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")
+            StringBuilder commandPrint = new StringBuilder()
+                    .append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")
                     .append(event.getAuthor().getName()).append("\t")
                     .append(event.getAuthor().getStringID()).append("\t")
                     .append("cmd: " + commandStr).append("\t")

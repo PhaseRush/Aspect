@@ -11,7 +11,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,28 +20,14 @@ public class WordCounter implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
-        if (event.getAuthor().getStringID().equals("187328584698953728")) {
-            IChannel channel = event.getChannel();
-            String s1 = "who tf this";
-            String s2 = "yall think im just slaving away here in this dark ass cellar in seattle somewhere. im not paid enough for this";
-            String s3 = "bot lives matter too.";
-
-            BotUtils.sendMessage(channel, s1);
-            BotUtils.sendMessage(channel, s2);
-            BotUtils.sendMessage(channel, s3);
-            BotUtils.sendMessage(channel, "okay fine gimme sec.");
-
-            System.out.println("Kait's whack line");
-        }
+        handleKaitlyn(event);
 
         long startTime = System.currentTimeMillis();
-        Map<IUser, Integer> userWordCountMap = new HashMap<>();
+        Map<IUser, Integer> userWordCountMap = new LinkedHashMap<>();
         IChannel channel = event.getChannel();
 
         if (args.size() < 1) {
-            BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
-                    "\nFind all occurrences of the word \"hello\" in all text channels: \n```\n$count hello, all```" +
-                    "\nMatch a greeting to all names that start with a capital R, K, or C, followed by at least 5 lower case letters: \n```\n$count \\(hi\\s)[R|K|C][a-z]{5,}```");
+            sendErrorMsg(event);
             return;
         }
 
@@ -55,9 +41,9 @@ public class WordCounter implements Command {
         if (args.size() == 2) {
             if (args.get(1).equals("all"))
                 textChannels.addAll(event.getGuild().getChannels());
-            else
-                textChannels.add(event.getChannel());
-        }
+        } else if (args.size() == 1) {
+            textChannels.add(event.getChannel());
+        } else sendErrorMsg(event);
 
         int messageCounter = 0;
         for (IChannel textChannel : textChannels) {
@@ -81,7 +67,7 @@ public class WordCounter implements Command {
             }
         }
 
-        userWordCountMap = BotUtils.sortMap(userWordCountMap, false, true);
+        userWordCountMap = BotUtils.sortMap(userWordCountMap, false, true); //flipped smallestToLargest
         Entry<IUser, Integer> mostGoodPerson = userWordCountMap.entrySet().iterator().next();
         String nick = mostGoodPerson.getKey().getNicknameForGuild(event.getGuild());
 
@@ -96,7 +82,7 @@ public class WordCounter implements Command {
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
                 .withDesc("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick))
                 .withFooterText("It took me " + minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " to scan through " +
-                        messageCounter + " messages in " + textChannels.size() + " channels");
+                        messageCounter + " messages in " + textChannels.size() + " channel" + (textChannels.size() == 1? "" : "s")); //added plural case
 
         int rankCounter = 1;
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
@@ -110,6 +96,28 @@ public class WordCounter implements Command {
         }
 
         BotUtils.sendMessage(channel, eb);
+    }
+
+    private void sendErrorMsg(MessageReceivedEvent event) {
+        BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
+                "\nFind all occurrences of the word \"hello\" in all text channels: \n```\n$count hello, all```" +
+                "\nMatch a greeting to all names that start with a capital R, K, or C, followed by at least 5 lower case letters: \n```\n$count \\(hi\\s)[R|K|C][a-z]{5,}```");
+    }
+
+    private void handleKaitlyn(MessageReceivedEvent event) {
+        if (event.getAuthor().getStringID().equals("187328584698953728")) {
+            IChannel channel = event.getChannel();
+            String s1 = "who tf this";
+            String s2 = "yall think im just slaving away here in this dark ass cellar in seattle somewhere. im not paid enough for this";
+            String s3 = "bot lives matter too.";
+
+            BotUtils.sendMessage(channel, s1);
+            BotUtils.sendMessage(channel, s2);
+            BotUtils.sendMessage(channel, s3);
+            BotUtils.sendMessage(channel, "okay fine gimme sec.");
+
+            System.out.println("Kait's whack line wooooooo");
+        }
     }
 
     @Override

@@ -426,10 +426,11 @@ public class BotUtils {
         List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
         if (sortByValue)
             entryList.sort(Entry.comparingByValue());
-        else
+        //else
             //entryList.sort(Entry.comparingByKey());
 
-        if (!smallestToLargest) Collections.reverse(entryList);
+        if (!smallestToLargest)
+            Collections.reverse(entryList);
 
         Map<K, V> result = new LinkedHashMap<>();
 

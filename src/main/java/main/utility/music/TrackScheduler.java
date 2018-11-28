@@ -157,7 +157,7 @@ public class TrackScheduler {
      */
     public synchronized AudioTrack nextTrack(IChannel channel) { //called from skip - FLOATING PLAYER WORKS CORRECTLY - 2018-10-25
         this.lastEmbedChannel = channel;
-        AudioTrack currentTrack = player.getPlayingTrack();
+        AudioTrack currentTrack = player.getPlayingTrack(); //redundant assignment?
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
