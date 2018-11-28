@@ -4,26 +4,38 @@ import com.ibm.watson.developer_cloud.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
-import main.passive.*;
 import main.utility.BotUtils;
 import sx.blah.discord.api.IDiscordClient;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * 8/26/18
+ * Aspect -- Discord bot built with love
+ *
+ * @URL github.com/PhaseRush/Aspect
+ * 2018/11/24
  */
 public class Main {
     public static IDiscordClient client;
 
     public static long startTime;
     public static Instant startInstant;
+
     public static OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
+
     public static LanguageTranslator translator;
 
+    // Keep a public list of all listeners
+    public static List<Object> dispatchListeners = new ArrayList<>();
+
     public static void main(String[] args){
+
+        // ------------------------------------------------------------ //
+
         startTime = System.currentTimeMillis();
         startInstant = Instant.now();
 
@@ -33,59 +45,68 @@ public class Main {
             return;
         }
 
-        //assign API keys
+        // ------------------------------------------------------------ //
+
+        // Default bot prefix (should be "$")
         BotUtils.DEFAULT_BOT_PREFIX = args[0];
-        BotUtils.DARK_SKY_API = args[2]; //1k/day
+
+        // Dark Sky -- limit: 1k/day
+        BotUtils.DARK_SKY_API = args[2];
+
+        // NASA
         BotUtils.NASA_API = args[4];
+
+        // Cloudsight image recognition
         BotUtils.CLOUDSIGHT_API_KEY = args[5];
+
+        // SMMRY - Summarization service
         BotUtils.SMMRY_API_KEY = args[6];
+
+        // Fortnite statistics API
         BotUtils.FORTNITE_API_KEY = args[7];
 
-        //wolfram
+        // Wolfram and Mathematica
         BotUtils.WOLFRAM_API_KEY = args[8];
 
-        //google#youtube
+        // Google and Youtube
         BotUtils.YOUTUBE_API_KEY = args[9];
 
-        //league
+        // League of Legends
         Orianna.setRiotAPIKey(args[3]);
         Orianna.setDefaultRegion(Region.NORTH_AMERICA);
 
-        //IBM Watson
+        // IBM Watson
         IamOptions options = new IamOptions.Builder().apiKey(args[10]).build(); //api key
         translator = new LanguageTranslator("2018-05-01", options);
         translator.setEndPoint("https://gateway-wdc.watsonplatform.net/language-translator/api");
 
-        //Warframe - bottom text id
+        // Warframe - Custom alert channel ID (The Lavender Society # bottom-text)
         BotUtils.WF_BOTTOM_TEXT_ID = args[11];
 
-        //private server id/passwords
+        // Private server id/passwords
         BotUtils.PRIVATE_CHANNEL_INFO_URL = args[12];
 
-        //github login
+        // Github for Git and Gist
         BotUtils.DEV_GITHUB_NAME = args[13];
         BotUtils.DEV_GITHUB_PASSWORD = args[14];
 
+        // ------------------------------------------------------------ //
 
-        //client
+        // Create all dispatch listeners
+        dispatchListeners = BotUtils.createListeners();
+
+        // Self Client Initialization
         client = BotUtils.getBuiltDiscordClient(args[1]);
 
-        // Register a listener via the EventSubscriber annotation which allows for organisation and delegation of events
-        client.getDispatcher().registerListener(new CommandManager());
-        client.getDispatcher().registerListener(new PassiveListener());
-        client.getDispatcher().registerListener(new WfPassive());
-        client.getDispatcher().registerListener(new PokemonIdentifier());
-        client.getDispatcher().registerListener(new PrivateChannelVerification()); //Thanks Resuna!
-        client.getDispatcher().registerListener(new CutePassive());
+        // Register all listeners via the EventSubscriber annotation which allows for organisation and delegation of events
+        client.getDispatcher().registerListeners(dispatchListeners);
 
+        // Self Client login - finalize setup
         // Only login after all events are registered otherwise some may be missed.
         client.login();
 
-        //testing
-        //GistUtils.makeGist("test.txt", "this is a description", "boop boop boop");
+        // ------------------------------------------------------------ //
 
-
-        //print init time
         System.out.println("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");
     }
 }

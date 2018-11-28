@@ -2,7 +2,9 @@ package main.utility;
 
 import com.google.gson.Gson;
 import info.debatty.java.stringsimilarity.Levenshtein;
+import main.CommandManager;
 import main.Main;
+import main.passive.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -419,7 +421,16 @@ public class BotUtils {
         return i > -1 && i < 26 ? String.valueOf((char) (i + 'a')) : null; //super fucking janky
     }
 
-    //needs work for sortin by key
+    /**
+     * Utility for sorting a map
+     * needs work for sorting by key, since Entry#compareingByKey does not return correct type
+     * @param map to sort
+     * @param smallestToLargest sort from smallest to largest?
+     * @param sortByValue sort by value?
+     * @param <K>
+     * @param <V>
+     * @return sorted map
+     */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortMap(Map<K, V> map, boolean smallestToLargest, boolean sortByValue) {
         List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
         if (sortByValue)
@@ -476,6 +487,20 @@ public class BotUtils {
     public static void Σ() {
         ///test if this will compile
     }
+
+    public static List<Object> createListeners() {
+        List<Object> dispatchListeners = new ArrayList<>();
+
+        dispatchListeners.add(new CommandManager());
+        dispatchListeners.add(new PassiveListener());
+        dispatchListeners.add(new WfPassive());
+        dispatchListeners.add(new PokemonIdentifier());
+        dispatchListeners.add(new PrivateChannelVerification()); //Thanks Resuna!
+        dispatchListeners.add(new CutePassive());
+
+        return dispatchListeners;
+    }
+
     @Override
     public String toString() {
         return "Baka don't touch me!";

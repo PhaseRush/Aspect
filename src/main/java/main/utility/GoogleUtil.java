@@ -48,8 +48,7 @@ public class GoogleUtil {
     public static void prettyPrintYoutube(Collection<SearchResult> searchResults, String query) {
 
         System.out.println("\n=============================================================");
-        System.out.println(
-                "   First " + "x number of" + " videos for search on \"" + query + "\".");
+        System.out.println("   First " + "x number of" + " videos for search on \"" + query + "\".");
         System.out.println("=============================================================\n");
 
         if (searchResults.size() == 0) {

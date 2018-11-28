@@ -10,6 +10,9 @@ import org.eclipse.egit.github.core.service.GistService;
 import java.io.IOException;
 import java.util.Collections;
 
+/**
+ * uses a library from 2011...
+ */
 public class GistUtils {
     public static GitHubClient client = new GitHubClient().setCredentials(BotUtils.DEV_GITHUB_NAME, BotUtils.DEV_GITHUB_PASSWORD);
 
