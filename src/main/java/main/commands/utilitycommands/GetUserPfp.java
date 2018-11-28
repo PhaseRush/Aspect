@@ -15,15 +15,15 @@ public class GetUserPfp implements Command {
         try {
             user = Main.client.getUserByID(Long.valueOf(args.get(0)));
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "Invalid parameter. Use the person's ID (@User not supported yet)");
+            BotUtils.send(event.getChannel(), "Invalid parameter. Use the person's ID (@User not supported yet)");
             return;
         }
         if (user == null) {
-            BotUtils.sendMessage(event.getChannel(), "Cannot parse userID. Is the person from this server, or in a server that Aspect is in?");
+            BotUtils.send(event.getChannel(), "Cannot parse userID. Is the person from this server, or in a server that Aspect is in?");
             return;
         }
 
-        BotUtils.sendMessage(event.getChannel(), user.getAvatarURL());
+        BotUtils.send(event.getChannel(), user.getAvatarURL());
     }
 
     @Override

@@ -12,7 +12,7 @@ public class ForceShutdown implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (!event.getAuthor().getStringID().equals("264213620026638336")) {
-            BotUtils.sendMessage(event.getChannel(), "no u.");
+            BotUtils.send(event.getChannel(), "no u.");
             return;
         }
 
@@ -21,11 +21,11 @@ public class ForceShutdown implements Command {
         try {
             MasterJsonUtil.writeState();
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "Error writing MasterState json.\n" +
+            BotUtils.send(event.getChannel(), "Error writing MasterState json.\n" +
                     (force? "Forcing shutdown" : "Use `-f` to force."));
         } finally {
             if (force) {
-                BotUtils.sendMessage(event.getChannel(), "");
+                BotUtils.send(event.getChannel(), "");
                 System.gc();
                 System.exit(9002);
             }

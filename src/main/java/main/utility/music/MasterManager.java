@@ -65,7 +65,7 @@ public class MasterManager {
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                BotUtils.sendMessage(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
+                BotUtils.send(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
                 play(musicManager, track, insertFront);
 //                try {
 //                    MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats().incrNumSongsQueued();
@@ -84,7 +84,7 @@ public class MasterManager {
                         duration += track.getDuration();
                     }
                 }
-                BotUtils.sendMessage(channel, "Adding " + counter + " songs to queue from " + playlist.getName() + " (first song: " + playlist.getTracks().get(0).getInfo().title + ")");
+                BotUtils.send(channel, "Adding " + counter + " songs to queue from " + playlist.getName() + " (first song: " + playlist.getTracks().get(0).getInfo().title + ")");
 
                 //update MasterState json
 //                try {
@@ -142,7 +142,7 @@ public class MasterManager {
                     List<SearchResult> searchResults = searchResponse.getItems();
 
                     if (searchResults.size() == 0) {
-                        BotUtils.sendMessage(channel, "Nothing found by: " + trackUrl);
+                        BotUtils.send(channel, "Nothing found by: " + trackUrl);
                         return;
                     }
 
@@ -181,10 +181,10 @@ public class MasterManager {
                                     loadAndPlay(channel, searchResults.get(4).getId().getVideoId(), event, insertFront, "");
                                     break;
                                 case "\u274C": //changed from red cross literal
-                                    BotUtils.sendMessage(channel, "Search terminated");
+                                    BotUtils.send(channel, "Search terminated");
                                     break;
                                 default:
-                                    BotUtils.sendMessage(channel, "Not a valid reaction; search will be terminated");
+                                    BotUtils.send(channel, "Not a valid reaction; search will be terminated");
                                     break;
                             }
                             if (!embedMessage.isDeleted()) //just in case
@@ -223,7 +223,7 @@ public class MasterManager {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                BotUtils.sendMessage(channel, "Could not play: " + exception.getMessage());
+                BotUtils.send(channel, "Could not play: " + exception.getMessage());
             }
 
         });
@@ -253,7 +253,7 @@ public class MasterManager {
         musicManager.getScheduler().setQueue(tracklist.subList(numToSkip, tracklist.size())); //removed size - 1
 
         BotUtils.reactWithCheckMark(event.getMessage());
-        //BotUtils.sendMessage(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
+        //BotUtils.send(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
 
         //state update
 

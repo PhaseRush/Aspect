@@ -10,7 +10,7 @@ import java.util.List;
 public class WfCetusCycle implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.sendMessage(event.getChannel(), WarframeUtil.cetusCycleString());
+        BotUtils.send(event.getChannel(), WarframeUtil.cetusCycleString());
     }
 
     @Override

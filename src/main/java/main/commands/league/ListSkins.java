@@ -20,7 +20,7 @@ public class ListSkins implements Command {
 
         Champion champion = Champion.named(champName).get();
         if ((champion == null)){
-            BotUtils.sendMessage(event.getChannel(), "Failed to get Champion");
+            BotUtils.send(event.getChannel(), "Failed to get Champion");
             return;
         }
 
@@ -31,7 +31,7 @@ public class ListSkins implements Command {
             sb.append(i + ": " + skins.get(i).getName() + "\n");
         }
 
-        BotUtils.sendMessage(event.getChannel(), sb.toString());
+        BotUtils.send(event.getChannel(), sb.toString());
     }
 
     @Override

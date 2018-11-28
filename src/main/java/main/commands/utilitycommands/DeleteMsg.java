@@ -15,7 +15,7 @@ public class DeleteMsg implements Command {
         try {
             new MessageDeleter(args.get(0), Integer.valueOf(args.get(1)), event.getAuthor(), event.getChannel()).runDelete(event.getGuild());
         } catch (MissingPermissionsException e) {
-            BotUtils.sendMessage(event.getChannel(), "Aspect is missing the MANAGE_MESSAGES permission. Ask the server admin for more details!");
+            BotUtils.send(event.getChannel(), "Aspect is missing the MANAGE_MESSAGES permission. Ask the server admin for more details!");
         }
     }
 

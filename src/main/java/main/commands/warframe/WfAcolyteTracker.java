@@ -28,7 +28,7 @@ public class WfAcolyteTracker implements Command {
             eb.appendField(a.getAgentType() + "\t | Lv. " + a.getRank() + "\t | Hp: " + hp, (a.isDiscovered() ? a.getLastDiscoveredAt() : "Not yet discovered"), false);
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

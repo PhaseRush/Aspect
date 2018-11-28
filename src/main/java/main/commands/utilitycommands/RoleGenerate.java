@@ -19,7 +19,7 @@ public class RoleGenerate implements Command {
         try {
 
             if (guild.getRolesByName(desiredName).size() >= 1) {
-                BotUtils.sendMessage(event.getChannel(), "One or more roles with this name already exists.");
+                BotUtils.send(event.getChannel(), "One or more roles with this name already exists.");
                 return;
             }
 
@@ -38,7 +38,7 @@ public class RoleGenerate implements Command {
 
             event.getAuthor().addRole(newRole);
         } catch (NullPointerException | IllegalArgumentException e) {
-            BotUtils.sendMessage(event.getChannel(), "4 parameters needed: role name, r[0-255], g[0-255], b[0-255]\n" +
+            BotUtils.send(event.getChannel(), "4 parameters needed: role name, r[0-255], g[0-255], b[0-255]\n" +
                     "Example: $makerole Canadian, 255, 0, 0");
         }
 

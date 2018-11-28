@@ -154,7 +154,7 @@ public class BotUtils {
     }
 
     // Helper functions to make certain aspects of the bot easier to use.
-    public static void sendMessage(IChannel channel, String message) {
+    public static void send(IChannel channel, String message) {
         RequestBuffer.request(() -> {
             try {
                 channel.sendMessage(message);
@@ -167,7 +167,7 @@ public class BotUtils {
         });
     }
 
-    public static void sendMessage(IChannel channel, List<String> messages) {
+    public static void send(IChannel channel, List<String> messages) {
         RequestBuffer.request(() -> {
             try {
                 for (String s : messages)
@@ -181,7 +181,7 @@ public class BotUtils {
         });
     }
 
-    public static void sendMessage(IChannel channel, EmbedBuilder embed) {
+    public static void send(IChannel channel, EmbedBuilder embed) {
         RequestBuffer.request(() -> {
             try {
                     channel.sendMessage(embed.build());
@@ -292,9 +292,7 @@ public class BotUtils {
 
     public static String buildString(List<String> list) {
         StringBuilder sb = new StringBuilder();
-        for (String s : list) {
-            sb.append(s).append(", ");
-        }
+        list.forEach(s -> sb.append(s).append(","));
         return sb.toString();
     }
 
@@ -372,7 +370,7 @@ public class BotUtils {
         IVoiceChannel voiceChannel = event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel();
 
         if (voiceChannel == null) {
-            BotUtils.sendMessage(event.getChannel(), "Join a voice chanel first, then use this command again");
+            BotUtils.send(event.getChannel(), "Join a voice chanel first, then use this command again");
             return;
         }
         voiceChannel.join();
@@ -426,8 +424,8 @@ public class BotUtils {
         List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
         if (sortByValue)
             entryList.sort(Entry.comparingByValue());
-        //else
-            //entryList.sort(Entry.comparingByKey());
+//        else
+//            entryList.sort(Entry.comparingByKey());
 
         if (!smallestToLargest)
             Collections.reverse(entryList);
@@ -453,6 +451,11 @@ public class BotUtils {
         return leven.distance(s1, s2);
     }
 
+    /**
+     * generates sha-256 hash for an input string
+     * @param input
+     * @return
+     */
     public static String SHA256(String input) {
         byte[] encodedBytes = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));
 
@@ -470,6 +473,9 @@ public class BotUtils {
 //        return (first > second? second : first);
 //    }
 
+    public static void Σ() {
+        ///test if this will compile
+    }
     @Override
     public String toString() {
         return "Baka don't touch me!";

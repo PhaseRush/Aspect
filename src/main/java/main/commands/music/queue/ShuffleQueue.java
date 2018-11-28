@@ -18,7 +18,7 @@ public class ShuffleQueue implements Command {
         Collections.shuffle(audioTracks);
 
         BotUtils.reactWithCheckMark(event.getMessage());
-        //BotUtils.sendMessage(event.getChannel(), "Queue has been shuffled");
+        //BotUtils.send(event.getChannel(), "Queue has been shuffled");
     }
 
     @Override

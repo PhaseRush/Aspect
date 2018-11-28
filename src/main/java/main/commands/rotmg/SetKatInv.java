@@ -12,10 +12,10 @@ public class SetKatInv implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if(!event.getAuthor().getStringID().equals("264213620026638336")) {
-            BotUtils.sendMessage(event.getChannel(), "This command is for <@"+ "264213620026638336" + " only.");
+            BotUtils.send(event.getChannel(), "This command is for <@"+ "264213620026638336" + " only.");
         } else {
             ReadWrite.writeToFile(KAT_INV_FILE_PATH, args.get(0), false, false);
-            BotUtils.sendMessage(event.getChannel(), "Inventory updated");
+            BotUtils.send(event.getChannel(), "Inventory updated");
         }
 
     }

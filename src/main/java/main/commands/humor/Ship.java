@@ -40,7 +40,7 @@ public class Ship implements Command {
                         iGuild.getUserByID(Long.valueOf(psycheId)), event);
             }
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "Something went terribly wrong. Either you're retarded and can't type or Kat's retarded and should delete this entire repo");
+            BotUtils.send(event.getChannel(), "Something went terribly wrong. Either you're retarded and can't type or Kat's retarded and should delete this entire repo");
         }
     }
 

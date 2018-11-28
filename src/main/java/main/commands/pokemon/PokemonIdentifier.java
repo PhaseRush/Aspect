@@ -15,7 +15,7 @@ public class PokemonIdentifier implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.sendMessage(event.getChannel(), PokemonUtil.mostRecentEmbed);
+        BotUtils.send(event.getChannel(), PokemonUtil.mostRecentEmbed);
 
         if (PokemonUtil.shouldSendDiff){
             RequestBuffer.request(() -> {
@@ -23,7 +23,7 @@ public class PokemonIdentifier implements Command {
                     File diffImgFile = new File(PokemonUtil.mostRecentDiffImgPath);
                     return event.getChannel().sendFile("Difference Image: ", diffImgFile);
                 } catch (FileNotFoundException e) {
-                    BotUtils.sendMessage(event.getChannel(), "Error sending difference image");
+                    BotUtils.send(event.getChannel(), "Error sending difference image");
                     System.out.println("Could not find difference image");
                 }
                 return null;

@@ -34,7 +34,7 @@ public class WfVoidFissures implements Command {
             fissures.removeIf(fissure -> !fissure.getTier().equals(relicName));
             eb.withTitle("Warframe | " + relicName + " Void Fissures");
             if (fissures.size() == 0) {
-                BotUtils.sendMessage(event.getChannel(), "There are no matching relic types for " + relicName);
+                BotUtils.send(event.getChannel(), "There are no matching relic types for " + relicName);
                 return; //don't run the embed
             }
         }
@@ -45,7 +45,7 @@ public class WfVoidFissures implements Command {
                     fissure.getTier() + " tier " + fissure.getTierNum(), false);
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class SongLoop implements Command {
         TrackScheduler scheduler = guildMusicManager.getScheduler();
 
         if (scheduler.getCurrentTrack() == null) {
-            BotUtils.sendMessage(event.getChannel(), "There is no track playing.");
+            BotUtils.send(event.getChannel(), "There is no track playing.");
             return;
         }
 
@@ -28,7 +28,7 @@ public class SongLoop implements Command {
                 maxLoop = loopCount;
             }
         } catch (NumberFormatException e) {
-            BotUtils.sendMessage(event.getChannel(),
+            BotUtils.send(event.getChannel(),
                     "Please use a number that is within the range [1 to " + Integer.MAX_VALUE + "], inclusive." +
                     "\n If you want to loop indefinetly, use `" + BotUtils.getPrefix(event.getGuild()) + "loop`");
             return;
@@ -37,7 +37,7 @@ public class SongLoop implements Command {
         //toggle looping
         if (scheduler.isLooping()) {
             scheduler.setLooping(false, 0);
-            BotUtils.sendMessage(event.getChannel(), "Stopped loop");
+            BotUtils.send(event.getChannel(), "Stopped loop");
         } else {
             scheduler.setLooping(true, maxLoop);
             BotUtils.reactWithCheckMark(event.getMessage());

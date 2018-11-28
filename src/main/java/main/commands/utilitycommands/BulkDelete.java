@@ -12,7 +12,7 @@ public class BulkDelete implements Command {
 
         int timeToDeleteFrom = Integer.valueOf(args.get(0));
         //new MessageDeleter(timeToDeleteFrom, event.getChannel(), event.getAuthor()).runBulkDelete();
-        BotUtils.sendMessage(event.getChannel(), "Command disabled.");
+        BotUtils.send(event.getChannel(), "Command disabled.");
     }
 
     @Override

@@ -69,7 +69,7 @@ public class WfItemInfo implements Command {
         }
         eb.appendField("Drops", (drops.toString().equals("") ? "not found in drop tables" : drops.toString()), false);
 
-        BotUtils.sendMessage(e.getChannel(), eb);
+        BotUtils.send(e.getChannel(), eb);
     }
 
     private void handleUserReactionWait(List<String> intendedItemNames) {
@@ -151,7 +151,7 @@ public class WfItemInfo implements Command {
     }
 
     private void send(String message) {
-        BotUtils.sendMessage(e.getChannel(), message);
+        BotUtils.send(e.getChannel(), message);
     }
     @Override
     public boolean canRun(MessageReceivedEvent event) {

@@ -19,7 +19,7 @@ public class Translate implements Command {
         for (String s : args)
             inputString.append(s + ", ");
 
-        BotUtils.sendMessage(event.getChannel(), TranslateUtils.transEnFr(inputString.toString().substring(0, inputString.lastIndexOf(","))));
+        BotUtils.send(event.getChannel(), TranslateUtils.transEnFr(inputString.toString().substring(0, inputString.lastIndexOf(","))));
 
     }
 

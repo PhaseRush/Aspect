@@ -25,7 +25,7 @@ public class FortniteShopSelect implements Command {
             sb.append((i + 1) + ((i + 1) < 10 ? ".\t " : ".\t") + storefront.getName() + "\n");
         }
 
-        BotUtils.sendMessage(event.getChannel(), sb.append("```").toString());
+        BotUtils.send(event.getChannel(), sb.append("```").toString());
     }
 
 

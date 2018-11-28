@@ -19,7 +19,7 @@ public class SongRestart implements Command {
             scheduler.getPlayer().startTrack(scheduler.getCurrentTrack().makeClone(), false);
             BotUtils.reactWithCheckMark(event.getMessage());
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "There was an error restarting this track.");
+            BotUtils.send(event.getChannel(), "There was an error restarting this track.");
         }
     }
 

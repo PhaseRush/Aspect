@@ -209,7 +209,7 @@ public class CommandManager {
 
             StringBuilder commandArgs = new StringBuilder();
             for (String s : argsList)
-                commandArgs.append(s + "\t");
+                commandArgs.append(s).append("\t");
 
             StringBuilder commandPrint = new StringBuilder()
                     .append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")

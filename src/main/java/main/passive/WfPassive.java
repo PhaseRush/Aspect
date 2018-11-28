@@ -40,7 +40,7 @@ public class WfPassive {
             final Runnable cetusTimeRunner = () -> {
                 WarframeCetusTimeObject cetus = WarframeUtil.getCetus();
 
-                //BotUtils.sendMessage(BotUtils.BOTTOM_TEXT, WarframeUtil.cetusCycleString());
+                //BotUtils.send(BotUtils.BOTTOM_TEXT, WarframeUtil.cetusCycleString());
                 Main.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
 
                 //int minute = LocalDateTime.now().getMinute();
@@ -82,7 +82,7 @@ public class WfPassive {
             }
 
             if (BotUtils.BOTTOM_TEXT != null) //bottom text is null on startup, throwing NPE.
-                BotUtils.sendMessage(BotUtils.BOTTOM_TEXT, eb);
+                BotUtils.send(BotUtils.BOTTOM_TEXT, eb);
         };
 
         alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);

@@ -16,10 +16,10 @@ public class CuteImg implements Command {
         try {
             String url = CuteUtil.cuteUrls.get(args.get(0));
             if (url.startsWith("~"))
-                BotUtils.sendMessage(event.getChannel(), new EmbedBuilder().withImage(url));
-            else BotUtils.sendMessage(event.getChannel(), url);
+                BotUtils.send(event.getChannel(), new EmbedBuilder().withImage(url));
+            else BotUtils.send(event.getChannel(), url);
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "Cuteness doesn't exist!");
+            BotUtils.send(event.getChannel(), "Cuteness doesn't exist!");
         }
     }
 

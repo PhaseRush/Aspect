@@ -16,7 +16,7 @@ public class SongStop implements Command {
         IVoiceChannel voiceChannel = event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel();
 
         if (voiceChannel == null) {
-            BotUtils.sendMessage(event.getChannel(), "Aspect is currently not in any voice channels." +
+            BotUtils.send(event.getChannel(), "Aspect is currently not in any voice channels." +
                     " If you believe this is a mistake, please pm the mods/admins, or bot owner @ Requiem#8148");
             return;
         }
@@ -34,7 +34,7 @@ public class SongStop implements Command {
         scheduler.deleteCurrentEmbed(); //clean up the chat
         BotUtils.reactWithCheckMark(event.getMessage());
         long startTime = MasterManager.getGuildAudioPlayer(event.getGuild()).getThisStartTime();
-        BotUtils.sendMessage(event.getChannel(), "This music session lasted `" + BotUtils.millisToHMS(System.currentTimeMillis() - startTime) + "`");
+        BotUtils.send(event.getChannel(), "This music session lasted `" + BotUtils.millisToHMS(System.currentTimeMillis() - startTime) + "`");
     }
 
     @Override

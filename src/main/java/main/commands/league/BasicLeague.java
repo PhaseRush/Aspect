@@ -14,7 +14,7 @@ public class BasicLeague implements Command {
         System.out.println(args.get(0));
         Summoner summoner = Orianna.summonerNamed(args.get(0)).get();
 
-        BotUtils.sendMessage(event.getChannel(), summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server");
+        BotUtils.send(event.getChannel(), summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server");
     }
 
 

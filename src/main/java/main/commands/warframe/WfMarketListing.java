@@ -83,7 +83,7 @@ public class WfMarketListing implements Command {
                     "/w " + seller.getIngame_nmae() + " Hi! I want to buy your " + intendedItemName + " for " + listing.getPlatinum() + " platinum.", false);
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     private void handleUserReactionWait(List<String> intendedItemNames, MessageReceivedEvent e, String filterParam) {
@@ -132,10 +132,10 @@ public class WfMarketListing implements Command {
                             finishCommand(intendedItemNames.get(4), e, filterParam);
                             break;
                         case "❌":
-                            BotUtils.sendMessage(e.getChannel(), "Command terminated.");
+                            BotUtils.send(e.getChannel(), "Command terminated.");
                             break;
                         default:
-                            BotUtils.sendMessage(e.getChannel(), "Not a valid reaction; command will be terminated.");
+                            BotUtils.send(e.getChannel(), "Not a valid reaction; command will be terminated.");
                             break;
                     }
                     if (!embedMessage.isDeleted()) //just in case

@@ -18,14 +18,14 @@ public class PurgeQueue implements Command {
         synchronized (audioTracks = guildMusicManager.getScheduler().getQueue()) { //added this synchronized block
             try {
                 if (Integer.valueOf(args.get(0)) > audioTracks.size()) {
-                    BotUtils.sendMessage(event.getChannel(), "There are only " + audioTracks.size() + " tracks!");
+                    BotUtils.send(event.getChannel(), "There are only " + audioTracks.size() + " tracks!");
                     return;
                 }
 
                 guildMusicManager.getScheduler().setQueue(audioTracks.subList(0, Integer.valueOf(args.get(0))));
-                BotUtils.sendMessage(event.getChannel(), "Queue has been purged from " + args.get(0) + " onwards.");
+                BotUtils.send(event.getChannel(), "Queue has been purged from " + args.get(0) + " onwards.");
             } catch (NumberFormatException e) {
-                BotUtils.sendMessage(event.getChannel(), "Need a number for the index number");
+                BotUtils.send(event.getChannel(), "Need a number for the index number");
             }
         }
 

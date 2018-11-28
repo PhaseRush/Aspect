@@ -23,7 +23,7 @@ public class SongInfo implements Command {
                 .withDesc("By: " + songInfo.author + "\n" + musicManager.getScheduler().trackProgress())
                 .withUrl(songInfo.uri);
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     private String getFormattedSongLength(AudioTrackInfo songInfo) {

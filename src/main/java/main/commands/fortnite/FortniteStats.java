@@ -32,7 +32,7 @@ public class FortniteStats implements Command {
                 .withDesc(generateDesc(stats))
                 .withFooterText("(*) indicates an estimated value; click title for more details");
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     private String generateDesc(FortniteTrackerJsonObj stats) {

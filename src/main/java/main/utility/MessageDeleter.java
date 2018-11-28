@@ -83,7 +83,7 @@ public class MessageDeleter {
         channel.bulkDelete(messagesToBulkDelete);
 
         String nick = (getDeletee().getNicknameForGuild(iGuild) == null? intendedAuthor.getName() : getDeletee().getNicknameForGuild(iGuild));
-        BotUtils.sendMessage(channel, "<@" + msgDeleter.getStringID() + "> deleted " +
+        BotUtils.send(channel, "<@" + msgDeleter.getStringID() + "> deleted " +
                 messagesToBulkDelete.size() + ((messagesToBulkDelete.size() == 1) ? " message" : " messages") +
                 " sent by " + ((intendedAuthorID.equals("417925383762214912")) ? "me :( " : nick) +
                 " in the last " + ((minutesToDelete == 1) ? "minute." : minutesToDelete + " minutes."));
@@ -96,7 +96,7 @@ public class MessageDeleter {
         messagesToBulkDelete.addAll(channel.getMessageHistoryTo(instantToDeleteFrom));
         messagesToBulkDelete.add(deletingMsg);
         channel.bulkDelete(messagesToBulkDelete);
-        BotUtils.sendMessage(channel, "<@" + msgDeleter.getStringID() + "> deleted " + messagesToBulkDelete.size() + " messages in " + channel.getName() + " in the last " + (minutesToDelete == 1 ? "minute" : minutesToDelete + " minutes"));
+        BotUtils.send(channel, "<@" + msgDeleter.getStringID() + "> deleted " + messagesToBulkDelete.size() + " messages in " + channel.getName() + " in the last " + (minutesToDelete == 1 ? "minute" : minutesToDelete + " minutes"));
     }
 
     @Override

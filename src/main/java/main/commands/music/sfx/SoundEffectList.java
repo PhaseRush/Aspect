@@ -17,7 +17,7 @@ public class SoundEffectList implements Command {
             sb.append(s + "\n");
         }
 
-        BotUtils.sendMessage(event.getChannel(), sb.append("```").toString());
+        BotUtils.send(event.getChannel(), sb.append("```").toString());
     }
 
     @Override

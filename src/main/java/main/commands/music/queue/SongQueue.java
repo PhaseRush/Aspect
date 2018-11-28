@@ -27,7 +27,7 @@ public class SongQueue implements Command {
 
         sb.append("```");
 
-        BotUtils.sendMessage(event.getChannel(), sb.toString());
+        BotUtils.send(event.getChannel(), sb.toString());
     }
 
     @Override

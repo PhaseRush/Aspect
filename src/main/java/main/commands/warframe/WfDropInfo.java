@@ -37,7 +37,7 @@ public class WfDropInfo implements Command {
             eb.appendField(e.getPlace(), e.getChance() + "%", false);
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

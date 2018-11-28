@@ -29,7 +29,7 @@ public class WfDailyDeals implements Command {
             eb.appendField(splitName[splitName.length - 1], deal.getOriginalPrice() + " :fast_forward: " + deal.getSalePrice() + ", Discount: " + deal.getDiscount() + "%", false);
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
 

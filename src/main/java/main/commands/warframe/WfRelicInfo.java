@@ -13,7 +13,7 @@ public class WfRelicInfo implements Command {
         String parsedUserInput = args.get(0);
 
         if (!checkValid(parsedUserInput)) {
-            BotUtils.sendMessage(event.getChannel(), "Invalid relic");
+            BotUtils.send(event.getChannel(), "Invalid relic");
             return;
         }
         String url = "https://raw.githubusercontent.com/WFCD/warframe-drop-data/gh-pages/data/relics.json";

@@ -37,10 +37,10 @@ public class PrivateChannelVerification {
                 if (hashedInput.equals(BotUtils.SHA256(p.getPassword()))) {
                     IRole role = Main.client.getRoleByID(p.getLongRoleID());
                     if (event.getAuthor().hasRole(role)) {
-                        BotUtils.sendMessage(event.getChannel(), "You already have the role to access `" + targetChannel.getName() + "` in `" + thisGuild.getName() + "`");
+                        BotUtils.send(event.getChannel(), "You already have the role to access `" + targetChannel.getName() + "` in `" + thisGuild.getName() + "`");
                     } else {
                         event.getAuthor().addRole(role);
-                        BotUtils.sendMessage(event.getChannel(), "Given `" + role.getName() + "` role to access `" + targetChannel.getName() + "` in `" + thisGuild.getName() + "`");
+                        BotUtils.send(event.getChannel(), "Given `" + role.getName() + "` role to access `" + targetChannel.getName() + "` in `" + thisGuild.getName() + "`");
                     }
                     break;
                 } else {

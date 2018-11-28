@@ -16,13 +16,13 @@ public class SongPause implements Command {
         AudioPlayer player = guildMusicManager.getPlayer();
 
         if (player.getPlayingTrack() == null) {
-            BotUtils.sendMessage(event.getChannel(), "Currently not playing any track.");
+            BotUtils.send(event.getChannel(), "Currently not playing any track.");
             return;
         }
 
         if (player.isPaused()) {
             player.setPaused(false);
-            BotUtils.sendMessage(event.getChannel(), "Player has been resumed");
+            BotUtils.send(event.getChannel(), "Player has been resumed");
         } else {
             player.setPaused(true);
             BotUtils.reactWithCheckMark(event.getMessage());

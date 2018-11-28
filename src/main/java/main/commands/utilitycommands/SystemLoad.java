@@ -27,7 +27,7 @@ public class SystemLoad implements Command {
                 "\nAvail Cores:  \t\t" + osBean.getAvailableProcessors()
                 + "```";
 
-        BotUtils.sendMessage(event.getChannel(), msg);
+        BotUtils.send(event.getChannel(), msg);
     }
 
     @Override

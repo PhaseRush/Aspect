@@ -11,7 +11,7 @@ public class MemberCount implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         int memberCount = event.getGuild().getUsers().size();
 
-        BotUtils.sendMessage(event.getChannel(), "There are currently " +
+        BotUtils.send(event.getChannel(), "There are currently " +
                 memberCount + " members in " +
                 event.getGuild().getName());
     }

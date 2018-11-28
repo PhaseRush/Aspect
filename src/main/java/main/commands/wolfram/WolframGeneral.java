@@ -81,10 +81,10 @@ public class WolframGeneral implements Command {
         } catch (WAException e) {
             e.printStackTrace();
         } catch (DiscordException e) {
-            BotUtils.sendMessage(event.getChannel(), "The parsed result is longer than 2000 characters and cannot be displayed\nor there is a different problem and i should just kms");
+            BotUtils.send(event.getChannel(), "The parsed result is longer than 2000 characters and cannot be displayed\nor there is a different problem and i should just kms");
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
 

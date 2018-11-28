@@ -13,19 +13,19 @@ public class SetPrefix implements Command {
         String pre = args.get(0);
 
         if(BotUtils.getPrefix(event.getGuild()).equals(pre)) {
-            BotUtils.sendMessage(event.getChannel(), "The prefix is already \"" + pre + "\"");
+            BotUtils.send(event.getChannel(), "The prefix is already \"" + pre + "\"");
         } else {
             BotUtils.setPrefix(event.getGuild(), pre);
             BotUtils.savePrefixMap();
-            BotUtils.sendMessage(event.getChannel(), "Prefix has been updated from \"" + BotUtils.DEFAULT_BOT_PREFIX + "\" to \"" + pre + "\"");
+            BotUtils.send(event.getChannel(), "Prefix has been updated from \"" + BotUtils.DEFAULT_BOT_PREFIX + "\" to \"" + pre + "\"");
         }
 
 
 //
 //        if (BotUtils.DEFAULT_BOT_PREFIX.equals(pre)) {
-//            BotUtils.sendMessage(event.getChannel(), "The prefix is already \"" + pre + "\"");
+//            BotUtils.send(event.getChannel(), "The prefix is already \"" + pre + "\"");
 //        } else {
-//            BotUtils.sendMessage(event.getChannel(), "Prefix has been updated from \"" + BotUtils.DEFAULT_BOT_PREFIX + "\" to \"" + pre + "\"");
+//            BotUtils.send(event.getChannel(), "Prefix has been updated from \"" + BotUtils.DEFAULT_BOT_PREFIX + "\" to \"" + pre + "\"");
 //            BotUtils.DEFAULT_BOT_PREFIX = args.get(0);
 //        }
     }

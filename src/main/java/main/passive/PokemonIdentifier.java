@@ -79,7 +79,7 @@ public class PokemonIdentifier {
 
 
             //this sends the message -- DONT SEND
-            //RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
+            //RequestBuffer.request(() -> event.getChannel().send(eb.build())).get();
             //instead of sending the embed, set the most recent embed to this instead
             PokemonUtil.mostRecentEmbed = eb;
 

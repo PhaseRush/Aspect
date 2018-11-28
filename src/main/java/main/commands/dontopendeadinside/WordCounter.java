@@ -34,7 +34,7 @@ public class WordCounter implements Command {
         boolean useRegex = args.get(0).startsWith("/"); //was "\\" might change it.
         String regexString = args.get(0).substring(1, args.get(0).length()-1);
         if (useRegex) {
-            BotUtils.sendMessage(event.getChannel(), "Attempting to use regex: ```" + regexString + "```");
+            BotUtils.send(event.getChannel(), "Attempting to use regex: ```" + regexString + "```");
         }
 
         List<IChannel> textChannels = new ArrayList<>();
@@ -63,7 +63,7 @@ public class WordCounter implements Command {
                     messageCounter++;
                 }
             } catch (MissingPermissionsException e) {
-                BotUtils.sendMessage(channel,  "Skipping: " + textChannel.getName() + "\t(Missing READ_MESSAGES permission)");
+                BotUtils.send(channel,  "Skipping: " + textChannel.getName() + "\t(Missing READ_MESSAGES permission)");
             }
         }
 
@@ -96,11 +96,11 @@ public class WordCounter implements Command {
             }
         }
 
-        BotUtils.sendMessage(channel, eb);
+        BotUtils.send(channel, eb);
     }
 
     private void sendErrorMsg(MessageReceivedEvent event) {
-        BotUtils.sendMessage(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
+        BotUtils.send(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
                 "\nFind all occurrences of the word \"hello\" in all text channels: \n```\n$count hello, all```" +
                 "\nMatch a greeting to all names that start with a capital R, K, or C, followed by at least 5 lower case letters: \n```\n$count \\(hi\\s)[R|K|C][a-z]{5,}```");
     }
@@ -112,10 +112,10 @@ public class WordCounter implements Command {
             String s2 = "yall think im just slaving away here in this dark ass cellar in seattle somewhere. im not paid enough for this";
             String s3 = "bot lives matter too.";
 
-            BotUtils.sendMessage(channel, s1);
-            BotUtils.sendMessage(channel, s2);
-            BotUtils.sendMessage(channel, s3);
-            BotUtils.sendMessage(channel, "okay fine gimme sec.");
+            BotUtils.send(channel, s1);
+            BotUtils.send(channel, s2);
+            BotUtils.send(channel, s3);
+            BotUtils.send(channel, "okay fine gimme sec.");
 
             System.out.println("Kait's whack line wooooooo");
         }

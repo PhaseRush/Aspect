@@ -24,12 +24,12 @@ public class PersonalEmbed implements Command {
                 }
             }
         } catch (Exception e) {
-            BotUtils.sendMessage(event.getChannel(), "There was an error with the ID");
+            BotUtils.send(event.getChannel(), "There was an error with the ID");
         }
     }
 
     private void sendEmbed(MessageReceivedEvent event, EmbedBuilder eb) {
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

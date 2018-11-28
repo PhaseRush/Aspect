@@ -27,7 +27,7 @@ public class WfBaro implements Command {
                 eb.appendField(o.getItem(), "Ducats: " + o.getDucats() + " | Credits: " + o.getCredits(), false);
             }
         }
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

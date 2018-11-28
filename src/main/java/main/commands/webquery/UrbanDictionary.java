@@ -18,7 +18,7 @@ public class UrbanDictionary implements Command {
         DefinitionContainer definition = BotUtils.gson.fromJson(json, DefinitionContainer.class);
 
         if (definition.getList().size() == 0) {
-            BotUtils.sendMessage(event.getChannel(), "No definitions found :(");
+            BotUtils.send(event.getChannel(), "No definitions found :(");
             return;
         }
         int numDefsToUse = (5 > definition.getList().size()? definition.getList().size() : 5);
@@ -35,7 +35,7 @@ public class UrbanDictionary implements Command {
             } catch (IllegalArgumentException ignored) {}
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     private String generateDesc(UDDefinition topDef) {

@@ -830,7 +830,7 @@ public class BulbapediaScraper implements Command {
             name = name.replaceAll(" ", "_");
             String finalName = name;
             //in case this accidentally runs again
-            //RequestBuffer.request(() -> channel.sendMessage("https://bulbapedia.bulbagarden.net/wiki/"+ finalName + "_(Pok%C3%A9mon)")).get();
+            //RequestBuffer.request(() -> channel.send("https://bulbapedia.bulbagarden.net/wiki/"+ finalName + "_(Pok%C3%A9mon)")).get();
 
             try {
                 Thread.sleep(200);

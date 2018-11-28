@@ -19,7 +19,7 @@ public class CutePassive {
         if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
         if (!event.getMessage().getFormattedContent().matches("\\b(me+o+w)\\b")) return; //actually check the pattern
 
-        BotUtils.sendMessage(event.getChannel(), "*meow meow :3*");
+        BotUtils.send(event.getChannel(), "*meow meow :3*");
         lastMeow = System.currentTimeMillis();
     }
 
@@ -31,7 +31,7 @@ public class CutePassive {
         if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
         if (!event.getMessage().getFormattedContent().matches("\\b([pP][aAeE][tT])\\b")) return; //if no pat, NO PAT FOR U
 
-        BotUtils.sendMessage(event.getChannel(), "*pet pet :3*");
+        BotUtils.send(event.getChannel(), "*pet pet :3*");
         lastPat = System.currentTimeMillis();
     }
 }

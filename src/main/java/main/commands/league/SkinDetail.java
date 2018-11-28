@@ -28,7 +28,7 @@ public class SkinDetail implements Command {
             skin = champion.getSkins().find(x -> x.getName().equals(args.get(1)));
 
         if ((skin == null)){
-            BotUtils.sendMessage(event.getChannel(), "Error getting skin information");
+            BotUtils.send(event.getChannel(), "Error getting skin information");
             return;
         }
 

@@ -84,13 +84,13 @@ public class AsciifyOld implements Command {
             }
 
             if (ascii.length() > 1997)
-                BotUtils.sendMessage(event.getChannel(), "Ascii art is > 2000 characters, and discord will shit on me. Use a higher skip count.\n" +
+                BotUtils.send(event.getChannel(), "Ascii art is > 2000 characters, and discord will shit on me. Use a higher skip count.\n" +
                         "$ascii [url], [increase this number]");
             else
-                BotUtils.sendMessage(event.getChannel(), ascii.append("```").toString());
+                BotUtils.send(event.getChannel(), ascii.append("```").toString());
 
         } catch (IOException e) {
-            BotUtils.sendMessage(event.getChannel(), "Invalid URL. Make sure it is directly linking a picture. Make sure the url ends in .png, .jpg, or any image file extension.");
+            BotUtils.send(event.getChannel(), "Invalid URL. Make sure it is directly linking a picture. Make sure the url ends in .png, .jpg, or any image file extension.");
         }
     }
 

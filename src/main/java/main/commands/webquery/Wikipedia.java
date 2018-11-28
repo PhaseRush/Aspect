@@ -30,7 +30,7 @@ public class Wikipedia implements Command {
         else if (wiki.getThumbnail() != null) //else try the thumbnail
             eb.withImage(wiki.getThumbnail().getSource());
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     private String generateDesc(WikiContainer wiki) {

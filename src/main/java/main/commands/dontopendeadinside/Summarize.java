@@ -26,7 +26,7 @@ public class Summarize implements Command {
         try {
             httpResponse = runHttpGet(req + "&SM_URL=" + args.get(0));
         } catch (IOException e) {
-            BotUtils.sendMessage(event.getChannel(), "Malformed URL");
+            BotUtils.send(event.getChannel(), "Malformed URL");
             return; //Don't proceed
         }
         SmmryObject smmryObject = BotUtils.gson.fromJson(httpResponse, SmmryObject.class);
@@ -35,7 +35,7 @@ public class Summarize implements Command {
         if (smmryObject.hasError())
             switch (smmryObject.getSm_api_error()) {
                 case "3":
-                    BotUtils.sendMessage(event.getChannel(), smmryObject.getSm_api_message().toLowerCase());
+                    BotUtils.send(event.getChannel(), smmryObject.getSm_api_message().toLowerCase());
                     return;
             }
 
@@ -56,7 +56,7 @@ public class Summarize implements Command {
                     .withDesc("Since the summary was too long, please refer to this link\n" + gist.getHtml_url() + //hitmlURL is NULL -- FIXED
                             "\nVisit this page if you prefer raw\n" + gist.getFiles().getSummary().getRaw_url());
 
-            BotUtils.sendMessage(event.getChannel(), eb);
+            BotUtils.send(event.getChannel(), eb);
             return;
         }
 
@@ -65,7 +65,7 @@ public class Summarize implements Command {
                 .withColor(Visuals.getVibrantColor())
                 .withFooterText("Reduced content by " + smmryObject.getSm_api_content_reduced() + " to " + smmryObject.getSm_api_character_count() + " characters in " + (System.currentTimeMillis() - startTime) + " ms");
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     private String runHttpGet(String url) throws IOException {

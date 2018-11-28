@@ -39,7 +39,7 @@ public class LeaguePlayerEmbed implements Command {
         try {
             summoner.getProfileIcon().getImage().get();
         } catch (ForbiddenException e) {
-            BotUtils.sendMessage(event.getChannel(), "Kat's api key is outdated. Spam her until she decides to mute you all");
+            BotUtils.send(event.getChannel(), "Kat's api key is outdated. Spam her until she decides to mute you all");
         } catch (NullPointerException e) {
             //thrown when Profile icon id = 1?
             validProfileIcon = false;

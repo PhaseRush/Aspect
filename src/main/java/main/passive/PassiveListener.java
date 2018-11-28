@@ -39,10 +39,10 @@ public class PassiveListener {
         if (event.getGuild().getStringID().equals("197158565004312576")) {
             String message = event.getMessage().getFormattedContent().toLowerCase();
             if (message.contains("penis"))
-                BotUtils.sendMessage(event.getChannel(), "penis.");
+                BotUtils.send(event.getChannel(), "penis.");
             //use embed to hide url in message
             if (message.contains("turtle"))
-                BotUtils.sendMessage(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
+                BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
         }
     }
 
@@ -53,8 +53,8 @@ public class PassiveListener {
         if (event.getMessage().getContent().equalsIgnoreCase("owo")) {
             int rand = ThreadLocalRandom.current().nextInt(100);
 
-            if (rand == 1) BotUtils.sendMessage(event.getChannel(), "degenerate");
-            else if (rand % 2 == 0) BotUtils.sendMessage(event.getChannel(), "owo");
+            if (rand == 1) BotUtils.send(event.getChannel(), "degenerate");
+            else if (rand % 2 == 0) BotUtils.send(event.getChannel(), "owo");
         }
     }
 
@@ -90,7 +90,7 @@ public class PassiveListener {
                     subR = afterR.substring(0, afterR.indexOf(" "));
                 else subR = afterR.replaceAll("[.,#!$%^&*;:{}=\\-_`~()]",""); //dont replace '/'
 
-                BotUtils.sendMessage(event.getChannel(), "https://www.reddit.com/" + subR);
+                BotUtils.send(event.getChannel(), "https://www.reddit.com/" + subR);
             }
         }
     }
@@ -110,7 +110,7 @@ public class PassiveListener {
         if (num > 797) return;
         BigInteger fact = BigIntegerMath.factorial(num);
 
-        BotUtils.sendMessage(event.getChannel(), "Did you know that `" + num + "! = " + fact + "`");
+        BotUtils.send(event.getChannel(), "Did you know that `" + num + "! = " + fact + "`");
     }
 
 
@@ -119,7 +119,7 @@ public class PassiveListener {
         String msg = event.getMessage().getFormattedContent();
         String alexa = "alexa play despacito";
 
-        //BotUtils.sendMessage(event.getChannel(), String.valueOf(levenshtein.distance(msg,alexa)));
+        //BotUtils.send(event.getChannel(), String.valueOf(levenshtein.distance(msg,alexa)));
         if (levenshtein.distance(msg, alexa) < 3 || msg.contains(alexa)) {
             if (event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel()
                     != event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()) {
@@ -139,9 +139,9 @@ public class PassiveListener {
         String msg = event.getMessage().getFormattedContent();
         double similarity = BotUtils.stringSimilarity(msg, "Happy Thanksgiving");
 
-        //BotUtils.sendMessage(event.getChannel(), String.valueOf(similarity));
+        //BotUtils.send(event.getChannel(), String.valueOf(similarity));
         if (similarity < 3) {
-            BotUtils.sendMessage(event.getChannel(), "Happy Thanksgiving!");
+            BotUtils.send(event.getChannel(), "Happy Thanksgiving!");
             lastThanksgivingMap.put(event.getGuild().getLongID(), System.currentTimeMillis());
         }
     }
@@ -149,7 +149,7 @@ public class PassiveListener {
 
     @EventSubscriber
     public void userJoin(UserJoinEvent event) {
-        BotUtils.sendMessage(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
+        BotUtils.send(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
     }
 
     @Override

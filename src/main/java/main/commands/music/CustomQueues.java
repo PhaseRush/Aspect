@@ -24,7 +24,7 @@ public class CustomQueues implements Command {
                 .withDesc(sb.toString())
                 .withColor(Visuals.getVibrantColor());
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

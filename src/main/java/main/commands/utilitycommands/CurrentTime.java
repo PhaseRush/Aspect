@@ -19,7 +19,7 @@ public class CurrentTime implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("America/Vancouver"));
         int minute = calendar.get(Calendar.MINUTE);
-        BotUtils.sendMessage(event.getChannel(),
+        BotUtils.send(event.getChannel(),
                 "In Vancouver, it is currently " +
                         calendar.get(Calendar.HOUR_OF_DAY) + ":" +
                         (minute < 10 ? "0" + minute : minute));

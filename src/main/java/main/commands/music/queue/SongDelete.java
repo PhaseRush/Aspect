@@ -19,13 +19,13 @@ public class SongDelete implements Command {
             try {
                 int i = Integer.valueOf(args.get(0));
                 if (Integer.valueOf(args.get(0)) > audioTracks.size()) {
-                    BotUtils.sendMessage(event.getChannel(), "There are only " + audioTracks.size() + " tracks!");
+                    BotUtils.send(event.getChannel(), "There are only " + audioTracks.size() + " tracks!");
                     return;
                 }
                 guildMusicManager.getScheduler().getQueue().remove(i-1);
                 BotUtils.reactWithCheckMark(event.getMessage());
             } catch (NumberFormatException | NullPointerException e) {
-                BotUtils.sendMessage(event.getChannel(), "Need a number for the index");
+                BotUtils.send(event.getChannel(), "Need a number for the index");
             }
         }
     }

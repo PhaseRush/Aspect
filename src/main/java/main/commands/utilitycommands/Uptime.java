@@ -20,7 +20,7 @@ public class Uptime implements Command {
         String s = "```Uptime: \t\t  " + days + " d\t" + hr + ":" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) +
                 "\t=\t" + millis + " ms" +
                 "\nStart instant:\t" + Main.startInstant.toString() + "```";
-        BotUtils.sendMessage(event.getChannel(), s);
+        BotUtils.send(event.getChannel(), s);
     }
 
     @Override

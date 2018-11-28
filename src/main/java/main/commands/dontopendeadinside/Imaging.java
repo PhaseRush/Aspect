@@ -30,7 +30,7 @@ public class Imaging implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if(args.size() !=1) {
-            BotUtils.sendMessage(event.getChannel(), "Please provide exactly 1 url. Use \"" + BotUtils.DEFAULT_BOT_PREFIX + "help img\" for more info");
+            BotUtils.send(event.getChannel(), "Please provide exactly 1 url. Use \"" + BotUtils.DEFAULT_BOT_PREFIX + "help img\" for more info");
         } else {
             IMessage loadingMsg = event.getChannel().sendMessage("```\nProcessing Image```");
             getCloudSightJson(args.get(0), event, loadingMsg);
@@ -49,7 +49,7 @@ public class Imaging implements Command {
             //returns the response body
             imageTokenJson = postWithJson("https://api.cloudsight.ai/v1/images", jsonStr);
         } catch (IOException e) {
-            BotUtils.sendMessage(event.getChannel(), e.toString());
+            BotUtils.send(event.getChannel(), e.toString());
         }
 
         ImagingPostBody postBody = new Gson().fromJson(imageTokenJson, ImagingPostBody.class);
@@ -142,7 +142,7 @@ public class Imaging implements Command {
             default:
                 response = "This really shouldn't have occurred. This spaghetti code needs more salt";
         }
-        BotUtils.sendMessage(event.getChannel(), response);
+        BotUtils.send(event.getChannel(), response);
     }
 
     private static void handleCompletedStatus(MessageReceivedEvent event, ImagingGetBody getBody, long startTIme, int numFailedGets) {

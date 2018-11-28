@@ -23,7 +23,7 @@ public class SongPlay implements Command {
 
         if (player.isPaused()) {
             player.setPaused(false);
-            BotUtils.sendMessage(event.getChannel(), "Player is now unpaused.");
+            BotUtils.send(event.getChannel(), "Player is now unpaused.");
         }
 
         String searchStr = String.join(" ", args);

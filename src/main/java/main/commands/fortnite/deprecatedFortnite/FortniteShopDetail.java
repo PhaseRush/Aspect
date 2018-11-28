@@ -19,7 +19,7 @@ public class FortniteShopDetail implements Command {
         String jsonOut = BotUtils.getJson("https://fortnite.y3n.co/v2/shop", true);
         FortniteShopJson shop = new Gson().fromJson(jsonOut, FortniteShopJson.class);
         Storefront selected = shop.getStorefronts()[Integer.valueOf(args.get(0)) - 1];
-        BotUtils.sendMessage(event.getChannel(), "Selected Storefront: " + selected.getName());
+        BotUtils.send(event.getChannel(), "Selected Storefront: " + selected.getName());
 
 
         EmbedBuilder eb = new EmbedBuilder()
@@ -32,7 +32,7 @@ public class FortniteShopDetail implements Command {
             eb.appendField((entry.getTitle() == null ? "placeholder title" : entry.getTitle()), entry.getDescription() + "\n" + prices.getRegularPrice() + " -> " + prices.getFinalPrice() + "(" + prices.getCurrencyType() + ")", false);
         }
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

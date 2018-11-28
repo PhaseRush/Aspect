@@ -35,7 +35,7 @@ public class RollDice implements Command {
                 .withTitle(numDice + "d" + numSides)
                 .withDesc(desc.toString());
 
-        BotUtils.sendMessage(event.getChannel(), eb);
+        BotUtils.send(event.getChannel(), eb);
 
     }
 

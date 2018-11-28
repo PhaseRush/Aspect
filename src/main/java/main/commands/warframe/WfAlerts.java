@@ -12,7 +12,7 @@ public class WfAlerts implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.sendMessage(event.getChannel(), WarframeUtil.generateAlertsEmbed());
+        BotUtils.send(event.getChannel(), WarframeUtil.generateAlertsEmbed());
     }
 
 

@@ -10,7 +10,7 @@ public class Help implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.sendMessage(event.getChannel(), "Details at: " + BotUtils.GITHUB_URL);
+        BotUtils.send(event.getChannel(), "Details at: " + BotUtils.GITHUB_URL);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class ListCuties implements Command {
         for (String cuteKey : CuteUtil.cuteUrls.keySet())
             sb.append(cuteKey).append("\n");
 
-        BotUtils.sendMessage(event.getChannel(), sb.append("```").toString());
+        BotUtils.send(event.getChannel(), sb.append("```").toString());
     }
 
     @Override

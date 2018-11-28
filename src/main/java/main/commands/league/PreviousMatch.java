@@ -37,7 +37,7 @@ public class PreviousMatch implements Command {
             }
         }
 
-        BotUtils.sendMessage(event.getChannel(), summoner.getName() + " has played " + matchHistory.size() + " games");
+        BotUtils.send(event.getChannel(), summoner.getName() + " has played " + matchHistory.size() + " games");
         loadingMsg.delete();
     }
 

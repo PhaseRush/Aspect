@@ -39,8 +39,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -526,7 +526,7 @@ public class AnnotationListener {
 
         //handle commands for mooshroom
         if ("!server".equals(message) || message.equals("!homebase")) {
-            //iChannel.sendMessage("We're currently playing on: \t\tUS West 1 \nCome join us!");
+            //iChannel.send("We're currently playing on: \t\tUS West 1 \nCome join us!");
             iChannel.sendMessage("--------------\n|  US West  |\n--------------");
 
         } else if ("!katinv".equals(message)) {//export imgur from muledump
@@ -576,7 +576,7 @@ public class AnnotationListener {
         //music stuff
         else if ("!radioplay".equals(message)) {
             for (String s : musicURLs) {
-                //iChannel.sendMessage(";;play " + s);
+                //iChannel.send(";;play " + s);
                 iChannel.sendMessage("Deprecated");
             }
         } else if (message.equals("!radioskip")) {
@@ -746,7 +746,7 @@ public class AnnotationListener {
         } else if (message.contains(">.<")) {
             author.getOrCreatePMChannel().sendMessage("!!! Are you a cutie too?? >.>");
         } else if (message.matches(".*\\s*(m+e+o+w+)+\\s*.*")) {
-            //iChannel.sendMessage(":3 h~hello!");
+            //iChannel.send(":3 h~hello!");
         }
 
 
@@ -1075,7 +1075,7 @@ public class AnnotationListener {
 
     private void randomReplyEvent(IChannel channel, IGuild guild, IUser author) {
         if ((new Random().nextFloat() <= .002f) && (meowable(channel))) {
-            //channel.sendMessage("Meow :3 (Bongoes tells me to change this but i like meowing)");
+            //channel.send("Meow :3 (Bongoes tells me to change this but i like meowing)");
             channel.sendMessage("\"MAke iT Say sOME gANgStA sHIt insteaD of mEOw\" - Bongoes 2018");
         }
     }
@@ -1090,8 +1090,8 @@ public class AnnotationListener {
             channel.sendMessage("I don't listen to plebs, " + author.getName() + ".");
             author.getOrCreatePMChannel().sendMessage("No hard feelings though. ~meow~ :3");
         } else if (author.getStringID().equals("292170798687453204")) {
-            //channel.sendMessage("Shut up. :3");
-            //author.getOrCreatePMChannel().sendMessage("They made me do it! No hard feelings, okay? :3");
+            //channel.send("Shut up. :3");
+            //author.getOrCreatePMChannel().send("They made me do it! No hard feelings, okay? :3");
         } else if (author.getStringID().equals("109008117810888704")) { //Umbracus
             if(new Random().nextFloat() > .9f) { //dont send everytime
                 author.getOrCreatePMChannel().sendMessage("Get back to work or I'm telling Kat!");
