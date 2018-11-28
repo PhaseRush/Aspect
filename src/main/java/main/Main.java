@@ -30,8 +30,6 @@ public class Main {
     public static LanguageTranslator translator;
 
     // Keep a public list of all listeners
-    // test
-    //test
     public static List<Object> dispatchListeners = new ArrayList<>();
 
     public static void main(String[] args){
@@ -100,11 +98,11 @@ public class Main {
         // Self Client Initialization
         client = BotUtils.getBuiltDiscordClient(args[1]);
 
-        // Register all listeners via the EventSubscriber annotation which allows for organisation and delegation of events
+        // Register all listeners via the @EventSubscriber annotation which allows for organization and delegation of events
         client.getDispatcher().registerListeners(dispatchListeners);
 
         // Self Client login - finalize setup
-        // Only login after all events are registered otherwise some may be missed.
+        // Only login after all events are registered - otherwise some may be missed.
         client.login();
 
         // ------------------------------------------------------------ //
