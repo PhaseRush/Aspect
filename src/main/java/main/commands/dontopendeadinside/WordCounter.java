@@ -20,7 +20,7 @@ public class WordCounter implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
-        handleKaitlyn(event);
+        handleKaitlyn(event); //yes
 
         long startTime = System.currentTimeMillis();
         Map<IUser, Integer> userWordCountMap = new LinkedHashMap<>();
@@ -31,8 +31,8 @@ public class WordCounter implements Command {
             return;
         }
 
-        boolean useRegex = args.get(0).startsWith("\\");
-        String regexString = args.get(0).substring(1);
+        boolean useRegex = args.get(0).startsWith("/"); //was "\\" might change it.
+        String regexString = args.get(0).substring(1, args.get(0).length()-1);
         if (useRegex) {
             BotUtils.sendMessage(event.getChannel(), "Attempting to use regex: ```" + regexString + "```");
         }
@@ -63,7 +63,7 @@ public class WordCounter implements Command {
                     messageCounter++;
                 }
             } catch (MissingPermissionsException e) {
-                BotUtils.sendMessage(channel, "Aspect is missing READ_MESSAGES permission in " + textChannel.getName() + ". Attempting to forcibly continue execution.");
+                BotUtils.sendMessage(channel,  "Skipping: " + textChannel.getName() + "\t(Missing READ_MESSAGES permission)");
             }
         }
 
@@ -91,6 +91,7 @@ public class WordCounter implements Command {
                 eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick), args.get(0).replaceAll("\\*", "\\\\*") + " count: " + entry.getValue().toString(), false);
                 rankCounter++;
             } catch (IllegalArgumentException e) {
+                eb.appendDesc("\n\n Listing the top 25:");
                 break; //already at 25 fields. Since map is sorted, just break loop
             }
         }
