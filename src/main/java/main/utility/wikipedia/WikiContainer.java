@@ -4,15 +4,15 @@ public class WikiContainer {
     private String type;
     private String title;
     private String displaytitle;
-    //namespace
-    //titles
+    // namespace
+    // titles
     private int pageid;
     private WikiImageInfo thumbnail;
     private WikiImageInfo originalimage;
     private String lang;
-    //dir
-    //revision
-    //tid
+    // dir
+    // revision
+    // tid
     private String timestamp; // ISO 8601
     private String description;
     private ContentUrls content_urls;

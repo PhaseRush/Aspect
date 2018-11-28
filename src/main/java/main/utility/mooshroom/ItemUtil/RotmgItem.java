@@ -27,7 +27,7 @@ public class RotmgItem {
         this.utst = utst;
     }
 
-    //todo needs work
+    // todo needs work
     public double getFeedPowerScore() {
         return feedPower/30;
     }

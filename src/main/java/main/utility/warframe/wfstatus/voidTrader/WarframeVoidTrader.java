@@ -6,7 +6,7 @@ public class WarframeVoidTrader {
     String expiry;
     String character;
     String location;
-    //
+
     WarframeVoidTraderInventoryObj[] inventory;
     String psId;
     boolean active;

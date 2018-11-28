@@ -1,13 +1,13 @@
 package main.utility.warframe.wfstatus.alerts;
 
 public class WarframeReward {
-    String[] items; //might just be Object[] items;
+    String[] items; // might just be Object[] items;
     WarframeCountedItem[] countedItems;
     int credits;
     String asString;
     String itemString;
     String thumbnail;
-    double color; //might be something else
+    double color; // might be something else
 
     public String[] getItems() {
         return items;

@@ -3,7 +3,7 @@ package main.utility.mooshroom.RealmEye.GuildUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-//http://www.tiffit.net/RealmInfo/api/guild?g=Mooshroom&f=
+// http://www.tiffit.net/RealmInfo/api/guild?g=Mooshroom&f=
 public class RealmEyeGuild {
 
     private String name = "";
@@ -13,7 +13,7 @@ public class RealmEyeGuild {
     private RealmEyeFameRank fame;
     private RealmEyeXpRank xp;
     private RealmEyeMostActiveServer most_active;
-    private String[] desc; //might need to change to list, probably not
+    private String[] desc; // might need to change to list, probably not
     List<RealmEyeGuildMember> members;
 
 

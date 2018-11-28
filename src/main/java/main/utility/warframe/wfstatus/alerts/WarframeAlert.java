@@ -10,7 +10,7 @@ public class WarframeAlert {
     WarframeMission mission;
     boolean expired;
     String eta;
-    Object[] rewardTypes; //not good.
+    Object[] rewardTypes; // not good.
 
 
     public String getId() {

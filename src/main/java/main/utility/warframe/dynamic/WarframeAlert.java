@@ -1,7 +1,7 @@
 package main.utility.warframe.dynamic;
 
 public class WarframeAlert {
-    EventID _id; //re-used
+    EventID _id; // re-used
     EventDate Activation;
     EventDate Expiry;
 

@@ -116,8 +116,7 @@ public class GifDecoder {
      * @return delay in milliseconds
      */
     public int getDelay(int n) {
-        //
-        delay = -1;
+        // delay = -1;
         if ((n >= 0) && (n < frameCount)) {
             delay = ((GifFrame) frames.get(n)).delay;
         }
@@ -379,7 +378,7 @@ public class GifDecoder {
         if (suffix == null) suffix = new byte[MaxStackSize];
         if (pixelStack == null) pixelStack = new byte[MaxStackSize + 1];
 
-        //  Initialize GIF data stream decoder.
+        // Initialize GIF data stream decoder.
 
         data_size = read();
         clear = 1 << data_size;
@@ -393,14 +392,14 @@ public class GifDecoder {
             suffix[code] = (byte) code;
         }
 
-        //  Decode GIF pixel stream.
+        // Decode GIF pixel stream.
 
         datum = bits = count = first = top = pi = bi = 0;
 
         for (i = 0; i < npix; ) {
             if (top == 0) {
                 if (bits < code_size) {
-                    //  Load bytes until there are enough bits for a code.
+                    // Load bytes until there are enough bits for a code.
                     if (count == 0) {
                         // Read a new data block.
                         count = readBlock();
@@ -415,18 +414,18 @@ public class GifDecoder {
                     continue;
                 }
 
-                //  Get the next code.
+                // Get the next code.
 
                 code = datum & code_mask;
                 datum >>= code_size;
                 bits -= code_size;
 
-                //  Interpret the code
+                // Interpret the code
 
                 if ((code > available) || (code == end_of_information))
                     break;
                 if (code == clear) {
-                    //  Reset decoder.
+                    // Reset decoder.
                     code_size = data_size + 1;
                     code_mask = (1 << code_size) - 1;
                     available = clear + 2;
@@ -450,7 +449,7 @@ public class GifDecoder {
                 }
                 first = ((int) suffix[code]) & 0xff;
 
-                //  Add a new string to the string table,
+                // Add a new string to the string table,
 
                 if (available >= MaxStackSize)
                     break;
@@ -466,7 +465,7 @@ public class GifDecoder {
                 old_code = in_code;
             }
 
-            //  Pop a pixel off the pixel stack.
+            // Pop a pixel off the pixel stack.
 
             top--;
             pixels[pi++] = pixelStack[top];

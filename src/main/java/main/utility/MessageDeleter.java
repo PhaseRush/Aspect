@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MessageDeleter {
-    //todo - make some stuff static someday
+    // todo - make some stuff static someday
 
     private String[] params;
     private String intendedAuthorID;
@@ -57,7 +57,7 @@ public class MessageDeleter {
     }
 
     private void handleIntendedAuthorID(IUser author) {
-        String potentialAuthorID = params[0].substring(1); //could be "me"  = call to self
+        String potentialAuthorID = params[0].substring(1); // could be "me"  = call to self
         if (potentialAuthorID.equals("me"))
             intendedAuthorID = author.getStringID();
         else
@@ -71,9 +71,9 @@ public class MessageDeleter {
 
         MessageHistory msgHist = channel.getMessageHistoryTo(instantToDeleteFrom);
 
-        //find all msg written by the intended author
+        // find all msg written by the intended author
         for (IMessage msg :msgHist) {
-            if (msg.getAuthor().getStringID().equals(intendedAuthorID)) { //figure out how to do a rolecheck @todo
+            if (msg.getAuthor().getStringID().equals(intendedAuthorID)) { // figure out how to do a rolecheck @todo
                 messagesToBulkDelete.add(msg);
             }
         }
@@ -104,7 +104,7 @@ public class MessageDeleter {
         return "<@" + msgDeleter.getStringID() + "> is deleting " + intendedAuthorID + "'s messages from " + minutesToDelete + " minutes ago.";
     }
 
-    //as in interviewer/interviewee :)
+    // as in interviewer/interviewee :)
     private IUser getDeletee() {
         IGuild iGuild = channel.getGuild();
         return iGuild.getUserByID(Long.parseLong(intendedAuthorID));

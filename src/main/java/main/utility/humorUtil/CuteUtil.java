@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class CuteUtil {
     public static Map<String, String> cuteUrls = new LinkedHashMap<>();
-    public static List<String> banned = new ArrayList<>(); //load from fat json
+    public static List<String> banned = new ArrayList<>(); // load from fat json
 
     static {
         cuteUrls.put("baka", "~http://pm1.narvii.com/6511/5f5c48c50768d5ac75a9e7ff6239e41fbcabcff2_00.jpg");

@@ -11,7 +11,7 @@ public class WorldState {
 
     WarframeEvent[] Events;
 
-    WarframeGoal[] Goals; //empty
+    WarframeGoal[] Goals; // empty
 
     WarframeAlert[] Alerts;
 

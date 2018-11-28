@@ -27,7 +27,7 @@ public class Wikipedia implements Command {
 
         if (wiki.getOriginalimage() != null)
             eb.withImage(wiki.getOriginalimage().getSource());
-        else if (wiki.getThumbnail() != null) //else try the thumbnail
+        else if (wiki.getThumbnail() != null) // else try the thumbnail
             eb.withImage(wiki.getThumbnail().getSource());
 
         BotUtils.send(event.getChannel(), eb);

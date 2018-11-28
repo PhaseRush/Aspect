@@ -63,7 +63,7 @@ public class Visuals {
     public static BufferedImage urlToBufferedImageWithAgentHeader(String url) {
         try {
             URLConnection connection = new URL(url).openConnection();
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0"); //also try .addRequestProperty()
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0"); // also try .addRequestProperty()
             InputStream inputStream = connection.getInputStream();
             return ImageIO.read(inputStream);
         } catch (IOException e) {
@@ -100,7 +100,7 @@ public class Visuals {
     public static Color analyizeWeightedImageColor(Image i, int ratio) {
         BufferedImage bi = convertImageToBufferedImage(i);
 
-        BufferedImage img = bi.getSubimage(bi.getWidth()/ratio, bi.getHeight()/ratio, bi.getWidth()*(ratio-1)/ratio, bi.getHeight()*(ratio-1)/ratio); //fill in the corners of the desired crop location here
+        BufferedImage img = bi.getSubimage(bi.getWidth()/ratio, bi.getHeight()/ratio, bi.getWidth()*(ratio-1)/ratio, bi.getHeight()*(ratio-1)/ratio); // fill in the corners of the desired crop location here
         BufferedImage copyOfImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics g = copyOfImage.createGraphics();
         g.drawImage(img, 0, 0, null);
@@ -108,7 +108,7 @@ public class Visuals {
         return analyizeImageColor(copyOfImage);
     }
 
-    //https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
+    // https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
     private static BufferedImage convertImageToBufferedImage(Image img) {
         if (img instanceof BufferedImage)
         {
@@ -127,7 +127,7 @@ public class Visuals {
         return bimage;
     }
 
-    //https://stackoverflow.com/questions/3224561/crop-image-to-smallest-size-by-removing-transparent-pixels-in-java
+    // https://stackoverflow.com/questions/3224561/crop-image-to-smallest-size-by-removing-transparent-pixels-in-java
     public static BufferedImage cropTransparent(BufferedImage image) {
         WritableRaster raster = image.getAlphaRaster();
         int width = raster.getWidth();

@@ -20,7 +20,7 @@ public class SongLoop implements Command {
             return;
         }
 
-        int maxLoop = Integer.MAX_VALUE; //todo : debate whether default (no params) should loop once or infinite times
+        int maxLoop = Integer.MAX_VALUE; // todo : debate whether default (no params) should loop once or infinite times
         try {
             if (args.size() == 1) {
                 int loopCount = Integer.valueOf(args.get(0));
@@ -34,7 +34,7 @@ public class SongLoop implements Command {
             return;
         }
 
-        //toggle looping
+        // toggle looping
         if (scheduler.isLooping()) {
             scheduler.setLooping(false, 0);
             BotUtils.send(event.getChannel(), "Stopped loop");

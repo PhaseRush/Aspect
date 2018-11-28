@@ -7,7 +7,7 @@ public class RealmEyeGuildMember {
     private int xp;
     private int rank;
     private int characters;
-    private String last_seen; //format: "2018-05-25 03:27:28"
+    private String last_seen; // format: "2018-05-25 03:27:28"
     private String server;
     private String average_fame_character;
     private String average_xp_character;

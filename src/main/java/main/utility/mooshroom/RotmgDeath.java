@@ -11,7 +11,7 @@ public class RotmgDeath {
     private int playerOutOfEight;
     private Date timeOfDeath;
 
-    private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm, MM/dd"); //might get rid of YEAR later
+    private SimpleDateFormat formatter = new SimpleDateFormat("HH:mm, MM/dd"); // might get rid of YEAR later
 
 
     public RotmgDeath(String playerName, String playerIGN, String playerClass, int playerOutOfEight, Date timeOfDeath) {

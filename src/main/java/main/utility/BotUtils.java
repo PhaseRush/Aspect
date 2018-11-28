@@ -453,7 +453,7 @@ public class BotUtils {
         int minutes = (int) ((millis / (1000 * 60)) % 60);
         int hours = (int) (millis / (1000 * 60 * 60));
 
-        return (hours == 0 ? "" : String.valueOf(hours) + ":") +
+        return (hours == 0 ? "" : hours + ":") +
                 (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
                 (seconds < 10 ? "0" + seconds : seconds);
     }
@@ -484,9 +484,7 @@ public class BotUtils {
 //        return (first > second? second : first);
 //    }
 
-    public static void Σ() {
-        ///test if this will compile
-    }
+    public static void Σ() {}
 
     public static List<Object> createListeners() {
         List<Object> dispatchListeners = new ArrayList<>();

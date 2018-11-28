@@ -26,7 +26,7 @@ public class RealmEyePlayer {
 
     private List<Character> characters = new ArrayList<>();
 
-    public RealmEyePlayer(String jsonUrl) { //hard part
+    public RealmEyePlayer(String jsonUrl) { // hard part
         this.jsonURL = jsonUrl;
     }
 
@@ -37,7 +37,7 @@ public class RealmEyePlayer {
     public int getTotalOutOf8() {
         int total = 0;
         for (Character character: characters){
-            //in the form: "1/8"
+            // in the form: "1/8"
             total += Integer.parseInt(character.getStats_maxed().substring(0,1));
         }
         return total;

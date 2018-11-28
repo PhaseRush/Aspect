@@ -17,7 +17,7 @@ import java.util.List;
  * Aspect -- Discord bot built with love
  *
  * @URL github.com/PhaseRush/Aspect
- * 2018/11/24
+ * 2018/11/28
  */
 public class Main {
     public static IDiscordClient client;
@@ -30,6 +30,8 @@ public class Main {
     public static LanguageTranslator translator;
 
     // Keep a public list of all listeners
+    // test
+    //test
     public static List<Object> dispatchListeners = new ArrayList<>();
 
     public static void main(String[] args){
