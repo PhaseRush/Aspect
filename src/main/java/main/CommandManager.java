@@ -34,9 +34,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CommandManager {
     private long readyTime = System.currentTimeMillis();
+    public static ExecutorService commandExecutors = Executors.newCachedThreadPool();
 
     public Map<String, Command> commandMap = new LinkedHashMap<>();
     //talked to hec about using a static initializer but constructor is fine
@@ -204,7 +207,10 @@ public class CommandManager {
         }
 
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
-        if (commandMap.containsKey(commandStr)) {
+        if (!commandMap.containsKey(commandStr)) return; // return if command is not inside of commandMap
+
+        // Define a runnable for the command
+        Runnable runCommand = () -> {
             commandMap.get(commandStr).runCommand(event, argsList);
 
             StringBuilder commandArgs = new StringBuilder();
@@ -227,8 +233,12 @@ public class CommandManager {
 //            } catch (Exception e) {
 //                System.out.println("CommandManager - error updating CommandStats json");
 //            }
-        }
+        };
+
+        // Execute the command
+        commandExecutors.execute(runCommand);
     }
+
 
     @Override
     public String toString() {

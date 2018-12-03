@@ -1,6 +1,7 @@
 package main.commands.utilitycommands;
 
 import main.Command;
+import main.CommandManager;
 import main.utility.BotUtils;
 import main.utility.state_json.MasterJsonUtil;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -25,7 +26,8 @@ public class ForceShutdown implements Command {
                     (force? "Forcing shutdown" : "Use `-f` to force."));
         } finally {
             if (force) {
-                BotUtils.send(event.getChannel(), "");
+                //BotUtils.send(event.getChannel(), "");
+                CommandManager.commandExecutors.shutdown(); //not sure if needed?
                 System.gc();
                 System.exit(9002);
             }

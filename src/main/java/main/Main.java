@@ -90,7 +90,7 @@ public class Main {
         BotUtils.DEV_GITHUB_NAME = args[13];
         BotUtils.DEV_GITHUB_PASSWORD = args[14];
 
-        // ------------------------------------------------------------ //
+        // ------------------------------------------------------------ //4
 
         // Create all dispatch listeners
         dispatchListeners = BotUtils.createListeners();
@@ -99,7 +99,7 @@ public class Main {
         client = BotUtils.getBuiltDiscordClient(args[1]);
 
         // Register all listeners via the @EventSubscriber annotation which allows for organization and delegation of events
-        client.getDispatcher().registerListeners(dispatchListeners);
+        client.getDispatcher().registerListeners(dispatchListeners.toArray());
 
         // Self Client login - finalize setup
         // Only login after all events are registered - otherwise some may be missed.
