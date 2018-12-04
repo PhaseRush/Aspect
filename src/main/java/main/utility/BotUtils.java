@@ -64,7 +64,6 @@ public class BotUtils {
     public static String PRIVATE_CHANNEL_INFO_URL;
 
 
-
     //dev meta
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
@@ -495,6 +494,7 @@ public class BotUtils {
         dispatchListeners.add(new PokemonIdentifier());
         dispatchListeners.add(new PrivateChannelVerification()); //Thanks Resuna!
         dispatchListeners.add(new CutePassive());
+        dispatchListeners.add(new ScheduledActions());
 
         return dispatchListeners;
     }

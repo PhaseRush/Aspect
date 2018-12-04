@@ -14,7 +14,8 @@ import java.util.Random;
  * added more robust error catching
  */
 public class RollDice implements Command {
-    Random r = new Random();
+    private Random r = new Random();
+
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String[] parseInput;
@@ -52,7 +53,6 @@ public class RollDice implements Command {
 
     }
 
-
     @Override
     public boolean canRun(MessageReceivedEvent event) {
         return false;
@@ -60,6 +60,6 @@ public class RollDice implements Command {
 
     @Override
     public String getDescription() {
-        return "```\n$rollSingle x, y```\n where x is the number of sides per die, and y is the number of die. You may omit y, and it will default to one die:```\n$rollSingle x```";
+        return "```\n$roll xdy```\n where x is the number of dice to be rolled, and y is the number of faces per die.\n Rolling 2 6 sided die (ex. for a game of monopoly): ```\n$roll 2d6";
     }
 }

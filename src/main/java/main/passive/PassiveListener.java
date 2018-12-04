@@ -72,7 +72,7 @@ public class PassiveListener {
         for (String s : msgSplit) {
             if (s.matches("(.*\\s)*/?(r/).*")) {
                 String afterR = s.substring(s.indexOf("r/"));
-                String subR = "";
+                String subR;
                 if (afterR.contains(" "))
                     subR = afterR.substring(0, afterR.indexOf(" "));
                 else subR = afterR.replaceAll("[.,#!$%^&*;:{}=\\-_`~()]",""); //dont replace '/'
