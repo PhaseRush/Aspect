@@ -191,6 +191,7 @@ public class CommandManager {
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) {
+        // If message doesn't start with BOT_PREFIX, return
         if (!event.getMessage().getFormattedContent().startsWith(BotUtils.DEFAULT_BOT_PREFIX)) return;
 
         // Given a message "/test arg1, arg2", argArray will contain ["!test", "arg1, arg2, ...."]
@@ -202,12 +203,12 @@ public class CommandManager {
         // Load the rest of the args in the array into a List for safer access
         // CHANGED IMPLEMENTATION TO BETTER SEPARATE COMMAS AND SPACES
         List<String> argsList = new ArrayList<>();
-        if (argArray.length != 1) {
+        if (argArray.length != 1)
             argsList.addAll(Arrays.asList(argArray[1].split(", ")));
-        }
 
+        // Return if command is not inside of commandMap
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
-        if (!commandMap.containsKey(commandStr)) return; // return if command is not inside of commandMap
+        if (!commandMap.containsKey(commandStr)) return;
 
         // Define a runnable for the command
         Runnable runCommand = () -> {
@@ -226,7 +227,7 @@ public class CommandManager {
 
             System.out.println(commandPrint);
 
-            //handle state json
+            // Handle state json
 //            try {
 //                CommandStats cmdStats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getCommandStats();
 //                cmdStats.setCallCount(cmdStats.getCallCount() + 1);
