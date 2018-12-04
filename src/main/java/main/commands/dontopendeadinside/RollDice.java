@@ -8,13 +8,26 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * rolls dice
+ *
+ * added more robust error catching
+ */
 public class RollDice implements Command {
     Random r = new Random();
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String[] parseInput = args.get(0).split("d", 2);
-        int numDice = Integer.valueOf(parseInput[0]);
-        int numSides = Integer.valueOf(parseInput[1]);
+        String[] parseInput;
+        int numDice, numSides;
+
+        try {
+            parseInput = args.get(0).split("d", 2);
+            numDice = Integer.valueOf(parseInput[0]);
+            numSides = Integer.valueOf(parseInput[1]);
+        } catch (IndexOutOfBoundsException | NumberFormatException e) {
+            BotUtils.send(event.getChannel(), getDescription());
+            return;
+        }
 
         StringBuilder desc = new StringBuilder("Total: ");
 

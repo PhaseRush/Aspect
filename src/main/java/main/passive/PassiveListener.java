@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,18 +42,6 @@ public class PassiveListener {
             //use embed to hide url in message
             if (message.contains("turtle"))
                 BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
-        }
-    }
-
-    @EventSubscriber
-    public void owo(MessageReceivedEvent event) {
-        if(event.getAuthor().isBot()) return; //bots get no owo :3
-
-        if (event.getMessage().getContent().equalsIgnoreCase("owo")) {
-            int rand = ThreadLocalRandom.current().nextInt(100);
-
-            if (rand == 1) BotUtils.send(event.getChannel(), "degenerate");
-            else if (rand % 2 == 0) BotUtils.send(event.getChannel(), "owo");
         }
     }
 

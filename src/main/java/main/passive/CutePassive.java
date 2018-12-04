@@ -6,11 +6,26 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class CutePassive {
 
     private long lastMeow, lastPat;
     private static List<Long> cuteWhiteList = Arrays.asList(417926479813279754L, 402728027223490572L); //singleton list for now
+    private Random r = ThreadLocalRandom.current();
+
+
+    @EventSubscriber
+    public void owo(MessageReceivedEvent event) {
+        if(event.getAuthor().isBot()) return; //bots get no owo :3
+        if (event.getMessage().getContent().equalsIgnoreCase("owo")) {
+            int rand = r.nextInt(100);
+
+            if (rand == 1) BotUtils.send(event.getChannel(), "degenerate");
+            else if (rand % 2 == 0) BotUtils.send(event.getChannel(), "owo");
+        }
+    }
 
     @EventSubscriber
     public void meow(MessageReceivedEvent event) {
@@ -23,7 +38,6 @@ public class CutePassive {
         lastMeow = System.currentTimeMillis();
     }
 
-    //working
     @EventSubscriber
     public void pat(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; //bot get no pat
