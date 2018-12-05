@@ -15,7 +15,7 @@ public class WfCetusCycle implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     @Override

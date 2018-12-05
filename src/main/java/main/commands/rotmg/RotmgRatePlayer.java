@@ -19,7 +19,7 @@ public class RotmgRatePlayer implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     private void handleRealmEyeRanking(String userJson, IChannel iChannel, IUser author) {

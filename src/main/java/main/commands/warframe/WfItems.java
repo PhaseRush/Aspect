@@ -23,7 +23,7 @@ public class WfItems implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     @Override

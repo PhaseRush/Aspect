@@ -22,7 +22,7 @@ public class SetKatInv implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return true;
+        return false;
     }
 
     @Override

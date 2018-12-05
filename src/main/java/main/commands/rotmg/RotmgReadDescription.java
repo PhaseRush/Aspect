@@ -19,7 +19,7 @@ public class RotmgReadDescription implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     private void handleRealmEyeDesc(String json, IChannel channel, String playerIGN) {

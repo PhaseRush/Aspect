@@ -20,7 +20,7 @@ public class ListCuties implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     @Override

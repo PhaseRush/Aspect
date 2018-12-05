@@ -32,7 +32,7 @@ public class SongPlay implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     @Override

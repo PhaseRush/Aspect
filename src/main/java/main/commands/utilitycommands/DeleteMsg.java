@@ -21,7 +21,7 @@ public class DeleteMsg implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return true;
+        return false;
     }
 
     @Override

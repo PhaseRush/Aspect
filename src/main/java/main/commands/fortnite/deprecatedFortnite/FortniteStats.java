@@ -28,7 +28,7 @@ public class FortniteStats implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     @Override

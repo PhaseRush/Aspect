@@ -12,9 +12,9 @@ public class CuteImg implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        if (CuteUtil.banned.contains(event.getAuthor().getStringID())) return; //put this guy on a watchlist
+        if (CuteUtil.banned.contains(event.getAuthor().getStringID())) return; // put this guy on a watchlist
         try {
-            String url = CuteUtil.cuteUrls.get(args.get(0));
+            String url = CuteUtil.cuteUrls.get("~"+args.get(0)); // fixed for new string formatting
             if (url.startsWith("~"))
                 BotUtils.send(event.getChannel(), new EmbedBuilder().withImage(url));
             else BotUtils.send(event.getChannel(), url);
@@ -25,7 +25,7 @@ public class CuteImg implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     @Override

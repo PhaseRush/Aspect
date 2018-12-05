@@ -23,7 +23,7 @@ public class RotmgGuildInfo  implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     private void handleRealmEyeGuildHighlight(String json, IChannel channel, long startTime) {

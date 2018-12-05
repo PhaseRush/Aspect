@@ -24,7 +24,7 @@ public class RotmgTotalScore implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
     private void handleRealmEyeTotalCharScore(String json, IChannel channel, IUser author, double startTime) {
         RealmEyePlayer player = new Gson().fromJson(json, RealmEyePlayer.class);

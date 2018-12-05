@@ -23,7 +23,7 @@ public class RotmgRecentChar implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event) {
-        return false;
+        return true;
     }
 
     private void handleRealmEyeRecentChar(String userJson, IChannel iChannel, IUser author, String playerIGN, String realmEyeUrl, long startTime) {
