@@ -15,6 +15,7 @@ public class SoundEffectList implements Command {
 
         for (String s : SfxManager.sfxMap.keySet()) {
             sb.append(s + "\n");
+            if (!s.startsWith("\n")) sb.append("\t");
         }
 
         BotUtils.send(event.getChannel(), sb.append("```").toString());

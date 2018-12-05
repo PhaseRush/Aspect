@@ -35,12 +35,12 @@ public class ScheduledActions {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
         ZonedDateTime zonedNow = zonedDateTime.toLocalDate().atStartOfDay(zoneId);
 
-        Instant tmrInstant = zonedNow.plusDays(1).plusHours(7).toInstant(); // 7:00 tomorrow (Los Angeles)
+        Instant tmr7amInstant = zonedNow.plusDays(1).plusHours(7).toInstant(); // 7:00 tomorrow (Los Angeles)
 
-        long diffMillis = tmrInstant.toEpochMilli() - now.toEpochMilli();
+        long diffMillis = tmr7amInstant.toEpochMilli() - now.toEpochMilli();
 
         morningGreeter = scheduler.scheduleAtFixedRate(greeter, diffMillis, 1000*60*60*24, TimeUnit.MILLISECONDS);
-
+        System.out.println("Kait morning greeter scheduled for " + tmr7amInstant.toString());
     }
 
 

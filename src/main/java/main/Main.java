@@ -20,13 +20,17 @@ import java.util.List;
  * 2018/11/28
  */
 public class Main {
+    // Aspect client
     public static IDiscordClient client;
 
+    // Timekeeping
     public static long startTime;
     public static Instant startInstant;
 
+    // System statistics
     public static OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
 
+    // IBM Translator
     public static LanguageTranslator translator;
 
     // Keep a public list of all listeners
