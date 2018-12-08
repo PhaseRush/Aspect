@@ -20,7 +20,7 @@ public class RotmgPets implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event) {
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
         return true;
     }
     private void handleRealmEyePets(String userJson, IChannel iChannel, IUser author, String playerIGN, String realmEyeUrl) {

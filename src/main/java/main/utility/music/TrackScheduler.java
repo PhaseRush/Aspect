@@ -215,6 +215,12 @@ public class TrackScheduler {
     }
 
     //@NotNull //got rid of this and the import
+
+    /**
+     * Generates a "seeded" colour based on the previous colour.
+     * For use in conjunction with the floating music player.
+     * @return Color which is the next color to be used by the floating music player
+     */
     private Color generateBiasedColor() {
         if (currentSongEmbed == null) {
             return Visuals.getVibrantColor();

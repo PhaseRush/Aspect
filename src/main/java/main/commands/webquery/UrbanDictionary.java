@@ -50,12 +50,6 @@ public class UrbanDictionary implements Command {
                 .replaceAll("]", "");
     }
 
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event) {
-        return true;
-    }
-
     @Override
     public String getDescription() {
         return null;

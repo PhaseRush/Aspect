@@ -43,7 +43,7 @@ public class SkinDetail implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event) {
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
         return true;
     }
 

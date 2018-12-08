@@ -99,6 +99,7 @@ public class CommandManager {
         commandMap.put("purge", new PurgeQueue());
         commandMap.put("insert", new SongInsert());
         commandMap.put("pause", new SongPause());
+        commandMap.put("resume", new SongResume());
         commandMap.put("qdel", songDelete);
         commandMap.put("songdel", songDelete);
         commandMap.put("listmusic", new CustomQueues());
@@ -212,7 +213,11 @@ public class CommandManager {
 
         // Define a runnable for the command
         Runnable runCommand = () -> {
-            commandMap.get(commandStr).runCommand(event, argsList);
+            Command cmd = commandMap.get(commandStr);
+            if (cmd.canRun(event, argsList)) cmd.runCommand(event, argsList);
+
+
+            //commandMap.get(commandStr).runCommand(event, argsList);
 
             StringBuilder commandArgs = new StringBuilder();
             for (String s : argsList)

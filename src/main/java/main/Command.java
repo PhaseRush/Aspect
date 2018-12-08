@@ -7,7 +7,9 @@ import java.util.List;
 public interface Command {
     void runCommand(MessageReceivedEvent event, List<String> args);
 
-    boolean canRun(MessageReceivedEvent event);
+    default boolean canRun(MessageReceivedEvent event, List<String> args) {
+        return true;
+    }
 
     String getDescription();
     //String getSyntax();

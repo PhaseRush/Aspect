@@ -9,7 +9,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 import java.util.List;
 
-public class SongPause implements Command {
+public class SongResume implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
@@ -24,18 +24,12 @@ public class SongPause implements Command {
             player.setPaused(false);
             BotUtils.send(event.getChannel(), "Player has been resumed");
         } else {
-            player.setPaused(true);
-            BotUtils.reactWithCheckMark(event.getMessage());
+            BotUtils.send(event.getChannel(), "Player is not paused");
         }
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
-        return null;
+        return "Resumes music player";
     }
 }
