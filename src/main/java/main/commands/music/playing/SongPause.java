@@ -38,4 +38,11 @@ public class SongPause implements Command {
     public String getDescription() {
         return null;
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
+
+
 }

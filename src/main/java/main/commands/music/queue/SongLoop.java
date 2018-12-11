@@ -54,4 +54,9 @@ public class SongLoop implements Command {
     public String getDescription() {
         return "loops current song infinitely, or x times";
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
 }

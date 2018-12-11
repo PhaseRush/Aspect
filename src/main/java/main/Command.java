@@ -11,6 +11,10 @@ public interface Command {
         return true;
     }
 
+    default boolean requireSynchronous(){
+        return false;
+    }
+
     String getDescription();
     //String getSyntax();
 }

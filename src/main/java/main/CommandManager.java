@@ -36,12 +36,14 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class CommandManager {
     private long readyTime = System.currentTimeMillis();
     public static ExecutorService commandExecutors = Executors.newCachedThreadPool();
 
     public Map<String, Command> commandMap = new LinkedHashMap<>();
+    public Map<String, LinkedBlockingQueue<Command>> syncCmdMap = new HashMap<>();
     //talked to hec about using a static initializer but constructor is fine
 
     public CommandManager() {
@@ -211,9 +213,10 @@ public class CommandManager {
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
         if (!commandMap.containsKey(commandStr)) return;
 
+        // Get the command
+        Command cmd = commandMap.get(commandStr);
         // Define a runnable for the command
         Runnable runCommand = () -> {
-            Command cmd = commandMap.get(commandStr);
             if (cmd.canRun(event, argsList)) cmd.runCommand(event, argsList);
 
 
@@ -241,8 +244,20 @@ public class CommandManager {
 //            }
         };
 
-        // Execute the command
-        commandExecutors.execute(runCommand);
+        // Execute the command on the threadpool if synchrony is not required
+        if (cmd.requireSynchronous()) {
+            String id = event.getGuild().getStringID();
+            LinkedBlockingQueue<Command> cmdQ = syncCmdMap.get(id);
+            // check to make sure the sync queue contains this queue
+            if (!syncCmdMap.keySet().contains(id)) {
+                cmdQ = new LinkedBlockingQueue<>();
+                syncCmdMap.put(id, cmdQ);
+            }
+
+            
+
+
+        } else commandExecutors.execute(runCommand);
     }
 
 

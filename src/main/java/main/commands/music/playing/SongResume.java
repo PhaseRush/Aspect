@@ -32,4 +32,9 @@ public class SongResume implements Command {
     public String getDescription() {
         return "Resumes music player";
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
 }

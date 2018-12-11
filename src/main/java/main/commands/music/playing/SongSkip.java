@@ -31,4 +31,9 @@ public class SongSkip implements Command {
     public String getDescription() {
         return "skips to next song, or next x songs if specified";
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
 }

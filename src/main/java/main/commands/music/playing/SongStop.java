@@ -46,4 +46,9 @@ public class SongStop implements Command {
     public String getDescription() {
         return "Stops current playing songs. Clears queue.";
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
 }

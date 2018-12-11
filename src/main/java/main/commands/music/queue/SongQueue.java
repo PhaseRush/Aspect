@@ -39,4 +39,9 @@ public class SongQueue implements Command {
     public String getDescription() {
         return "lists current queue for this voice channel";
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
 }

@@ -199,9 +199,9 @@ public class TrackScheduler {
         //make the timeline updater
         final Runnable trackTimelineUpdater = () -> currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
         long onePercentDuration = getCurrentTrack().getDuration()/100;
-        long refreshTime = (onePercentDuration > 1000 ? onePercentDuration : 1000); //use min of 1 second
+        long refreshTime = (onePercentDuration > 2000 ? onePercentDuration : 2000); //use min of 2 seconds
         //set the current updater to this update runner
-        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, refreshTime, refreshTime*2, TimeUnit.MILLISECONDS);
+        trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, refreshTime, refreshTime, TimeUnit.MILLISECONDS);
     }
 
     public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {
@@ -211,7 +211,8 @@ public class TrackScheduler {
                 .withColor(generateBiasedColor())
                 .withTitle(songInfo.title)
                 .withDesc("By: " + songInfo.author + "\n" + trackProgress())
-                .withUrl(songInfo.uri);
+                .withUrl(songInfo.uri)
+                .withFooterText("Next: " + queue.get(0).getInfo().title);
     }
 
     //@NotNull //got rid of this and the import

@@ -30,4 +30,9 @@ public class ShuffleQueue implements Command {
     public String getDescription() {
         return "Shuffles queue. Uses java.util.Collections#shuffle, so don't blame me if the shuffling doesn't seem random";
     }
+
+    @Override
+    public boolean requireSynchronous() {
+        return true;
+    }
 }
