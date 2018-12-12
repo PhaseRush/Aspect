@@ -168,6 +168,22 @@ public class BotUtils {
         });
     }
 
+    public static IMessage sendGet(IChannel channel, String message) {
+        return
+        RequestBuffer.request(() -> {
+            try {
+                return channel.sendMessage(message);
+            } catch (DiscordException e) {
+                System.err.println("Message could not be sent with error: ");
+                e.printStackTrace();
+                return null;
+            } catch (MissingPermissionsException e) {
+                System.out.println("Missing Permissions: " + channel.getName() + " Msg: " + message);
+                return null;
+            }
+        }).get();
+    }
+
     public static void send(IChannel channel, List<String> messages) {
         RequestBuffer.request(() -> {
             try {
@@ -455,6 +471,20 @@ public class BotUtils {
         return (hours == 0 ? "" : hours + ":") +
                 (hours != 0 && minutes < 10 ? "0" + minutes : minutes) + ":" +
                 (seconds < 10 ? "0" + seconds : seconds);
+    }
+
+    public static String millisToMS(long millis) {
+        int seconds = (int) (millis / 1000) % 60;
+        int minutes = (int) ((millis / (1000 * 60)) % 60);
+
+        return String.valueOf(minutes) + (seconds < 10 ? "0" + seconds : seconds);
+    }
+
+    public static String limitLength(String s, int length, boolean useDotDotDot) {
+        if (s.length() <= length) return s;
+
+        if (useDotDotDot) return s.substring(0, length-3) + "...";
+        return s.substring(0,length);
     }
 
     public static double stringSimilarity(String s1, String s2) {

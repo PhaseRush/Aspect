@@ -245,19 +245,20 @@ public class CommandManager {
         };
 
         // Execute the command on the threadpool if synchrony is not required
-        if (cmd.requireSynchronous()) {
-            String id = event.getGuild().getStringID();
-            LinkedBlockingQueue<Command> cmdQ = syncCmdMap.get(id);
-            // check to make sure the sync queue contains this queue
-            if (!syncCmdMap.keySet().contains(id)) {
-                cmdQ = new LinkedBlockingQueue<>();
-                syncCmdMap.put(id, cmdQ);
-            }
-
-            
-
-
-        } else commandExecutors.execute(runCommand);
+//        if (cmd.requireSynchronous()) {
+//            String id = event.getGuild().getStringID();
+//            LinkedBlockingQueue<Command> cmdQ = syncCmdMap.get(id);
+//            // check to make sure the sync queue contains this queue
+//            if (!syncCmdMap.keySet().contains(id)) {
+//                cmdQ = new LinkedBlockingQueue<>();
+//                syncCmdMap.put(id, cmdQ);
+//            }
+//
+//
+//
+//
+//        } else
+            commandExecutors.execute(runCommand);
     }
 
 

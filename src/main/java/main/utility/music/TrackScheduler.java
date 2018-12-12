@@ -206,13 +206,15 @@ public class TrackScheduler {
 
     public synchronized EmbedBuilder generateCurrentTrackEmbed(AudioTrack audioTrack) {
         AudioTrackInfo songInfo = audioTrack.getInfo();
-
-        return new EmbedBuilder()
+        EmbedBuilder eb = new EmbedBuilder()
                 .withColor(generateBiasedColor())
                 .withTitle(songInfo.title)
                 .withDesc("By: " + songInfo.author + "\n" + trackProgress())
-                .withUrl(songInfo.uri)
-                .withFooterText("Next: " + queue.get(0).getInfo().title);
+                .withUrl(songInfo.uri);
+
+        if (queue.size() != 0) eb.withFooterText("Next: " + queue.get(0).getInfo().title);
+
+        return eb;
     }
 
     //@NotNull //got rid of this and the import
