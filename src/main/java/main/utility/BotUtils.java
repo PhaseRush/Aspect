@@ -477,14 +477,24 @@ public class BotUtils {
         int seconds = (int) (millis / 1000) % 60;
         int minutes = (int) ((millis / (1000 * 60)) % 60);
 
-        return String.valueOf(minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+        return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 
-    public static String limitLength(String s, int length, boolean useDotDotDot) {
+    public static String limitStrLen(String s, int length, boolean useDotDotDot, boolean cutAtSpace) {
+        // if str is shorter just return
         if (s.length() <= length) return s;
 
-        if (useDotDotDot) return s.substring(0, length-3) + "...";
-        return s.substring(0,length);
+        // if don't care about dots just return substr
+        if (!useDotDotDot) return s.substring(0, length);
+
+        int spaceIdx = length;
+        int startIdx = useDotDotDot ? length - 4 : length; // 4 = 3 dots + 1 space
+        // iter down until we hit a space
+        for (int i = startIdx; i > 0; i--) {
+            if (s.charAt(i) == ' ') spaceIdx = i;
+            break;
+        }
+        return s.substring(0, spaceIdx) + " ...";
     }
 
     public static double stringSimilarity(String s1, String s2) {
