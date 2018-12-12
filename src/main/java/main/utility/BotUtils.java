@@ -170,18 +170,18 @@ public class BotUtils {
 
     public static IMessage sendGet(IChannel channel, String message) {
         return
-        RequestBuffer.request(() -> {
-            try {
-                return channel.sendMessage(message);
-            } catch (DiscordException e) {
-                System.err.println("Message could not be sent with error: ");
-                e.printStackTrace();
-                return null;
-            } catch (MissingPermissionsException e) {
-                System.out.println("Missing Permissions: " + channel.getName() + " Msg: " + message);
-                return null;
-            }
-        }).get();
+                RequestBuffer.request(() -> {
+                    try {
+                        return channel.sendMessage(message);
+                    } catch (DiscordException e) {
+                        System.err.println("Message could not be sent with error: ");
+                        e.printStackTrace();
+                        return null;
+                    } catch (MissingPermissionsException e) {
+                        System.out.println("Missing Permissions: " + channel.getName() + " Msg: " + message);
+                        return null;
+                    }
+                }).get();
     }
 
     public static void send(IChannel channel, List<String> messages) {
@@ -201,7 +201,7 @@ public class BotUtils {
     public static void send(IChannel channel, EmbedBuilder embed) {
         RequestBuffer.request(() -> {
             try {
-                    channel.sendMessage(embed.build());
+                channel.sendMessage(embed.build());
             } catch (DiscordException e) {
                 System.err.println("Embed could not be sent with error: ");
                 e.printStackTrace();
@@ -484,17 +484,21 @@ public class BotUtils {
         // if str is shorter just return
         if (s.length() <= length) return s;
 
-        // if don't care about dots just return substr
-        if (!useDotDotDot) return s.substring(0, length);
+        // if don't care just return substr
+        if (!useDotDotDot && !cutAtSpace) return s.substring(0, length);
 
-        int spaceIdx = length;
-        int startIdx = useDotDotDot ? length - 4 : length; // 4 = 3 dots + 1 space
-        // iter down until we hit a space
-        for (int i = startIdx; i > 0; i--) {
-            if (s.charAt(i) == ' ') spaceIdx = i;
-            break;
+        int cutIndex = useDotDotDot ? length - 4 : length; // 4 = 3 dots + 1 space
+
+        // only update cutIndex if we want to cut at space
+        if (cutAtSpace) {
+            // iter down until we hit a space
+            for (int i = cutIndex; i > 0; i--) {
+                if (s.charAt(i) == ' ') cutIndex = i; // set cutIndex to current iter and break
+                break;
+            }
         }
-        return s.substring(0, spaceIdx) + " ...";
+
+        return s.substring(0, cutIndex) + (useDotDotDot ? " ..." : "");
     }
 
     public static double stringSimilarity(String s1, String s2) {
