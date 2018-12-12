@@ -493,8 +493,10 @@ public class BotUtils {
         if (cutAtSpace) {
             // iter down until we hit a space
             for (int i = cutIndex; i > 0; i--) {
-                if (s.charAt(i) == ' ') cutIndex = i; // set cutIndex to current iter and break
-                break;
+                if (s.charAt(i) == ' ') {
+                    cutIndex = i; // set cutIndex to current iter and break
+                    break;
+                }
             }
         }
 
