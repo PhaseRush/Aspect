@@ -500,7 +500,7 @@ public class BotUtils {
             }
         }
 
-        return s.substring(0, cutIndex) + (useDotDotDot ? " ..." : "");
+        return s.substring(0, cutIndex) + (useDotDotDot ? " ...\n" : "\n");
     }
 
     public static double stringSimilarity(String s1, String s2) {
