@@ -477,7 +477,7 @@ public class BotUtils {
         int seconds = (int) (millis / 1000) % 60;
         int minutes = (int) ((millis / (1000 * 60)) % 60);
 
-        return String.valueOf(minutes) + (seconds < 10 ? "0" + seconds : seconds);
+        return String.valueOf(minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 
     public static String limitLength(String s, int length, boolean useDotDotDot) {
