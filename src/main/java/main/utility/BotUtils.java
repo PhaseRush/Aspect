@@ -184,6 +184,22 @@ public class BotUtils {
                 }).get();
     }
 
+    public static IMessage sendGet(IChannel channel, EmbedBuilder embedBuilder) {
+        return
+                RequestBuffer.request(() -> {
+                    try {
+                        return channel.sendMessage(embedBuilder.build());
+                    } catch (DiscordException e) {
+                        System.err.println("Message could not be sent with error: ");
+                        e.printStackTrace();
+                        return null;
+                    } catch (MissingPermissionsException e) {
+                        System.out.println("Missing Permissions: " + channel.getName() + " EmbedBuilder: " + embedBuilder.toString());
+                        return null;
+                    }
+                }).get();
+    }
+
     public static void send(IChannel channel, List<String> messages) {
         RequestBuffer.request(() -> {
             try {
@@ -510,7 +526,7 @@ public class BotUtils {
     /**
      * generates sha-256 hash for an input string
      * @param input
-     * @return
+     * @return sha256
      */
     public static String SHA256(String input) {
         byte[] encodedBytes = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));
