@@ -8,6 +8,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import java.util.List;
 
 public class SoundEffectList implements Command {
+
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         StringBuilder sb = new StringBuilder()
@@ -19,11 +20,6 @@ public class SoundEffectList implements Command {
         }
 
         BotUtils.send(event.getChannel(), sb.append("```").toString());
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override

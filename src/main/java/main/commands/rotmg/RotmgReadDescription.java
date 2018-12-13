@@ -17,11 +17,6 @@ public class RotmgReadDescription implements Command {
         handleRealmEyeDesc(json, event.getChannel(), args.get(0));
     }
 
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     private void handleRealmEyeDesc(String json, IChannel channel, String playerIGN) {
         RealmEyePlayer player = new Gson().fromJson(json, RealmEyePlayer.class);
 

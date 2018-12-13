@@ -87,13 +87,6 @@ public class WolframGeneral implements Command {
         BotUtils.send(event.getChannel(), eb);
     }
 
-
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     @Override
     public String getDescription() {
         return "Wolfram Alpha - Deep query.";

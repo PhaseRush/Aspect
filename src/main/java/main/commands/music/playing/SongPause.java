@@ -30,11 +30,6 @@ public class SongPause implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return null;
     }

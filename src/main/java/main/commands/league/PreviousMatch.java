@@ -41,9 +41,15 @@ public class PreviousMatch implements Command {
         loadingMsg.delete();
     }
 
+    /**
+     * WIP
+     * @param event
+     * @param args
+     * @return
+     */
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
+        return false;
     }
 
     @Override

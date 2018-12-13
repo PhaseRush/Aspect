@@ -21,11 +21,6 @@ public class RotmgRecentChar implements Command {
         handleRealmEyeRecentChar(json, event.getChannel(), event.getAuthor(), args.get(0), realmEyeUrl, startTime);
     }
 
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     private void handleRealmEyeRecentChar(String userJson, IChannel iChannel, IUser author, String playerIGN, String realmEyeUrl, long startTime) {
         RealmEyePlayer player = new Gson().fromJson(userJson, RealmEyePlayer.class);
         Character mostRecentChar = player.getCharacters().get(0); //gets first (most recent character)

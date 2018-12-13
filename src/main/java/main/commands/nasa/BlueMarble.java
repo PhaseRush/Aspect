@@ -37,12 +37,7 @@ public class BlueMarble implements Command {
                 .withImage(imageUrl)
                 .withFooterText(date);
 
-        event.getChannel().sendMessage(eb.build());
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

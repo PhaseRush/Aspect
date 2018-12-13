@@ -100,11 +100,6 @@ public class OverwatchStats implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Ships as-is. All public apis are non-usable (extremely outdated)";
     }

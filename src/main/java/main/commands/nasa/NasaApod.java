@@ -25,22 +25,7 @@ public class NasaApod implements Command {
                 .withImage(apod.getHdurl())
                 .withFooterText((apod.getCopyright()==null? "NASA" : apod.getCopyright()) + ", " + apod.getDate());
 
-        event.getChannel().sendMessage(eb.build());
-
-
-
-//        System.out.println(apod.getTitle()+"\n"
-//                + apod.getCopyright()+ "\n"
-//                +apod.getDate() +"\n"+
-//                apod.getExplanation() +"\n"+
-//                apod.getHdurl() +"\n"
-//                + apod.getMedia_type() + "\n"+
-//                apod.getService_version());
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
+        BotUtils.send(event.getChannel(), eb);
     }
 
     @Override

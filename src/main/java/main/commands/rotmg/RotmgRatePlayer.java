@@ -17,11 +17,6 @@ public class RotmgRatePlayer implements Command {
         handleRealmEyeRanking(json, event.getChannel(), event.getAuthor());
     }
 
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     private void handleRealmEyeRanking(String userJson, IChannel iChannel, IUser author) {
         RealmEyePlayer player = new Gson().fromJson(userJson, RealmEyePlayer.class);
         iChannel.sendMessage(player.getName() + " has a total of " + player.getTotalOutOf8() + " maxed stats over " + player.getNumChars() + " characters.");

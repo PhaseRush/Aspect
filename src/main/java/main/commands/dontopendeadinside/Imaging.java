@@ -160,7 +160,6 @@ public class Imaging implements Command {
         System.out.println("img analysis failed : " + numFailedGets);
     }
 
-
     public static String postWithJson(String url, String json) throws IOException { //could also throw NullPE
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
@@ -175,7 +174,6 @@ public class Imaging implements Command {
         }
     }
 
-
     public static String getRequest(String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
@@ -186,12 +184,6 @@ public class Imaging implements Command {
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
         }
-    }
-
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override

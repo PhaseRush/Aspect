@@ -17,21 +17,8 @@ public class BasicLeague implements Command {
         BotUtils.send(event.getChannel(), summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server");
     }
 
-
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     @Override
     public String getDescription() {
         return "Shows summoner level";
     }
-
-    private void testing() {
-        Summoner summoner = Orianna.summonerNamed("Danman96").get();
-
-    }
-
 }

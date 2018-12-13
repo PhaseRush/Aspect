@@ -165,11 +165,6 @@ public class WfMarketListing implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "retrieves market listings for item. can filter based on online ingame and offline";
     }

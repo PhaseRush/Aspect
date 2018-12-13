@@ -30,6 +30,12 @@ public class SetPrefix implements Command {
 //        }
     }
 
+    /**
+     * don't let this run.
+     * @param event
+     * @param args
+     * @return
+     */
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
         return false;

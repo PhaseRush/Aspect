@@ -17,12 +17,6 @@ public class SetKatInv implements Command {
             ReadWrite.writeToFile(KAT_INV_FILE_PATH, args.get(0), false, false);
             BotUtils.send(event.getChannel(), "Inventory updated");
         }
-
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return false;
     }
 
     @Override

@@ -34,11 +34,6 @@ public class RandomItem implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Shows one (or more, if specified) random items";
     }

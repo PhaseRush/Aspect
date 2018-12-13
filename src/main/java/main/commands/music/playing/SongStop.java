@@ -38,11 +38,6 @@ public class SongStop implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Stops current playing songs. Clears queue.";
     }

@@ -49,11 +49,6 @@ public class Poll implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Constructs a Poll with an arbitrary number of options. ```$poll [question], [option1], [option2],...";
     }

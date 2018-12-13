@@ -10,6 +10,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import java.util.List;
 
 public class PurgeQueue implements Command {
+
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
@@ -29,11 +30,6 @@ public class PurgeQueue implements Command {
             }
         }
 
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override

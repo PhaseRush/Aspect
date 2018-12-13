@@ -23,11 +23,6 @@ public class SongSkip implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "skips to next song, or next x songs if specified";
     }

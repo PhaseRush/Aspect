@@ -22,10 +22,6 @@ public class RotmgTotalScore implements Command {
 
     }
 
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
     private void handleRealmEyeTotalCharScore(String json, IChannel channel, IUser author, double startTime) {
         RealmEyePlayer player = new Gson().fromJson(json, RealmEyePlayer.class);
         EmbedBuilder embed = player.charsToEmbed(author.getAvatarURL());

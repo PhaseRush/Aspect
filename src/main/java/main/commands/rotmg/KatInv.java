@@ -9,14 +9,10 @@ import java.util.List;
 
 public class KatInv implements Command {
     private final String KAT_INV_FILE_PATH = "C:\\Users\\Positron\\IdeaProjects\\Aspect\\txtfiles\\Mooshroom\\katinvurl.txt";
+
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         BotUtils.send(event.getChannel(), ReadWrite.readFromFile(KAT_INV_FILE_PATH));
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override

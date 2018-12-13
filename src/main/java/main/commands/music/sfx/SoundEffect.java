@@ -36,11 +36,6 @@ public class SoundEffect implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "plays a specified sound effect. use $listsfx to get list of available sounds";
     }

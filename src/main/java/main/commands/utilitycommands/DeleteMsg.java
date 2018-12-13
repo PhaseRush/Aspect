@@ -20,11 +20,6 @@ public class DeleteMsg implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return false;
-    }
-
-    @Override
     public String getDescription() {
         return "Deletes message by user. $deletemsg userId, [minutes to delete from]";
     }

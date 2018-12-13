@@ -109,11 +109,6 @@ public class Ship implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Ships 2 people. Might be slightly broken atm bother the dev if you want this fixed.";
     }
@@ -122,10 +117,5 @@ public class Ship implements Command {
     private void initAdvice() {
         advice.add("Take a shot every time someone picks Janna but instead of alcohol use bleach");
         //advice.add("The median lethal dose of Botox is 1ng/kg.");
-    }
-
-
-    public String helpMsg() {
-        return null;
     }
 }

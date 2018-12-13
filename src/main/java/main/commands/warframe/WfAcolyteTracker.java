@@ -32,11 +32,6 @@ public class WfAcolyteTracker implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "info about acolytes";
     }

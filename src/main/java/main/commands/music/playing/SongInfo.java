@@ -26,19 +26,6 @@ public class SongInfo implements Command {
         BotUtils.send(event.getChannel(), eb);
     }
 
-    private String getFormattedSongLength(AudioTrackInfo songInfo) {
-        long millis = songInfo.length;
-        int mins = (int) (millis / 1000 / 60);
-        int secs = (int) ((millis / 1000) % 60);
-
-        return mins + ":" + (secs < 10 ? "0" + secs : secs);
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     @Override
     public String getDescription() {
         return "Shows info about current song";

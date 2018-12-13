@@ -26,11 +26,6 @@ public class CurrentTime implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Shows shows current time in Vancouver, Canada";
     }

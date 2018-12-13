@@ -215,27 +215,15 @@ public class CommandManager {
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
         if (!commandMap.containsKey(commandStr)) return;
 
+        // TODO: add spell check (leven) for commandstr length >=2 with reaction listener
+
         // Get the command
         Command cmd = commandMap.get(commandStr);
         // Define a runnable for the command
         Runnable runCommand = () -> {
             if (cmd.canRun(event, argsList)) cmd.runCommand(event, argsList);
 
-
-            //commandMap.get(commandStr).runCommand(event, argsList);
-
-            StringBuilder commandArgs = new StringBuilder();
-            for (String s : argsList)
-                commandArgs.append(s).append("\t");
-
-            StringBuilder commandPrint = new StringBuilder()
-                    .append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")
-                    .append(event.getAuthor().getName()).append("\t")
-                    .append(event.getAuthor().getStringID()).append("\t")
-                    .append("cmd: " + commandStr).append("\t")
-                    .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
-
-            System.out.println(commandPrint);
+            cmdPrintLog(event, commandStr, argsList);
 
             // Handle state json
 //            try {
@@ -258,6 +246,21 @@ public class CommandManager {
 //
 //        } else
         commandExecutors.execute(runCommand);
+    }
+
+    private void cmdPrintLog(MessageReceivedEvent event, String commandStr, List<String> argsList) {
+        StringBuilder commandArgs = new StringBuilder();
+        for (String s : argsList)
+            commandArgs.append(s).append("\t");
+
+        StringBuilder commandPrint = new StringBuilder()
+                .append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")
+                .append(event.getAuthor().getName()).append("\t")
+                .append(event.getAuthor().getStringID()).append("\t")
+                .append("cmd: " + commandStr).append("\t")
+                .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
+
+        System.out.println(commandPrint);
     }
 
 

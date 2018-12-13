@@ -16,8 +16,9 @@ public class CustomQueues implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         StringBuilder sb = new StringBuilder("\n");
 
-        for (Map.Entry e : customUrls.entrySet())
+        for (Map.Entry e : customUrls.entrySet()) {
             sb.append("["+e.getKey() + "](" + e.getValue()).append(")\n");
+        }
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Preconfigured Playlists")
@@ -25,11 +26,6 @@ public class CustomQueues implements Command {
                 .withColor(Visuals.getVibrantColor());
 
         BotUtils.send(event.getChannel(), eb);
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override

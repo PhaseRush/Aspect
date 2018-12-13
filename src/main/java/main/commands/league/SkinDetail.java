@@ -43,11 +43,6 @@ public class SkinDetail implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "League - Displays image of skin";
     }

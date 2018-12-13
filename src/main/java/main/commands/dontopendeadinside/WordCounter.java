@@ -122,11 +122,6 @@ public class WordCounter implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Counts the number of occurrences of a word, ranked by user.";
     }

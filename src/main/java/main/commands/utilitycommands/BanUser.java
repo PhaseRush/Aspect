@@ -21,11 +21,6 @@ public class BanUser implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "doesn't do too much right now";
     }

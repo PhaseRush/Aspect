@@ -21,11 +21,6 @@ public class RotmgGuildInfo  implements Command {
         handleRealmEyeGuildHighlight(json, event.getChannel(), startTime);
     }
 
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     private void handleRealmEyeGuildHighlight(String json, IChannel channel, long startTime) {
         RealmEyeGuild realmGuild = new Gson().fromJson(json, RealmEyeGuild.class);
 

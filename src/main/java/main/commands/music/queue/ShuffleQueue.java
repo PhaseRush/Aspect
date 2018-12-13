@@ -22,11 +22,6 @@ public class ShuffleQueue implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Shuffles queue. Uses java.util.Collections#shuffle, so don't blame me if the shuffling doesn't seem random";
     }

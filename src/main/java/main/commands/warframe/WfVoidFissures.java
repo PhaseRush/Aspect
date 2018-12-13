@@ -49,11 +49,6 @@ public class WfVoidFissures implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Lists current void fissures. Able to filter based on input. ```$wfvoid lith```";
     }

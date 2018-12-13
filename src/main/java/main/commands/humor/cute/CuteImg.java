@@ -24,17 +24,7 @@ public class CuteImg implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Displays a cute Image. Use `listcute` to get a list of valid cuteness";
-    }
-
-
-    public String helpMsg() {
-        return null;
     }
 }

@@ -153,10 +153,6 @@ public class WfItemInfo implements Command {
     private void send(String message) {
         BotUtils.send(e.getChannel(), message);
     }
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
 
     @Override
     public String getDescription() {

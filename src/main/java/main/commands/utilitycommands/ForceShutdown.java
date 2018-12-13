@@ -12,11 +12,6 @@ public class ForceShutdown implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        if (!event.getAuthor().getStringID().equals("264213620026638336")) {
-            BotUtils.send(event.getChannel(), "no u.");
-            return;
-        }
-
        // dump MasterState json
         boolean force = args.size() > 0 & args.get(0).contains("-f");
         try {
@@ -34,9 +29,15 @@ public class ForceShutdown implements Command {
         }
     }
 
+    /**
+     * only run for me.
+     * @param event
+     * @param args
+     * @return
+     */
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
+        return event.getAuthor().getStringID().equals("264213620026638336");
     }
 
     @Override

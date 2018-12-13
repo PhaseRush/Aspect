@@ -13,17 +13,7 @@ public class Insult implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "Dishes an insult. ~~Slightly NSFW~~.";
-    }
-
-
-    public String helpMsg() {
-        return null;
     }
 }

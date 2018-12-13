@@ -50,12 +50,6 @@ public class RollDice implements Command {
                 .withDesc(desc.toString());
 
         BotUtils.send(event.getChannel(), eb);
-
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override

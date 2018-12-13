@@ -19,10 +19,6 @@ public class RotmgPets implements Command {
         handleRealmEyePets(json, event.getChannel(), event.getAuthor(), args.get(0), realmEyeUrl);
     }
 
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
     private void handleRealmEyePets(String userJson, IChannel iChannel, IUser author, String playerIGN, String realmEyeUrl) {
         RealmEyePets pets = new Gson().fromJson(userJson, RealmEyePets.class);
         Pet highestLevelPet = pets.findHighestLevelPet();

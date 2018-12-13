@@ -32,12 +32,6 @@ public class WfDailyDeals implements Command {
         BotUtils.send(event.getChannel(), eb);
     }
 
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
     @Override
     public String getDescription() {
         return "warframe daily deals";

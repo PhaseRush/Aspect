@@ -16,11 +16,6 @@ public class BulkDelete implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return false;
-    }
-
-    @Override
     public String getDescription() {
         return "bulk deletes message from a text channel. \nCURRENTLY DISABLED FOR OBVIOUS REASONS";
     }

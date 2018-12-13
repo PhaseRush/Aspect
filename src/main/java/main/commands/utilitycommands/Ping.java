@@ -9,12 +9,7 @@ import java.util.List;
 public class Ping implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.send(event.getChannel(), "Pong!");
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
+        BotUtils.send(event.getChannel(), "Meow!");
     }
 
     @Override
