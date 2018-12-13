@@ -75,7 +75,7 @@ public class FortniteStats implements Command {
                 .appendField("Wins", String.valueOf(fGameType.getWins()), true)
                 .appendField("Winrate %", String.valueOf(fGameType.getWinrate()), true)
                 .appendField("Score", String.valueOf(fGameType.getScore()), true)
-                .appendField(BotUtils.getRandomFromStringArray(questions), (new Random().nextBoolean() ? "yes" : "no"), true)
+                .appendField(BotUtils.getRandStrArr(questions), (new Random().nextBoolean() ? "yes" : "no"), true)
                 .withTimestamp(System.currentTimeMillis())
                 .withFooterText("This information was last updated " + fp.getLastUpdate());
 

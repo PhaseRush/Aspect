@@ -41,7 +41,7 @@ public class BotUtils {
     private static Levenshtein leven = new Levenshtein();
 
     //encryption
-    static MessageDigest messageDigest;
+    private static MessageDigest messageDigest;
 
     // Constants for use throughout the bot
     public final static String GITHUB_URL = "https://github.com/PhaseRush/Aspect";
@@ -64,13 +64,18 @@ public class BotUtils {
     public static String PRIVATE_CHANNEL_INFO_URL;
 
 
-    //dev meta
+    //dev meta -- USE FOR GIST GENERATION (NOT MY ACTUAL GITHUB CREDS)
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
 
+    // weird flex but ok
+    private static String[] wfboWeird = {"eccentric", "eerie", "peculiar", "unnatural"};
+    private static String[] wfboFlex = {"boast", "display", "exhibit", "swagger"};
+    private static String[] wfboBut = {"alas", "although", "however", "nevertheless", "though"};
+    private static String[] wfboOk = {"adequate", "common", "decent", "sufficient", "tolerable", "admissible", "copacetic"};
 
     // --- Static initializer --
     static {
@@ -319,7 +324,7 @@ public class BotUtils {
         return "";
     }
 
-    public static String getRandomFromStringArray(String[] stringArray) {
+    public static String getRandStrArr(String[] stringArray) {
         return stringArray[new Random().nextInt(stringArray.length)];
     }
 
@@ -357,7 +362,7 @@ public class BotUtils {
     }
 
     /**
-     * was originall BotUtils#isAPicture
+     * was originally BotUtils#isAPicture
      * now returns num of pictures (untested)
      * @param iMessage
      * @return
@@ -521,6 +526,17 @@ public class BotUtils {
 
     public static double stringSimilarity(String s1, String s2) {
         return leven.distance(s1, s2);
+    }
+
+    public static String generateWeirdFlex(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(getRandStrArr(wfboWeird)).append(" ");
+        sb.append(getRandStrArr(wfboFlex)).append(" ");
+        sb.append(getRandStrArr(wfboBut)).append(" ");
+        sb.append(getRandStrArr(wfboOk));
+
+        return sb.toString();
     }
 
     /**

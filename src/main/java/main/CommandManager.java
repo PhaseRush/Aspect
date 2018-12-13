@@ -135,13 +135,15 @@ public class CommandManager {
         commandMap.put("ow", new OverwatchStats());
 
         //meta
+        SystemLoad cpu = new SystemLoad();
         commandMap.put("setprefix", new SetPrefix());
         commandMap.put("ban", new BanUser());
         commandMap.put("ping", new Ping());
         commandMap.put("info", new PersonalEmbed());
         commandMap.put("membercount", new MemberCount());
         commandMap.put("poll", new Poll());
-        commandMap.put("cpuload", new SystemLoad());
+        commandMap.put("cpuload", cpu);
+        commandMap.put("cpu", cpu);
         commandMap.put("makerole", new RoleGenerate());
         commandMap.put("shutdown", new ForceShutdown());
         commandMap.put("uptime", new Uptime());
@@ -254,11 +256,8 @@ public class CommandManager {
 //                syncCmdMap.put(id, cmdQ);
 //            }
 //
-//
-//
-//
 //        } else
-            commandExecutors.execute(runCommand);
+        commandExecutors.execute(runCommand);
     }
 
 

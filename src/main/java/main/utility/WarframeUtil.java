@@ -170,8 +170,8 @@ public class WarframeUtil {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
         WarframeCetusTimeObject cetus = new Gson().fromJson(json, WarframeCetusTimeObject.class);
         return "It is currently " + (cetus.isDay() ?
-                "day. It will be night in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandomFromStringArray(dayActivities) :
-                "night. It will be day in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandomFromStringArray(nightActivities));
+                "day. It will be night in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandStrArr(dayActivities) :
+                "night. It will be day in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandStrArr(nightActivities));
     }
 
     public static WarframeCetusTimeObject getCetus() {

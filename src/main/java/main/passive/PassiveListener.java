@@ -82,6 +82,15 @@ public class PassiveListener {
         }
     }
 
+    @EventSubscriber
+    public void weirdFlexButOk(MessageReceivedEvent event) {
+        final String reference = "weird flex but ok";
+        double levelScore = BotUtils.stringSimilarity(reference, event.getMessage().getFormattedContent().toLowerCase().trim());
+        if (levelScore < 4) {
+            BotUtils.send(event.getChannel(), BotUtils.generateWeirdFlex());
+        }
+    }
+
 
     @EventSubscriber
     public void unexpectedFactorial(MessageReceivedEvent event) {

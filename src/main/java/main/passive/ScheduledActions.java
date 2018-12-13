@@ -21,7 +21,6 @@ public class ScheduledActions {
     private static final long kaitGeneralChatID = 197158565004312576L;
     private static IChannel kaitGenChannel;
 
-
     @EventSubscriber
     public void morningGreeter(ReadyEvent event) {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);

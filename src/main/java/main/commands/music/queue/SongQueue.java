@@ -27,7 +27,7 @@ public class SongQueue implements Command {
 
         // generate embed desc
         for (int i = 0; i < (moreThan15 ? 15 : audioTracks.size()); i++) {
-            sb.append((i + 1) + ". \t" + (i < 9 ? " " : "") +
+            sb.append((i + 1) + ".    " + (i < 9 ? " " : "") +
                     "[" + BotUtils.millisToMS(audioTracks.get(i).getInfo().length) + "]   " +
                     BotUtils.limitStrLen(audioTracks.get(i).getInfo().title + "\n", 75, true, true)); // +1 for index 1
         }
