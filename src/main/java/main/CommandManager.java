@@ -263,7 +263,6 @@ public class CommandManager {
         System.out.println(commandPrint);
     }
 
-
     @Override
     public String toString() {
         return "Segmentation fault (core dumped)";

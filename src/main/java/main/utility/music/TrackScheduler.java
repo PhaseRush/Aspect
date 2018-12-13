@@ -225,25 +225,31 @@ public class TrackScheduler {
      * @return Color which is the next color to be used by the floating music player
      */
     private Color generateBiasedColor() {
+        float colorIncr = 15;
         if (currentSongEmbed == null) {
             return Visuals.getVibrantColor();
         }else { //hue could overflow
             Color color = currentSongEmbed.getEmbeds().get(0).getColor();
             float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
             try {
-                return Color.getHSBColor(hsb[0] + r.nextFloat() / 25, hsb[1], hsb[2]); //hsb[1] = 0.9f, hsb[2] = 1.0f
+                return Color.getHSBColor(hsb[0] + r.nextFloat() / colorIncr, hsb[1], hsb[2]); //hsb[1] = 0.9f, hsb[2] = 1.0f
             } catch (Exception e) { //catch if hue is > 1 (there is a chance, so just reset it with random color)
                 return Visuals.getVibrantColor();
             }
         }
     }
 
+    /**
+     * generates the progress bar visual for the floating music player
+     * @return StringBuilder which is the entire progress bar
+     */
     public StringBuilder trackProgress() {
         int lengthFactor = 2;
         long duration = getCurrentTrack().getDuration();
         long position = getCurrentTrack().getPosition();
         long percent = 100*position / (duration*lengthFactor); //*2
         String marker = ":red_circle:";
+        String unicodeMarker = "\uD83D\uDD34";
         String filler = "-";
 
         StringBuilder sb = new StringBuilder("\n[0:00][");
@@ -251,7 +257,8 @@ public class TrackScheduler {
         for (double d = 0; d < percent; d++)
             sb.append(filler);
 
-        sb.append(marker);
+        //sb.append(marker);
+        sb.append(unicodeMarker);
 
         for (double d = percent; d < 100/lengthFactor - 1; d++) //-1 for the auto track updater not reaching the end
             sb.append(filler);
