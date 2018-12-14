@@ -68,7 +68,7 @@ public class TrackScheduler {
                 // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
                 if(endReason.mayStartNext) {
                     //check looping condition
-                    if (looping) {
+                    if (looping) { // fucking kms reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         System.out.println("Looping, count = " + loopCount);
                         if (loopCount == maxLoop) { //end loop, behave as if else below (WORKING)
                             //System.out.println("called nextTrack (is looping, but reached max loop)");
