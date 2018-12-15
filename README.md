@@ -136,6 +136,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 #### WIP Features:
 - [ ] Dump MasterState json with command
 - [ ] use [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform) to detect "beat drops" etc.
+- [ ] Passively listen for hashtag. Excl channels, search via twitter api.
 
 #### @TODO
 - [ ] Summarize - gist needs to be public and should add footer for reduction % and time taken (like in embed)
