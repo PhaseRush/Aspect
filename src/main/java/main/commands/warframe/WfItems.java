@@ -18,7 +18,11 @@ public class WfItems implements Command {
         for (WarframeItem i : obj.getPayload().getItems().getEn()) {
             System.out.println(i.getItem_name());
         }
+    }
 
+    @Override
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
+        return false;
     }
 
     @Override
