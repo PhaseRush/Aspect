@@ -123,12 +123,8 @@ public class TrackScheduler {
     public synchronized boolean queueFront(AudioTrack track) {
         boolean playing = player.startTrack(track, true);
 
-        if(playing)
-            handleFloatingPlayer(track);
-
-        if(!playing) {
-            queue.add(0,track);
-        }
+        if (playing) handleFloatingPlayer(track);
+        else queue.add(0,track);
 
         return playing;
     }
@@ -225,7 +221,7 @@ public class TrackScheduler {
      * @return Color which is the next color to be used by the floating music player
      */
     private Color generateBiasedColor() {
-        float colorIncr = 15;
+        float colorIncr = 40;
         if (currentSongEmbed == null) {
             return Visuals.getVibrantColor();
         }else { //hue could overflow

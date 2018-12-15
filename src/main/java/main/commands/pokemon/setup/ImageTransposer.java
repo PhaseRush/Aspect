@@ -45,7 +45,7 @@ public class ImageTransposer implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
+        return false;
     }
 
     @Override

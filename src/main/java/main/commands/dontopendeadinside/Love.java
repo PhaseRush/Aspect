@@ -41,11 +41,6 @@ public class Love implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
-    }
-
-    @Override
     public String getDescription() {
         return "One of the OG commands.";
     }

@@ -561,8 +561,6 @@ public class BotUtils {
 //        return (first > second? second : first);
 //    }
 
-    public static void Σ() {}
-
     public static List<Object> createListeners() {
         List<Object> dispatchListeners = new ArrayList<>();
 
