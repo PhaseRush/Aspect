@@ -125,6 +125,7 @@ public class CommandManager {
         commandMap.put("deletemsg", new DeleteMsg());
         commandMap.put("trans", new Translate());
         commandMap.put("pfp", new GetUserPfp());
+        commandMap.put("serverpfp", new GetGuildPfp());
 
         //Fortnite
         commandMap.put("fn", new FortniteStats());

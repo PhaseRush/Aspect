@@ -1,5 +1,6 @@
 package main;
 
+import main.utility.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface Command {
         return false;
     }
 
-    String getDescription();
+    default String getDescription() {
+        return BotUtils.GITHUB_URL;
+    }
     //String getSyntax();
 }
