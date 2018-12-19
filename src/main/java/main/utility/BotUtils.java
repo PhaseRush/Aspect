@@ -37,7 +37,7 @@ public class BotUtils {
     public static Gson gson = new Gson();
     private static OkHttpClient client = new OkHttpClient();
 
-    //leven
+    //levenss
     private static Levenshtein leven = new Levenshtein();
 
     //encryption
@@ -345,6 +345,7 @@ public class BotUtils {
         return emojis;
     }
 
+    // need to use unicode
     public static List<ReactionEmoji> initializeNumberEmojis() {
         List<ReactionEmoji> emojis = new ArrayList<>();
         emojis.add(ReactionEmoji.of("0️⃣"));

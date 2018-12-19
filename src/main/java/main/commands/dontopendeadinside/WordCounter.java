@@ -16,11 +16,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class WordCounter implements Command {
+public class
+WordCounter implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
-        handleKaitlyn(event); //yes
+        handleKaitlyn(event); // yes.
 
         long startTime = System.currentTimeMillis();
         Map<IUser, Integer> userWordCountMap = new LinkedHashMap<>();
@@ -32,7 +33,7 @@ public class WordCounter implements Command {
         }
 
         boolean useRegex = args.get(0).startsWith("/"); //was "\\" might change it.
-        String regexString = args.get(0).substring(1, args.get(0).length()-1);
+        String regexString = args.get(0).substring(1);
         if (useRegex) {
             BotUtils.send(event.getChannel(), "Attempting to use regex: ```" + regexString + "```");
         }
@@ -76,7 +77,7 @@ public class WordCounter implements Command {
         int minutes = (int) (timeElapsed / 60000);
         int seconds = (int) (timeElapsed % 60000) / 1000;
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("very high tech counter")
+                .withTitle(useRegex? "Regex Matches" : "Word Counter")
                 //.withColor(Visuals.analyizeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
                 .withColor(Visuals.getVibrantColor())
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
