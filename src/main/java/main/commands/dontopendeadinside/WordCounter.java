@@ -26,26 +26,32 @@ WordCounter implements Command {
         long startTime = System.currentTimeMillis();
         Map<IUser, Integer> userWordCountMap = new LinkedHashMap<>();
         IChannel channel = event.getChannel();
+        boolean useAllchannels = false;
 
         if (args.size() < 1) {
             sendErrorMsg(event);
             return;
         }
 
-        boolean useRegex = args.get(0).startsWith("/"); //was "\\" might change it.
-        String regexString = args.get(0).substring(1);
-        if (useRegex) {
-            BotUtils.send(event.getChannel(), "Attempting to use regex: ```" + regexString + "```");
-        }
+        boolean useRegex = args.get(0).startsWith("/"); // was "\\"
+        String regexString = args.get(0).substring(1); // set this regardless if being used or not. Low overhead
 
         List<IChannel> textChannels = new ArrayList<>();
         if (args.size() == 2) {
-            if (args.get(1).equals("all"))
+            if (args.get(1).equals("all")) {
                 textChannels.addAll(event.getGuild().getChannels());
+                useAllchannels = true;
+            }
         } else if (args.size() == 1) {
             textChannels.add(event.getChannel());
         } else sendErrorMsg(event);
 
+        // send message before executing search
+        if (useRegex) {
+            BotUtils.send(event.getChannel(), "Attempting to use regex " + (useAllchannels? "in all channels" : "in this channel") + ": ```" + regexString + "```");
+        }
+
+        // heavy workload
         int messageCounter = 0;
         for (IChannel textChannel : textChannels) {
             try {
@@ -89,7 +95,10 @@ WordCounter implements Command {
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
             try {
                 String eachNick = entry.getKey().getNicknameForGuild(event.getGuild());
-                eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick), args.get(0).replaceAll("\\*", "\\\\*") + " count: " + entry.getValue().toString(), false);
+                eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick),
+                        (useRegex? "" : args.get(0).replaceAll("\\*", "\\\\*")) +
+                                " count: " + entry.getValue().toString(), false);
+
                 rankCounter++;
             } catch (IllegalArgumentException e) {
                 eb.appendDesc("\n\n Listing the top 25:");
@@ -124,6 +133,6 @@ WordCounter implements Command {
 
     @Override
     public String getDescription() {
-        return "Counts the number of occurrences of a word, ranked by user.";
+        return "Counts the number of occurrences of a word or matches for a regex, ranked by user.";
     }
 }
