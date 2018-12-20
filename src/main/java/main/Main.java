@@ -10,7 +10,6 @@ import sx.blah.discord.api.IDiscordClient;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,9 +31,6 @@ public class Main {
 
     // IBM Translator
     public static LanguageTranslator translator;
-
-    // Keep a public list of all listeners
-    public static List<Object> dispatchListeners = new ArrayList<>();
 
     public static void main(String[] args){
 
@@ -97,7 +93,7 @@ public class Main {
         // ------------------------------------------------------------ //4
 
         // Create all dispatch listeners
-        dispatchListeners = BotUtils.createListeners();
+        List<Object> dispatchListeners = BotUtils.createListeners();
 
         // Self Client Initialization
         client = BotUtils.getBuiltDiscordClient(args[1]);

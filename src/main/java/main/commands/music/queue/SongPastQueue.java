@@ -9,13 +9,13 @@ import sx.blah.discord.handle.obj.IMessage;
 
 import java.util.List;
 
-public class SongQueue implements Command {
+public class SongPastQueue implements Command {
     private IMessage previousQMsg;
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
-        StringBuilder sb = scheduler.getQueueStrB(event);
+        StringBuilder sb = scheduler.getPastQueueStrB(event);
 
         // delete previous message if not null
         if (previousQMsg != null) previousQMsg.delete();
@@ -24,7 +24,7 @@ public class SongQueue implements Command {
 
     @Override
     public String getDescription() {
-        return "Displays the music queue. Will only show first 15 tracks if the queue is longer than 15.";
+        return "Displays the past music queue (songs that were already played). Will only show first 15 tracks if the queue is longer than 15.";
     }
 
     @Override

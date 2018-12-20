@@ -7,6 +7,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import main.utility.BotUtils;
 import main.utility.Visuals;
+import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
@@ -30,6 +31,7 @@ import java.util.concurrent.*;
  */
 public class TrackScheduler {
     private volatile List<AudioTrack> queue; //dannie said to make volatile
+    private volatile List<AudioTrack> pastQueue;
     private final AudioPlayer player;
 
     private Random r = ThreadLocalRandom.current();
@@ -57,6 +59,7 @@ public class TrackScheduler {
         // since all elements won't have to be shifted after removing. Additionally, choosing to add in between the queue
         // will similarly not cause many elements to shift and wil only require a couple of node changes.
         queue = Collections.synchronizedList(new LinkedList<>());
+        pastQueue = Collections.synchronizedList(new LinkedList<>());
         this.player = player;
 
         // For encapsulation, keep the listener anonymous.
@@ -77,13 +80,10 @@ public class TrackScheduler {
                             looping = false;
                             currentSongEmbed.delete(); //@TODO MIGHT BE ISSUE WITH MULTITHREADING  or update later on @todo poop tonight at 8:00 (thanks luis)
                             nextTrack();
-                        } else { //(NOT WORKING)
-                            //player.startTrack(previousTrack.makeClone(), false); //< -- could be this?
+                        } else { // (WORKING) (Confirmed by Vi.)
                             currentSongEmbed.delete();
                             queue.add(0, previousTrack.makeClone());
-                            //player.startTrack(currentTrack.makeClone(), false); //FAIL - deletes entire queue
                             nextTrack();
-
                             //System.out.println("called player.startTrack is looping");
                             loopCount++;
                         }
@@ -110,10 +110,9 @@ public class TrackScheduler {
         // track goes to the queue instead.
         boolean playing = player.startTrack(track, true);
 
-        if (playing)
+        if (playing){
             handleFloatingPlayer(track);
-
-        if (!playing){
+        } else {
             queue.add(track);
         }
 
@@ -248,7 +247,7 @@ public class TrackScheduler {
         String unicodeMarker = "\uD83D\uDD34";
         String filler = "-";
 
-        StringBuilder sb = new StringBuilder("\n[0:00][");
+        StringBuilder sb = new StringBuilder("\n[");
 
         for (double d = 0; d < percent; d++)
             sb.append(filler);
@@ -285,6 +284,10 @@ public class TrackScheduler {
      */
     public List<AudioTrack> getQueue() {
         return this.queue;
+    }
+
+    public List<AudioTrack> getPastQueue() {
+        return this.pastQueue;
     }
 
     public void setQueue(List<AudioTrack> newQueue) {
@@ -326,5 +329,29 @@ public class TrackScheduler {
 
     public AudioPlayer getPlayer() {
         return player;
+    }
+
+    public StringBuilder getQueueStrB(MessageReceivedEvent event) {
+        return buildQueueStrB(event, queue, "Queue");
+    }
+    public StringBuilder getPastQueueStrB(MessageReceivedEvent event) {
+        return buildQueueStrB(event, pastQueue, "Past queue");
+    }
+
+    public StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName) {
+        // generate message head
+        StringBuilder sb = new StringBuilder(queueName + " for " + event.getGuild().getName() + ": "
+                + (localQueue.size() > 15 ? "(listing first 15 of) " + localQueue.size() + " songs" : "")
+                + "\nTotal duration: " + getQueueHMS() + "```\n");
+
+        // generate embed desc
+        for (int i = 0; i < (localQueue.size() > 15 ? 15 : localQueue.size()); i++) {
+            sb.append((i + 1) + ".    " + (i < 9 ? " " : "") +
+                    "[" + BotUtils.millisToMS(localQueue.get(i).getInfo().length) + "]   " +
+                    BotUtils.limitStrLen(localQueue.get(i).getInfo().title + "\n", 75, true, true)); // +1 for index 1
+        }
+
+        sb.append("```");
+        return sb;
     }
 }

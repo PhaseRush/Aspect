@@ -569,7 +569,7 @@ public class BotUtils {
         dispatchListeners.add(new PassiveListener());
         dispatchListeners.add(new WfPassive());
         dispatchListeners.add(new PokemonIdentifier());
-        dispatchListeners.add(new PrivateChannelVerification()); //Thanks Resuna!
+        dispatchListeners.add(new PrivateChannelVerification()); // Thanks Resuna!
         dispatchListeners.add(new CutePassive());
         dispatchListeners.add(new ScheduledActions());
 
