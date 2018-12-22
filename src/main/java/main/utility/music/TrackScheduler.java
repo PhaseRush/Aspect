@@ -136,6 +136,9 @@ public class TrackScheduler {
         AudioTrack currentTrack = player.getPlayingTrack();
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
 
+        // add current to past queue
+        pastQueue.add(currentTrack);
+
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(nextTrack, false);

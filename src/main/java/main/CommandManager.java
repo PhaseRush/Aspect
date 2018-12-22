@@ -45,7 +45,7 @@ public class CommandManager {
     public Map<String, Command> commandMap = new LinkedHashMap<>();
     public Map<String, LinkedBlockingQueue<Command>> syncCmdMap = new HashMap<>();
 
-    private Map<String, ExecutorService> syncExecMap = new HashMap<>();
+    private Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
     //talked to hec about using a static initializer but constructor is fine
 
     public CommandManager() {
@@ -242,11 +242,11 @@ public class CommandManager {
 //            }
         };
 
-        // Execute the command on the threadpool if synchrony is not required
+        // Execute the command on the server specific Executor if synchrony is required
         if (cmd.requireSynchronous()) {
             String id = event.getGuild().getStringID();
-            syncExecMap.putIfAbsent(id, Executors.newFixedThreadPool(1));
-            syncExecMap.get(id).execute(runCommand);
+            syncExecuteMap.putIfAbsent(id, Executors.newFixedThreadPool(1));
+            syncExecuteMap.get(id).execute(runCommand);
         } else { // use default executor
             commandExecutors.execute(runCommand);
         }

@@ -42,7 +42,7 @@ public class Main {
         if (args.length != 15) {
             System.out.println("You screwed up the runtime config params!");
             System.exit(9001);
-            return;
+            return; // :)
         }
 
         // ------------------------------------------------------------ //
@@ -90,7 +90,7 @@ public class Main {
         BotUtils.DEV_GITHUB_NAME = args[13];
         BotUtils.DEV_GITHUB_PASSWORD = args[14];
 
-        // ------------------------------------------------------------ //4
+        // ------------------------------------------------------------ //
 
         // Create all dispatch listeners
         List<Object> dispatchListeners = BotUtils.createListeners();
