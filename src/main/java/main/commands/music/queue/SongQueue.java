@@ -20,6 +20,13 @@ public class SongQueue implements Command {
         // delete previous message if not null
         if (previousQMsg != null) previousQMsg.delete();
         previousQMsg = BotUtils.sendGet(event.getChannel(), sb.toString());
+
+//        try {
+//            System.out.println("sleeping in queue");
+//            Thread.sleep(2000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override
