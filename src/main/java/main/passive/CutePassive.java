@@ -18,7 +18,7 @@ public class CutePassive {
 
     @EventSubscriber
     public void owo(MessageReceivedEvent event) {
-        if(event.getAuthor().isBot()) return; //bots get no owo :3
+        if (event.getAuthor().isBot()) return; // bots get no owo :3
         if (event.getMessage().getContent().equalsIgnoreCase("owo")) {
             int rand = r.nextInt(100);
 

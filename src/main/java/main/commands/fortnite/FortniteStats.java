@@ -50,7 +50,7 @@ public class FortniteStats implements Command {
         String duoPercentile = String.valueOf(duo.getTrnRating().getPercentile());
         if (duo.getTrnRating().getPercentile() == 0) {
             double totalPlayers = calcTotalPlayers(stats);
-            duoPercentile = "*" + String.valueOf(100 * duo.getTrnRating().getRank() / totalPlayers);
+            duoPercentile = "*" + 100 * duo.getTrnRating().getRank() / totalPlayers;
         }
         sb.append(generateRow("Top %", String.valueOf(solo.getTrnRating().getPercentile()), (duoPercentile.length()>5? duoPercentile.substring(0,5): duoPercentile), String.valueOf(squad.getTrnRating().getPercentile()))).append("\n");
 
@@ -69,6 +69,7 @@ public class FortniteStats implements Command {
 
         //kd StatsFactory.
         sb.append(StatsFactory.generateRow("K/D ratio", solo.getKd().getValue(), duo.getKd().getValue(), squad.getKd().getValue(),width)).append("\n");
+
         //Score/StatsFactory.tch
         sb.append(StatsFactory.generateRow("Score/Game", solo.getScorePerMatch().getValue(), duo.getScorePerMatch().getValue(), squad.getScorePerMatch().getValue(),width)).append("\n");
 
@@ -93,10 +94,10 @@ public class FortniteStats implements Command {
 
         StringBuilder sb = new StringBuilder(category);
 
-        //fill with blanks
+        // fill with blanks
         for (int i = catLen; i < totalWidth; i++) sb.append(" ");
 
-        //replace each
+        // replace each
         sb.replace(firstE-soloVal.length(),firstE, soloVal);
         sb.replace(secondE-duoVal.length(),secondE,duoVal);
         sb.replace(thirdE-squadVal.length(),thirdE, squadVal);
@@ -105,7 +106,7 @@ public class FortniteStats implements Command {
     }
 
     private StringBuilder initHeader(StringBuilder sb, int width) {
-        for (int i = 0; i < width; i++) //ehh we'll see
+        for (int i = 0; i < width; i++) // ehh we'll see
             sb.append(" ");
         sb.append("\n");
         for (int i = 0; i < 14; i++)
@@ -122,6 +123,6 @@ public class FortniteStats implements Command {
 
     @Override
     public String getDescription() {
-        return "Fortnite stats. specify platform on 2nd parameter.";
+        return "Fortnite stats. specify platform on 2nd parameter - default to PC.";
     }
 }

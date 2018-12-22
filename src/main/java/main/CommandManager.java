@@ -224,9 +224,12 @@ public class CommandManager {
         Command cmd = commandMap.get(commandStr);
         // Define a runnable for the command
         Runnable runCommand = () -> {
-            if (cmd.canRun(event, argsList)) cmd.runCommand(event, argsList);
+            if (cmd.canRun(event, argsList)) {
+                cmd.runCommand(event, argsList);
 
-            cmdPrintLog(event, commandStr, argsList);
+                cmdPrintLog(event, commandStr, argsList);
+            }
+
 
             // Handle state json
 //            try {
