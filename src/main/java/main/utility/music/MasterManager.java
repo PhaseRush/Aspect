@@ -234,6 +234,7 @@ public class MasterManager {
         else musicManager.getScheduler().queueFront(track);
     }
 
+    // NPE
     public synchronized static void skipTrack(MessageReceivedEvent event) {
         GuildMusicManager musicManager = getGuildAudioPlayer(event.getGuild());
         musicManager.getScheduler().nextTrack(event.getChannel());

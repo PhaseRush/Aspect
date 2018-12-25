@@ -10,14 +10,17 @@ import java.util.List;
 public class SongSkip implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        if (args.size() == 0)
+        if (args.size() == 0) {
             MasterManager.skipTrack(event);
-        else {
+            BotUtils.reactWithCheckMark(event.getMessage());
+        } else {
             try {
                 MasterManager.skipNumTracks(event, Integer.valueOf(args.get(0)));
                 MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler().deleteCurrentEmbed(); //delete the floating player
+                BotUtils.reactWithCheckMark(event.getMessage());
             } catch (NumberFormatException e) {
                 BotUtils.send(event.getChannel(), "Use: ```\n" + BotUtils.DEFAULT_BOT_PREFIX + "help skip``` for proper formatting");
+                BotUtils.reactWithX(event.getMessage());
             }
         }
     }

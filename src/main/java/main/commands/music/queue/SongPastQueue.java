@@ -16,11 +16,14 @@ public class SongPastQueue implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
         StringBuilder sb = scheduler.getPastQueueStrB(event);
-        // System.out.println("Song pq: sb: " + sb.toString());
+        System.out.println("Song pq: sb: " + sb.toString());
 
         // delete previous message if not null
-        if (previousQMsg != null) previousQMsg.delete();
+        // if (previousQMsg != null) previousQMsg.delete();
         previousQMsg = BotUtils.sendGet(event.getChannel(), sb.toString());
+
+
+        BotUtils.reactWithCheckMark(event.getMessage());
     }
 
     @Override

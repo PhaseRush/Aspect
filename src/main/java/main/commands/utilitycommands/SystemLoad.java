@@ -19,7 +19,7 @@ public class SystemLoad implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         // check special request
-        if (args.get(0).equalsIgnoreCase("syncmap")){
+        if (!args.isEmpty() && args.get(0).equalsIgnoreCase("syncmap")){
             runSyncMap(event);
             return;
         }

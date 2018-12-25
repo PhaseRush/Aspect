@@ -137,7 +137,10 @@ public class TrackScheduler {
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
 
         // add current to past queue
-        pastQueue.add(0, currentTrack);
+        if (previousTrack != null) pastQueue.add(0, previousTrack.makeClone());
+
+        //testing (seems like it works)
+        previousTrack = null;
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
@@ -157,12 +160,15 @@ public class TrackScheduler {
         this.lastEmbedChannel = channel;
         AudioTrack currentTrack = player.getPlayingTrack(); //redundant assignment?
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
-        pastQueue.add(0, currentTrack); // insert front
+
+        if (previousTrack != null) pastQueue.add(0, previousTrack.makeClone());
+
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         if (currentSongEmbed !=null) //debug purposes
             currentSongEmbed.delete(); //delete the embed before starting next song.
+
         player.startTrack(nextTrack, false);
         currentTrack = nextTrack; //for looping
 

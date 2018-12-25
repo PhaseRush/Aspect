@@ -83,7 +83,7 @@ public class CommandManager {
         SongDelete songDelete = new SongDelete();
         SongQueue songQueue = new SongQueue();
         SongSkip songSkip = new SongSkip();
-        SongRestart songRestart = new SongRestart();
+        SongPlayPrev songPlayPrev = new SongPlayPrev();
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
@@ -92,8 +92,8 @@ public class CommandManager {
         commandMap.put("current", songInfo);
         commandMap.put("skip", songSkip);
         commandMap.put(">", songSkip);
-        commandMap.put("restart", songRestart);
-        commandMap.put("<", songRestart);
+        commandMap.put("restart", songPlayPrev);
+        commandMap.put("<", songPlayPrev);
         commandMap.put("queue", songQueue);
         commandMap.put("q", songQueue);
         commandMap.put("pq", new SongPastQueue());
