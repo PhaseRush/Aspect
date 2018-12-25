@@ -576,6 +576,12 @@ public class BotUtils {
         return dispatchListeners;
     }
 
+    public static String getNickOrDefault(MessageReceivedEvent event) {
+        String nick = event.getAuthor().getNicknameForGuild(event.getGuild());
+        if (nick == null) return event.getAuthor().getName();
+        else return nick;
+    }
+
     @Override
     public String toString() {
         return "Baka don't touch me!";

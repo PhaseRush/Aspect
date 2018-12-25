@@ -5,6 +5,7 @@ import main.commands.fortnite.FortniteStats;
 import main.commands.humor.AnalyzeUser;
 import main.commands.humor.Insult;
 import main.commands.humor.Ship;
+import main.commands.humor.SpongeBobify;
 import main.commands.humor.cute.CuteImg;
 import main.commands.humor.cute.ListCuties;
 import main.commands.league.*;
@@ -76,6 +77,7 @@ public class CommandManager {
         commandMap.put("insult", new Insult());
         commandMap.put("count", new WordCounter());
         commandMap.put("lyze", new AnalyzeUser());
+        commandMap.put("bob", new SpongeBobify());
 
         //music
         SongInfo songInfo = new SongInfo();
