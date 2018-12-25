@@ -137,7 +137,7 @@ public class TrackScheduler {
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
 
         // add current to past queue
-        pastQueue.add(currentTrack);
+        pastQueue.add(0, currentTrack);
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
@@ -157,6 +157,7 @@ public class TrackScheduler {
         this.lastEmbedChannel = channel;
         AudioTrack currentTrack = player.getPlayingTrack(); //redundant assignment?
         AudioTrack nextTrack = queue.isEmpty() ? null : queue.remove(0);
+        pastQueue.add(0, currentTrack); // insert front
 
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
@@ -326,8 +327,16 @@ public class TrackScheduler {
 //        return l;
     }
 
+    public long getPastQueueDurationMillis() {
+        return pastQueue.stream().mapToLong(AudioTrack::getDuration).sum();
+    }
+
     public String getQueueHMS() {
         return BotUtils.millisToHMS(getQueueDurationMillis());
+    }
+
+    public String getPastQueueHMS() {
+        return BotUtils.millisToHMS(getPastQueueDurationMillis());
     }
 
     public AudioPlayer getPlayer() {
@@ -342,10 +351,11 @@ public class TrackScheduler {
     }
 
     public StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName) {
+        System.out.println("inside build: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()));
         // generate message head
         StringBuilder sb = new StringBuilder(queueName + " for " + event.getGuild().getName() + ": "
                 + (localQueue.size() > 15 ? "(listing first 15 of) " + localQueue.size() + " songs" : "")
-                + "\nTotal duration: " + getQueueHMS() + "```\n");
+                + "\nTotal duration: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()) + "```\n");
 
         // generate embed desc
         for (int i = 0; i < (localQueue.size() > 15 ? 15 : localQueue.size()); i++) {

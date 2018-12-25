@@ -16,6 +16,7 @@ public class SongPastQueue implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
         StringBuilder sb = scheduler.getPastQueueStrB(event);
+        // System.out.println("Song pq: sb: " + sb.toString());
 
         // delete previous message if not null
         if (previousQMsg != null) previousQMsg.delete();
@@ -31,4 +32,5 @@ public class SongPastQueue implements Command {
     public boolean requireSynchronous() {
         return true;
     }
+
 }

@@ -36,16 +36,14 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class CommandManager {
     private long readyTime = System.currentTimeMillis();
     public static ExecutorService commandExecutors = Executors.newCachedThreadPool();
 
     public Map<String, Command> commandMap = new LinkedHashMap<>();
-    public Map<String, LinkedBlockingQueue<Command>> syncCmdMap = new HashMap<>();
 
-    private Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
+    public static Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
     //talked to hec about using a static initializer but constructor is fine
 
     public CommandManager() {
