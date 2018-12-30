@@ -1,8 +1,11 @@
 package main.utility.wolfram;
 
-import com.wolfram.alpha.WAEngine;
+import com.wolfram.alpha.*;
 import main.utility.BotUtils;
+import main.utility.Visuals;
 import sx.blah.discord.handle.impl.obj.Embed.EmbedField;
+import sx.blah.discord.util.DiscordException;
+import sx.blah.discord.util.EmbedBuilder;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,6 +20,94 @@ public class WolframUtil {
         engine.setAppID(BotUtils.WOLFRAM_API_KEY);
         //plaintext is the only format available
         engine.addFormat("plaintext");
+    }
+
+    public static EmbedBuilder runQuery(String inputQuery, boolean formatVerticalBar, boolean advanced) {
+        WAQuery query = engine.createQuery();
+        query.setInput(inputQuery);
+
+        EmbedBuilder eb = new EmbedBuilder()
+                .withTitle("Wolfram Alpha Query")
+                .withColor(Visuals.getVibrantColor());
+
+        List<EmbedField> embedFields;
+        try {
+            // For educational purposes, print out the URL we are about to send:
+            System.out.println("Query URL:\n" + engine.toURL(query));
+
+            // This sends the URL to the Wolfram|Alpha server, gets the XML result
+            // and parses it into an object hierarchy held by the WAQueryResult object.
+            WAQueryResult queryResult = engine.performQuery(query);
+            queryResult.acquireImages();
+
+            if (queryResult.isError()) {
+                System.out.println("Query error");
+                System.out.println("  error code: " + queryResult.getErrorCode());
+                System.out.println("  error message: " + queryResult.getErrorMessage());
+            } else if (!queryResult.isSuccess()) {
+                System.out.println("Query was not understood; no results available.");
+            } else {
+                // Have result, check if advanced
+                embedFields = addFields(queryResult, formatVerticalBar, advanced);
+
+                for (EmbedField ef : handleRepeatedFields(embedFields)) {
+                    try {
+                        eb.appendField(ef);
+                    } catch (IllegalArgumentException e) {
+                        eb.appendField(new EmbedField(ef.getName(), ef.getValue().substring(0, 1023), false));
+                    }
+                }
+
+                eb.withFooterText("This operation took " + Math.round(queryResult.getTiming() * 1000 * 1000)/1000 + " ms");
+            }
+        } catch (WAException e) {
+            e.printStackTrace();
+        } catch (DiscordException e) {
+            return null;
+        }
+
+        return eb;
+    }
+
+    private static List<EmbedField> addFields(WAQueryResult queryResult, boolean formatVerticalBar, boolean advanced) {
+        List<EmbedField> embedFields = new ArrayList<>();
+
+
+        WAPod[] pods = queryResult.getPods();
+        for (int i = 0; i < (advanced ? pods.length : Math.min(pods.length, 2)); i++) {
+            WAPod pod = pods[i];
+            if (!pod.isError()) {
+                for (WASubpod subpod : pod.getSubpods()) {
+                    for (Object element : subpod.getContents()) {
+                        if (element instanceof WAPlainText) {
+                            String content = ((WAPlainText) element).getText();
+                            if (!(content.equals("") || pod.getTitle().equals(""))) {
+                                embedFields.add(new EmbedField(pod.getTitle(), (formatVerticalBar ? content.replaceAll("[|]", ":\t") : content), false));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /*else { // Basic query - just input interp. and result
+            for (WAPod pod : queryResult.getPods()) {
+                if (!pod.isError()) {
+                    for (WASubpod subpod : pod.getSubpods()) {
+                        for (Object element : subpod.getContents()) {
+                            if (element instanceof WAPlainText) {
+                                if (pod.getTitle().startsWith("Input") || pod.getTitle().startsWith("Result")) {
+                                    String content = ((WAPlainText) element).getText();
+                                    embedFields.add(new EmbedField(pod.getTitle(), (formatVerticalBar ? content.replaceAll("[|]", ":\t") : content), false));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }*/
+
+        return embedFields;
     }
 
     public static Iterable<? extends EmbedField> handleRepeatedFields(List<EmbedField> embedFields) {

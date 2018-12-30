@@ -23,7 +23,8 @@ import main.commands.utilitycommands.*;
 import main.commands.warframe.*;
 import main.commands.webquery.UrbanDictionary;
 import main.commands.webquery.Wikipedia;
-import main.commands.wolfram.WolframGeneral;
+import main.commands.wolfram.WolframAdvanced;
+import main.commands.wolfram.WolframBasic;
 import main.utility.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
@@ -58,7 +59,7 @@ public class CommandManager {
         UrbanDictionary urbanDictionary = new UrbanDictionary();
         commandMap.put("dic", urbanDictionary);
         commandMap.put("def", urbanDictionary);
-        commandMap.put("wiki", new Wikipedia());
+        commandMap.put("wiki", new Wikipedia()); // :)
 
 
         //dontdeadopeninside
@@ -66,8 +67,8 @@ public class CommandManager {
         commandMap.put("ascii", new Asciimg());
         commandMap.put("help", new Help());
         commandMap.put("summarize", new Summarize());
-        commandMap.put("img", new Imaging());
-        commandMap.put("identify", new PokemonIdentifier());
+        commandMap.put("img", new Imaging()); // showcase?
+        commandMap.put("identify", new PokemonIdentifier()); // showcase?
         commandMap.put("roll", new RollDice());
 
         //humor
@@ -79,7 +80,7 @@ public class CommandManager {
         commandMap.put("lyze", new AnalyzeUser());
         commandMap.put("bob", new SpongeBobify());
 
-        //music
+        //music -- Showcase
         SongInfo songInfo = new SongInfo();
         SongStop songStop = new SongStop();
         SongDelete songDelete = new SongDelete();
@@ -131,7 +132,7 @@ public class CommandManager {
         commandMap.put("pfp", new GetUserPfp());
         commandMap.put("serverpfp", new GetGuildPfp());
 
-        //Fortnite
+        //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());
         //commandMap.put("fnshop", new FortniteShopSelect());
         //commandMap.put("fnselect", new FortniteShopDetail());
@@ -152,10 +153,9 @@ public class CommandManager {
         commandMap.put("makerole", new RoleGenerate());
         commandMap.put("shutdown", new ForceShutdown());
         commandMap.put("uptime", new Uptime());
-
         commandMap.put("write", new Testing());
 
-        //League of Legends
+        //League of Legends -- Showcase
         commandMap.put("lollevel", new BasicLeague());
         commandMap.put("lolsum", new LeaguePlayerEmbed());
         commandMap.put("lolregions", new AvailableRegions());
@@ -179,17 +179,18 @@ public class CommandManager {
 
         commandMap.put("wfmod", new WfModInfo());
 
-        //Nasa
+        //Nasa // Showcase
         commandMap.put("apod", new NasaApod());
         commandMap.put("bluemarble", new BlueMarble());
 
-        //Wolfram Alpha
-        WolframGeneral wolframGeneral = new WolframGeneral();
-        commandMap.put("wolfram", wolframGeneral);
-        commandMap.put("answer", wolframGeneral);
-        commandMap.put("solve", wolframGeneral);
-        commandMap.put("_", wolframGeneral);
-        commandMap.put(" ", wolframGeneral);
+        //Wolfram Alpha -- Showcase
+        WolframBasic wolframBasic= new WolframBasic();
+        commandMap.put("wolfram", wolframBasic);
+        commandMap.put("answer", wolframBasic);
+        commandMap.put("solve", wolframBasic);
+        commandMap.put("_", wolframBasic);
+
+        commandMap.put("__", new WolframAdvanced());
     }
 
     @EventSubscriber
