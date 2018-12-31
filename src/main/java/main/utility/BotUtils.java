@@ -26,6 +26,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,6 +37,7 @@ public class BotUtils {
     private static Random tlr = ThreadLocalRandom.current();
     public static Gson gson = new Gson();
     private static OkHttpClient client = new OkHttpClient();
+    private static Date today = new Date();
 
     //levenss
     private static Levenshtein leven = new Levenshtein();
@@ -68,6 +70,8 @@ public class BotUtils {
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
 
+    public static String DEV_DISCORD_STRING_ID = "264213620026638336";
+
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
 
@@ -81,7 +85,7 @@ public class BotUtils {
     static {
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException ignored){}
+        } catch (NoSuchAlgorithmException ignored) {}
     }
 
 
@@ -580,6 +584,10 @@ public class BotUtils {
         String nick = event.getAuthor().getNicknameForGuild(event.getGuild());
         if (nick == null) return event.getAuthor().getName();
         else return nick;
+    }
+
+    public static String getTodayYYYYMMDD() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(today);
     }
 
     @Override

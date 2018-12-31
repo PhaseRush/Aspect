@@ -53,7 +53,7 @@ public class PreviousMatch implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "WIP, displays detail about previous match for given player";
     }
 

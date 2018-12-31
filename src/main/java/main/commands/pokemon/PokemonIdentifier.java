@@ -37,7 +37,7 @@ public class PokemonIdentifier implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "refactored from automatic identification to a command - requested by Vowed 4 nov 2018";
     }
 }

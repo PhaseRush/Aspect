@@ -35,7 +35,7 @@ public class ListSkins implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Lists skins for a champion";
     }
 }

@@ -35,7 +35,7 @@ public class SpongeBobify implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "maximizes sarcasm.";
     }
 }

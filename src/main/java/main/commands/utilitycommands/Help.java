@@ -16,7 +16,7 @@ public class Help implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Details at: " + BotUtils.GITHUB_URL;
     }
 }

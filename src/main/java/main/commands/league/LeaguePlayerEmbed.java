@@ -89,7 +89,7 @@ public class LeaguePlayerEmbed implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Generates visual for a player";
     }
 }

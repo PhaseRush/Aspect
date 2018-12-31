@@ -38,7 +38,7 @@ public class SongStop implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Stops current playing songs. Clears queue.";
     }
 

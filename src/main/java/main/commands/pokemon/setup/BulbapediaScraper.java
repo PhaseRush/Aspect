@@ -848,7 +848,7 @@ public class BulbapediaScraper implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "";
     }
 }

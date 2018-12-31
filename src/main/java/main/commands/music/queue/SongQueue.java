@@ -30,7 +30,7 @@ public class SongQueue implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Displays the music queue. Will only show first 15 tracks if the queue is longer than 15.";
     }
 

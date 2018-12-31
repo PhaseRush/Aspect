@@ -24,7 +24,7 @@ public class CuteImg implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Displays a cute Image. Use `listcute` to get a list of valid cuteness";
     }
 }

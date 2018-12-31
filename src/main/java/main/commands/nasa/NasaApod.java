@@ -29,7 +29,7 @@ public class NasaApod implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "NASA - shows Astronomy Picture of the Day";
     }
 }

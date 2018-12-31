@@ -13,7 +13,7 @@ public class Ping implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "a meme";
     }
 }

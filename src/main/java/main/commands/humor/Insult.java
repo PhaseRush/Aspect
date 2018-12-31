@@ -13,7 +13,7 @@ public class Insult implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Dishes an insult. ~~Slightly NSFW~~.";
     }
 }

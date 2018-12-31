@@ -100,7 +100,7 @@ public class OverwatchStats implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Ships as-is. All public apis are non-usable (extremely outdated)";
     }
 }

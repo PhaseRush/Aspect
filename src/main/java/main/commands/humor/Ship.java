@@ -109,7 +109,7 @@ public class Ship implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Ships 2 people. Might be slightly broken atm bother the dev if you want this fixed.";
     }
 

@@ -34,7 +34,7 @@ public class RandomItem implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Shows one (or more, if specified) random items";
     }
 }

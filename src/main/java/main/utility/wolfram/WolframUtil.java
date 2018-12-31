@@ -90,23 +90,6 @@ public class WolframUtil {
             }
         }
 
-        /*else { // Basic query - just input interp. and result
-            for (WAPod pod : queryResult.getPods()) {
-                if (!pod.isError()) {
-                    for (WASubpod subpod : pod.getSubpods()) {
-                        for (Object element : subpod.getContents()) {
-                            if (element instanceof WAPlainText) {
-                                if (pod.getTitle().startsWith("Input") || pod.getTitle().startsWith("Result")) {
-                                    String content = ((WAPlainText) element).getText();
-                                    embedFields.add(new EmbedField(pod.getTitle(), (formatVerticalBar ? content.replaceAll("[|]", ":\t") : content), false));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
-
         return embedFields;
     }
 

@@ -26,7 +26,7 @@ public class CurrentTime implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Shows shows current time in Vancouver, Canada";
     }
 }

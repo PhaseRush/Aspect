@@ -25,7 +25,7 @@ public class PlayerReset implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return null;
     }
 }

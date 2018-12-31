@@ -30,7 +30,7 @@ public class SongPause implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return null;
     }
 

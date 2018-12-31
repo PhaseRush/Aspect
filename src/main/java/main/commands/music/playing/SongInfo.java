@@ -27,7 +27,7 @@ public class SongInfo implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Shows info about current song";
     }
 }

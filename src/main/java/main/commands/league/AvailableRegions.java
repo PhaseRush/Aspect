@@ -32,7 +32,7 @@ public class AvailableRegions implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Lists supported regions";
     }
 }

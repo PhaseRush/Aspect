@@ -78,7 +78,7 @@ public class Asciimg implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Ascii-fied";
     }
 }

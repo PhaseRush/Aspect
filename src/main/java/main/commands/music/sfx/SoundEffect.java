@@ -36,7 +36,7 @@ public class SoundEffect implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "plays a specified sound effect. use $listsfx to get list of available sounds";
     }
 }

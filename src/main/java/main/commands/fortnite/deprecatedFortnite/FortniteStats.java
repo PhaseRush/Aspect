@@ -27,7 +27,7 @@ public class FortniteStats implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Temporarily Deprecated - Displays Fortnite stats for a player. ```$fn AmperianLoop, squad```";
     }
 

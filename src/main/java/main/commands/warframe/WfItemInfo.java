@@ -155,7 +155,7 @@ public class WfItemInfo implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "info about item drop rates.";
     }
 }

@@ -49,7 +49,7 @@ public class WfVoidFissures implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Lists current void fissures. Able to filter based on input. ```$wfvoid lith```";
     }
 }

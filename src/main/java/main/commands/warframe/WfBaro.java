@@ -31,7 +31,7 @@ public class WfBaro implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "displays info about void trader";
     }
 }

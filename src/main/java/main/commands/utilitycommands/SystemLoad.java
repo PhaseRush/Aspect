@@ -56,7 +56,7 @@ public class SystemLoad implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "How hard I'm working.";
     }
 }

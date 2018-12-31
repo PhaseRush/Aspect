@@ -20,7 +20,7 @@ public class DeleteMsg implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Deletes message by user. $deletemsg userId, [minutes to delete from]";
     }
 }

@@ -132,7 +132,7 @@ WordCounter implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Counts the number of occurrences of a word or matches for a regex, ranked by user.";
     }
 }

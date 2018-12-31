@@ -187,7 +187,7 @@ public class Imaging implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Cloudsight Image Recognition";
     }
 }

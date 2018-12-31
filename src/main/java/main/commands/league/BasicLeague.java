@@ -18,7 +18,7 @@ public class BasicLeague implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Shows summoner level";
     }
 }

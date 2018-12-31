@@ -31,7 +31,7 @@ public class SongPlay implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "plays song url, or searches youtube if url is not valid.";
     }
 

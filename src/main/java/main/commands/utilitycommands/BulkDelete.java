@@ -16,7 +16,7 @@ public class BulkDelete implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "bulk deletes message from a text channel. \nCURRENTLY DISABLED FOR OBVIOUS REASONS";
     }
 }

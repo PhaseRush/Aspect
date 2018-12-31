@@ -20,6 +20,7 @@ import main.commands.overwatch.OverwatchStats;
 import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
+import main.commands.utilitycommands.guild.UsersToGist;
 import main.commands.warframe.*;
 import main.commands.webquery.UrbanDictionary;
 import main.commands.webquery.Wikipedia;
@@ -191,6 +192,9 @@ public class CommandManager {
         commandMap.put("_", wolframBasic);
 
         commandMap.put("__", new WolframAdvanced());
+
+        // Some Gist dumping
+        commandMap.put("dumpusers", new UsersToGist());
     }
 
     @EventSubscriber

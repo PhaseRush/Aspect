@@ -20,7 +20,7 @@ public class WolframAdvanced implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Wolfram Alpha - Advanced query with full results.";
     }
 }

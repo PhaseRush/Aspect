@@ -24,7 +24,7 @@ public class Translate implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "WIP - translate input";
     }
 }

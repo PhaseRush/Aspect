@@ -26,7 +26,7 @@ public class SongSkip implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "skips to next song, or next x songs if specified";
     }
 

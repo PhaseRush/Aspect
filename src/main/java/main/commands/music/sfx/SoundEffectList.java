@@ -23,7 +23,7 @@ public class SoundEffectList implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Lists available sound effects";
     }
 }

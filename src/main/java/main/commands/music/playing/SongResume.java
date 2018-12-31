@@ -29,7 +29,7 @@ public class SongResume implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Resumes music player";
     }
 

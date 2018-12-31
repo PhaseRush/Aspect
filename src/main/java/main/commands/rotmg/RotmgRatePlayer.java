@@ -23,7 +23,7 @@ public class RotmgRatePlayer implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "ROTMG";
     }
 }

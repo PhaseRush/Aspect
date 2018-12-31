@@ -31,7 +31,7 @@ public class SongDelete implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Deletes a song from the queue. Specify the position which should be deleted.";
     }
 

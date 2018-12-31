@@ -17,7 +17,7 @@ public class MemberCount implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Counts total members in this server";
     }
 }

@@ -26,7 +26,7 @@ public class WfItems implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "dev use";
     }
 }

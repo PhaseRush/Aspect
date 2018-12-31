@@ -27,7 +27,7 @@ public class GetUserPfp implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return null;
     }
 }

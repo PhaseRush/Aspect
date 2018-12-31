@@ -14,7 +14,7 @@ public class WfCetusCycle implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Warframe - Current Cetus cycle. (PC only)";
     }
 }

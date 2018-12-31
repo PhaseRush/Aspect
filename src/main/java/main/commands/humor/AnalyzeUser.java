@@ -35,7 +35,7 @@ public class AnalyzeUser implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "WIP - Analyses message history of user";
     }
 }

@@ -33,7 +33,7 @@ public class WfDailyDeals implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "warframe daily deals";
     }
 }

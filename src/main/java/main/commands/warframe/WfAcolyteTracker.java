@@ -32,7 +32,7 @@ public class WfAcolyteTracker implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "info about acolytes";
     }
 }

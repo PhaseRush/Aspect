@@ -16,8 +16,9 @@ public interface Command {
         return false;
     }
 
-    default String getDescription() {
+    default String getDesc() {
         return BotUtils.GITHUB_URL;
     }
+
     //String getSyntax();
 }

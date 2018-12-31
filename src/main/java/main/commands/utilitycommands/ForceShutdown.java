@@ -41,7 +41,7 @@ public class ForceShutdown implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "plz dont do this to me";
     }
 }

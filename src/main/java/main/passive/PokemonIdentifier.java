@@ -58,6 +58,7 @@ public class PokemonIdentifier {
                     similarityMap.put(s, sim);
                     if (sim < threshold) { //if this is already ~perfect~ close enough match, dont do any more
                         shouldSendDiff = false;
+                        System.out.println(counter + " Path:" + PokemonUtil.baseDir + s + ".png"); // print out for debug
                         break;
                     }
                 } catch (IOException e) {

@@ -165,7 +165,7 @@ public class WfMarketListing implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "retrieves market listings for item. can filter based on online ingame and offline";
     }
 }

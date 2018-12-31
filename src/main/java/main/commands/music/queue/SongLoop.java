@@ -46,7 +46,7 @@ public class SongLoop implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "loops current song infinitely, or x times";
     }
 

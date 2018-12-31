@@ -45,7 +45,7 @@ public class RoleGenerate implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Generates a role with user's permission hierarchy ```$makerole [name], r, g, b";
     }
 }

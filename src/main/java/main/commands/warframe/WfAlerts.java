@@ -16,7 +16,7 @@ public class WfAlerts implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Displays all alerts";
     }
 }

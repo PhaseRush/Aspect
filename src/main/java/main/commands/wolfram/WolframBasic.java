@@ -25,7 +25,7 @@ public class WolframBasic implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Wolfram Alpha - Basic query with to-the-point replies.";
     }
 }

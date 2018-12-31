@@ -41,7 +41,7 @@ public class FortniteShopDetail implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "DEPRECATED - returns detailed infomation about a fortnite shop category";
     }
 }

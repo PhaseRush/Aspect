@@ -117,7 +117,7 @@ public class AsciifyOld implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "AsciifyOld an art piece.";
     }
 }

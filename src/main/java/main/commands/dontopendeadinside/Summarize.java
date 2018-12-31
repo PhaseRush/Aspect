@@ -79,7 +79,7 @@ public class Summarize implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Uses SMMRY to summarize any text article.";
     }
 }

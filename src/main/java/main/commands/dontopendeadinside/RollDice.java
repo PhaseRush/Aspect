@@ -26,7 +26,7 @@ public class RollDice implements Command {
             numDice = Integer.valueOf(parseInput[0]);
             numSides = Integer.valueOf(parseInput[1]);
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
-            BotUtils.send(event.getChannel(), getDescription());
+            BotUtils.send(event.getChannel(), getDesc());
             return;
         }
 
@@ -53,7 +53,7 @@ public class RollDice implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "```\n$roll xdy```\n where x is the number of dice to be rolled, and y is the number of faces per die.\n Rolling 2 6 sided die (ex. for a game of monopoly): ```\n$roll 2d6";
     }
 }

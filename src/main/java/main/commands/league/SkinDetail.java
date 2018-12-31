@@ -43,7 +43,7 @@ public class SkinDetail implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "League - Displays image of skin";
     }
 }

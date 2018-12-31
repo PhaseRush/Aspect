@@ -22,7 +22,7 @@ public class ShuffleQueue implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Shuffles queue. Uses java.util.Collections#shuffle, so don't blame me if the shuffling doesn't seem random";
     }
 

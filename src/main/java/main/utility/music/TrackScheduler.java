@@ -356,8 +356,9 @@ public class TrackScheduler {
         return buildQueueStrB(event, pastQueue, "Past queue");
     }
 
-    public StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName) {
-        System.out.println("inside build: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()));
+    private StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName) {
+        // System.out.println("inside build: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()));
+        if (localQueue.isEmpty()) return new StringBuilder(queueName + " for " + event.getGuild().getName() + " is empty :(");
         // generate message head
         StringBuilder sb = new StringBuilder(queueName + " for " + event.getGuild().getName() + ": "
                 + (localQueue.size() > 15 ? "(listing first 15 of) " + localQueue.size() + " songs" : "")

@@ -27,7 +27,7 @@ public class SongPastQueue implements Command {
     }
 
     @Override
-    public String getDescription() {
+    public String getDesc() {
         return "Displays the past music queue (songs that were already played). Will only show first 15 tracks if the queue is longer than 15.";
     }
 
