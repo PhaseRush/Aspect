@@ -21,6 +21,7 @@ import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.utilitycommands.guild.UsersToGist;
+import main.commands.utilitycommands.metautil.UpdatePresence;
 import main.commands.warframe.*;
 import main.commands.webquery.UrbanDictionary;
 import main.commands.webquery.Wikipedia;
@@ -132,6 +133,7 @@ public class CommandManager {
         commandMap.put("trans", new Translate());
         commandMap.put("pfp", new GetUserPfp());
         commandMap.put("serverpfp", new GetGuildPfp());
+        commandMap.put("presence", new UpdatePresence());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());

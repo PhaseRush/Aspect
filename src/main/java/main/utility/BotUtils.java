@@ -39,7 +39,7 @@ public class BotUtils {
     private static OkHttpClient client = new OkHttpClient();
     private static Date today = new Date();
 
-    //levenss
+    //leven
     private static Levenshtein leven = new Levenshtein();
 
     //encryption
@@ -66,7 +66,7 @@ public class BotUtils {
     public static String PRIVATE_CHANNEL_INFO_URL;
 
 
-    //dev meta -- USE FOR GIST GENERATION (NOT MY ACTUAL GITHUB CREDS)
+    //dev meta -- USE FOR GIST GENERATION
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
 
@@ -244,7 +244,7 @@ public class BotUtils {
         userVoiceChannel.join();
     }
 
-    //leave voice channel
+    //bleave voice channel
     public static void handleLeaveVoice(MessageReceivedEvent event) {
         IVoiceChannel botVoiceChannel = event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel();
 
@@ -546,8 +546,8 @@ public class BotUtils {
 
     /**
      * generates sha-256 hash for an input string
-     * @param input
-     * @return sha256
+     * @param input any arbitrary input String
+     * @return sha256 hashed String output
      */
     public static String SHA256(String input) {
         byte[] encodedBytes = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));

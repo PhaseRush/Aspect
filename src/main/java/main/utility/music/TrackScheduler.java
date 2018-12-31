@@ -72,7 +72,7 @@ public class TrackScheduler {
                 if(endReason.mayStartNext) {
                     //check looping condition
                     if (looping) { // fucking kms reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        System.out.println("Looping, count = " + loopCount);
+                        // System.out.println("Looping, count = " + loopCount);
                         if (loopCount == maxLoop) { //end loop, behave as if else below (WORKING)
                             //System.out.println("called nextTrack (is looping, but reached max loop)");
                             loopCount = 0;
@@ -204,7 +204,7 @@ public class TrackScheduler {
         //make the timeline updater
         final Runnable trackTimelineUpdater = () -> currentSongEmbed.edit(generateCurrentTrackEmbed(getCurrentTrack()).build());
         long onePercentDuration = getCurrentTrack().getDuration()/100;
-        long refreshTime = (onePercentDuration > 2000 ? onePercentDuration : 2000); //use min of 2 seconds
+        long refreshTime = Math.max(onePercentDuration, 2000); //use min of 2 seconds
         //set the current updater to this update runner
         trackEmbedUpdater = floatingPlayerScheduler.scheduleAtFixedRate(trackTimelineUpdater, refreshTime, refreshTime, TimeUnit.MILLISECONDS);
     }
@@ -213,11 +213,13 @@ public class TrackScheduler {
         AudioTrackInfo songInfo = audioTrack.getInfo();
         EmbedBuilder eb = new EmbedBuilder()
                 .withColor(generateBiasedColor())
-                .withTitle(songInfo.title)
+                .withTitle((player.isPaused() ? "[ PAUSED ]\t" :"") + songInfo.title)
                 .withDesc("By: " + songInfo.author + "\n" + trackProgress())
                 .withUrl(songInfo.uri);
 
         if (queue.size() != 0) eb.withFooterText("Next: " + queue.get(0).getInfo().title);
+
+        if (looping) eb.appendDesc("\nLooping: " + loopCount + "/" + maxLoop);
 
         return eb;
     }

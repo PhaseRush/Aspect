@@ -27,14 +27,15 @@ public class WfPassive {
 
     @EventSubscriber
     public void warframeCetusUpdater(ReadyEvent event) {
+        // cetusTimePresense();
+    }
+
+    public static void cetusTimePresense() {
         BotUtils.setBottomText();
-        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);//not sure @todo
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        //calculate initial delay
+        // calculate initial delay
         Instant instant = Instant.parse(WarframeUtil.getCetus().getExpiry());
-        long elapseMillis = instant.toEpochMilli() - System.currentTimeMillis(); //millis to next day/night change -- CORRECT
-
-        //System.out.println("elapseMillis: " + elapseMillis); //confusing output sometimes, just don't print anymore
 
         try {
             final Runnable cetusTimeRunner = () -> {
