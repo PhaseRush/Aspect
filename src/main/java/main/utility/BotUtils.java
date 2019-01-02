@@ -590,6 +590,10 @@ public class BotUtils {
         return new SimpleDateFormat("yyyy-MM-dd").format(today);
     }
 
+    public static boolean isDev(MessageReceivedEvent event) {
+        return event.getAuthor().getStringID().equals(DEV_DISCORD_STRING_ID);
+    }
+
     @Override
     public String toString() {
         return "Baka don't touch me!";

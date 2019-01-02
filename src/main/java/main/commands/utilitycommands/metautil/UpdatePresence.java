@@ -16,10 +16,20 @@ public class UpdatePresence implements Command {
         if (args.get(0).equals("warframe")) WfPassive.cetusTimePresense();
         else {
             ActivityType activity = null;
-            if (args.get(0).equals("P")) activity = ActivityType.PLAYING;
-            else if (args.get(0).equals("S")) activity = ActivityType.STREAMING;
-            else if (args.get(0).equals("L")) activity = ActivityType.LISTENING;
-            else if (args.get(0).equals("W")) activity = ActivityType.WATCHING;
+            switch (args.get(0)) {
+                case "P":
+                    activity = ActivityType.PLAYING;
+                    break;
+                case "S":
+                    activity = ActivityType.STREAMING;
+                    break;
+                case "L":
+                    activity = ActivityType.LISTENING;
+                    break;
+                case "W":
+                    activity = ActivityType.WATCHING;
+                    break;
+            }
 
             event.getClient().changePresence(StatusType.ONLINE, activity, args.get(1));
         }

@@ -148,6 +148,13 @@ public class PassiveListener {
         BotUtils.send(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
     }
 
+//    @EventSubscriber
+//    public void testing(MessageReceivedEvent event) {
+//        if (event.getChannel().getStringID().equals("528282417589649448")) {
+//            System.out.println("hi");
+//        }
+//    }
+
     @Override
     public String toString() {
         return "This is janky asf";

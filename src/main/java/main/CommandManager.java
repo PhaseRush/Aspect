@@ -217,17 +217,16 @@ public class CommandManager {
         // Extract the "command" part of the first arg out by ditching the amount of characters present in the prefix
         String commandStr = argArray[0].substring(BotUtils.DEFAULT_BOT_PREFIX.length());
 
+        // Return if command is not inside of commandMap
+        // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
+        if (!commandMap.containsKey(commandStr)) return;
+        // TODO: add spell check (leven) for commandstr length >=2 with reaction listener
+
         // Load the rest of the args in the array into a List for safer access
         // CHANGED IMPLEMENTATION TO BETTER SEPARATE COMMAS AND SPACES
         List<String> argsList = new ArrayList<>();
         if (argArray.length != 1)
             argsList.addAll(Arrays.asList(argArray[1].split(", ")));
-
-        // Return if command is not inside of commandMap
-        // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
-        if (!commandMap.containsKey(commandStr)) return;
-
-        // TODO: add spell check (leven) for commandstr length >=2 with reaction listener
 
         // Get the command
         Command cmd = commandMap.get(commandStr);
@@ -238,7 +237,6 @@ public class CommandManager {
 
                 cmdPrintLog(event, commandStr, argsList);
             }
-
 
             // Handle state json
 //            try {
@@ -281,7 +279,7 @@ public class CommandManager {
 
     @Override
     public int hashCode() {
-        return -1 * (int)Math.exp(Math.PI);
+        return Integer.valueOf("no u");
     }
 
 }

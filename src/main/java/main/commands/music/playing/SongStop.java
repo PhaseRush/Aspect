@@ -34,7 +34,7 @@ public class SongStop implements Command {
         scheduler.deleteCurrentEmbed(); //clean up the chat
         BotUtils.reactWithCheckMark(event.getMessage());
         long startTime = MasterManager.getGuildAudioPlayer(event.getGuild()).getThisStartTime();
-        BotUtils.send(event.getChannel(), "This music session lasted `" + BotUtils.millisToHMS(System.currentTimeMillis() - startTime) + "`");
+        if (startTime != 0) BotUtils.send(event.getChannel(), "This music session lasted `" + BotUtils.millisToHMS(System.currentTimeMillis() - startTime) + "`");
     }
 
     @Override
