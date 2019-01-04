@@ -3,7 +3,6 @@ package main.passive;
 import main.utility.BotUtils;
 import main.utility.PokemonUtil;
 import main.utility.Visuals;
-import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.util.EmbedBuilder;
@@ -19,7 +18,8 @@ import java.util.Map;
 public class PokemonIdentifier {
     private static ThreadGroup pokemonIdentifiers = new ThreadGroup("Pokemon Identifiers");
 
-    @EventSubscriber //Not a subscriber anymore - Vowed 4/nov/18
+    //2019-1-3 took out subscription. Causing lag, and no one really uses.
+    //@EventSubscriber //Not a subscriber anymore - Vowed 4/nov/18
     public void pokemonIdentifier(MessageReceivedEvent event) {
         if (!(event.getAuthor().getStringID().equals("365975655608745985")/* || event.getAuthor().getStringID().equals("264213620026638336")*/)) return;
         if (event.getMessage().getEmbeds().size() == 0) return; //not *that* needed but nice to have

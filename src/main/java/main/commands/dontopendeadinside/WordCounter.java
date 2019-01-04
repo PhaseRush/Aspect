@@ -3,6 +3,8 @@ package main.commands.dontopendeadinside;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.gist.GistUtils;
+import main.utility.gist.gist_json.GistContainer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
@@ -25,6 +27,7 @@ WordCounter implements Command {
 
         long startTime = System.currentTimeMillis();
         Map<IUser, Integer> userWordCountMap = new LinkedHashMap<>();
+        Map<IUser, Integer> userMsgCountMap = new LinkedHashMap<>();
         IChannel channel = event.getChannel();
         boolean useAllchannels = false;
 
@@ -56,18 +59,18 @@ WordCounter implements Command {
         for (IChannel textChannel : textChannels) {
             try {
                 for (IMessage m : textChannel.getFullMessageHistory()) {
+                    IUser author = m.getAuthor();
                     if (useRegex) {
                         if (m.getContent().matches(regexString)) {
-                            IUser author = m.getAuthor();
                             userWordCountMap.put(author, userWordCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
                         }
                     } else {
                         if (m.getContent().contains(args.get(0))) {
-                            IUser author = m.getAuthor();
                             userWordCountMap.merge(author, 1, (v, $) -> v + 1); //@Phanta#1328
                         }
                     }
                     messageCounter++;
+                    userMsgCountMap.put(author, userMsgCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
                 }
             } catch (MissingPermissionsException e) {
                 BotUtils.send(channel,  "Skipping: " + textChannel.getName() + "\t(Missing READ_MESSAGES permission)");
@@ -83,11 +86,11 @@ WordCounter implements Command {
         int minutes = (int) (timeElapsed / 60000);
         int seconds = (int) (timeElapsed % 60000) / 1000;
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle(useRegex? "Regex Matches" : "Word Counter")
+                .withTitle(useRegex? "Regex Matcher" : "Word Counter")
                 //.withColor(Visuals.analyizeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
                 .withColor(Visuals.getVibrantColor())
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
-                .withDesc("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick))
+                .withDesc("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\nFormat: x/y, where x is number of matches and y is the total messages by user")
                 .withFooterText("It took me " + minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " to scan through " +
                         messageCounter + " messages in " + textChannels.size() + " channel" + (textChannels.size() == 1? "" : "s")); //added plural case
 
@@ -97,16 +100,33 @@ WordCounter implements Command {
                 String eachNick = entry.getKey().getNicknameForGuild(event.getGuild());
                 eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick),
                         (useRegex? "" : args.get(0).replaceAll("\\*", "\\\\*")) +
-                                " count: " + entry.getValue().toString(), false);
+                                " count: " + entry.getValue().toString() + " / " + userMsgCountMap.get(entry.getKey()), false);
 
                 rankCounter++;
             } catch (IllegalArgumentException e) {
                 eb.appendDesc("\n\n Listing the top 25:");
                 break; //already at 25 fields. Since map is sorted, just break loop
-    }
-}
+            }
+        }
 
         BotUtils.send(channel, eb);
+
+        // generate gist
+        StringBuilder sb = new StringBuilder("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\nFormat: x / y, where x is the number of matches and y is the total messages by user");
+        rankCounter = 1;
+        for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
+            sb.append(rankCounter + " : " + entry.getValue() + " -> " + entry.getValue() + " / " + userMsgCountMap.get(entry.getKey()) + "\n");
+            rankCounter++;
+        }
+
+        String json = BotUtils.getStringFromUrl(GistUtils.makeGistGetUrl(
+                "Aspect :: " + (useRegex? "Regex Matcher" : "Word Counter"),
+                "Counts the number of occurrences of a word or matches for a regex, ranked by user"
+                ,sb.toString()
+        ));
+
+        GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
+        BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + gist.getHtml_url());
     }
 
     private void sendErrorMsg(MessageReceivedEvent event) {
@@ -133,6 +153,6 @@ WordCounter implements Command {
 
     @Override
     public String getDesc() {
-        return "Counts the number of occurrences of a word or matches for a regex, ranked by user.";
+        return "Counts the number of occurrences of a word or matches for a regex, ranked by user";
     }
 }
