@@ -79,6 +79,7 @@ public class CommandManager {
         commandMap.put("ship", new Ship());
         commandMap.put("insult", new Insult());
         commandMap.put("count", new WordCounter());
+        commandMap.put("freq", new UserWordFrequency());
         commandMap.put("lyze", new AnalyzeUser());
         commandMap.put("bob", new SpongeBobify());
 

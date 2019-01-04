@@ -29,7 +29,7 @@ public class SongStop implements Command {
         catch (Exception ignored) {}
 
         scheduler.getQueue().clear(); //purge entire queue
-
+        scheduler.getPastQueue().clear();
 
         scheduler.deleteCurrentEmbed(); //clean up the chat
         BotUtils.reactWithCheckMark(event.getMessage());

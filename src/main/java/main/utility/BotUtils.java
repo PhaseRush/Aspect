@@ -37,7 +37,6 @@ public class BotUtils {
     private static Random tlr = ThreadLocalRandom.current();
     public static Gson gson = new Gson();
     private static OkHttpClient client = new OkHttpClient();
-    private static Date today = new Date();
 
     //leven
     private static Levenshtein leven = new Levenshtein();
@@ -47,6 +46,7 @@ public class BotUtils {
 
     // Constants for use throughout the bot
     public final static String GITHUB_URL = "https://github.com/PhaseRush/Aspect";
+    public final static String DEV_DISCORD_STRING_ID = "264213620026638336";
 
     //guildID, commandPrefix
     private static final String mapFilePath = "";//get rid of this
@@ -70,7 +70,6 @@ public class BotUtils {
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
 
-    public static String DEV_DISCORD_STRING_ID = "264213620026638336";
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
@@ -81,11 +80,19 @@ public class BotUtils {
     private static String[] wfboBut = {"alas", "although", "however", "nevertheless", "though"};
     private static String[] wfboOk = {"adequate", "common", "decent", "sufficient", "tolerable", "admissible", "copacetic"};
 
+    // dictionary
+    public static Set<String> dictionary;
+
     // --- Static initializer --
     static {
+        // encrypter
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException ignored) {}
+
+        // dictionary
+        String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
+        dictionary = new TreeSet<>(Arrays.asList(allString.split("\n")));
     }
 
 
@@ -210,17 +217,18 @@ public class BotUtils {
     }
 
     public static void send(IChannel channel, List<String> messages) {
-        RequestBuffer.request(() -> {
-            try {
-                for (String s : messages)
+        try {
+            for (String s : messages) {
+                RequestBuffer.request(() -> {
                     channel.sendMessage(s);
-            } catch (DiscordException e) {
-                System.err.println("Message could not be sent with error: ");
-                e.printStackTrace();
-            } catch (MissingPermissionsException e) {
-                System.out.println("Missing Permissions for message list: " + channel.getName());
+                });
             }
-        });
+        } catch (DiscordException e) {
+            System.err.println("Message could not be sent with error: ");
+            e.printStackTrace();
+        } catch (MissingPermissionsException e) {
+            System.out.println("Missing Permissions for message list: " + channel.getName());
+        }
     }
 
     public static void send(IChannel channel, EmbedBuilder embed) {
@@ -244,7 +252,7 @@ public class BotUtils {
         userVoiceChannel.join();
     }
 
-    //bleave voice channel
+    //leave voice channel
     public static void handleLeaveVoice(MessageReceivedEvent event) {
         IVoiceChannel botVoiceChannel = event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel();
 
@@ -506,20 +514,20 @@ public class BotUtils {
         return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 
-    public static String limitStrLen(String s, int length, boolean useDotDotDot, boolean cutAtSpace) {
+    public static String limitStrLen(String s, int length, boolean useDotDotDot, boolean cutAtChar, char cutChar) {
         // if str is shorter just return
         if (s.length() <= length) return s;
 
         // if don't care just return substr
-        if (!useDotDotDot && !cutAtSpace) return s.substring(0, length);
+        if (!useDotDotDot && !cutAtChar) return s.substring(0, length);
 
         int cutIndex = useDotDotDot ? length - 4 : length; // 4 = 3 dots + 1 space
 
         // only update cutIndex if we want to cut at space
-        if (cutAtSpace) {
+        if (cutAtChar) {
             // iter down until we hit a space
             for (int i = cutIndex; i > 0; i--) {
-                if (s.charAt(i) == ' ') {
+                if (s.charAt(i) == cutChar) {
                     cutIndex = i; // set cutIndex to current iter and break
                     break;
                 }
@@ -586,8 +594,14 @@ public class BotUtils {
         else return nick;
     }
 
+    public static String getNickOrDefault(IUser user, IGuild guild) {
+        String nick = user.getNicknameForGuild(guild);
+        if (nick == null) return user.getName();
+        else return nick;
+    }
+
     public static String getTodayYYYYMMDD() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(today);
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     }
 
     public static boolean isDev(MessageReceivedEvent event) {
