@@ -226,4 +226,11 @@ public class Visuals {
         return new EmbedField(title, value, inLine);
     }
 
+
+    // some real fancy shit gonna go down
+
+    public static String genTextImage(String text, int width, int height) {
+        return null;
+    }
+
 }
