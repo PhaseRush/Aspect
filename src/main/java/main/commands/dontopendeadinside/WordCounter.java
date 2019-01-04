@@ -78,7 +78,7 @@ WordCounter implements Command {
         }
 
         userWordCountMap = BotUtils.sortMap(userWordCountMap, false, true); //flipped smallestToLargest
-        Entry<IUser, Integer> mostGoodPerson = userWordCountMap.entrySet().iterator().next();
+        Entry<IUser, Integer> mostGoodPerson = userWordCountMap.entrySet().iterator().next(); // will throw NoSuchEle Exc if no one matches
         String nick = mostGoodPerson.getKey().getNicknameForGuild(event.getGuild());
 
 
@@ -115,7 +115,7 @@ WordCounter implements Command {
         StringBuilder sb = new StringBuilder("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\nFormat: x / y, where x is the number of matches and y is the total messages by user");
         rankCounter = 1;
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
-            sb.append(rankCounter + " : " + entry.getValue() + " -> " + entry.getValue() + " / " + userMsgCountMap.get(entry.getKey()) + "\n");
+            sb.append(rankCounter + " : " + BotUtils.getNickOrDefault(entry.getKey(), event.getGuild()) + " -> " + entry.getValue() + " / " + userMsgCountMap.get(entry.getKey()) + "\n");
             rankCounter++;
         }
 
