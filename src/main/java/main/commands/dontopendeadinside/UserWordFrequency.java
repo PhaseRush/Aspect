@@ -35,6 +35,9 @@ public class UserWordFrequency implements Command {
     private static DecimalFormat df = new DecimalFormat("##.####");
     private static List<String> validLangs = Arrays.asList("american", "canadian", "british");
 
+    // waifu roulette, music, bot-spam
+    private static List<String> blacklist = Arrays.asList("481734359343300609", "423408062347608064", "530204591984214046");
+
     static {
         df.setRoundingMode(RoundingMode.CEILING);
     }
@@ -57,7 +60,7 @@ public class UserWordFrequency implements Command {
         JLanguageTool langTool = getTool(args);
 
         long startTime = System.currentTimeMillis(); // convert to nanoTime later
-        for (IChannel channel : event.getGuild().getChannels()) {
+        for (IChannel channel : event.getGuild().getChannels().stream().filter(ch -> !blacklist.contains(ch.getStringID())).collect(Collectors.toList())) {
             // update loading msg
             updateLoadingMsg(loadingMsg, channel);
 
@@ -247,6 +250,11 @@ public class UserWordFrequency implements Command {
     }
     private String str(int i) {
         return String.valueOf(i);
+    }
+
+    @Override
+    public boolean requireSynchronous(){
+        return true;
     }
 
     @Override
