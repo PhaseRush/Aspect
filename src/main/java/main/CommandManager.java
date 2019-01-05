@@ -67,6 +67,7 @@ public class CommandManager {
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
         commandMap.put("ascii", new Asciimg());
+        commandMap.put("render", new TextToImage());
         commandMap.put("help", new Help());
         commandMap.put("summarize", new Summarize());
         commandMap.put("img", new Imaging()); // showcase?

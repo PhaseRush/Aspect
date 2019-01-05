@@ -12,10 +12,7 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 public class
@@ -78,7 +75,13 @@ WordCounter implements Command {
         }
 
         userWordCountMap = BotUtils.sortMap(userWordCountMap, false, true); //flipped smallestToLargest
-        Entry<IUser, Integer> mostGoodPerson = userWordCountMap.entrySet().iterator().next(); // will throw NoSuchEle Exc if no one matches
+        Entry<IUser, Integer> mostGoodPerson = null;
+        try {
+            mostGoodPerson = userWordCountMap.entrySet().iterator().next(); // will throw NoSuchEle Exc if no one matches
+        } catch (NoSuchElementException e) {
+            BotUtils.send(event.getChannel(), "No matches found :(");
+            return;
+        }
         String nick = mostGoodPerson.getKey().getNicknameForGuild(event.getGuild());
 
 
@@ -112,7 +115,7 @@ WordCounter implements Command {
         BotUtils.send(channel, eb);
 
         // generate gist
-        StringBuilder sb = new StringBuilder("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\nFormat: x / y, where x is the number of matches and y is the total messages by user");
+        StringBuilder sb = new StringBuilder("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\n\nFormat: x / y, where x is the number of matches and y is the total messages by user");
         rankCounter = 1;
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
             sb.append(rankCounter + " : " + BotUtils.getNickOrDefault(entry.getKey(), event.getGuild()) + " -> " + entry.getValue() + " / " + userMsgCountMap.get(entry.getKey()) + "\n");

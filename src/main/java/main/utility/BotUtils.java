@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class BotUtils {
 
@@ -92,7 +93,8 @@ public class BotUtils {
 
         // dictionary
         String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
-        dictionary = new TreeSet<>(Arrays.asList(allString.split("\n")));
+        //dictionary = new TreeSet<>(Arrays.asList(allString.split("\n")));
+        dictionary = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
     }
 
 
@@ -179,7 +181,20 @@ public class BotUtils {
                 System.err.println("Message could not be sent with error: ");
                 e.printStackTrace();
             } catch (MissingPermissionsException e) {
-                System.out.println("Missing Permissions: " + channel.getName() + " Msg: " + message);
+                send(channel, "Missing Permissions: " + channel.getName() + " Msg: " + message);
+            }
+        });
+    }
+
+    public static void send(IChannel channel, String path, boolean isFilePath) {
+        File file = new File(path);
+        RequestBuffer.request(() -> {
+            try {
+                channel.sendFile(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (MissingPermissionsException e) {
+                send(channel, "Missing Permissions: " + channel.getName());
             }
         });
     }
