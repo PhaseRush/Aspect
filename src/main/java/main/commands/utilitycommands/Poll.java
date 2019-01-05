@@ -13,7 +13,7 @@ import sx.blah.discord.util.RequestBuffer;
 import java.util.List;
 
 public class Poll implements Command {
-    private List<ReactionEmoji> regionalIndicators = BotUtils.initializeRegionals();
+    private List<ReactionEmoji> regionalIndicators = BotUtils.getRegionals();
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {

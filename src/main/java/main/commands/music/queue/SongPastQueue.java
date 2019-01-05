@@ -18,8 +18,8 @@ public class SongPastQueue implements Command {
         StringBuilder sb = scheduler.getPastQueueStrB(event);
         System.out.println("Song pq: sb: " + sb.toString());
 
-        // delete previous message if not null
-        // if (previousQMsg != null) previousQMsg.delete();
+        // runDelete previous message if not null
+        // if (previousQMsg != null) previousQMsg.runDelete();
         previousQMsg = BotUtils.sendGet(event.getChannel(), sb.toString());
 
 

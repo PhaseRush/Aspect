@@ -98,7 +98,7 @@ public class WfMarketListing implements Command {
                 .withColor(Visuals.getVibrantColor());
 
         IMessage embedMessage = RequestBuffer.request(() -> e.getChannel().sendMessage(itemOptionEmbed.build())).get();
-        BotUtils.reactAllEmojis(embedMessage, BotUtils.initializeRegionals().subList(0, numOptions));
+        BotUtils.reactAllEmojis(embedMessage, BotUtils.getRegionals().subList(0, numOptions));
         //might need to sleep thread to guarantee this comes last.
         RequestBuffer.request(() -> {
             embedMessage.addReaction(ReactionEmoji.of("❌"));

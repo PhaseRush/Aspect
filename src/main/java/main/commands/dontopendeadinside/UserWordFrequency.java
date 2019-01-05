@@ -36,7 +36,7 @@ public class UserWordFrequency implements Command {
     private static List<String> validLangs = Arrays.asList("american", "canadian", "british");
 
     // waifu roulette, music, bot-spam
-    private static List<String> blacklist = Arrays.asList("481734359343300609", "423408062347608064", "530204591984214046");
+    private static List<String> blacklist = Arrays.asList("528282417589649448", "423408062347608064", "530204591984214046");
 
     static {
         df.setRoundingMode(RoundingMode.CEILING);
@@ -54,6 +54,7 @@ public class UserWordFrequency implements Command {
         Map<String, Integer> freqMap = new HashMap<>();
         Map<String, Integer> typoMap = new HashMap<>();
         int[] wordCharCount = new int[10];
+        StringBuilder autoCorrect = new StringBuilder("Autocorrections:\n");
 
         float numChars = 0, numWords = 0,  numMsgs = 0, matchErrors = 0, numTypos = 0, numEdits = 0;
 
@@ -90,10 +91,14 @@ public class UserWordFrequency implements Command {
                             for (RuleMatch match : matches) {
                                 if (!match.getSuggestedReplacements().isEmpty()) { // if there is a suggestion
                                     String correction = match.getSuggestedReplacements().get(0);
-                                    correction = correction.substring(1, correction.length() - 1); // get rid of square brackets
+//                                    try {
+//                                        correction = correction.substring(1, correction.length() - 1); // no square brackets
+//                                    } catch (IndexOutOfBoundsException e) {
+//                                        continue; //ignore this suggestion
+//                                    }
 
                                     // temp log corrections
-                                    System.out.println(word + " -> "+ correction);
+                                    autoCorrect.append("\n" + word + " -> "+ correction).append(" in " + channel.getName() + " @ " + msg.getTimestamp().toString());
 
                                     // freqMap.put(correction, freqMap.getOrDefault(correction, 0) + 1); //@tterrag#1098
                                     typoMap.put(correction, typoMap.getOrDefault(correction, 0) + 1); //@tterrag#1098
@@ -162,7 +167,7 @@ public class UserWordFrequency implements Command {
 
         // disclaimer
         eb.appendDesc("\n\n Note: Typos may be over-counted. Misspelled words may be wrong.");
-        // delete loading embed
+        // runDelete loading embed
         if (!loadingMsg.isDeleted()) loadingMsg.delete();
 
         // send embed
@@ -172,7 +177,7 @@ public class UserWordFrequency implements Command {
         String json = BotUtils.getStringFromUrl(GistUtils.makeGistGetUrl(
                 "Aspect :: Message Stats for " + BotUtils.getNickOrDefault(target, event.getGuild()),
                 "Stats for past 1 week in " + event.getGuild().getName(),
-                sb.toString()));
+                sb.toString() + "\n\n" + autoCorrect.toString()));
 
         GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
         BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + gist.getHtml_url());

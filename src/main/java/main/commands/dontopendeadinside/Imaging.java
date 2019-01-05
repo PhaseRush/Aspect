@@ -57,7 +57,7 @@ public class Imaging implements Command {
         //injected in to here
         handleGetRequestWithLoop(postBody, event, startTime);
 
-        //delete loading message
+        //runDelete loading message
         loadingMsg.delete();
     }
 

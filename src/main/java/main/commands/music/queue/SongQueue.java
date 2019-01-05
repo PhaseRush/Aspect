@@ -17,7 +17,7 @@ public class SongQueue implements Command {
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
         StringBuilder sb = scheduler.getQueueStrB(event);
 
-        // delete previous message if not null
+        // runDelete previous message if not null
         if (previousQMsg != null) previousQMsg.delete();
         previousQMsg = BotUtils.sendGet(event.getChannel(), sb.toString());
 

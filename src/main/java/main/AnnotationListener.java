@@ -88,7 +88,7 @@ public class AnnotationListener {
     private List<String> volumeUnits = new ArrayList<>();
 
     private List<String> elevatedUserStringIDs = new ArrayList<>();
-    private List<ReactionEmoji> regionalIndicators = BotUtils.initializeRegionals();
+    private List<ReactionEmoji> regionalIndicators = BotUtils.getRegionals();
     private DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     private boolean shellRestricted = false;
@@ -481,7 +481,7 @@ public class AnnotationListener {
             handleUnNuke(author, iChannel);
             return;
         }
-        //check if this iChannel is nuked. if it is, delete the message immediately
+        //check if this iChannel is nuked. if it is, runDelete the message immediately
         for (ChatRestriction cr: masterChatRestrictionManager.getChatRestrictionList()) {
             if (cr.getRestrictedChannel().equals(iChannel)) { //find the ChatRestriction Obj
                 if (cr.isMuted()) { //check of the ChatRestriction Obj is actually muted

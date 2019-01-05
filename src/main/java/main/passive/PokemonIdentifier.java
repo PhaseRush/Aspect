@@ -103,7 +103,7 @@ public class PokemonIdentifier {
 //                    return null;
 //                }).get();
 
-                //diffImgFile.delete();
+                //diffImgFile.runDelete();
             } else {
                 PokemonUtil.shouldSendDiff = false;
             }

@@ -34,6 +34,7 @@ import java.util.concurrent.Executors;
 public class MasterManager {
     private static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private static final Map<Long, GuildMusicManager> musicManagers  = new HashMap<>();
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     //thanks to decc the hecc
     static {
@@ -192,15 +193,14 @@ public class MasterManager {
                         }
                     };
 
-                    //register this listener
-                    event.getClient().getDispatcher().registerListener(reactionListener);
-
-                    //react with emojis after registering listener
-                    List<ReactionEmoji> reactionEmojis = BotUtils.initializeRegionals().subList(0, 5);
+                    //react with emojis before registering listener
+                    List<ReactionEmoji> reactionEmojis = BotUtils.getRegionals().subList(0, 5);
                     reactionEmojis.add(ReactionEmoji.of("\u274C"));
                     BotUtils.reactAllEmojis(embedMessage, reactionEmojis);
 
-                    ExecutorService executorService = Executors.newFixedThreadPool(1);//no idea how many i need. seems like a relatively simple task?
+                    //register this listener
+                    event.getClient().getDispatcher().registerListener(reactionListener);
+
                     Runnable removeListener = () -> {
                         try {
                             Thread.sleep(10000);

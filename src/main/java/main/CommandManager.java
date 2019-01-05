@@ -136,6 +136,7 @@ public class CommandManager {
         commandMap.put("pfp", new GetUserPfp());
         commandMap.put("serverpfp", new GetGuildPfp());
         commandMap.put("presence", new UpdatePresence());
+        commandMap.put("cleanup", new DeleteWaifus());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());

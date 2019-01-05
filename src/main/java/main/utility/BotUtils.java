@@ -257,6 +257,16 @@ public class BotUtils {
         });
     }
 
+    public static void reactGet(IMessage message, ReactionEmoji emoji) {
+        RequestBuffer.request(() -> {
+            try {
+                message.addReaction(emoji);
+            } catch (Exception e) {
+                System.out.println("error in botutils#requestGet");
+            }
+        }).get();
+    }
+
     //join voice channel
     public static void handleJoinVoice(MessageReceivedEvent event) {
         IVoiceChannel userVoiceChannel = event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel();
@@ -361,7 +371,7 @@ public class BotUtils {
         return sb.toString();
     }
 
-    public static List<ReactionEmoji> initializeRegionals() {
+    public static List<ReactionEmoji> getRegionals() {
         List<ReactionEmoji> emojis = new ArrayList<>();
 
         for (int i = 0; i < 26; i++) {

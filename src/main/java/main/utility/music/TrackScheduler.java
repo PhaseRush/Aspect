@@ -41,7 +41,7 @@ public class TrackScheduler {
     private int maxLoop = -1;
 
     private IMessage currentSongEmbed;
-    private IMessage lastSongEmbed; //added as temp to delete previous embed
+    private IMessage lastSongEmbed; //added as temp to runDelete previous embed
     private AudioTrack previousTrack; //track that just ended -- keep track for looping -- debug
     private AudioTrack currentTrack;
     public IChannel lastEmbedChannel; //public so accessible from masterManager
@@ -167,7 +167,7 @@ public class TrackScheduler {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         if (currentSongEmbed !=null) //debug purposes
-            currentSongEmbed.delete(); //delete the embed before starting next song.
+            currentSongEmbed.delete(); //runDelete the embed before starting next song.
 
         player.startTrack(nextTrack, false);
         currentTrack = nextTrack; //for looping
