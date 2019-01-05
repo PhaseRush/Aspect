@@ -28,13 +28,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MasterManager {
     private static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private static final Map<Long, GuildMusicManager> musicManagers  = new HashMap<>();
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     //thanks to decc the hecc
     static {
@@ -198,21 +195,11 @@ public class MasterManager {
                     reactionEmojis.add(ReactionEmoji.of("\u274C"));
                     BotUtils.reactAllEmojis(embedMessage, reactionEmojis);
 
-                    //register this listener
+                    // register listener
                     event.getClient().getDispatcher().registerListener(reactionListener);
 
-                    Runnable removeListener = () -> {
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException ignored) {
-                        } finally { //please just execute this no matter what
-                            event.getClient().getDispatcher().unregisterListener(reactionListener);
-                            if (!embedMessage.isDeleted()) embedMessage.delete();
-
-                        }
-                    };
-                    executorService.execute(removeListener);
-
+                    // unregister listener after x ms
+                    BotUtils.unregisterListener(embedMessage, reactionListener, 10000);
 
                 } catch (IOException e) {
                     System.out.println("Audio - MasterManager.loadAndPlay.noMatches - IOException thrown");
@@ -228,6 +215,9 @@ public class MasterManager {
 
         });
     }
+
+
+
     //updated with boolean insertFront //got rid of syncrh. (dannie)
     private static void play(GuildMusicManager musicManager, AudioTrack track, boolean insertFront) {
         if (!insertFront) musicManager.getScheduler().queue(track);

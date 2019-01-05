@@ -14,15 +14,11 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class DeleteWaifus implements Command {
     private static final String MUDAMAID_ID = "264213620026638336"; //527432104204697600
     private static final List<String> filterCommands = Arrays.asList("$w", "$mu", "$h", "$i", "$im", "$wg");
-
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -59,18 +55,8 @@ public class DeleteWaifus implements Command {
         // register listener
         event.getClient().getDispatcher().registerListener(reactionListener);
 
-        // unregister listener after 10 seconds time
-        Runnable removeListener = () -> {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException ignored) {
-            } finally { //please just execute this no matter what
-                event.getClient().getDispatcher().unregisterListener(reactionListener);
-                if (!confirmMsg.isDeleted()) confirmMsg.delete();
-
-            }
-        };
-        executorService.execute(removeListener);
+        // unregister listener after 10000 ms
+        BotUtils.unregisterListener(confirmMsg, reactionListener, 10000);
     }
 
     public void runDelete(MessageReceivedEvent event, List<IMessage> msgs) {

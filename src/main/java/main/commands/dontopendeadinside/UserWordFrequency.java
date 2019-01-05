@@ -32,14 +32,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserWordFrequency implements Command {
-    private static DecimalFormat df = new DecimalFormat("##.####");
+    private static DecimalFormat df4 = new DecimalFormat("##.####");
+    private static DecimalFormat df2 = new DecimalFormat("##");
     private static List<String> validLangs = Arrays.asList("american", "canadian", "british");
 
     // waifu roulette, music, bot-spam
     private static List<String> blacklist = Arrays.asList("528282417589649448", "423408062347608064", "530204591984214046");
 
     static {
-        df.setRoundingMode(RoundingMode.CEILING);
+        df4.setRoundingMode(RoundingMode.CEILING);
+        df2.setRoundingMode(RoundingMode.CEILING);
     }
 
     /**
@@ -59,6 +61,7 @@ public class UserWordFrequency implements Command {
         float numChars = 0, numWords = 0,  numMsgs = 0, matchErrors = 0, numTypos = 0, numEdits = 0;
 
         JLanguageTool langTool = getTool(args);
+        Instant historyDuration = getDuration(args);
 
         long startTime = System.currentTimeMillis(); // convert to nanoTime later
         for (IChannel channel : event.getGuild().getChannels().stream().filter(ch -> !blacklist.contains(ch.getStringID())).collect(Collectors.toList())) {
@@ -66,8 +69,7 @@ public class UserWordFrequency implements Command {
             updateLoadingMsg(loadingMsg, channel);
 
             try {
-                Instant oneWeek = Instant.now().minus(7, ChronoUnit.DAYS); //
-                for (IMessage msg : channel.getMessageHistoryTo(oneWeek).stream().filter(msg -> msg.getAuthor().equals(target)).collect(Collectors.toList())) {
+                for (IMessage msg : channel.getMessageHistoryTo(historyDuration).stream().filter(msg -> msg.getAuthor().equals(target)).collect(Collectors.toList())) {
                     numChars += msg.getFormattedContent().length();
                     numMsgs++;
 
@@ -98,7 +100,7 @@ public class UserWordFrequency implements Command {
 //                                    }
 
                                     // temp log corrections
-                                    autoCorrect.append("\n" + word + " -> "+ correction).append(" in " + channel.getName() + " @ " + msg.getTimestamp().toString());
+                                    autoCorrect.append("\n" + word + " -> "+ correction).append("\t\tin " + channel.getName() + " @ " + msg.getTimestamp().toString());
 
                                     // freqMap.put(correction, freqMap.getOrDefault(correction, 0) + 1); //@tterrag#1098
                                     typoMap.put(correction, typoMap.getOrDefault(correction, 0) + 1); //@tterrag#1098
@@ -134,10 +136,10 @@ public class UserWordFrequency implements Command {
                 .put(0,0, Cell.of("Messages", "Characters", "Words", "Typos", "Edits"))
                 .put(0, 1, Cell.of(str(numMsgs), str(numChars), str(numWords), str(numTypos), str(numEdits)))
                 .put(0, 2, Cell.of("",
-                        numMsgs==0? "NAN " : df.format(numChars / numMsgs) + " chars/msg",
-                        numWords==0? "NAN" : df.format(numChars/numWords) + " chars/word",
-                        numWords==0? "NAN" : df.format(numTypos/numWords) + " typos/word",
-                        numMsgs==0 ? "NAN" : df.format(numEdits/numMsgs) + " edits/msg"));
+                        numMsgs==0? "NAN " : df4.format(numChars / numMsgs) + " chars/msg",
+                        numWords==0? "NAN" : df4.format(numChars/numWords) + " chars/word",
+                        numWords==0? "NAN" : df4.format(numTypos/numWords) + " typos/word",
+                        numMsgs==0 ? "NAN" : df4.format(numEdits/numMsgs) + " edits/msg"));
 
         table = Border.DOUBLE_LINE.apply(table);
 
@@ -183,6 +185,14 @@ public class UserWordFrequency implements Command {
         BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + gist.getHtml_url());
     }
 
+    private Instant getDuration(List<String> args) {
+        Instant duration;
+        if (!args.isEmpty() && args.get(0).equals("MAX")) duration = Instant.MIN;
+        else duration = Instant.now().minus(7, ChronoUnit.DAYS);
+
+        return duration;
+    }
+
     private void updateLoadingMsg(IMessage loadingMsg, IChannel channel) {
         IEmbed old = loadingMsg.getEmbeds().get(0);
         EmbedBuilder eb = new EmbedBuilder()
@@ -205,28 +215,44 @@ public class UserWordFrequency implements Command {
     }
 
     private void buildCharFreqDist(int[] wordCharCount, StringBuilder sb) {
-        GridTable table = GridTable.of(2,10)
-                .put(0,0, Cell.of("1"))
-                .put(0,1, Cell.of("2"))
-                .put(0,2, Cell.of("3"))
-                .put(0,3, Cell.of("4"))
-                .put(0,4, Cell.of("5"))
-                .put(0,5, Cell.of("6"))
-                .put(0,6, Cell.of("7"))
-                .put(0,7, Cell.of("8"))
-                .put(0,8, Cell.of("9"))
-                .put(0,9, Cell.of("10+"))
+        double total = Arrays.stream(wordCharCount).sum();
 
-                .put(1,0, Cell.of(str(wordCharCount[0])))
-                .put(1,1, Cell.of(str(wordCharCount[1])))
-                .put(1,2, Cell.of(str(wordCharCount[2])))
-                .put(1,3, Cell.of(str(wordCharCount[3])))
-                .put(1,4, Cell.of(str(wordCharCount[4])))
-                .put(1,5, Cell.of(str(wordCharCount[5])))
-                .put(1,6, Cell.of(str(wordCharCount[6])))
-                .put(1,7, Cell.of(str(wordCharCount[7])))
-                .put(1,8, Cell.of(str(wordCharCount[8])))
-                .put(1,9, Cell.of(str(wordCharCount[9])));
+        GridTable table = GridTable.of(3,11)
+                .put(0,0, Cell.of("Chars"))
+                .put(0,1, Cell.of("1"))
+                .put(0,2, Cell.of("2"))
+                .put(0,3, Cell.of("3"))
+                .put(0,4, Cell.of("4"))
+                .put(0,5, Cell.of("5"))
+                .put(0,6, Cell.of("6"))
+                .put(0,7, Cell.of("7"))
+                .put(0,8, Cell.of("8"))
+                .put(0,9, Cell.of("9"))
+                .put(0,10, Cell.of("10+"))
+
+                .put(1,0, Cell.of("Freq"))
+                .put(1,1, Cell.of(str(wordCharCount[0])))
+                .put(1,2, Cell.of(str(wordCharCount[1])))
+                .put(1,3, Cell.of(str(wordCharCount[2])))
+                .put(1,4, Cell.of(str(wordCharCount[3])))
+                .put(1,5, Cell.of(str(wordCharCount[4])))
+                .put(1,6, Cell.of(str(wordCharCount[5])))
+                .put(1,7, Cell.of(str(wordCharCount[6])))
+                .put(1,8, Cell.of(str(wordCharCount[7])))
+                .put(1,9, Cell.of(str(wordCharCount[8])))
+                .put(1,10, Cell.of(str(wordCharCount[9])))
+
+                .put(2,0, Cell.of("%"))
+                .put(2,1, Cell.of(str(wordCharCount[0]/total)))
+                .put(2,2, Cell.of(str(wordCharCount[1]/total)))
+                .put(2,3, Cell.of(str(wordCharCount[2]/total)))
+                .put(2,4, Cell.of(str(wordCharCount[3]/total)))
+                .put(2,5, Cell.of(str(wordCharCount[4]/total)))
+                .put(2,6, Cell.of(str(wordCharCount[5]/total)))
+                .put(2,7, Cell.of(str(wordCharCount[6]/total)))
+                .put(2,8, Cell.of(str(wordCharCount[7]/total)))
+                .put(2,9, Cell.of(str(wordCharCount[8]/total)))
+                .put(2,10, Cell.of(str(wordCharCount[9]/total)));
 
         table = Border.DOUBLE_LINE.apply(table);
 
@@ -244,8 +270,8 @@ public class UserWordFrequency implements Command {
     }
 
     private JLanguageTool getTool(List<String> args) {
-        if (args.size() == 1) return LangUtil.langToolAmerican;
-        if (args.get(1).startsWith("CA")) return LangUtil.langToolEnglish;
+        if (args.size() > 1 && args.get(1).equals("US")) return LangUtil.langToolAmerican;
+        if (args.size() > 1 && args.get(1).startsWith("CA")) return LangUtil.langToolEnglish;
 
         return LangUtil.langToolAmerican; // just use this as default case
     }
@@ -256,6 +282,9 @@ public class UserWordFrequency implements Command {
     private String str(int i) {
         return String.valueOf(i);
     }
+    private String str(double d) {
+        return String.valueOf(df2.format(d*100));
+    }
 
     @Override
     public boolean requireSynchronous(){
@@ -264,9 +293,9 @@ public class UserWordFrequency implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-//        return event.getMessage().getMentions().size() == 1 &&
-//                (args.size() != 2 || validLangs.contains(args.get(1)));
-        return BotUtils.isDev(event);
+        return event.getMessage().getMentions().size() == 1 &&
+                (args.size() != 2 || validLangs.contains(args.get(1)));
+        //return BotUtils.isDev(event);
     }
 
 }

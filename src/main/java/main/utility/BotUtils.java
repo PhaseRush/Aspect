@@ -11,6 +11,7 @@ import okhttp3.Response;
 import org.apache.commons.io.IOUtils;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.*;
@@ -29,6 +30,8 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -84,6 +87,9 @@ public class BotUtils {
     // dictionary
     public static Set<String> dictionary;
 
+    // Utility objects
+    private static ExecutorService listenerExecuter = Executors.newCachedThreadPool();
+
     // --- Static initializer --
     static {
         // encrypter
@@ -93,7 +99,6 @@ public class BotUtils {
 
         // dictionary
         String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
-        //dictionary = new TreeSet<>(Arrays.asList(allString.split("\n")));
         dictionary = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
     }
 
@@ -265,6 +270,21 @@ public class BotUtils {
                 System.out.println("error in botutils#requestGet");
             }
         }).get();
+    }
+
+    // temp listener
+    public static void unregisterListener(IMessage embedMessage, IListener reactionListener, int timeoutMillis) {
+        Runnable removeListener = () -> {
+            try {
+                Thread.sleep(timeoutMillis);
+            } catch (InterruptedException ignored) {
+            } finally { //please just execute this no matter what
+                Main.client.getDispatcher().unregisterListener(reactionListener);
+                if (!embedMessage.isDeleted()) embedMessage.delete();
+
+            }
+        };
+        listenerExecuter.execute(removeListener);
     }
 
     //join voice channel
