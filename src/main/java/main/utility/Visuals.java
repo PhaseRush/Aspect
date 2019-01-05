@@ -1,5 +1,6 @@
 package main.utility;
 
+import main.utility.miscJsonObj.CatMediaContainer;
 import sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -286,6 +287,13 @@ public class Visuals {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static String getCatMedia() {
+        String json = BotUtils.getStringFromUrl("https://api.thecatapi.com/v1/images/search?size=full");
+        json = json.substring(1, json.length()-1);
+        CatMediaContainer cat = BotUtils.gson.fromJson(json, CatMediaContainer.class);
+        return cat.getUrl();
     }
 
 }

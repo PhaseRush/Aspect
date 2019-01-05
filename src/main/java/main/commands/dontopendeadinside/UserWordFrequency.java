@@ -14,6 +14,7 @@ import org.languagetool.JLanguageTool;
 import org.languagetool.rules.RuleMatch;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
@@ -44,17 +45,22 @@ public class UserWordFrequency implements Command {
      */
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+        IMessage loadingMsg = BotUtils.sendGet(event.getChannel(), initLoadingEb());
+
         IUser target = event.getMessage().getMentions().get(0); // guarantee to have 1
         Map<String, Integer> freqMap = new HashMap<>();
         Map<String, Integer> typoMap = new HashMap<>();
         int[] wordCharCount = new int[10];
 
-        float numChars = 0, numWords = 0,  numMsgs = 0, matchErrors = 0, numTypos = 0, numEdits = 0; // technically should be 0, buuuuuuuuuuut ya know
+        float numChars = 0, numWords = 0,  numMsgs = 0, matchErrors = 0, numTypos = 0, numEdits = 0;
 
         JLanguageTool langTool = getTool(args);
 
         long startTime = System.currentTimeMillis(); // convert to nanoTime later
         for (IChannel channel : event.getGuild().getChannels()) {
+            // update loading msg
+            updateLoadingMsg(loadingMsg, channel);
+
             try {
                 Instant oneWeek = Instant.now().minus(7, ChronoUnit.DAYS); //
                 for (IMessage msg : channel.getMessageHistoryTo(oneWeek).stream().filter(msg -> msg.getAuthor().equals(target)).collect(Collectors.toList())) {
@@ -151,6 +157,12 @@ public class UserWordFrequency implements Command {
         // check length of description -- use limit length regardless
         eb.withDesc(BotUtils.limitStrLen(sb.toString(), 2048, false, true, '\n'));
 
+        // disclaimer
+        eb.appendDesc("\n\n Note: Typos may be over-counted. Misspelled words may be wrong.");
+        // delete loading embed
+        if (!loadingMsg.isDeleted()) loadingMsg.delete();
+
+        // send embed
         BotUtils.send(event.getChannel(), eb);
 
         // generate gist
@@ -161,6 +173,27 @@ public class UserWordFrequency implements Command {
 
         GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
         BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + gist.getHtml_url());
+    }
+
+    private void updateLoadingMsg(IMessage loadingMsg, IChannel channel) {
+        IEmbed old = loadingMsg.getEmbeds().get(0);
+        EmbedBuilder eb = new EmbedBuilder()
+                .withTitle(old.getTitle())
+                .withColor(old.getColor())
+                .withImage(old.getImage().getUrl())
+                .withDesc("Scanning: `" + channel.getName() + "`");
+
+        try {
+            loadingMsg.edit(eb.build());
+        } catch (Exception ignored) { // rate limit exception, etc
+        }
+    }
+
+    private EmbedBuilder initLoadingEb() {
+        return new EmbedBuilder()
+                .withTitle("... analysing")
+                .withColor(Visuals.getVibrantColor())
+                .withImage(Visuals.getCatMedia());
     }
 
     private void buildCharFreqDist(int[] wordCharCount, StringBuilder sb) {
