@@ -153,7 +153,7 @@ public class UserWordFrequency implements Command {
         System.out.println("typomap size: " + typoMap.size());
 
         // chars per word table
-        sb.append("\nCharacters per word distribution```js\n");
+        sb.append("```js\nCharacters per word distribution                  \n");
         buildCharFreqDist(wordCharCount, sb);
 
         // word frequency
@@ -198,8 +198,9 @@ public class UserWordFrequency implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle(old.getTitle())
                 .withColor(old.getColor())
-                .withImage(old.getImage().getUrl())
                 .withDesc("Scanning: `" + channel.getName() + "`");
+
+        if (old.getImage() != null) eb.withImage(old.getImage().getUrl());
 
         try {
             loadingMsg.edit(eb.build());
@@ -208,10 +209,15 @@ public class UserWordFrequency implements Command {
     }
 
     private EmbedBuilder initLoadingEb() {
-        return new EmbedBuilder()
+        EmbedBuilder embedBuilder = new EmbedBuilder()
                 .withTitle("... analysing")
-                .withColor(Visuals.getVibrantColor())
-                .withImage(Visuals.getCatMedia());
+                .withColor(Visuals.getVibrantColor());
+        try {
+            embedBuilder.withImage(Visuals.getCatMedia());
+        } catch (Exception ignored) {
+        }
+
+        return embedBuilder;
     }
 
     private void buildCharFreqDist(int[] wordCharCount, StringBuilder sb) {

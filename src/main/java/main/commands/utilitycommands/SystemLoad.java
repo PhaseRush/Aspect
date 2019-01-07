@@ -42,7 +42,7 @@ public class SystemLoad implements Command {
     }
 
     private void runSyncMap(MessageReceivedEvent event) {
-        StringBuilder sb = new StringBuilder("The following servers have synchronous maps:```\n");
+        StringBuilder sb = new StringBuilder("The following servers have synchronous maps:```js\n");
 
         for (Map.Entry e : CommandManager.syncExecuteMap.entrySet()) {
             IGuild guild = Main.client.getGuildByID(Long.valueOf((String)e.getKey()));
@@ -51,6 +51,8 @@ public class SystemLoad implements Command {
                     .append(exe.isTerminated()? "TERMINATED": "RUNNING")
                     .append("\n");
         }
+
+        sb.append("```");
 
         BotUtils.send(event.getChannel(), sb.toString());
     }

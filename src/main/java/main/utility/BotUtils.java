@@ -273,15 +273,14 @@ public class BotUtils {
     }
 
     // temp listener
-    public static void unregisterListener(IMessage embedMessage, IListener reactionListener, int timeoutMillis) {
+    public static void unregisterListener(IListener reactionListener, int timeoutMillis, IMessage embedMsg) {
         Runnable removeListener = () -> {
             try {
                 Thread.sleep(timeoutMillis);
             } catch (InterruptedException ignored) {
             } finally { //please just execute this no matter what
                 Main.client.getDispatcher().unregisterListener(reactionListener);
-                if (!embedMessage.isDeleted()) embedMessage.delete();
-
+                if (!embedMsg.isDeleted()) embedMsg.delete();
             }
         };
         listenerExecuter.execute(removeListener);

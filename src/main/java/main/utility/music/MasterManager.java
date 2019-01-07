@@ -199,7 +199,7 @@ public class MasterManager {
                     event.getClient().getDispatcher().registerListener(reactionListener);
 
                     // unregister listener after x ms
-                    BotUtils.unregisterListener(embedMessage, reactionListener, 10000);
+                    BotUtils.unregisterListener(reactionListener, 10000, embedMessage);
 
                 } catch (IOException e) {
                     System.out.println("Audio - MasterManager.loadAndPlay.noMatches - IOException thrown");
@@ -247,7 +247,6 @@ public class MasterManager {
         //BotUtils.send(channel, "Skipped " + numToSkip + (numToSkip == 1 ? " track" : " tracks"));
 
         //state update
-
 //        try {
 //            MusicStats stats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats();
 //            stats.setNumSongsSkipped(stats.getNumSongsSkipped() + numToSkip);

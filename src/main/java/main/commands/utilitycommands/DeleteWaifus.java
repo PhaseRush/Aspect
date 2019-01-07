@@ -56,7 +56,7 @@ public class DeleteWaifus implements Command {
         event.getClient().getDispatcher().registerListener(reactionListener);
 
         // unregister listener after 10000 ms
-        BotUtils.unregisterListener(confirmMsg, reactionListener, 10000);
+        BotUtils.unregisterListener(reactionListener, 10000, confirmMsg);
     }
 
     public void runDelete(MessageReceivedEvent event, List<IMessage> msgs) {
