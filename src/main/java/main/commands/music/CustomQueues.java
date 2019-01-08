@@ -30,6 +30,6 @@ public class CustomQueues implements Command {
 
     @Override
     public String getDesc() {
-        return null;
+        return "Returns a list of custom queues that are supported by the bot. Try `$play [queue name]`";
     }
 }

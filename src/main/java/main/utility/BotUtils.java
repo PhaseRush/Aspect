@@ -236,6 +236,21 @@ public class BotUtils {
                 }).get();
     }
 
+    public static IMessage sendGet(IChannel channel, String path, boolean isFilePath) {
+        File file = new File(path);
+        return RequestBuffer.request(() -> {
+            try {
+                return channel.sendFile(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return  null;
+            } catch (MissingPermissionsException e) {
+                send(channel, "Missing Permissions: " + channel.getName());
+                return null;
+            }
+        }).get();
+    }
+
     public static void send(IChannel channel, List<String> messages) {
         try {
             for (String s : messages) {

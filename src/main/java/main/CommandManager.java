@@ -239,6 +239,8 @@ public class CommandManager {
                 cmd.runCommand(event, argsList);
 
                 cmdPrintLog(event, commandStr, argsList);
+            } else {
+                BotUtils.send(event.getChannel(), "Error running command");
             }
 
             // Handle state json
