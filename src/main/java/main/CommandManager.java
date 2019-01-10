@@ -45,7 +45,7 @@ public class CommandManager {
     private long readyTime = System.currentTimeMillis();
     public static ExecutorService commandExecutors = Executors.newCachedThreadPool();
 
-    public Map<String, Command> commandMap = new LinkedHashMap<>();
+    public static Map<String, Command> commandMap = new LinkedHashMap<>();
 
     public static Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
     //talked to hec about using a static initializer but constructor is fine

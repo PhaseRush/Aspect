@@ -7,13 +7,14 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 public class TextToImage implements Command {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String path = "text_image" + System.currentTimeMillis();
+        String path = "text_image_" + UUID.randomUUID().toString();
         Visuals.saveImg(Visuals.genTextImage(args.get(0)), path);
 
         path = System.getProperty("user.dir") + "\\" + path + ".png";
@@ -25,11 +26,6 @@ public class TextToImage implements Command {
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
         return !args.isEmpty();
-    }
-
-    @Override
-    public boolean requireSynchronous() {
-        return true;
     }
 
     @Override

@@ -289,7 +289,7 @@ public class BotUtils {
 
     // temp listener
     public static void unregisterListener(IListener reactionListener, int timeoutMillis, IMessage embedMsg) {
-        Runnable removeListener = () -> {
+        listenerExecuter.execute(() -> {
             try {
                 Thread.sleep(timeoutMillis);
             } catch (InterruptedException ignored) {
@@ -297,8 +297,7 @@ public class BotUtils {
                 Main.client.getDispatcher().unregisterListener(reactionListener);
                 if (!embedMsg.isDeleted()) embedMsg.delete();
             }
-        };
-        listenerExecuter.execute(removeListener);
+        });
     }
 
     //join voice channel
@@ -455,7 +454,7 @@ public class BotUtils {
 
     public static void reactAllEmojis(IMessage iMessage, List<ReactionEmoji> emojis) {
         for (ReactionEmoji e : emojis)
-            RequestBuffer.request(() -> iMessage.addReaction(e)).get(); //.get() is literally magic and fixes the entire universe
+            RequestBuffer.request(() -> iMessage.addReaction(e)).get(); //.get() is literally magic and fixes the entire universe -- because it blocks thread until last emoji finished
     }
 
     public static void reactiWithEmoji(IMessage iMessage, ReactionEmoji e) {

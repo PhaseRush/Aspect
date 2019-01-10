@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DeleteWaifus implements Command {
-    private static final String MUDAMAID_ID = "264213620026638336"; //527432104204697600
-    private static final List<String> filterCommands = Arrays.asList("$w", "$mu", "$h", "$i", "$im", "$wg");
+    private static final String MUDAMAID_ID = "527432104204697600"; //527432104204697600
+    private static final List<String> filterCommands = Arrays.asList("$w", "$mu", "$h", "$i", "$im", "$wg", "$wishlist", "$wish", "$ima", "mm");
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {

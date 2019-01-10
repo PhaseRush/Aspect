@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.Map.Entry;
+
 public class PokemonIdentifier {
     private static ThreadGroup pokemonIdentifiers = new ThreadGroup("Pokemon Identifiers");
 
@@ -28,7 +30,7 @@ public class PokemonIdentifier {
             long startTime = System.currentTimeMillis();
             double threshold = 10; //changed from .1 -> 10
             boolean shouldSendDiff = true;
-            String targetUrl = "";
+            String targetUrl;
 
             if(event.getAuthor().getStringID().equals("264213620026638336") && event.getMessage().getFormattedContent().startsWith("ht")) { //for use by dev for testing
                 targetUrl = event.getMessage().getFormattedContent();
@@ -43,8 +45,8 @@ public class PokemonIdentifier {
             BufferedImage target = Visuals.cropTransparent(Visuals.urlToBufferedImageWithAgentHeader(targetUrl)); //important
 
             HashMap<String, Double> similarityMap = new HashMap<>();
-            BufferedImage testImg = null;
-            Map.Entry answer = null;
+            BufferedImage testImg;
+            Entry answer;
 
             int counter = 1;
             for (String s : PokemonUtil.pokemonArray) {
