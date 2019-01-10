@@ -666,6 +666,15 @@ public class BotUtils {
         return event.getAuthor().getStringID().equals(DEV_DISCORD_STRING_ID);
     }
 
+    public static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
+    }
+
+    public static boolean isLinux() {
+        String os =  System.getProperty("os.name").toLowerCase();
+        return os.contains("nix") || os.contains("nux") || os.contains("aix");
+    }
+
     @Override
     public String toString() {
         return "Baka don't touch me!";

@@ -113,7 +113,7 @@ public class PokemonIdentifier {
 
         //@todo using this thread impl. to test out priority setting
         Thread iden = new Thread(pokemonIdentifiers, identifier, "identifier");
-        iden.setPriority(3); //5 is default priority. might want to make this daemon
+        iden.setPriority(3); //5 is default priority
         iden.start();
         //then execute this guy
         //executor.execute(identifier);

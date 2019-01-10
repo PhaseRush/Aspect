@@ -39,6 +39,7 @@ public class DeleteWaifus implements Command {
                         runDelete(event, msgs);
                         break;
                     case "\u274c": // x
+                        BotUtils.send(event.getChannel(), "Exiting cleanup");
                         break;
                     default:
                         BotUtils.send(event.getChannel(), "Not a valid reaction, exiting cleanup");

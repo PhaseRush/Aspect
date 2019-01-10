@@ -142,7 +142,7 @@
             <version>1.1.2</version>
         </dependency>
 
-        <!--Spell chck-->
+        <!--Splel chck-->
         <dependency>
             <groupId>org.languagetool</groupId>
             <artifactId>language-en</artifactId>

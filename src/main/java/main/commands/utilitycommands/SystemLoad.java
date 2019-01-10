@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
 public class SystemLoad implements Command {
-    OperatingSystemMXBean osBean;
-    Runtime r;
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -24,9 +22,8 @@ public class SystemLoad implements Command {
             return;
         }
 
-
-        osBean = Main.osBean;
-        r = Runtime.getRuntime();
+        OperatingSystemMXBean osBean = Main.osBean;
+        Runtime r = Runtime.getRuntime();
         double maxM = r.maxMemory() / 1E6;
 
         String msg = "```" +
@@ -45,10 +42,11 @@ public class SystemLoad implements Command {
         StringBuilder sb = new StringBuilder("The following servers have synchronous maps:```js\n");
 
         for (Map.Entry e : CommandManager.syncExecuteMap.entrySet()) {
-            IGuild guild = Main.client.getGuildByID(Long.valueOf((String)e.getKey()));
+            IGuild guild = Main.client.getGuildByID(Long.valueOf((String) e.getKey()));
             ExecutorService exe = (ExecutorService) e.getValue();
-            sb.append(guild.getName()).append(" : ")
-                    .append(exe.isTerminated()? "TERMINATED": "RUNNING")
+            sb.append(guild.getName()).append(" @ ")
+                    .append(guild.getStringID()).append(" : ")
+                    .append(exe.isTerminated() ? "TERMINATED" : "RUNNING")
                     .append("\n");
         }
 
