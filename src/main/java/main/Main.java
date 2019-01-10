@@ -92,11 +92,11 @@ public class Main {
 
         // ------------------------------------------------------------ //
 
-        // Create all dispatch listeners
-        List<Object> dispatchListeners = BotUtils.createListeners();
-
         // Self Client Initialization
         client = BotUtils.getBuiltDiscordClient(args[1]);
+
+        // Create all dispatch listeners
+        List<Object> dispatchListeners = BotUtils.createListeners();
 
         // Register all listeners via the @EventSubscriber annotation which allows for organization and delegation of events
         client.getDispatcher().registerListeners(dispatchListeners.toArray());

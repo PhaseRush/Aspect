@@ -1,4 +1,4 @@
-package main.commands.dontopendeadinside;
+package main.commands.dontopendeadinside.imaging;
 
 import com.google.gson.Gson;
 import main.Command;

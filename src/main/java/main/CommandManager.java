@@ -1,6 +1,13 @@
 package main;
 
-import main.commands.dontopendeadinside.*;
+import main.commands.dontopendeadinside.RollDice;
+import main.commands.dontopendeadinside.Summarize;
+import main.commands.dontopendeadinside.UserWordFrequency;
+import main.commands.dontopendeadinside.WordCounter;
+import main.commands.dontopendeadinside.imaging.Imaging;
+import main.commands.dontopendeadinside.imaging.TextToImage;
+import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
+import main.commands.dontopendeadinside.imaging.ascii.Asciimg;
 import main.commands.fortnite.FortniteStats;
 import main.commands.humor.AnalyzeUser;
 import main.commands.humor.Insult;
