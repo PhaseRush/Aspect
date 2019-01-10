@@ -2,6 +2,8 @@ package main.commands.dontopendeadinside;
 
 import main.Command;
 import main.utility.BotUtils;
+import main.utility.gist.GistUtils;
+import main.utility.gist.gist_json.GistContainer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -47,9 +49,18 @@ public class RollDice implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle(numDice + "d" + numSides)
-                .withDesc(desc.toString());
+                .withDesc(BotUtils.limitStrLen(desc.toString(), 1500, true, true, '+'));
 
         BotUtils.send(event.getChannel(), eb);
+
+
+        if (desc.length() > 1500) {
+            GistContainer gist = GistUtils.makeGistGetObj(
+                    numDice + "d" + numSides + "roll for " + BotUtils.getNickOrDefault(event),
+                    "Total: " + total,
+                    desc.toString());
+            BotUtils.send(event.getChannel(), "To see all the rolls, visit\n" + gist.getHtml_url());
+        }
     }
 
     @Override

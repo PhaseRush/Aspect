@@ -2,6 +2,7 @@ package main.utility.gist;
 
 
 import main.utility.BotUtils;
+import main.utility.gist.gist_json.GistContainer;
 import org.eclipse.egit.github.core.Gist;
 import org.eclipse.egit.github.core.GistFile;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -31,5 +32,11 @@ public class GistUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static GistContainer makeGistGetObj(String fileName, String fileDesc, String fileContent) {
+        String url = makeGistGetUrl(fileName, fileDesc, fileContent);
+        String json = BotUtils.getStringFromUrl(url);
+        return BotUtils.gson.fromJson(json, GistContainer.class);
     }
 }
