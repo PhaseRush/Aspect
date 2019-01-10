@@ -45,6 +45,7 @@ public class UserWordFrequency implements Command {
     }
 
     /**
+     * kms
      * @param event
      * @param args
      */
@@ -220,6 +221,7 @@ public class UserWordFrequency implements Command {
         return embedBuilder;
     }
 
+    // Why loop when you can unroll :)
     private void buildCharFreqDist(int[] wordCharCount, StringBuilder sb) {
         double total = Arrays.stream(wordCharCount).sum();
 
