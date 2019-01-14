@@ -2,20 +2,21 @@ import main.utility.BotUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static junit.framework.Assert.*;
 
 class BotUtilsTest {
     private static String DIR_PATH;
-    private static Calendar CALENDAR;
+    private static Date DATE;
 
     @BeforeAll
     static void setup() {
         DIR_PATH = System.getProperty("user.dir") + "/";
-        CALENDAR = Calendar.getInstance();
+        DATE = new Date();
     }
 
     @Test
@@ -114,10 +115,22 @@ class BotUtilsTest {
         assertEquals(BotUtils.stringSimilarity(s3, s2), 2.0);
     }
 
+    @Test
+    void SHA256_const() {
+        BotUtils.dictionary
+                .forEach((s) ->
+                        assertEquals(
+                                org.apache.commons.codec.digest.DigestUtils.sha256Hex(s),
+                                BotUtils.SHA256(s)));
+    }
 
-    //test SHA256
+    @Test
+    void getTodayYYYYMMDD_const() {
+        SimpleDateFormat format = new SimpleDateFormat();
+        format.applyPattern("yyyy-MM-dd");
 
-    //test getTodayYYYYMMDD
+        assertEquals(BotUtils.getTodayYYYYMMDD(), format.format(DATE));
+    }
 
     @Test
     void isWindows_Const() {

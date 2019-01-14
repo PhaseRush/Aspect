@@ -24,7 +24,6 @@ import sx.blah.discord.util.RequestBuffer;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -34,6 +33,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BotUtils {
 
@@ -619,16 +620,22 @@ public class BotUtils {
      * @return sha256 hashed String output
      */
     public static String SHA256(String input) {
-        byte[] encodedBytes = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));
+        try{
+            byte[] hash = messageDigest.digest(input.getBytes(UTF_8));
+            StringBuilder hexString = new StringBuilder();
 
-        StringBuilder hexBuilder = new StringBuilder();
-        for (byte encodedByte : encodedBytes) {
-            String hex = Integer.toHexString(0xff & encodedByte);
-            if (hex.length() == 1) hexBuilder.append('0');
-            hexBuilder.append(hex);
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            return null;
+
         }
-
-        return hexBuilder.toString();
     }
 
 //    public static <T extends Number> getMin(T first, T second) {
