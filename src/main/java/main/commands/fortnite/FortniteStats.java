@@ -26,7 +26,7 @@ public class FortniteStats implements Command {
 
 
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("Fortnite Stats: " + BotUtils.capitalizeFirst(ign) + " : " + platform)
+                .withTitle("Fortnite Stats: " + BotUtils.capitalizeFirstLowerRest(ign) + " : " + platform)
                 .withUrl("https://fortnitetracker.com/profile/" + platform + "/" + ign)
                 //.withThumbnail("https://vignette.wikia.nocookie.net/fortnite/images/5/54/Icon_Monthly_VIP_Badge.png/revision/latest?cb=20170806011009")
                 .withDesc(generateDesc(stats))

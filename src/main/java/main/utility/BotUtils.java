@@ -173,8 +173,8 @@ public class BotUtils {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     // Helper functions to make certain aspects of the bot easier to use.
@@ -485,8 +485,11 @@ public class BotUtils {
         voiceChannel.join();
     }
 
-    public static String capitalizeFirst(String s) {
+    public static String capitalizeFirstLowerRest(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+    }
+    public static String capitalizeFirst(String s) {
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
     public static String getStringFromUrl(String url) {

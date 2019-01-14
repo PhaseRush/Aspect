@@ -59,7 +59,7 @@ public class LeaguePlayerEmbed implements Command {
                 .withAuthorName(summoner.getName())
                 .withTitle("League of Legends analytics - 8.11")
                 .withUrl("https://github.com/PhaseRush/Aspect")
-                .withThumbnail("http://opgg-static.akamaized.net/images/medals/" + BotUtils.capitalizeFirst(rank) + "_" + "" + ".png")
+                .withThumbnail("http://opgg-static.akamaized.net/images/medals/" + BotUtils.capitalizeFirstLowerRest(rank) + "_" + "" + ".png")
                 .withDesc(ign + " is a " + (isRanked ? rank + " " + division.name() : "") + " " + cm.getChampion().getName()
                         + " main "  + (isRanked? "in " + summoner.getLeague(Queue.RANKED_SOLO_5x5).getName() : ""))
                 .withColor(validProfileIcon ? (Visuals.analyizeImageColor(summoner.getProfileIcon().getImage().get())) : Visuals.getVibrantColor())
