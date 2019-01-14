@@ -73,19 +73,47 @@ class BotUtilsTest {
         assertEquals(BotUtils.capitalizeFirst(s4), ";test");
     }
 
+    @Test
+    void getStringFromUrl_Const() {
+        String url = "https://raw.githubusercontent.com/PhaseRush/Aspect/master/LICENSE";
+        String text = BotUtils.getStringFromUrl(url);
 
-    // TODO: 2019-01-13
-    //test getStringFromUrl
+        assertTrue(text.startsWith("MIT License"));
+        assertTrue(text.endsWith("SOFTWARE.\n"));
+    }
+
     //test buildOptions
-    //test getCharFromInt
 
+    @Test
+    void getCharFromInt_Const() {
+        String[] chars = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
+        for (int i = 0; i < 26; i++) {
+            assertEquals(BotUtils.getCharFromInt(i), chars[i]);
+        }
+    }
     //test sortMap
 
     //test millisToHMS
     //test millistoMS
+
     //test limitStrLen
     //test stringSimilarity
-    //test generateWeirdFlex
+
+    @Test
+    void stringSimilarity_Const() {
+        String s0 = "test";
+        String s1 = "test";
+        String s2 = "tesq";
+        String s3 = "test1";
+
+        assertEquals(BotUtils.stringSimilarity(s0, s1), 0.0);
+        assertEquals(BotUtils.stringSimilarity(s1, s0), 0.0);
+        assertEquals(BotUtils.stringSimilarity(s1, s2), 1.0);
+        assertEquals(BotUtils.stringSimilarity(s1, s3), 1.0);
+        assertEquals(BotUtils.stringSimilarity(s3, s2), 2.0);
+    }
+
 
     //test SHA256
 
@@ -106,8 +134,4 @@ class BotUtilsTest {
     void toString_JOKE() {
         assertEquals(new BotUtils().toString(), "Baka don't touch me!");
     }
-
-
-
-
 }

@@ -527,7 +527,7 @@ public class BotUtils {
         return sb.append("\n:x: cancel this request").toString();
     }
 
-    private static String getCharFromInt(int i) {
+    public static String getCharFromInt(int i) {
         return i > -1 && i < 26 ? String.valueOf((char) (i + 'a')) : null; //super fucking janky
     }
 
