@@ -54,7 +54,7 @@ public class BotUtils {
     public final static String DEV_DISCORD_STRING_ID = "264213620026638336";
 
     //guildID, commandPrefix
-    private static final String mapFilePath = "";//get rid of this
+    private static final String mapFilePath = ""; //get rid of this
     private static Map<Long, String> PREFIX_MAP = new HashMap<>(); //adding angle brackets surpress warnings :)
 
     //API keys
@@ -134,7 +134,6 @@ public class BotUtils {
 
     /**
      * (slightly nsfw) Insults
-     *
      * @return
      */
     private static List<String> populateInsults() {
@@ -193,6 +192,8 @@ public class BotUtils {
         });
     }
 
+    // redundant var just for distinction
+    // cannot change other because will make the call bulky
     public static void send(IChannel channel, String path, boolean isFilePath) {
         File file = new File(path);
         RequestBuffer.request(() -> {
@@ -454,7 +455,7 @@ public class BotUtils {
         return imageCount;
     }
 
-    public static void reactAllEmojis(IMessage iMessage, List<ReactionEmoji> emojis) {
+    public synchronized static void reactAllEmojis(IMessage iMessage, List<ReactionEmoji> emojis) {
         for (ReactionEmoji e : emojis)
             RequestBuffer.request(() -> iMessage.addReaction(e)).get(); //.get() is literally magic and fixes the entire universe -- because it blocks thread until last emoji finished
     }
@@ -551,13 +552,10 @@ public class BotUtils {
      */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortMap(Map<K, V> map, boolean smallestToLargest, boolean sortByValue) {
         List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());
-        if (sortByValue)
-            entryList.sort(Entry.comparingByValue());
-//        else
-//            entryList.sort(Entry.comparingByKey());
+        if (sortByValue) entryList.sort(Entry.comparingByValue());
+//        else entryList.sort(Entry.comparingByKey());
 
-        if (!smallestToLargest)
-            Collections.reverse(entryList);
+        if (!smallestToLargest) Collections.reverse(entryList);
 
         Map<K, V> result = new LinkedHashMap<>();
 

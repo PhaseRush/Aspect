@@ -70,7 +70,7 @@ public class EventsNearLocation implements Command {
 
         isRateLimited = Integer.valueOf(rl.getAvailable()) < 5; // leave 5 requests for buffers
 
-
+        rateReset = Long.valueOf(rl.getReset());
     }
 
     /**
