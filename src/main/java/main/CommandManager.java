@@ -23,6 +23,7 @@ import main.commands.music.sfx.SoundEffect;
 import main.commands.music.sfx.SoundEffectList;
 import main.commands.nasa.BlueMarble;
 import main.commands.nasa.NasaApod;
+import main.commands.outdoors.EventsNearLocation;
 import main.commands.overwatch.OverwatchStats;
 import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
@@ -80,6 +81,9 @@ public class CommandManager {
         commandMap.put("img", new Imaging()); // showcase?
         commandMap.put("identify", new PokemonIdentifier()); // showcase?
         commandMap.put("roll", new RollDice());
+
+        // misc features
+        commandMap.put("events", new EventsNearLocation());
 
         //humor
         commandMap.put("cute", new CuteImg());

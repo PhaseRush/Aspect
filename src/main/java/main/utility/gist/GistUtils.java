@@ -39,4 +39,9 @@ public class GistUtils {
         String json = BotUtils.getStringFromUrl(url);
         return BotUtils.gson.fromJson(json, GistContainer.class);
     }
+
+    public static String makeGistGetHtmlUrl(String fileName, String fileDesc, String fileContent) {
+        return makeGistGetObj(fileName, fileDesc, fileContent).getHtml_url();
+    }
+
 }

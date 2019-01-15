@@ -67,6 +67,7 @@ public class BotUtils {
     public static String WOLFRAM_API_KEY;
     public static String YOUTUBE_API_KEY;
     public static String WF_BOTTOM_TEXT_ID;
+    public static String TICKET_MASTER_API_KEY;
     public static IChannel BOTTOM_TEXT;
     public static String PRIVATE_CHANNEL_INFO_URL;
 
