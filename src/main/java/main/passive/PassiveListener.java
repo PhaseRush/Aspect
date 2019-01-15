@@ -27,7 +27,7 @@ public class PassiveListener {
     private static Levenshtein levenshtein = new Levenshtein();
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
-    private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L); //for Ohra's private server
+    private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
 
 
     @EventSubscriber

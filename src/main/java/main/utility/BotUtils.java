@@ -523,12 +523,18 @@ public class BotUtils {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < numOptions; i++)
-            sb.append(":regional_indicator_" + getCharFromInt(i) + ":\t\t" + intendedItemNames.get(i) + "\n");
+            sb.append(":regional_indicator_" + ithChar(i) + ":\t\t" + intendedItemNames.get(i) + "\n");
 
         return sb.append("\n:x: cancel this request").toString();
     }
 
-    public static String getCharFromInt(int i) {
+    /**
+     * returns the ith char of the alphabet.
+     * NOTE: 0-based index, ie: a is the 0th char
+     * @param i
+     * @return ith char of alphabet, null if input not valid
+     */
+    public static String ithChar(int i) {
         return i > -1 && i < 26 ? String.valueOf((char) (i + 'a')) : null; //super fucking janky
     }
 
