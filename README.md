@@ -22,12 +22,33 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | play | 1 | Adds param to Queue | `$play \[YT song/plist]` |
 | nowplaying/current/np| 0 | Displays info about current song | `$nowplaying` |
 | skip | 0, 1 | skips 1 song, or \[param\] songs | `$skip (15)` |
-| queue | 0 | lists the first 15 songs in queue | `$queue` |
+| queue/q | 0 | lists the first 15 songs in queue | `$queue` |
 | loop - WIP| 0, 1 | loops indefinetly, or \[param\] times | `$loop (3)` |
 | shuffle | 0 | shuffles current queue | `$shuffle` |
 | sfx | 1 | plays \[param\] sound effect | `$sfx purple` | 
 | listsfx | 0 | lists all available sound effects | `$listsfx` |
-| qdel | 1 | removes song in position x from queue | `$qdel 4` |
+| qdel/songdel | 1 | removes song in position x from queue | `$qdel 4` |
+| listmusic | 0 | lists all preconfigured playlists | `$listmusic` |
+| pq | 0 | lists past queue (past songs) | `$pq` |
+
+#### Misc.
+
+| Command | #Params | Description | Example |
+| --- | --- | --- | --- |
+| summarize | 1 | summarizes webpage article | `$summarize https://goo.gl/oei2cu` |
+| img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
+| greet | 0 | greets everyone in current Voice channel | `$greet` |
+
+#### Utility (non-meta)
+
+| Command | #Params | Description | Example |
+| --- | --- | --- | --- |
+| dic/def | 1 | urban dictionary query | `$dic english` |
+| wiki | 1 | wikipedia query | `$wiki apple` |
+| roll | 1 | rolls dice. Use dice notation | `$roll 6d14` |
+| render | 1 | renders an image with text param | `$render Hello!` |
+| freq | 1 | analyses word frequency for tagged user | `$freq @Requeim` |
+| bob | 1 | Spongebob-ify text parameter | `$bob haha so funny` |
 
 #### General Commands
 
@@ -86,7 +107,8 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-|wolfram/solve/_ | 1..* | Querys WA | `$_ tell me a comp sci joke` |
+|wolfram/solve/_ | 1..* | Basic WA query | `$_ tell me a comp sci joke` |
+| __ | 1..* | Full WA query | `$__ centripetal force 15kg 600m 13rad/sec` |
 
 #### Humour // Don't dead open inside
 
@@ -98,13 +120,6 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | ascii | 1,2 | Ascii-fy an image. Can specify font size| `$ascii https://goo.gl/5dx7VS, 4` |
 | ascii2 | 2 | Ascii-fy, old. Specify font size | `$ascii2 https://goo.gl/5dx7VS, 10` |
 | count | 1, 2 | Counts # of occurences of word/regex in channel, or entire server | `$count word, all` |
-
-#### Misc.
-
-| Command | #Params | Description | Example |
-| --- | --- | --- | --- |
-| summarize | 1 | summarizes webpage article | `$summarize https://goo.gl/oei2cu` |
-| img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
 
 #### Stats
 | Command | #Params | Description | Example |
