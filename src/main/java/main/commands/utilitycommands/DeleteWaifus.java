@@ -70,7 +70,7 @@ public class DeleteWaifus implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true; // will add other stuff later
+        return false; // DISABLE FOR NOW
     }
 
     @Override

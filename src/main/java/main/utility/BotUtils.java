@@ -291,7 +291,7 @@ public class BotUtils {
     }
 
     // temp listener
-    public static void unregisterListener(IListener reactionListener, int timeoutMillis, IMessage embedMsg) {
+    public static synchronized void unregisterListener(IListener reactionListener, int timeoutMillis, IMessage embedMsg) {
         listenerExecuter.execute(() -> {
             try {
                 Thread.sleep(timeoutMillis);

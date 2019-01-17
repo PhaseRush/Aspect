@@ -1,9 +1,6 @@
 package main;
 
-import main.commands.dontopendeadinside.RollDice;
-import main.commands.dontopendeadinside.Summarize;
-import main.commands.dontopendeadinside.UserWordFrequency;
-import main.commands.dontopendeadinside.WordCounter;
+import main.commands.dontopendeadinside.*;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.TextToImage;
 import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
@@ -84,6 +81,7 @@ public class CommandManager {
 
         // misc features
         commandMap.put("events", new EventsNearLocation());
+        commandMap.put("greet", new Greet());
 
         //humor
         commandMap.put("cute", new CuteImg());
