@@ -40,7 +40,7 @@ public class Main {
         startInstant = Instant.now();
 
         if (args.length != 16) {
-            System.out.println("You screwed up the runtime config params!");
+            System.out.println("You screwed up the runtime config params!\targs:" + args.length) ;
             System.exit(9001);
             return; // :)
         }

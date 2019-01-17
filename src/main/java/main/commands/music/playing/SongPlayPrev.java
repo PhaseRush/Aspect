@@ -9,7 +9,7 @@ import sx.blah.discord.handle.obj.IVoiceChannel;
 
 import java.util.List;
 
-public class SongPlayPast implements Command {
+public class SongPlayPrev implements Command {
 
     // Mostly copied code from SongPlay.java, but with modifications for the queuing
     @Override

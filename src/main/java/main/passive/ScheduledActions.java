@@ -27,7 +27,7 @@ public class ScheduledActions {
         final Runnable greeter= () -> BotUtils.send(kaitGenChannel, greetMsg);
 
         // initialize channel
-        Main.client.getChannelByID(kaitGeneralChatID);
+        kaitGenChannel = Main.client.getChannelByID(kaitGeneralChatID);
 
         Instant now = Instant.now();
         ZoneId zoneId = ZoneId.of("America/Los_Angeles");
