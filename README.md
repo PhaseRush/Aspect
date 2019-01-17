@@ -45,7 +45,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | --- | --- | --- | --- |
 | dic/def | 1 | urban dictionary query | `$dic english` |
 | wiki | 1 | wikipedia query | `$wiki apple` |
-| roll | 2 | rolls dice. Use dice notation | `$roll 6d14` |
+| roll | 1 | rolls dice. Use dice notation | `$roll 6d14` |
 | render | 1 | renders an image with text param | `$render Hello!` |
 | freq | 1 | analyses word frequency for tagged user | `$freq @Requeim` |
 | bob | 1 | Spongebob-ify text parameter | `$bob haha so funny` |
