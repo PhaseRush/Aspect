@@ -38,7 +38,6 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | summarize | 1 | summarizes webpage article | `$summarize https://goo.gl/oei2cu` |
 | img | 1 | image recognition | `$img https://goo.gl/5dx7VS` |
 | greet | 0 | greets everyone in current Voice channel | `$greet` |
-|
 
 #### Utility (non-meta)
 | --- | --- | --- | --- |
