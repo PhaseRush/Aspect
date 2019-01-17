@@ -40,6 +40,8 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | greet | 0 | greets everyone in current Voice channel | `$greet` |
 
 #### Utility (non-meta)
+
+| Command | #Params | Description | Example |
 | --- | --- | --- | --- |
 | dic/def | 1 | urban dictionary query | `$dic english` |
 | wiki | 1 | wikipedia query | `$wiki apple` |
