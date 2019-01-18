@@ -15,7 +15,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class ScheduledActions {
-    public static ScheduledFuture<?> morningGreeter = null;
+    private static ScheduledFuture<?> morningGreeter = null;
 
     private static final String greetMsg = "Have a good day, everyone :)";
     private static final long kaitGeneralChatID = 197158565004312576L;

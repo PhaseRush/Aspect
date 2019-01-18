@@ -24,6 +24,10 @@ public interface Command {
         return BotUtils.GITHUB_URL;
     }
 
+    default boolean correctable() {
+        return true;
+    }
+
 //    default String getFailReason(MessageReceivedEvent event, List<String> args) {
 //        return BotUtils.GITHUB_URL;
 //    }

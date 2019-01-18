@@ -69,6 +69,12 @@ public class RollDice implements Command {
         }
     }
 
+    // could be 100% cpu problem
+    @Override
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
+        return args.size() == 1;
+    }
+
     @Override
     public String getDesc() {
         return "```\n$roll `x`d`y````\n where x is the number of dice to be rolled, and y is the number of faces per die.\n Rolling 2 6 sided die (ex. for a game of monopoly): ```\n$roll 2d6";

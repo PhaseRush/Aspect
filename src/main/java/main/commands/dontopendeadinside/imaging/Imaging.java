@@ -187,6 +187,16 @@ public class Imaging implements Command {
     }
 
     @Override
+    public boolean correctable() {
+        return false;
+    }
+
+    @Override
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
+        return args.size() == 1;
+    }
+
+    @Override
     public String getDesc() {
         return "Cloudsight Image Recognition";
     }

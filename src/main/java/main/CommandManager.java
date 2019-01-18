@@ -1,5 +1,6 @@
 package main;
 
+import javafx.util.Pair;
 import main.commands.dontopendeadinside.*;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.TextToImage;
@@ -231,8 +232,17 @@ public class CommandManager {
 
         // Return if command is not inside of commandMap
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
-        if (!commandMap.containsKey(commandStr)) return;
-        // TODO: add spell check (leven) for commandstr length >=2 with reaction listener
+        //  include command spell cmdCheck
+        if (!commandMap.containsKey(commandStr)) {
+            if (commandStr.length() < 2) return; // dont cmdCheck on length 1 commands
+
+            String corrected = cmdCheck(commandStr);
+            if (corrected != null)  {
+                commandStr = corrected; // set correction
+                BotUtils.send(event.getChannel(), "Command not found, instead executing : `" + commandStr + "`");
+            }
+            else return; // no correction
+        }
 
         // Load the rest of the args in the array into a List for safer access
         // CHANGED IMPLEMENTATION TO BETTER SEPARATE COMMAS AND SPACES
@@ -243,11 +253,12 @@ public class CommandManager {
         // Get the command
         Command cmd = commandMap.get(commandStr);
         // Define a runnable for the command
+        String finalCommandStr = commandStr;  // need this or final in lambda gets mad
         Runnable runCommand = () -> {
             if (cmd.canRun(event, argsList)) {
                 cmd.runCommand(event, argsList);
 
-                cmdPrintLog(event, commandStr, argsList);
+                cmdPrintLog(event, finalCommandStr, argsList);
             } else {
                 BotUtils.send(event.getChannel(), "Error running command");
             }
@@ -270,6 +281,19 @@ public class CommandManager {
             commandExecutors.execute(runCommand);
         }
     }
+
+    private String cmdCheck(String inputStr) {
+        return commandMap.keySet().stream()
+                .filter(s -> Math.abs(s.length() - inputStr.length()) < 2)
+                .map(s -> new Pair<>(s, BotUtils.stringSimilarity(s, inputStr)))
+                .sorted(Comparator.comparingDouble(Pair::getValue))
+                .filter(p -> p.getValue() < 2)
+                .filter(p -> commandMap.get(p.getKey()).correctable())
+                .map(Pair::getKey)
+                .findFirst()
+                .orElse(null);
+    }
+
 
     private void cmdPrintLog(MessageReceivedEvent event, String commandStr, List<String> argsList) {
         StringBuilder commandArgs = new StringBuilder();

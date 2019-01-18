@@ -607,6 +607,9 @@ public class BotUtils {
     public static double stringSimilarity(String s1, String s2) {
         return leven.distance(s1, s2);
     }
+    public static int stringSimilarityInt(String s1, String s2) {
+        return (int) leven.distance(s1, s2);
+    }
 
     public static String generateWeirdFlex(){
         StringBuilder sb = new StringBuilder();
