@@ -1,6 +1,7 @@
 package main.utility;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import info.debatty.java.stringsimilarity.Levenshtein;
 import main.CommandManager;
 import main.Main;
@@ -11,7 +12,6 @@ import okhttp3.Response;
 import org.apache.commons.io.IOUtils;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.*;
@@ -41,6 +41,7 @@ public class BotUtils {
     //meta util -- Gson now public
     private static Random tlr = ThreadLocalRandom.current();
     public static Gson gson = new Gson();
+    private static JsonParser jsonParser = new JsonParser();
     private static OkHttpClient client = new OkHttpClient();
 
     //leven
@@ -291,17 +292,18 @@ public class BotUtils {
     }
 
     // temp listener
-    public static synchronized void unregisterListener(IListener reactionListener, int timeoutMillis, IMessage embedMsg) {
-        listenerExecuter.execute(() -> {
-            try {
-                Thread.sleep(timeoutMillis);
-            } catch (InterruptedException ignored) {
-            } finally { //please just execute this no matter what
-                Main.client.getDispatcher().unregisterListener(reactionListener);
-                if (!embedMsg.isDeleted()) embedMsg.delete();
-            }
-        });
-    }
+    // 100% cpu?
+//    public static synchronized void unregisterListener(IListener reactionListener, int timeoutMillis, IMessage embedMsg) {
+//        listenerExecuter.execute(() -> {
+//            try {
+//                Thread.sleep(timeoutMillis);
+//            } catch (InterruptedException ignored) {
+//            } finally { //please just execute this no matter what
+//                Main.client.getDispatcher().unregisterListener(reactionListener);
+//                if (!embedMsg.isDeleted()) embedMsg.delete();
+//            }
+//        });
+//    }
 
     //join voice channel
     public static void handleJoinVoice(MessageReceivedEvent event) {
@@ -691,6 +693,33 @@ public class BotUtils {
     public static boolean isLinux() {
         String os =  System.getProperty("os.name").toLowerCase();
         return os.contains("nix") || os.contains("nux") || os.contains("aix");
+    }
+
+    /**
+     *  credit to https://github.com/Lmperatoreq/HastebinAPI
+     */
+    public static String makeHasteGetUrl(String contents) throws IOException {
+        HttpURLConnection connection = (HttpURLConnection)new URL("https://hastebin.com/documents").openConnection();
+
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
+
+        connection.setRequestProperty("user-agent", "Java/Aspect-DiscordBot");
+
+        OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+
+        writer.write(contents);
+
+        writer.flush();
+        writer.close();
+
+        InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+
+        String key = jsonParser.parse(reader).getAsJsonObject().get("key").getAsString();
+
+        reader.close();
+
+        return key;
     }
 
     @Override

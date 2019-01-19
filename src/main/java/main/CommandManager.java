@@ -232,7 +232,7 @@ public class CommandManager {
 
         // Return if command is not inside of commandMap
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
-        //  include command spell cmdCheck
+        // include command spell cmdCheck
         if (!commandMap.containsKey(commandStr)) {
             if (commandStr.length() < 2) return; // dont cmdCheck on length 1 commands
 

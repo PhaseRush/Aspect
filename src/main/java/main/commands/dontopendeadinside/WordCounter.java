@@ -3,8 +3,6 @@ package main.commands.dontopendeadinside;
 import main.Command;
 import main.utility.BotUtils;
 import main.utility.Visuals;
-import main.utility.gist.GistUtils;
-import main.utility.gist.gist_json.GistContainer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
@@ -12,6 +10,7 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -122,14 +121,19 @@ WordCounter implements Command {
             rankCounter++;
         }
 
-        String json = BotUtils.getStringFromUrl(GistUtils.makeGistGetUrl(
-                "Aspect :: " + (useRegex? "Regex Matcher" : "Word Counter"),
-                "Counts the number of occurrences of a word or matches for a regex, ranked by user"
-                ,sb.toString()
-        ));
+//        String json = BotUtils.getStringFromUrl(GistUtils.makeGistGetUrl(
+//                "Aspect :: " + (useRegex? "Regex Matcher" : "Word Counter"),
+//                "Counts the number of occurrences of a word or matches for a regex, ranked by user"
+//                ,sb.toString()
+//        ));
 
-        GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
-        BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + gist.getHtml_url());
+        StringBuilder hasteContent = new StringBuilder("Aspect :: " + (useRegex? "Regex Matcher" : "Word Counter") + sb.toString());
+
+        //GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
+        try {
+            String hasteURL = BotUtils.makeHasteGetUrl(hasteContent.toString());
+            BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + hasteURL);
+        } catch (IOException ignored) {}
     }
 
     private void sendErrorMsg(MessageReceivedEvent event) {
