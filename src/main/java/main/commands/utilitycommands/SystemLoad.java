@@ -39,6 +39,11 @@ public class SystemLoad implements Command {
     }
 
     private void runSyncMap(MessageReceivedEvent event) {
+        if (CommandManager.syncExecuteMap.entrySet().isEmpty()) {
+            BotUtils.send(event.getChannel(), "No servers have synchronous maps");
+            return;
+        }
+
         StringBuilder sb = new StringBuilder("The following servers have synchronous maps:```js\n");
 
         for (Map.Entry e : CommandManager.syncExecuteMap.entrySet()) {

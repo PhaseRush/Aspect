@@ -219,7 +219,7 @@ public class TrackScheduler {
 
         if (queue.size() != 0) eb.withFooterText("Next: " + queue.get(0).getInfo().title);
 
-        if (looping) eb.appendDesc("\nLooping: " + loopCount + "/" + maxLoop);
+        if (looping) eb.appendDesc("\nLooping: " + loopCount + "/" + (maxLoop == Integer.MAX_VALUE? "∞" : maxLoop));
 
         return eb;
     }
