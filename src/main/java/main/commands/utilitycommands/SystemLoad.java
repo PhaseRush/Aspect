@@ -27,7 +27,7 @@ public class SystemLoad implements Command {
         double maxM = r.maxMemory() / 1E6;
 
         String msg = "```" +
-                "System Load:  \t\t" + osBean.getSystemLoadAverage() +
+                "System Load:  \t\t" + osBean.getSystemLoadAverage()*100 + " %" +
                 "\nRam (MB): \t\t\t" + (int) (maxM - r.freeMemory() / 1E6) + " / " + (int) maxM +
                 "\nArch: \t\t\t\t" + osBean.getArch() +
                 "\nName: \t\t\t\t" + osBean.getName() +

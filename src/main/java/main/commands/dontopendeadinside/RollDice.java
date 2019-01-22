@@ -2,11 +2,10 @@ package main.commands.dontopendeadinside;
 
 import main.Command;
 import main.utility.BotUtils;
-import main.utility.gist.GistUtils;
-import main.utility.gist.gist_json.GistContainer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -61,11 +60,13 @@ public class RollDice implements Command {
 
 
         if (desc.length() > 1500) {
-            GistContainer gist = GistUtils.makeGistGetObj(
-                    numDice + "d" + numSides + "roll for " + BotUtils.getNickOrDefault(event),
-                    "Total: " + total,
-                    desc.toString());
-            BotUtils.send(event.getChannel(), "To see all the rolls, visit\n" + gist.getHtml_url());
+            try {
+                String hasteUrl = BotUtils.makeHasteGetUrl(numDice + "d" + numSides + " roll for " + BotUtils.getNickOrDefault(event)
+                        + "\n\n" + desc.toString());
+
+                BotUtils.send(event.getChannel(), "To see all the rolls, visit\n" + hasteUrl);
+            } catch (IOException ignored) {
+            }
         }
     }
 
