@@ -479,6 +479,9 @@ public class BotUtils {
     public static String getRandomFromListString(List<String> listString) {
         return listString.get(tlr.nextInt(listString.size()));
     }
+    public static String getRandomFromArrayString(String[] strings) {
+        return strings[ThreadLocalRandom.current().nextInt(strings.length)];
+    }
 
     public static void joinVC(MessageReceivedEvent event) {
         IVoiceChannel voiceChannel = event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel();
