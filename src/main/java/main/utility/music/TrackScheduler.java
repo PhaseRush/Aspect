@@ -351,14 +351,14 @@ public class TrackScheduler {
         return player;
     }
 
-    public StringBuilder getQueueStrB(MessageReceivedEvent event) {
-        return buildQueueStrB(event, queue, "Queue");
+    public StringBuilder getQueueStrB(MessageReceivedEvent event, boolean mobileFormat) {
+        return buildQueueStrB(event, queue, "Queue", mobileFormat);
     }
     public StringBuilder getPastQueueStrB(MessageReceivedEvent event) {
-        return buildQueueStrB(event, pastQueue, "Past queue");
+        return buildQueueStrB(event, pastQueue, "Past queue", false);
     }
 
-    private StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName) {
+    private StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName, boolean mobileFormat) {
         // System.out.println("inside build: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()));
         if (localQueue.isEmpty()) return new StringBuilder(queueName + " for " + event.getGuild().getName() + " is empty :(");
         // generate message head
@@ -370,7 +370,7 @@ public class TrackScheduler {
         for (int i = 0; i < (localQueue.size() > 15 ? 15 : localQueue.size()); i++) {
             sb.append((i + 1) + ".    " + (i < 9 ? " " : "") +
                     "[" + BotUtils.millisToMS(localQueue.get(i).getInfo().length) + "]   " +
-                    BotUtils.limitStrLen(localQueue.get(i).getInfo().title + "\n", 75, true, true, ' ')); // +1 for index 1
+                    BotUtils.limitStrLen(localQueue.get(i).getInfo().title + "\n", (mobileFormat? 35 : 75), true, true, ' ')); // +1 for index 1
         }
 
         sb.append("```");

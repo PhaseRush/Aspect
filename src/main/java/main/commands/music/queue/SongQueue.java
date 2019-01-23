@@ -15,7 +15,12 @@ public class SongQueue implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         TrackScheduler scheduler = MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler();
-        StringBuilder sb = scheduler.getQueueStrB(event);
+
+        boolean mobile = false;
+        // check if mobile formatting
+        if (!args.isEmpty() && args.get(0).startsWith("m")) mobile = true;
+
+        StringBuilder sb = scheduler.getQueueStrB(event, mobile);
 
         // runDelete previous message if not null
         if (previousQMsg != null) previousQMsg.delete();
