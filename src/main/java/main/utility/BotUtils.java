@@ -746,7 +746,7 @@ public class BotUtils {
         private String link;
     }
 
-    public static long millisToNextHour(int hour24) {
+    public static long millisToNextHour24(int hour24) {
         Instant now = Instant.now();
         ZoneId zoneId = ZoneId.of("America/Los_Angeles");
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
