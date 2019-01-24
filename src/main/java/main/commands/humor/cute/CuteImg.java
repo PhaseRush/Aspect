@@ -14,9 +14,9 @@ public class CuteImg implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (CuteUtil.banned.contains(event.getAuthor().getStringID())) return; // put this guy on a watchlist
         try {
-            String url = CuteUtil.cuteUrls.get("~"+args.get(0)); // fixed for new string formatting
+            String url = CuteUtil.cuteUrls.get(args.get(0)); // fixed for new string formatting
             if (url.startsWith("~"))
-                BotUtils.send(event.getChannel(), new EmbedBuilder().withImage(url));
+                BotUtils.send(event.getChannel(), new EmbedBuilder().withImage(url.substring(1)));
             else BotUtils.send(event.getChannel(), url);
         } catch (Exception e) {
             BotUtils.send(event.getChannel(), "Cuteness doesn't exist!");
