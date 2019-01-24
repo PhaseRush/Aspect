@@ -10,6 +10,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.commons.io.IOUtils;
+import org.jsoup.Jsoup;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -724,6 +725,24 @@ public class BotUtils {
 
         return key;
     }
+
+    public static EmbedBuilder getQuoteEmbed() {
+        String jsonArray = BotUtils.getStringFromUrl("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1");
+        String json = jsonArray.substring(1, jsonArray.length()-1);
+        QuoteContainer quote = gson.fromJson(json, QuoteContainer.class);
+
+        return new EmbedBuilder()
+                .withTitle("Have a good day, everyone!")
+                .withColor(Visuals.getVibrantColor())
+                .withDesc(Jsoup.parse(quote.content).text() + "\n\t- " + quote.title);
+    }
+    private static class QuoteContainer {
+        private int id;
+        private String title;
+        private String content;
+        private String link;
+    }
+
 
     @Override
     public String toString() {

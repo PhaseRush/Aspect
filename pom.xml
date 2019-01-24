@@ -148,6 +148,14 @@
             <version>4.4</version>
         </dependency>
 
+        <!--Jsoup for html stripping-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+
+
         <!--table formatter-->
         <dependency>
             <groupId>com.github.inamik.text.tables</groupId>
