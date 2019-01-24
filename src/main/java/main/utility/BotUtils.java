@@ -3,6 +3,7 @@ package main.utility;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import info.debatty.java.stringsimilarity.Levenshtein;
+import javafx.util.Pair;
 import main.CommandManager;
 import main.Main;
 import main.passive.*;
@@ -763,6 +764,18 @@ public class BotUtils {
         else next7am = tmr7amInstant; // 7:00 tmr
 
         return next7am.toEpochMilli() - now.toEpochMilli();
+    }
+
+    public static String cmdSpellCorrect(String inputStr) {
+        return CommandManager.commandMap.keySet().stream()
+                .filter(s -> Math.abs(s.length() - inputStr.length()) < 2)
+                .map(s -> new Pair<>(s, BotUtils.stringSimilarity(s, inputStr)))
+                .sorted(Comparator.comparingDouble(Pair::getValue))
+                .filter(p -> p.getValue() < 2)
+                .filter(p -> CommandManager.commandMap.get(p.getKey()).correctable())
+                .map(Pair::getKey)
+                .findFirst()
+                .orElse(null);
     }
 
 

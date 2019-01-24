@@ -1,6 +1,5 @@
 package main;
 
-import javafx.util.Pair;
 import main.commands.dontopendeadinside.*;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
@@ -147,6 +146,7 @@ public class CommandManager {
         commandMap.put("serverpfp", new GetGuildPfp());
         commandMap.put("presence", new UpdatePresence());
         commandMap.put("cleanup", new DeleteWaifus());
+        commandMap.put("time", new CommandTimer());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());
@@ -232,11 +232,11 @@ public class CommandManager {
 
         // Return if command is not inside of commandMap
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
-        // include command spell cmdCheck
+        // include command spell cmdSpellCorrect
         if (!commandMap.containsKey(commandStr)) {
-            if (commandStr.length() < 2) return; // dont cmdCheck on length 1 commands
+            if (commandStr.length() < 2) return; // dont cmdSpellCorrect on length 1 commands
 
-            String corrected = cmdCheck(commandStr);
+            String corrected = BotUtils.cmdSpellCorrect(commandStr);
             if (corrected != null)  {
                 commandStr = corrected; // set correction
                 BotUtils.send(event.getChannel(), "Command not found, instead executing : `" + commandStr + "`");
@@ -282,17 +282,7 @@ public class CommandManager {
         }
     }
 
-    private String cmdCheck(String inputStr) {
-        return commandMap.keySet().stream()
-                .filter(s -> Math.abs(s.length() - inputStr.length()) < 2)
-                .map(s -> new Pair<>(s, BotUtils.stringSimilarity(s, inputStr)))
-                .sorted(Comparator.comparingDouble(Pair::getValue))
-                .filter(p -> p.getValue() < 2)
-                .filter(p -> commandMap.get(p.getKey()).correctable())
-                .map(Pair::getKey)
-                .findFirst()
-                .orElse(null);
-    }
+
 
 
     private void cmdPrintLog(MessageReceivedEvent event, String commandStr, List<String> argsList) {
