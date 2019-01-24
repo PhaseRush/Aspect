@@ -28,6 +28,9 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
@@ -741,6 +744,25 @@ public class BotUtils {
         private String title;
         private String content;
         private String link;
+    }
+
+    public static long millisToNextHour(int hour24) {
+        Instant now = Instant.now();
+        ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
+        ZonedDateTime zonedNow = zonedDateTime.toLocalDate().atStartOfDay(zoneId);
+
+        Instant today7amInstant = zonedNow.plusHours(hour24).toInstant();
+        //System.out.println("today: " + (today7amInstant.toEpochMilli() - System.currentTimeMillis()));
+
+        Instant tmr7amInstant = zonedNow.plusDays(1).plusHours(hour24).toInstant();
+        //System.out.println("tmr: " + (tmr7amInstant.toEpochMilli() - System.currentTimeMillis()));
+
+        Instant next7am;
+        if (today7amInstant.isAfter(now)) next7am = today7amInstant;  // 7:00 today
+        else next7am = tmr7amInstant; // 7:00 tmr
+
+        return next7am.toEpochMilli() - now.toEpochMilli();
     }
 
 
