@@ -3,7 +3,7 @@ package main;
 import javafx.util.Pair;
 import main.commands.dontopendeadinside.*;
 import main.commands.dontopendeadinside.imaging.Imaging;
-import main.commands.dontopendeadinside.imaging.TextToImage;
+import main.commands.dontopendeadinside.imaging.Render;
 import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
 import main.commands.dontopendeadinside.imaging.ascii.Asciimg;
 import main.commands.fortnite.FortniteStats;
@@ -73,7 +73,7 @@ public class CommandManager {
         //dontdeadopeninside
         commandMap.put("ascii2", new AsciifyOld());
         commandMap.put("ascii", new Asciimg());
-        commandMap.put("render", new TextToImage());
+        commandMap.put("render", new Render());
         commandMap.put("help", new Help());
         commandMap.put("summarize", new Summarize());
         commandMap.put("img", new Imaging()); // showcase?

@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
-public class TextToImage implements Command {
+public class Render implements Command {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
@@ -17,7 +17,7 @@ public class TextToImage implements Command {
         String path = "text_image_" + UUID.randomUUID().toString();
         Visuals.saveImg(Visuals.genTextImage(args.get(0)), path);
 
-        path = System.getProperty("user.dir") + "\\" + path + ".png";
+        path = System.getProperty("user.dir") + "/" + path + ".png"; //  changed file separator from \\ to /
         BotUtils.sendGet(event.getChannel(), path, true);
 
         new File(path).delete();

@@ -55,12 +55,14 @@ public class Greet implements Command {
 
         if (vChannel.isPresent()) { // generate greetings
             StringBuilder sb = new StringBuilder();
-            vChannel.get().getConnectedUsers().forEach((u) -> sb
-                    .append(BotUtils.getRandomFromArrayString(greetings) + ", ")
-                    .append((customMap.containsKey(u.getLongID())?
-                            customMap.get(u.getLongID()) :
-                            BotUtils.getNickOrDefault(u, event.getGuild()))
-                            + "!\n"));
+            vChannel.get().getConnectedUsers().stream()
+                    .filter(u -> !u.isBot())
+                    .forEach((u) -> sb
+                            .append(BotUtils.getRandomFromArrayString(greetings) + ", ")
+                            .append((customMap.containsKey(u.getLongID())?
+                                    customMap.get(u.getLongID()) :
+                                    BotUtils.getNickOrDefault(u, event.getGuild()))
+                                    + "!\n"));
 
             BotUtils.send(event.getChannel(), sb.toString());
             // update map
