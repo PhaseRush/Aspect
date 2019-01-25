@@ -6,7 +6,6 @@ import main.utility.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
 public class CommandTimer implements Command {
     @Override
@@ -18,29 +17,23 @@ public class CommandTimer implements Command {
         }
         Command cmd = CommandManager.commandMap.get(targetCmd);
         List<String> targetParams = args.subList(1, args.size());
-        Runnable runCommand = () -> {
-            if (cmd.canRun(event, targetParams)) {
-                cmd.runCommand(event, targetParams);
-            } else {
-                BotUtils.send(event.getChannel(), "Error running target command");
-            }
-        };
 
-        long start;
-
-        if (cmd.requireSynchronous()) {
-            String id = event.getGuild().getStringID();
-            CommandManager.syncExecuteMap.putIfAbsent(id, Executors.newFixedThreadPool(1));
-            start = System.nanoTime();
-            CommandManager.syncExecuteMap.get(id).execute(runCommand);
-        } else { // use default executor
-            start = System.nanoTime();
-            CommandManager.commandExecutors.execute(runCommand);
+        if (!cmd.canRun(event, targetParams)) {
+            BotUtils.send(event.getChannel(), "Error running target command");
+            return;
         }
 
+        long start = System.nanoTime();
+        cmd.runCommand(event, targetParams);
         long end = System.nanoTime();
+        double durationMillis = (end - start)/1E6;
 
-        BotUtils.send(event.getChannel(), "Elapsed time : " + (end - start)/1E6 + " ms");
+        BotUtils.send(event.getChannel(),
+                "Runtime for `" + targetCmd +  "/" +cmd.getClass().getName() + "` : " +
+                        (durationMillis < 1000?
+                                durationMillis + " ms" :
+                                BotUtils.millisToMS((long)durationMillis)
+                        ));
     }
 
     @Override
@@ -49,12 +42,15 @@ public class CommandTimer implements Command {
     }
 
     @Override
+    /*
+    do not run more than one timer command at any time
+     */
     public boolean requireSynchronous() {
-        return false;
+        return true;
     }
 
     @Override
     public String getDesc() {
-        return "times a command. syntax unix like";
+        return "times runtime for a command. syntax unix like";
     }
 }

@@ -139,7 +139,7 @@ public class CommandManager {
 
         //Utility
         commandMap.put("bulkdelete", new BulkDelete());
-        commandMap.put("time", new CurrentTime());
+        commandMap.put("timev", new CurrentTime());
         commandMap.put("deletemsg", new DeleteMsg());
         commandMap.put("trans", new Translate());
         commandMap.put("pfp", new GetUserPfp());
