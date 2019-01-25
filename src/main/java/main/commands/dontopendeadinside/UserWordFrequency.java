@@ -8,8 +8,6 @@ import main.utility.BotUtils;
 import main.utility.LangUtil;
 import main.utility.TableUtil;
 import main.utility.Visuals;
-import main.utility.gist.GistUtils;
-import main.utility.gist.gist_json.GistContainer;
 import org.languagetool.JLanguageTool;
 import org.languagetool.rules.RuleMatch;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -176,14 +174,15 @@ public class UserWordFrequency implements Command {
         // send embed
         BotUtils.send(event.getChannel(), eb);
 
-        // generate gist
-        String json = BotUtils.getStringFromUrl(GistUtils.makeGistGetUrl(
-                "Aspect :: Message Stats for " + BotUtils.getNickOrDefault(target, event.getGuild()),
-                "Stats for past 1 week in " + event.getGuild().getName(),
-                sb.toString() + "\n\n" + autoCorrect.toString()));
-
-        GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
-        BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + gist.getHtml_url());
+        // generate haste
+        String hasteContent = "Aspect :: 1 week message stats for " + BotUtils.getNickOrDefault(target, event.getGuild()) +
+                "\n" + sb.toString() + "\n\n" + autoCorrect.toString();
+        try {
+            BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + BotUtils.makeHasteGetUrl(hasteContent));
+        } catch (IOException e) {
+            System.out.println("Error: User word frequency, haste creation");
+            e.printStackTrace();
+        }
     }
 
     private Instant getDuration(List<String> args) {
