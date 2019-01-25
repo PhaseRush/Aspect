@@ -28,17 +28,22 @@ public class CommandTimer implements Command {
         long end = System.nanoTime();
         double durationMillis = (end - start)/1E6;
 
+        try { // try to make sure this sends AFTER all output of target command
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) { // if interrupted dont care, just send the time
+        }
+
         BotUtils.send(event.getChannel(),
                 "Runtime for `" + targetCmd +  "/" +cmd.getClass().getName() + "` : " +
-                        (durationMillis < 1000?
-                                durationMillis + " ms" :
+                        (durationMillis < 60000?
+                                Math.round(durationMillis) + " ms" :
                                 BotUtils.millisToMS((long)durationMillis)
                         ));
     }
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return !args.isEmpty();
+        return !args.isEmpty(); // need at least the target command name
     }
 
     @Override
