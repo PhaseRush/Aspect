@@ -370,7 +370,7 @@ public class TrackScheduler {
         for (int i = 0; i < (localQueue.size() > 15 ? 15 : localQueue.size()); i++) {
             sb.append((i + 1) + ".    " + (i < 9 ? " " : "") +
                     "[" + BotUtils.millisToMS(localQueue.get(i).getInfo().length) + "]   " +
-                    BotUtils.limitStrLen(localQueue.get(i).getInfo().title + "\n", (mobileFormat? 35 : 75), true, true, ' ')); // +1 for index 1
+                    BotUtils.limitStrLen(localQueue.get(i).getInfo().title + "\n", (mobileFormat? 30 : 75), true, true, ' ')); // +1 for index 1
         }
 
         sb.append("```");

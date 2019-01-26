@@ -767,14 +767,13 @@ public class BotUtils {
     }
 
     public static String cmdSpellCorrect(String inputStr) {
-        return CommandManager.commandMap.keySet().stream()
-                .filter(s -> Math.abs(s.length() - inputStr.length()) < 2)
-                .map(s -> new Pair<>(s, BotUtils.stringSimilarity(s, inputStr)))
-                .sorted(Comparator.comparingDouble(Pair::getValue))
+        return CommandManager.commandMap.entrySet().stream()
+                .filter(e -> e.getValue().correctable()) // thanks phanta
+                .filter(e -> Math.abs(e.getKey().length() - inputStr.length()) < 2)
+                .map(e -> new Pair<>(e.getKey(), BotUtils.stringSimilarity(e.getKey(), inputStr)))
+                .min(Comparator.comparingDouble(Pair::getValue))
                 .filter(p -> p.getValue() < 2)
-                .filter(p -> CommandManager.commandMap.get(p.getKey()).correctable())
                 .map(Pair::getKey)
-                .findFirst()
                 .orElse(null);
     }
 

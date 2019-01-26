@@ -32,17 +32,21 @@ public class Greet implements Command {
     };
 
     static {
+        // me.exe
+        customMap.put(264213620026638336L, "Empress Kat");
+
+        // pKamen
         customMap.put(107377006747848704L, "Orha"); // haha take that!
         customMap.put(127943220335214592L, "Siamese cat");
+        customMap.put(167418444067766273L, "Vivi");
+
+        // d4j
+        customMap.put(149031328132628480L, "Your Majesty");
+
     }
 
 
-    @Override
-    public void runCommand(MessageReceivedEvent event, List<String> args) {
-        // get voice channel
-        Optional<IVoiceChannel> vChannel = Optional.ofNullable(event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel());
-
-        // reactor cosplay
+    // reactor cosplay
 //        BotUtils.send(event.getChannel(),
 //                event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()
 //                        .ifNotNullDo(c -> c.getConnectedUsers())
@@ -53,23 +57,35 @@ public class Greet implements Command {
 //                                .elseIfNull("you're not connected")
 //                        );
 
-        if (vChannel.isPresent()) { // generate greetings
-            StringBuilder sb = new StringBuilder();
-            vChannel.get().getConnectedUsers().stream()
-                    .filter(u -> !u.isBot())
-                    .forEach((u) -> sb
-                            .append(BotUtils.getRandomFromArrayString(greetings) + ", ")
-                            .append((customMap.containsKey(u.getLongID())?
-                                    customMap.get(u.getLongID()) :
-                                    BotUtils.getNickOrDefault(u, event.getGuild()))
-                                    + "!\n"));
+    @Override
+    public void runCommand(MessageReceivedEvent event, List<String> args) {
+        // get author voice channel
+        List<IVoiceChannel> vChannels = new ArrayList<>(Collections.singletonList(event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()));
 
-            BotUtils.send(event.getChannel(), sb.toString());
-            // update map
-            idTimeMap.put(event.getAuthor().getLongID(), System.currentTimeMillis());
-        } else { // get the fuck in voice
-            BotUtils.send(event.getChannel(), "You're not in a voice channel! Join a voice channel and try again :)");
+        // add all users
+        if (!args.isEmpty() && args.get(0).equals("all")) vChannels.addAll(event.getGuild().getVoiceChannels());
+
+        if (vChannels.isEmpty()) {
+            BotUtils.send(event.getChannel(), "There is no one to greet :(\n Either join a voice channel, or try `$greet all`");
+            return;
         }
+
+        StringBuilder sb = new StringBuilder();
+        vChannels.forEach(
+                vc -> vc.getConnectedUsers().stream()
+                        .filter(u -> !u.isBot())
+                        .forEach( u -> sb
+                                .append(BotUtils.getRandomFromArrayString(greetings) + ", ")
+                                .append((customMap.containsKey(u.getLongID())?
+                                        customMap.get(u.getLongID()) :
+                                        BotUtils.getNickOrDefault(u, event.getGuild()))
+                                        + "!\n"))
+        );
+
+        BotUtils.send(event.getChannel(), sb.toString());
+
+        // update map
+        idTimeMap.put(event.getAuthor().getLongID(), System.currentTimeMillis());
     }
 
     @Override
@@ -84,6 +100,6 @@ public class Greet implements Command {
 
     @Override
     public String getDesc() {
-        return "Aspect greets everyone in the voice channel :)";
+        return "Aspect greets friends :)";
     }
 }
