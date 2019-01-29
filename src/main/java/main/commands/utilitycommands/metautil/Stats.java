@@ -10,6 +10,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.awt.*;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Stats implements Command {
     @Override
@@ -28,7 +29,9 @@ public class Stats implements Command {
 
                 // fields
                 .appendField("Guilds", String.valueOf(Main.client.getGuilds().size()), true)
-                .appendField("Users", String.valueOf(Main.client.getGuilds().stream().mapToInt(u -> u.getUsers().size()).sum()), true)
+                .appendField("Users", "Total: " + Main.client.getGuilds().stream().mapToInt(u -> u.getUsers().size()).sum() + "\n" +
+                                "Unique: " + Main.client.getGuilds().stream().flatMap(g -> g.getUsers().stream()).collect(Collectors.toSet()).size(), true)
+
                 .appendField("Commands available", "Unique: "+ new HashSet<>(CommandManager.commandMap.values()).size() +
                         "\nAliases: " + CommandManager.commandMap.keySet().size(), true)
                 ;
@@ -37,9 +40,10 @@ public class Stats implements Command {
     private String generateDesc() {
         StringBuilder sb = new StringBuilder()
                 .append(Uptime.genUptime()).append("\n")         // uptime
-                .append(CpuStats.genMessage()).append('\n');    // general stats
+                .append(CpuStats.genMessage()).append('\n')
+                .append(CpuStats.genSyncMap().orElse(""));    // general stats
 
-        CpuStats.genSyncMap().ifPresent(sb::append);
+        CpuStats.genSyncMap().ifPresent(sb::append); // syncmap
 
         return sb.toString();
     }

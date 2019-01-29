@@ -20,10 +20,7 @@ public class CpuStats implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         // check special request
         if (!args.isEmpty() && args.get(0).equalsIgnoreCase("syncmap")){
-            Optional<StringBuilder> sb = genSyncMap();
-            if (sb.isPresent()) BotUtils.send(event.getChannel(), sb.toString());
-            else BotUtils.send(event.getChannel(), "No servers have synchronous maps");
-
+            BotUtils.send(event.getChannel(), genSyncMap().orElse("No servers have synchronous maps"));
             return;
         }
 
@@ -46,7 +43,7 @@ public class CpuStats implements Command {
                 + "```";
     }
 
-    static Optional<StringBuilder> genSyncMap() {
+    static Optional<String> genSyncMap() {
         if (CommandManager.syncExecuteMap.entrySet().isEmpty()) {
             return Optional.empty();
         }
@@ -64,7 +61,7 @@ public class CpuStats implements Command {
 
         sb.append("```");
 
-        return Optional.of(sb);
+        return Optional.of(sb.toString());
     }
 
     @Override
