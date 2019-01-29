@@ -57,7 +57,9 @@ public class BotUtils {
 
     // Constants for use throughout the bot
     public final static String GITHUB_URL = "https://github.com/PhaseRush/Aspect";
+    public final static String GITHUB_URL_SHORT = "github.com/PhaseRush/Aspect";
     public final static String DEV_DISCORD_STRING_ID = "264213620026638336";
+    public final static long DEV_DISCORD_LONG_ID = 264213620026638336L;
 
     //guildID, commandPrefix
     private static final String mapFilePath = ""; //get rid of this
@@ -764,7 +766,7 @@ public class BotUtils {
         else next7am = tmr7amInstant; // 7:00 tmr
 
         return next7am.toEpochMilli() - now.toEpochMilli();
-    }
+}
 
     public static String cmdSpellCorrect(String inputStr) {
         return CommandManager.commandMap.entrySet().stream()
@@ -772,7 +774,7 @@ public class BotUtils {
                 .filter(e -> Math.abs(e.getKey().length() - inputStr.length()) < 2)
                 .map(e -> new Pair<>(e.getKey(), BotUtils.stringSimilarity(e.getKey(), inputStr)))
                 .min(Comparator.comparingDouble(Pair::getValue))
-                .filter(p -> p.getValue() < 2)
+                .filter(p -> p.getValue() < 2) // the order of this filter and min has caused fat debates in #programming-help
                 .map(Pair::getKey)
                 .orElse(null);
     }

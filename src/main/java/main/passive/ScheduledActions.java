@@ -38,7 +38,7 @@ public class ScheduledActions {
     @EventSubscriber
     public void cpuProfiler(ReadyEvent event) {
         final Runnable cpuHawk = () -> {
-            if ( !sentMessage.get() && Math.abs(Main.osBean.getSystemLoadAverage() - 1) > 1) {
+            if ( !sentMessage.get() && Main.osBean.getSystemLoadAverage() > 1) {
                 BotUtils.send(
                         Main.client.getUserByID(Long.valueOf(BotUtils.DEV_DISCORD_STRING_ID)).getOrCreatePMChannel(),
                         "cpu sad :(");

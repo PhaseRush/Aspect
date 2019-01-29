@@ -1,4 +1,4 @@
-package main.commands.utilitycommands;
+package main.commands.utilitycommands.guildutil;
 
 import main.Command;
 import main.utility.BotUtils;

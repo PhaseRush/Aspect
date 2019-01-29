@@ -1,32 +1,42 @@
-package main.commands.utilitycommands;
+package main.commands.utilitycommands.metautil;
 
 import main.Command;
 import main.CommandManager;
 import main.Main;
 import main.utility.BotUtils;
+import org.jetbrains.annotations.NotNull;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IGuild;
 
 import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 
-public class SystemLoad implements Command {
+public class CpuStats implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         // check special request
         if (!args.isEmpty() && args.get(0).equalsIgnoreCase("syncmap")){
-            runSyncMap(event);
+            Optional<StringBuilder> sb = genSyncMap();
+            if (sb.isPresent()) BotUtils.send(event.getChannel(), sb.toString());
+            else BotUtils.send(event.getChannel(), "No servers have synchronous maps");
+
             return;
         }
 
+        BotUtils.send(event.getChannel(), genMessage());
+    }
+
+    @NotNull
+    public static String genMessage() {
         OperatingSystemMXBean osBean = Main.osBean;
         Runtime r = Runtime.getRuntime();
         double maxM = r.maxMemory() / 1E6;
 
-        String msg = "```" +
+        return "```" +
                 "System Load:  \t\t" + osBean.getSystemLoadAverage()*100 + " %" +
                 "\nRam (MB): \t\t\t" + (int) (maxM - r.freeMemory() / 1E6) + " / " + (int) maxM +
                 "\nArch: \t\t\t\t" + osBean.getArch() +
@@ -34,14 +44,11 @@ public class SystemLoad implements Command {
                 "\nVersion:  \t\t\t" + osBean.getVersion() +
                 "\nAvail Cores:  \t\t" + osBean.getAvailableProcessors()
                 + "```";
-
-        BotUtils.send(event.getChannel(), msg);
     }
 
-    private void runSyncMap(MessageReceivedEvent event) {
+    static Optional<StringBuilder> genSyncMap() {
         if (CommandManager.syncExecuteMap.entrySet().isEmpty()) {
-            BotUtils.send(event.getChannel(), "No servers have synchronous maps");
-            return;
+            return Optional.empty();
         }
 
         StringBuilder sb = new StringBuilder("The following servers have synchronous maps:```js\n");
@@ -57,7 +64,7 @@ public class SystemLoad implements Command {
 
         sb.append("```");
 
-        BotUtils.send(event.getChannel(), sb.toString());
+        return Optional.of(sb);
     }
 
     @Override

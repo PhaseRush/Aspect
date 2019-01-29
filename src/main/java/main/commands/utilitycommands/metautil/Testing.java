@@ -1,4 +1,4 @@
-package main.commands.utilitycommands;
+package main.commands.utilitycommands.metautil;
 
 import main.Command;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

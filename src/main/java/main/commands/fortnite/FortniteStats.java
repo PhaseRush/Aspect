@@ -122,6 +122,11 @@ public class FortniteStats implements Command {
     }
 
     @Override
+    public boolean correctable() {
+        return false;
+    }
+
+    @Override
     public String getDesc() {
         return "Fortnite stats. specify platform on 2nd parameter - default to PC.";
     }

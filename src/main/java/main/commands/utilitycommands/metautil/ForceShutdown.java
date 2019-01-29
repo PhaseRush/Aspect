@@ -1,4 +1,4 @@
-package main.commands.utilitycommands;
+package main.commands.utilitycommands.metautil;
 
 import main.Command;
 import main.CommandManager;

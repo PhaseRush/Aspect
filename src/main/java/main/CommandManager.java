@@ -26,7 +26,8 @@ import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
 import main.commands.utilitycommands.guild.UsersToGist;
-import main.commands.utilitycommands.metautil.UpdatePresence;
+import main.commands.utilitycommands.guildutil.*;
+import main.commands.utilitycommands.metautil.*;
 import main.commands.warframe.*;
 import main.commands.webquery.UrbanDictionary;
 import main.commands.webquery.Wikipedia;
@@ -147,6 +148,7 @@ public class CommandManager {
         commandMap.put("presence", new UpdatePresence());
         commandMap.put("cleanup", new DeleteWaifus());
         commandMap.put("time", new CommandTimer());
+        commandMap.put("stats", new Stats());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());
@@ -157,7 +159,7 @@ public class CommandManager {
         commandMap.put("ow", new OverwatchStats());
 
         //meta
-        SystemLoad cpu = new SystemLoad();
+        CpuStats cpu = new CpuStats();
         commandMap.put("setprefix", new SetPrefix());
         commandMap.put("ban", new BanUser());
         commandMap.put("ping", new Ping());
