@@ -29,8 +29,8 @@ public class Stats implements Command {
 
                 // fields
                 .appendField("Guilds", String.valueOf(Main.client.getGuilds().size()), true)
-                .appendField("Users", "Total: " + Main.client.getGuilds().stream().mapToInt(u -> u.getUsers().size()).sum() + "\n" +
-                                "Unique: " + Main.client.getGuilds().stream().flatMap(g -> g.getUsers().stream()).collect(Collectors.toSet()).size(), true)
+                .appendField("Unique: " + Main.client.getGuilds().stream().flatMap(g -> g.getUsers().stream()).collect(Collectors.toSet()).size() +
+                        "\nUsers", "Total: " + Main.client.getGuilds().stream().mapToInt(u -> u.getUsers().size()).sum(), true)
 
                 .appendField("Commands available", "Unique: "+ new HashSet<>(CommandManager.commandMap.values()).size() +
                         "\nAliases: " + CommandManager.commandMap.keySet().size(), true)
@@ -38,14 +38,9 @@ public class Stats implements Command {
     }
 
     private String generateDesc() {
-        StringBuilder sb = new StringBuilder()
-                .append(Uptime.genUptime()).append("\n")         // uptime
-                .append(CpuStats.genMessage()).append('\n')
-                .append(CpuStats.genSyncMap().orElse(""));    // general stats
-
-        CpuStats.genSyncMap().ifPresent(sb::append); // syncmap
-
-        return sb.toString();
+        return Uptime.genUptime() + "\n" +         // uptime
+                CpuStats.genMessage() + '\n' +      // general stats
+                CpuStats.genSyncMap().orElse("");     // syncmap
     }
 
     @Override
