@@ -29,8 +29,8 @@ public class Stats implements Command {
 
                 // fields
                 .appendField("Guilds", String.valueOf(Main.client.getGuilds().size()), true)
-                .appendField("Unique: " + Main.client.getGuilds().stream().flatMap(g -> g.getUsers().stream()).collect(Collectors.toSet()).size() +
-                        "\nUsers", "Total: " + Main.client.getGuilds().stream().mapToInt(u -> u.getUsers().size()).sum(), true)
+                .appendField("Users","Unique: " + Main.client.getGuilds().stream().flatMap(g -> g.getUsers().stream()).collect(Collectors.toSet()).size() +
+                         "\nTotal: " + Main.client.getGuilds().stream().mapToInt(u -> u.getUsers().size()).sum(), true)
 
                 .appendField("Commands available", "Unique: "+ new HashSet<>(CommandManager.commandMap.values()).size() +
                         "\nAliases: " + CommandManager.commandMap.keySet().size(), true)
