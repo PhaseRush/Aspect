@@ -287,6 +287,19 @@ public class BotUtils {
             }
         });
     }
+    public static void send(IChannel channel, EmbedBuilder embed, File file) {
+        RequestBuffer.request(() -> {
+            try {
+                channel.sendFile(embed.build(), file);
+            } catch (DiscordException e) {
+                System.err.println("Embed could not be sent with error: ");
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.err.println("File could not be found with error: ");
+                e.printStackTrace();
+            }
+        });
+    }
 
     public static void reactGet(IMessage message, ReactionEmoji emoji) {
         RequestBuffer.request(() -> {
@@ -778,7 +791,7 @@ public class BotUtils {
                 .map(Pair::getKey)
                 .orElse(null);
     }
-
+    
 
     @Override
     public String toString() {

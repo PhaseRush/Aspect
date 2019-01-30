@@ -21,8 +21,8 @@ public class Uptime implements Command {
         int hr = (int) ((millis / (1000 * 60 * 60)) % 24);
 
         int days = (int) TimeUnit.MILLISECONDS.toDays(millis);
-        return "```Uptime: \t" + days + " d\t" + hr + ":" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) +
-                "\t=\t" + millis + " ms" +
+        return "```Uptime:   " + days + " d  " + hr + ":" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) +
+                "  =  " + millis + " ms" +
                 "\nStart instant:\t" + Main.startInstant.toString() + "```";
     }
 

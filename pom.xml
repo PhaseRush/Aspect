@@ -183,6 +183,21 @@
             <scope>test</scope>
         </dependency>
 
+        <!--JFreeChart for line plots and other graphs-->
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.19</version>
+        </dependency>
+
+        <!--apache commons collections - CircularFIFOQueue-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.2</version>
+        </dependency>
+
+
 
     </dependencies>
 
