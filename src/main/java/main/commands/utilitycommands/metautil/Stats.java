@@ -3,13 +3,14 @@ package main.commands.utilitycommands.metautil;
 import main.Command;
 import main.CommandManager;
 import main.Main;
+import main.passive.ScheduledActions;
 import main.utility.BotUtils;
 import main.utility.grapher.LineChart;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
 import java.awt.*;
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,13 +23,7 @@ public class Stats implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String imgDir = generateImage();
-        File imageFile = new File(imgDir);
-        BotUtils.send(event.getChannel(), generateStats(imageFile.getName().replace(".png", "")), imageFile);
-
-
-        System.out.println(imageFile.getName().replace(".png", ""));
-        //imageFile.delete();
+        BotUtils.send(event.getChannel(), generateStats("stats_img.png"), generateImage(), "stats_img.png");
     }
 
     private EmbedBuilder generateStats(String imgDir) {
@@ -40,7 +35,7 @@ public class Stats implements Command {
                 .withFooterIcon(Main.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getAvatarURL())
                 .withFooterText("Built with love. " + BotUtils.GITHUB_URL_SHORT)
 
-                //
+                // attach rendered image
                 .withImage("attachment://" + imgDir)
 
                 // fields
@@ -63,13 +58,11 @@ public class Stats implements Command {
 
     return filepath to image
      */
-    private String generateImage() {
-        //double[] cpuVals = ScheduledActions.cpuQueue.toArray();
-        //double[] memVals = ScheduledActions.memQueue.toArray();
-        double[] cpuVals = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-        double[] memVals = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private ByteArrayInputStream generateImage() {
+        double[] cpuVals = ScheduledActions.cpuQueue.toArray();
+        double[] memVals = ScheduledActions.memQueue.toArray();
 
-        return LineChart.generateTwoPlot("Cpu", "Ram", timeScale, timeScale, cpuVals, memVals);
+        return new ByteArrayInputStream(LineChart.generateTwoPlot("Cpu (%)", "Ram (MB)", timeScale, timeScale, cpuVals, memVals).toByteArray());
     }
 
     @Override

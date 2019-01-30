@@ -63,10 +63,10 @@ public class ScheduledActions {
         
         final Runnable systemProber = () -> {
             cpuQueue.push(ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class).getSystemCpuLoad()*100); // convert to %
-            memQueue.push(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory());
+            memQueue.push((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1E6);
         };
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(systemProber, 5, 30, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
+        scheduledFuture = scheduler.scheduleAtFixedRate(systemProber, 3, 30, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
 
     }
 

@@ -300,6 +300,16 @@ public class BotUtils {
             }
         });
     }
+    public static void send(IChannel channel, EmbedBuilder embed, InputStream inStream, String fileName) {
+        RequestBuffer.request(() -> {
+            try {
+                channel.sendFile(embed.build(), inStream, fileName);
+            } catch (DiscordException e) {
+                System.err.println("Embed could not be sent with error: ");
+                e.printStackTrace();
+            }
+        });
+    }
 
     public static void reactGet(IMessage message, ReactionEmoji emoji) {
         RequestBuffer.request(() -> {
@@ -779,7 +789,7 @@ public class BotUtils {
         else next7am = tmr7amInstant; // 7:00 tmr
 
         return next7am.toEpochMilli() - now.toEpochMilli();
-}
+    }
 
     public static String cmdSpellCorrect(String inputStr) {
         return CommandManager.commandMap.entrySet().stream()
@@ -791,7 +801,7 @@ public class BotUtils {
                 .map(Pair::getKey)
                 .orElse(null);
     }
-    
+
 
     @Override
     public String toString() {
