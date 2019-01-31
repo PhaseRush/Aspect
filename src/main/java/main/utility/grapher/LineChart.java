@@ -1,5 +1,6 @@
 package main.utility.grapher;
 
+import main.utility.Visuals;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
@@ -8,12 +9,10 @@ import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 public class LineChart {
 
@@ -66,7 +65,7 @@ public class LineChart {
         plot.mapDatasetToRangeAxis(1, 1);
 
         //generate the chart
-        JFreeChart chart = new JFreeChart("System Cpu and Memory vs time", null, plot, true);
+        JFreeChart chart = new JFreeChart("System Cpu and Memory vs time", new Font("Arial", Font.PLAIN, 20), plot, true);
         chart.setBackgroundPaint(Color.WHITE);
 
 
@@ -75,25 +74,6 @@ public class LineChart {
         chartPanel.setBackground(Color.BLACK);
 
         BufferedImage objBufferedImage = chart.createBufferedImage(800,500);
-        ByteArrayOutputStream bas = new ByteArrayOutputStream();
-
-        try {
-            ImageIO.write(objBufferedImage, "png", bas);
-            return bas;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        try {
-//            String dir = System.getProperty("user.dir") + "/stats_time_" + UUID.randomUUID().toString() + ".png";
-//            File file = new File(dir);
-//            ChartUtilities.saveChartAsPNG(file, chart, 800, 500);
-//            return dir;
-//
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-
-        return null;
+        return Visuals.buffImgToOutputStream(objBufferedImage, "png");
     }
 }

@@ -1,13 +1,12 @@
 package main.utility;
 
 import main.utility.miscJsonObj.CatMediaContainer;
+import org.jetbrains.annotations.Nullable;
 import sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 import sx.blah.discord.util.EmbedBuilder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.*;
@@ -230,7 +229,7 @@ public class Visuals {
     // some real fancy shit gonna go down
 
     //https://stackoverflow.com/questions/18800717/convert-text-content-to-image
-    public static BufferedImage genTextImage(String text) {
+    public static ByteArrayOutputStream genTextImage(String text) {
         /*
            Because font metrics is based on a graphics context, we need to create
            a small, temporary image so we can ascertain the width and height
@@ -261,25 +260,37 @@ public class Visuals {
         g2d.drawString(text, 0, fm.getAscent());
         g2d.dispose();
 
-        return img;
+        return buffImgToOutputStream(img, "png");
     }
 
-    public static BufferedImage genTextImage(String text, int width, int height) {
-        BufferedImage before = genTextImage(text);
-        double scaleX = ((double)width)/before.getWidth();
-        double scaleY = ((double)height)/before.getHeight();
-
-
-        int w = before.getWidth();
-        int h = before.getHeight();
-        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-        AffineTransform at = new AffineTransform();
-        at.scale(scaleX, scaleY);
-        AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        after = scaleOp.filter(before, after);
-
-        return after;
+    @Nullable
+    public static ByteArrayOutputStream buffImgToOutputStream(BufferedImage img, String format) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(img, format, baos);
+            return baos;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
+//    public static BufferedImage genTextImage(String text, int width, int height) {
+//        BufferedImage before = genTextImage(text);
+//        double scaleX = ((double)width)/before.getWidth();
+//        double scaleY = ((double)height)/before.getHeight();
+//
+//
+//        int w = before.getWidth();
+//        int h = before.getHeight();
+//        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+//        AffineTransform at = new AffineTransform();
+//        at.scale(scaleX, scaleY);
+//        AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+//        after = scaleOp.filter(before, after);
+//
+//        return after;
+//    }
 
     public static void saveImg(BufferedImage img, String path) {
         try {
