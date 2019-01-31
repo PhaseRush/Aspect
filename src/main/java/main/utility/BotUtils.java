@@ -752,7 +752,7 @@ public class BotUtils {
 
         reader.close();
 
-        return key;
+        return "https://hastebin.com/" + key;
     }
 
     public static EmbedBuilder getQuoteEmbed() {

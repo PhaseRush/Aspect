@@ -11,11 +11,15 @@ public class DoubleRingBuffer  {
     private final AtomicInteger pointer = new AtomicInteger(0);
     private final AtomicDoubleArray buffer;
 
+
+    public DoubleRingBuffer() {
+        this(30);
+    }
+
     public DoubleRingBuffer(final int max) {
         buffer = new AtomicDoubleArray(max);
         this.max = max;
     }
-
 
     public double[] push(double element) {
         if(full()) shift();
@@ -23,7 +27,6 @@ public class DoubleRingBuffer  {
         if(!full()) size++;
         return toArray();
     }
-
 
     public double pop() {
         if(pointer.get() == max || pointer.get() == size()) {

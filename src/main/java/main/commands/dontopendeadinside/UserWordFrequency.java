@@ -177,6 +177,9 @@ public class UserWordFrequency implements Command {
         // generate haste
         String hasteContent = "Aspect :: 1 week message stats for " + BotUtils.getNickOrDefault(target, event.getGuild()) +
                 "\n" + sb.toString() + "\n\n" + autoCorrect.toString();
+        // cleanup "```js"
+        hasteContent = hasteContent.replaceAll("[```js|```]", "");
+
         try {
             BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + BotUtils.makeHasteGetUrl(hasteContent));
         } catch (IOException e) {
