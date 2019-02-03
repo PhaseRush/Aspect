@@ -1,7 +1,7 @@
 package main.commands.warframe;
 
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.warframe.market.item.WarframeItem;
 import main.utility.warframe.market.item.WarframeItemPayloadContainer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

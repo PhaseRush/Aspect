@@ -1,6 +1,6 @@
 package main.passive;
 
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
@@ -23,7 +23,7 @@ public class CutePassive {
             int rand = r.nextInt(100);
 
             if (rand == 1) BotUtils.send(event.getChannel(), "degenerate");
-            else if (rand % 2 == 0) BotUtils.send(event.getChannel(), "owo");
+            else if (rand % 4 == 0) BotUtils.send(event.getChannel(), "owo");
         }
     }
 
@@ -31,8 +31,8 @@ public class CutePassive {
     public void meow(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; //bot get no meowPattern
         if (System.currentTimeMillis() - lastMeow < 1000) return; //meowPattern no more than 1/sec
-        if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
-        if (!event.getMessage().getFormattedContent().matches("\\b(me+o+w)\\b")) return; //actually check the pattern
+        //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
+        if (!event.getMessage().getFormattedContent().matches("(?i)\\b(me+o+w)\\b")) return; //actually check the pattern
 
         BotUtils.send(event.getChannel(), "*meow meow :3*");
         lastMeow = System.currentTimeMillis();
@@ -42,8 +42,8 @@ public class CutePassive {
     public void pat(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; //bot get no pat
         if (System.currentTimeMillis() - lastPat < 1000) return; //pat no more than 1/sec
-        if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
-        if (!event.getMessage().getFormattedContent().matches("\\b([pP][aAeE][tT])\\b")) return; //if no pat, NO PAT FOR U
+        //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
+        if (!event.getMessage().getFormattedContent().matches("(?i)\\b(p(a+|e+)+t)\\b")) return; //if no pat, NO PAT FOR U
 
         BotUtils.send(event.getChannel(), "*pet pet :3*");
         lastPat = System.currentTimeMillis();

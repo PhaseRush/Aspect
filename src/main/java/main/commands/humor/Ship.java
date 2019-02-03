@@ -1,9 +1,9 @@
 package main.commands.humor;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
 import main.utility.maths.MathUtil;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.api.internal.json.objects.EmbedObject;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;

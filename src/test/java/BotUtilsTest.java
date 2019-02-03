@@ -1,4 +1,4 @@
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

@@ -1,8 +1,8 @@
 package main.commands.warframe;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import main.utility.warframe.wfstatus.voidTrader.WarframeVoidTrader;
 import main.utility.warframe.wfstatus.voidTrader.WarframeVoidTraderInventoryObj;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

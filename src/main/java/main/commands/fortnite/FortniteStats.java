@@ -1,10 +1,10 @@
 package main.commands.fortnite;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.StatsFactory;
 import main.utility.fortnite.fornitetracker.FortniteTrackerJsonObj;
 import main.utility.fortnite.fornitetracker.stats.FortniteTrackerPx;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 

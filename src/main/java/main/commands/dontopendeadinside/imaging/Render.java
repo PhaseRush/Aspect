@@ -1,8 +1,8 @@
 package main.commands.dontopendeadinside.imaging;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -22,7 +22,7 @@ public class Render implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return !args.isEmpty();
+        return args.size() == 1;
     }
 
     @Override

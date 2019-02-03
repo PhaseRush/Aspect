@@ -1,8 +1,8 @@
 package main.passive;
 
-import main.utility.BotUtils;
 import main.utility.PokemonUtil;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IEmbed;
 import sx.blah.discord.util.EmbedBuilder;

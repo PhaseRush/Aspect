@@ -2,7 +2,7 @@ package main.passive;
 
 import com.google.common.math.BigIntegerMath;
 import info.debatty.java.stringsimilarity.Levenshtein;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

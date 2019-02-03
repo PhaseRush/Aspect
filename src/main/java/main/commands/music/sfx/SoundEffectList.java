@@ -1,7 +1,7 @@
 package main.commands.music.sfx;
 
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.music.SfxManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 

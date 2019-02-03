@@ -1,7 +1,7 @@
 package main.commands.music.queue;
 
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.music.GuildMusicManager;
 import main.utility.music.MasterManager;
 import main.utility.music.TrackScheduler;

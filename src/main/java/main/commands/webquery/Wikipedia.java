@@ -1,8 +1,8 @@
 package main.commands.webquery;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import main.utility.wikipedia.WikiContainer;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;

@@ -1,8 +1,8 @@
 package main.commands.pokemon;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.PokemonUtil;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.RequestBuffer;
 

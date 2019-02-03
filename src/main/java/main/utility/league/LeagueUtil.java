@@ -3,7 +3,7 @@ package main.utility.league;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import com.merakianalytics.orianna.types.core.staticdata.Item;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;

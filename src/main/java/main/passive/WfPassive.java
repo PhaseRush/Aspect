@@ -1,9 +1,9 @@
 package main.passive;
 
 import main.Main;
-import main.utility.BotUtils;
 import main.utility.Visuals;
 import main.utility.WarframeUtil;
+import main.utility.metautil.BotUtils;
 import main.utility.warframe.wfstatus.WarframeCetusTimeObject;
 import main.utility.warframe.wfstatus.alerts.WarframeAlert;
 import main.utility.warframe.wfstatus.alerts.WarframeMission;

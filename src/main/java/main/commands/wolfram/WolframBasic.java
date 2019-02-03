@@ -1,7 +1,7 @@
 package main.commands.wolfram;
 
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.wolfram.WolframUtil;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;

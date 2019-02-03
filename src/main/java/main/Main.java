@@ -4,7 +4,7 @@ import com.ibm.watson.developer_cloud.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.api.IDiscordClient;
 
 import java.lang.management.ManagementFactory;

@@ -2,7 +2,7 @@ package main.passive;
 
 import com.sun.management.OperatingSystemMXBean;
 import main.Main;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.structures.DoubleRingBuffer;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;

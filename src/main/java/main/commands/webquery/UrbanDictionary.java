@@ -1,7 +1,7 @@
 package main.commands.webquery;
 
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.urbandictionary.DefinitionContainer;
 import main.utility.urbandictionary.UDDefinition;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

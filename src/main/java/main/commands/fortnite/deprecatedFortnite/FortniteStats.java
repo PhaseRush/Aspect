@@ -2,10 +2,10 @@ package main.commands.fortnite.deprecatedFortnite;
 
 import com.google.gson.Gson;
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
 import main.utility.fortnite.deprecatedfortniteutil.FortnitePlayerParser.FGameType;
 import main.utility.fortnite.deprecatedfortniteutil.FortnitePlayerParser.FPlayer;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.EmbedBuilder;

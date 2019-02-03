@@ -2,7 +2,7 @@ package main.commands.music.playing;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IVoiceChannel;

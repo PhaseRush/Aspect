@@ -6,9 +6,9 @@ import com.ticketmaster.api.discovery.response.PagedResponse;
 import com.ticketmaster.api.discovery.response.RateLimit;
 import com.ticketmaster.discovery.model.Events;
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
 import main.utility.gist.GistUtils;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 

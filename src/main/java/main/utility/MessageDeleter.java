@@ -1,5 +1,6 @@
 package main.utility;
 
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;

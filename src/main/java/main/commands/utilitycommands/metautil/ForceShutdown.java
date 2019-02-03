@@ -2,7 +2,7 @@ package main.commands.utilitycommands.metautil;
 
 import main.Command;
 import main.CommandManager;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.state_json.MasterJsonUtil;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 

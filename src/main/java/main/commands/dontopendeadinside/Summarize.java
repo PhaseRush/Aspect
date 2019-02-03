@@ -1,11 +1,11 @@
 package main.commands.dontopendeadinside;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.SmmryObject;
 import main.utility.Visuals;
 import main.utility.gist.GistUtils;
 import main.utility.gist.gist_json.GistContainer;
+import main.utility.metautil.BotUtils;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

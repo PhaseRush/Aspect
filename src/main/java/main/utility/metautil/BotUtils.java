@@ -1,4 +1,4 @@
-package main.utility;
+package main.utility.metautil;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
@@ -7,6 +7,7 @@ import javafx.util.Pair;
 import main.CommandManager;
 import main.Main;
 import main.passive.*;
+import main.utility.Visuals;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -616,6 +617,16 @@ public class BotUtils {
         return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds);
     }
 
+    /**
+     * Limits the length of a String
+     *
+     * @param s input string
+     * @param length target length
+     * @param useDotDotDot end with "..."? length includes ...
+     * @param cutAtChar end the string at the following character?
+     * @param cutChar character to use if cutAtChar is true
+     * @return string within target length
+     */
     public static String limitStrLen(String s, int length, boolean useDotDotDot, boolean cutAtChar, char cutChar) {
         // if str is shorter just return
         if (s.length() <= length) return s;
@@ -647,14 +658,12 @@ public class BotUtils {
     }
 
     public static String generateWeirdFlex(){
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(getRandStrArr(wfboWeird)).append(" ");
-        sb.append(getRandStrArr(wfboFlex)).append(" ");
-        sb.append(getRandStrArr(wfboBut)).append(" ");
-        sb.append(getRandStrArr(wfboOk));
-
-        return sb.toString();
+        return new StringBuilder()
+                .append(getRandStrArr(wfboWeird)).append(" ")
+                .append(getRandStrArr(wfboFlex)).append(" ")
+                .append(getRandStrArr(wfboBut)).append(" ")
+                .append(getRandStrArr(wfboOk))
+                .toString();
     }
 
     /**
@@ -772,30 +781,33 @@ public class BotUtils {
         private String link;
     }
 
+    /**
+     * returns milliseconds to next Xth hour
+     *
+     * note: Timezone is Los Angeles / Pacific
+     * @param hour24 24 hour format for desired target time
+     * @return milliseconds until hour24
+     */
     public static long millisToNextHour24(int hour24) {
         Instant now = Instant.now();
         ZoneId zoneId = ZoneId.of("America/Los_Angeles");
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
         ZonedDateTime zonedNow = zonedDateTime.toLocalDate().atStartOfDay(zoneId);
 
-        Instant today7amInstant = zonedNow.plusHours(hour24).toInstant();
-        //System.out.println("today: " + (today7amInstant.toEpochMilli() - System.currentTimeMillis()));
+        Instant todayXam = zonedNow.plusHours(hour24).toInstant();
 
-        Instant tmr7amInstant = zonedNow.plusDays(1).plusHours(hour24).toInstant();
-        //System.out.println("tmr: " + (tmr7amInstant.toEpochMilli() - System.currentTimeMillis()));
+        Instant tmrXam = zonedNow.plusDays(1).plusHours(hour24).toInstant();
 
-        Instant next7am;
-        if (today7amInstant.isAfter(now)) next7am = today7amInstant;  // 7:00 today
-        else next7am = tmr7amInstant; // 7:00 tmr
+        Instant nextXam = (todayXam.isAfter(now) ? todayXam : tmrXam);
 
-        return next7am.toEpochMilli() - now.toEpochMilli();
+        return nextXam.toEpochMilli() - now.toEpochMilli();
     }
 
     public static String cmdSpellCorrect(String inputStr) {
         return CommandManager.commandMap.entrySet().stream()
                 .filter(e -> e.getValue().correctable()) // thanks phanta
                 .filter(e -> Math.abs(e.getKey().length() - inputStr.length()) < 2)
-                .map(e -> new Pair<>(e.getKey(), BotUtils.stringSimilarity(e.getKey(), inputStr)))
+                .map(e -> new Pair<>(e.getKey(), BotUtils.stringSimilarityInt(e.getKey(), inputStr)))
                 .min(Comparator.comparingDouble(Pair::getValue))
                 .filter(p -> p.getValue() < 2) // the order of this filter and min has caused fat debates in #programming-help
                 .map(Pair::getKey)

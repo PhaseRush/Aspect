@@ -1,7 +1,6 @@
 package main;
 
 import com.google.gson.Gson;
-import main.utility.BotUtils;
 import main.utility.MessageDeleter;
 import main.utility.ReadWrite;
 import main.utility.Visuals;
@@ -10,6 +9,7 @@ import main.utility.chat.ChatRestrictionManager;
 import main.utility.fortnite.deprecatedfortniteutil.FortnitePlayerParser.FGameType;
 import main.utility.fortnite.deprecatedfortniteutil.FortnitePlayerParser.FPlayer;
 import main.utility.maths.UnitConverter;
+import main.utility.metautil.BotUtils;
 import main.utility.mooshroom.RealmEye.GuildUtil.RealmEyeGuild;
 import main.utility.mooshroom.RealmEye.GuildUtil.RealmEyeGuildMember;
 import main.utility.mooshroom.RealmEye.PetUtil.Pet;

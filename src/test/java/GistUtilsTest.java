@@ -1,6 +1,6 @@
-import main.utility.BotUtils;
 import main.utility.gist.GistUtils;
 import main.utility.gist.gist_json.GistContainer;
+import main.utility.metautil.BotUtils;
 import org.junit.jupiter.api.Test;
 
 public class GistUtilsTest {

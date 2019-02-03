@@ -2,7 +2,7 @@ package main.passive;
 
 import com.google.gson.Gson;
 import main.Main;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.privatechannel.IdKeyInfo;
 import main.utility.privatechannel.PrivateIdKeyPairContainer;
 import sx.blah.discord.api.events.EventSubscriber;

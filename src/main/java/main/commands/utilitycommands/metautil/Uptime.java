@@ -2,7 +2,7 @@ package main.commands.utilitycommands.metautil;
 
 import main.Command;
 import main.Main;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.List;

@@ -2,8 +2,8 @@ package main.commands.music.playing;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import main.utility.music.GuildMusicManager;
 import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

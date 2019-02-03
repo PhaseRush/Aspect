@@ -1,8 +1,8 @@
 package main.commands.humor.cute;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.humorUtil.CuteUtil;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.List;

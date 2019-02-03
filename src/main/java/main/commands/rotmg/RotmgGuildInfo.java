@@ -2,8 +2,8 @@ package main.commands.rotmg;
 
 import com.google.gson.Gson;
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import main.utility.mooshroom.RealmEye.GuildUtil.RealmEyeGuild;
 import main.utility.mooshroom.RealmEye.GuildUtil.RealmEyeGuildMember;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

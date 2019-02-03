@@ -1,8 +1,8 @@
 package main.commands.rotmg;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.ReadWrite;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.List;

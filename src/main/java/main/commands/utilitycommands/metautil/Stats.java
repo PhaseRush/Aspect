@@ -4,8 +4,8 @@ import main.Command;
 import main.CommandManager;
 import main.Main;
 import main.passive.ScheduledActions;
-import main.utility.BotUtils;
 import main.utility.grapher.LineChart;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -59,10 +59,14 @@ public class Stats implements Command {
     return filepath to image
      */
     private ByteArrayInputStream generateImage() {
-        double[] cpuVals = ScheduledActions.cpuQueue.toArray();
-        double[] memVals = ScheduledActions.memQueue.toArray();
-
-        return new ByteArrayInputStream(LineChart.generateTwoPlot("Cpu (%)", "Ram (MB)", timeScale, timeScale, cpuVals, memVals).toByteArray());
+        return new ByteArrayInputStream(
+                LineChart.generateTwoPlot(
+                        "Cpu (%)", "Ram (MB)",
+                        timeScale,
+                        timeScale,
+                        ScheduledActions.cpuQueue.toArray(),
+                        ScheduledActions.memQueue.toArray())
+                        .toByteArray());
     }
 
     @Override

@@ -17,28 +17,15 @@ import java.io.ByteArrayOutputStream;
 public class LineChart {
 
     public static ByteArrayOutputStream generateTwoPlot(String name1, String name2, double[] dataSet1x, double[] dataSet2x, double[] dataSet1y, double[] dataSet2y) {
-        //create the series - add some dummy data
         XYSeries series1 = new XYSeries(name1);
         XYSeries series2 = new XYSeries(name2);
 
         for (int i = 0; i < dataSet1y.length; i++) {
             series1.add(dataSet1x[i], dataSet1y[i]);
         }
-        for (int i = 0; i < dataSet2y.length; i++) {
+            for (int i = 0; i < dataSet2y.length; i++) {
             series2.add(dataSet2x[i], dataSet2y[i]);
         }
-
-        // FAKE DATA
-//        double[] timeScale = {
-//                -15, -14.5, -14, -13.5, -13, -12.5, -12, -11.5, -11, -10.5,
-//                -10, -9.5, -9, -8.5, -8, -7.5, -7, -6.5, -6, -5.5, -5,
-//                -4.5, -4, -3.5, -3, -2.5, -2, -1.5, -1, -.5, 0};
-//
-//        for (int i = 0; i < 30; i++) {
-//            series1.add(timeScale[i], 100-i*2);
-//            series2.add(timeScale[i], 50+i);
-//        }
-        // END FAKE DATA
 
         //create the datasets
         XYSeriesCollection dataset1 = new XYSeriesCollection();

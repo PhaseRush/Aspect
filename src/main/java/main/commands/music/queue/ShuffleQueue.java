@@ -2,7 +2,7 @@ package main.commands.music.queue;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import main.utility.music.GuildMusicManager;
 import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

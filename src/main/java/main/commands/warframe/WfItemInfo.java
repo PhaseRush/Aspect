@@ -1,9 +1,9 @@
 package main.commands.warframe;
 
 import main.Command;
-import main.utility.BotUtils;
 import main.utility.Visuals;
 import main.utility.WarframeUtil;
+import main.utility.metautil.BotUtils;
 import main.utility.warframe.market.itemdetail.WarframeDetailedDrop;
 import main.utility.warframe.market.itemdetail.WarframeDetailedItem;
 import main.utility.warframe.market.itemdetail.WarframeItemDetailPayloadContainer;

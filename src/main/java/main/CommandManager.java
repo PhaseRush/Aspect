@@ -33,7 +33,7 @@ import main.commands.webquery.UrbanDictionary;
 import main.commands.webquery.Wikipedia;
 import main.commands.wolfram.WolframAdvanced;
 import main.commands.wolfram.WolframBasic;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

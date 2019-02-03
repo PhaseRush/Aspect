@@ -1,5 +1,6 @@
 package main.utility;
 
+import main.utility.metautil.BotUtils;
 import main.utility.miscJsonObj.CatMediaContainer;
 import org.jetbrains.annotations.Nullable;
 import sx.blah.discord.handle.impl.obj.Embed.EmbedField;

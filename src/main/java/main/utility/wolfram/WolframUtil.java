@@ -1,8 +1,8 @@
 package main.utility.wolfram;
 
 import com.wolfram.alpha.*;
-import main.utility.BotUtils;
 import main.utility.Visuals;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.EmbedBuilder;

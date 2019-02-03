@@ -1,7 +1,7 @@
 package main.commands.dontopendeadinside.imaging.ascii;
 
 import main.Command;
-import main.utility.BotUtils;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import javax.imageio.ImageIO;
