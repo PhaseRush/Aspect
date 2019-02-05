@@ -1,4 +1,4 @@
-package main.commands.dontopendeadinside;
+package main.commands.dontopendeadinside.games;
 
 import main.Command;
 import main.utility.metautil.BotUtils;

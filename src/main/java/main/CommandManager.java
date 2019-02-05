@@ -1,6 +1,10 @@
 package main;
 
-import main.commands.dontopendeadinside.*;
+import main.commands.dontopendeadinside.Greet;
+import main.commands.dontopendeadinside.Summarize;
+import main.commands.dontopendeadinside.UserWordFrequency;
+import main.commands.dontopendeadinside.WordCounter;
+import main.commands.dontopendeadinside.games.RollDice;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
 import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
@@ -25,6 +29,7 @@ import main.commands.overwatch.OverwatchStats;
 import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
+import main.commands.utilitycommands.guild.DumpEmotes;
 import main.commands.utilitycommands.guild.UsersToGist;
 import main.commands.utilitycommands.guildutil.*;
 import main.commands.utilitycommands.metautil.*;
@@ -210,8 +215,9 @@ public class CommandManager {
 
         commandMap.put("__", new WolframAdvanced());
 
-        // Some Gist dumping
+        // Other meta util
         commandMap.put("dumpusers", new UsersToGist());
+        commandMap.put("emotes", new DumpEmotes());
     }
 
     @EventSubscriber

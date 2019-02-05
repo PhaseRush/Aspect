@@ -1,4 +1,4 @@
-package main.commands.dontopendeadinside;
+package main.commands.dontopendeadinside.games;
 
 import main.Command;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
