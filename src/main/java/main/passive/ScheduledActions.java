@@ -55,7 +55,7 @@ public class ScheduledActions {
             }
         };
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(cpuHawk, 30, 60, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
+        scheduledFuture = scheduler.scheduleAtFixedRate(cpuHawk, 60, 60, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
     }
 
     @EventSubscriber

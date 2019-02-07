@@ -32,7 +32,7 @@ public class CpuStats implements Command {
         Runtime r = Runtime.getRuntime();
         double maxM = r.maxMemory() / 1E6;
 
-        return "```                                                     " +
+        return "```                                                     \n" +
                 "System Load:  \t\t" + osBean.getSystemLoadAverage()*100 + " %" +
                 "\nRam (MB): \t\t\t" + (int) (maxM - r.freeMemory() / 1E6) + " / " + (int) maxM +
                 "\nArch: \t\t\t\t" + osBean.getArch() +

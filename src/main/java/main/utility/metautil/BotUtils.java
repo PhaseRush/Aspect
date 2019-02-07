@@ -15,6 +15,7 @@ import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.internal.json.objects.EmbedObject;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.*;
@@ -243,6 +244,22 @@ public class BotUtils {
                         return null;
                     } catch (MissingPermissionsException e) {
                         System.out.println("Missing Permissions: " + channel.getName() + " EmbedBuilder: " + embedBuilder.toString());
+                        return null;
+                    }
+                }).get();
+    }
+
+    public static IMessage sendGet(IChannel channel, EmbedObject embedObject) {
+        return
+                RequestBuffer.request(() -> {
+                    try {
+                        return channel.sendMessage(embedObject);
+                    } catch (DiscordException e) {
+                        System.err.println("Message could not be sent with error: ");
+                        e.printStackTrace();
+                        return null;
+                    } catch (MissingPermissionsException e) {
+                        System.out.println("Missing Permissions: " + channel.getName() + " EmbedObject: " + embedObject.toString());
                         return null;
                     }
                 }).get();

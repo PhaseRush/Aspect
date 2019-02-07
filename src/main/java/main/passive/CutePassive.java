@@ -43,7 +43,7 @@ public class CutePassive {
         if (event.getAuthor().isBot()) return; //bot get no pat
         if (System.currentTimeMillis() - lastPat < 1000) return; //pat no more than 1/sec
         //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
-        if (!event.getMessage().getFormattedContent().matches("(?i)\\b(p(a+|e+)+t)\\b")) return; //if no pat, NO PAT FOR U
+        if (!event.getMessage().getFormattedContent().matches("(?i)\\b(p(a+|e+)t)\\b")) return; //if no pat, NO PAT FOR U
 
         BotUtils.send(event.getChannel(), "*pet pet :3*");
         lastPat = System.currentTimeMillis();
