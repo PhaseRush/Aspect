@@ -3,6 +3,9 @@ package main.utility;
 import main.utility.metautil.BotUtils;
 import main.utility.miscJsonObj.CatMediaContainer;
 import org.jetbrains.annotations.Nullable;
+import org.scilab.forge.jlatexmath.TeXConstants;
+import org.scilab.forge.jlatexmath.TeXFormula;
+import org.scilab.forge.jlatexmath.TeXIcon;
 import sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -306,6 +309,23 @@ public class Visuals {
         json = json.substring(1, json.length()-1);
         CatMediaContainer cat = BotUtils.gson.fromJson(json, CatMediaContainer.class);
         return cat.getUrl();
+    }
+
+
+    public static ByteArrayOutputStream renderTex(String texInput) {
+        TeXFormula formula = new TeXFormula(texInput);
+
+        TeXIcon icon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setStyle(20).build();
+
+        icon.setInsets(new Insets(5,5,5,5));
+
+        BufferedImage texBuffImg =
+                new BufferedImage(
+                        icon.getIconWidth(),
+                        icon.getIconHeight(),
+                        BufferedImage.TYPE_INT_ARGB);
+
+        return buffImgToOutputStream(texBuffImg, "png");
     }
 
 }

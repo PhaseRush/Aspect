@@ -7,6 +7,7 @@ import main.commands.dontopendeadinside.WordCounter;
 import main.commands.dontopendeadinside.games.RollDice;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
+import main.commands.dontopendeadinside.imaging.Tex;
 import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
 import main.commands.dontopendeadinside.imaging.ascii.Asciimg;
 import main.commands.fortnite.FortniteStats;
@@ -79,6 +80,7 @@ public class CommandManager {
         commandMap.put("ascii2", new AsciifyOld());
         commandMap.put("ascii", new Asciimg());
         commandMap.put("render", new Render());
+        commandMap.put("tex", new Tex());
         commandMap.put("help", new Help());
         commandMap.put("summarize", new Summarize());
         commandMap.put("img", new Imaging()); // showcase?

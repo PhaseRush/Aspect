@@ -191,11 +191,19 @@
         </dependency>
 
         <!--apache commons collections - CircularFIFOQueue-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.commons</groupId>-->
+            <!--<artifactId>commons-collections4</artifactId>-->
+            <!--<version>4.2</version>-->
+        <!--</dependency>-->
+
+        <!--Jlatexmath - TeX rendering-->
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>4.2</version>
+            <groupId>org.scilab.forge</groupId>
+            <artifactId>jlatexmath</artifactId>
+            <version>1.0.7</version>
         </dependency>
+
 
 
 
