@@ -121,6 +121,7 @@ public class CommandManager {
         commandMap.put("queue", songQueue);
         commandMap.put("q", songQueue);
         commandMap.put("pq", new SongPastQueue());
+        commandMap.put("fq", new FilterQueue());
         //commandMap.put("")
         commandMap.put("loop", new SongLoop());
         commandMap.put("shuffle", new ShuffleQueue());
