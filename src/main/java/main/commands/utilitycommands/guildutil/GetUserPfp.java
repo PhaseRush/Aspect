@@ -24,7 +24,7 @@ public class GetUserPfp implements Command {
             try {
                 users.add(Main.client.getUserByID(Long.valueOf(args.get(0))));
             } catch (Exception e) {
-                BotUtils.send(event.getChannel(), "Invalid parameter. Use the person's ID (@User not supported yet)");
+                BotUtils.send(event.getChannel(), "Invalid parameter. Use the person's ID or @tag them");
                 return;
             }
             if (users.isEmpty()) {
@@ -44,6 +44,6 @@ public class GetUserPfp implements Command {
 
     @Override
     public String getDesc() {
-        return null;
+        return "Gets a user's profile pic. Can tag multiple people to get everyone's pfp";
     }
 }

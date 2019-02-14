@@ -10,6 +10,7 @@ import main.passive.*;
 import main.utility.Visuals;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
@@ -80,7 +81,7 @@ public class BotUtils {
     public static String TICKET_MASTER_API_KEY;
     public static IChannel BOTTOM_TEXT;
     public static String PRIVATE_CHANNEL_INFO_URL;
-
+    public static String DEEP_AI_API_KEY;
 
     //dev meta -- USE FOR GIST GENERATION
     public static String DEV_GITHUB_NAME;
@@ -566,6 +567,32 @@ public class BotUtils {
                 .header(headerName, headerValue)
                 .build();//Response response = client.newCall(request).execute()
         try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            //kys
+            return "error - url status request - getstringfromurl - with header";
+        }
+    }
+    public static String getStringFromUrl(String url, String headerName1, String headerValue1, RequestBody requestBody) {
+        Request request = new Request.Builder()
+                .url(url)
+                .header(headerName1, headerValue1)
+                .post(requestBody)
+                .build();//Response response = client.newCall(request).execute()
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            //kys
+            return "error - url status request - getstringfromurl - with header";
+        }
+    }
+    public static String getStringFromURL(String url, List<String> headerNames, List<String> headerValues){
+        Request.Builder request = new Request.Builder()
+                .url(url);
+        for (int i = 0; i < headerNames.size(); i++) {
+            request.header(headerNames.get(i), headerValues.get(i));
+        }
+        try (Response response = client.newCall(request.build()).execute()) {
             return response.body().string();
         } catch (IOException e) {
             //kys

@@ -54,7 +54,7 @@ public class MasterManager {
         }
 
         guild.getAudioManager().setAudioProvider(musicManager.getAudioProvider());
-
+        //musicManager.getPlayer().setVolume(50); // ?
         return musicManager;
     }
 

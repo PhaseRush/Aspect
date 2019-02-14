@@ -19,12 +19,14 @@ public class FilterQueue implements Command {
                         .filter(track -> track.getInfo().title.toLowerCase().contains(args.get(0).toLowerCase()))
                         .collect(Collectors.toList())
         );
+
         BotUtils.reactWithCheckMark(event.getMessage());
     }
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return !args.isEmpty();
+        return !MasterManager.getGuildAudioPlayer(event.getGuild()).getScheduler().getQueue().isEmpty() &&
+                !args.isEmpty();
     }
 
     @Override

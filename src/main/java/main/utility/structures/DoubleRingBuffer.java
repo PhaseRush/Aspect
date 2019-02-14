@@ -4,6 +4,9 @@ import com.google.common.util.concurrent.AtomicDoubleArray;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * custom implementation for a ring buffer, thanks to Xaanit for all the help
+ */
 public class DoubleRingBuffer  {
 
     private final int max;

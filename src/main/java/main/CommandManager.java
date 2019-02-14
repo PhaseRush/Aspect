@@ -10,6 +10,7 @@ import main.commands.dontopendeadinside.imaging.Render;
 import main.commands.dontopendeadinside.imaging.Tex;
 import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
 import main.commands.dontopendeadinside.imaging.ascii.Asciimg;
+import main.commands.dontopendeadinside.imaging.deepAI.Waifu2x;
 import main.commands.fortnite.FortniteStats;
 import main.commands.humor.AnalyzeUser;
 import main.commands.humor.Insult;
@@ -86,6 +87,7 @@ public class CommandManager {
         commandMap.put("img", new Imaging()); // showcase?
         commandMap.put("identify", new PokemonIdentifier()); // showcase?
         commandMap.put("roll", new RollDice());
+        commandMap.put("upscale", new Waifu2x());
 
         // misc features
         commandMap.put("events", new EventsNearLocation());

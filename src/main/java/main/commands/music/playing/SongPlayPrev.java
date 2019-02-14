@@ -1,6 +1,7 @@
 package main.commands.music.playing;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.Command;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
@@ -21,6 +22,14 @@ public class SongPlayPrev implements Command {
         if (aspectChannel != userChannel) { //cant use .equals b/c could be null
             BotUtils.joinVC(event);
             MasterManager.getGuildAudioPlayer(event.getGuild()).setThisStartTime(System.currentTimeMillis());
+        }
+
+        // restart
+        AudioTrack curr = player.getPlayingTrack();
+        if (curr.getPosition() > 1000 * 10) { // more than 10 sec in
+            curr.setPosition(0); // restart
+        } else {
+            // go back a song
         }
 
         if (player.isPaused()) {

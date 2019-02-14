@@ -39,7 +39,7 @@ public class Main {
         startTime = System.currentTimeMillis();
         startInstant = Instant.now();
 
-        if (args.length != 16) {
+        if (args.length != 17) {
             System.out.println("You screwed up the runtime config params!\targs:" + args.length) ;
             System.exit(9001);
             return; // :)
@@ -73,6 +73,9 @@ public class Main {
 
         // Ticketmaster
         BotUtils.TICKET_MASTER_API_KEY = args[15];
+
+        // Deep AI
+        BotUtils.DEEP_AI_API_KEY = args[16];
 
         // League of Legends
         Orianna.setRiotAPIKey(args[3]);
