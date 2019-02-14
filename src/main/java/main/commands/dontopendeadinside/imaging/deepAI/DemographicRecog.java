@@ -17,28 +17,28 @@ public class DemographicRecog extends DeepAI implements Command {
         String targetUrl = getTargetUrl(event, args);
         String json = fetchJson("https://api.deepai.org/api/demographic-recognition", targetUrl);
 
-        Container[] objs = BotUtils.gson.fromJson(json, Container[].class);
-        Container target = objs[0];
+        Face target = BotUtils.gson.fromJson(json, Container.class).output.faces[0];
         BotUtils.send(event.getChannel(), new EmbedBuilder()
                 .withTitle("Demographic Recognition")
                 .withDesc(generateDesc(target)));
     }
 
-    private String generateDesc(Container target) {
+    private String generateDesc(Face target) {
         GridTable table = GridTable.of(2, 3)
                 .put(0, 0, Cell.of("Category"))
                 .put(0, 1, Cell.of("Estimate"))
                 .put(0, 2, Cell.of("Certainty"))
 
                 .put(1, 0, Cell.of("Age range", "Gender", "Race"))
-                .put(1, 2, Cell.of(generateStats(target)))
-                .put(1, 3, Cell.of(generateError(target)));
+                .put(1, 1, Cell.of(generateStats(target)))
+                .put(1, 2, Cell.of(generateError(target)));
+
         table = Border.DOUBLE_LINE.apply(table);
 
-        return TableUtil.render(table).toString();
+        return TableUtil.renderInCodeBlock(table).toString(); // lol this is so hacky
     }
 
-    private String[] generateStats(Container target) {
+    private String[] generateStats(Face target) {
         String[] obj = new String[3];
         obj[0] = target.age_range[0] + " - " + target.age_range[1];
         obj[1] = target.gender;
@@ -46,11 +46,11 @@ public class DemographicRecog extends DeepAI implements Command {
         return obj;
     }
 
-    private String[] generateError(Container target) {
+    private String[] generateError(Face target) {
         String[] obj = new String[3];
-        obj[0] = String.valueOf(target.age_range_confidence);
-        obj[1] = String.valueOf(target.gender_confidence);
-        obj[2] = String.valueOf(target.cultural_appearance_confidence);
+        obj[0] = target.age_range_confidence*100 + " %";
+        obj[1] = target.gender_confidence*100 + " %";
+        obj[2] = target.cultural_appearance_confidence*100 + " %";
         return obj;
     }
 
@@ -59,7 +59,16 @@ public class DemographicRecog extends DeepAI implements Command {
         return "Guesses your age, gender, and race based on your image";
     }
 
-    private class Container{
+    private class Container {
+        Output output;
+    }
+
+    private class Output {
+        Face[] faces;
+    }
+
+    private class Face {
+
         int[] age_range;
         String gender;
         String cultural_appearance;

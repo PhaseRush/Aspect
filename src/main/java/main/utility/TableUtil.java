@@ -35,4 +35,9 @@ public class TableUtil {
 
         return sb;
     }
+    public static StringBuilder renderInCodeBlock(GridTable g) {
+        return new StringBuilder("```js\n                              ")
+                .append(render(g))
+                .append("```");
+    }
 }
