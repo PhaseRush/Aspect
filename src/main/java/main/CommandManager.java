@@ -11,6 +11,7 @@ import main.commands.dontopendeadinside.imaging.Tex;
 import main.commands.dontopendeadinside.imaging.ascii.AsciifyOld;
 import main.commands.dontopendeadinside.imaging.ascii.Asciimg;
 import main.commands.dontopendeadinside.imaging.deepAI.Colourer;
+import main.commands.dontopendeadinside.imaging.deepAI.DeepDream;
 import main.commands.dontopendeadinside.imaging.deepAI.DemographicRecog;
 import main.commands.dontopendeadinside.imaging.deepAI.Waifu2x;
 import main.commands.fortnite.FortniteStats;
@@ -96,6 +97,7 @@ public class CommandManager {
         commandMap.put("face", new DemographicRecog());
         commandMap.put("color", color);
         commandMap.put("colour", color);
+        commandMap.put("deep", new DeepDream());
 
         // misc features
         commandMap.put("events", new EventsNearLocation());

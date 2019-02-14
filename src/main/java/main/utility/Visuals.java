@@ -10,6 +10,7 @@ import sx.blah.discord.handle.impl.obj.Embed.EmbedField;
 import sx.blah.discord.util.EmbedBuilder;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
@@ -315,7 +316,7 @@ public class Visuals {
     public static ByteArrayOutputStream renderTex(String texInput) {
         TeXFormula formula = new TeXFormula(texInput);
 
-        TeXIcon icon = formula.new TeXIconBuilder().setStyle(TeXConstants.STYLE_DISPLAY).setStyle(20).build();
+        TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
 
         icon.setInsets(new Insets(5,5,5,5));
 
@@ -324,6 +325,13 @@ public class Visuals {
                         icon.getIconWidth(),
                         icon.getIconHeight(),
                         BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = texBuffImg.createGraphics();
+        g2d.setColor(Color.white);
+        g2d.fillRect(0,0,icon.getIconWidth(),icon.getIconHeight());
+        JLabel jl = new JLabel();
+        jl.setForeground(new Color(0, 0, 0));
+        icon.paintIcon(jl, g2d, 0, 0);
 
         return buffImgToOutputStream(texBuffImg, "png");
     }

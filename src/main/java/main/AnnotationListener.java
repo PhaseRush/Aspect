@@ -50,6 +50,7 @@ import java.util.regex.Pattern;
  * THIS IS FROM THE OLD BOT. NONE OF THIS CLASS IS IN USE ANYMORE.
  * ---------------------------------------------------------------
  */
+@SuppressWarnings("all") // yikes dont look too hard
 public class AnnotationListener {
     private IDiscordClient client;
     private List<String> bannedUsers = new ArrayList<>();

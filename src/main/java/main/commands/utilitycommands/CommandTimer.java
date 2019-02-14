@@ -48,7 +48,7 @@ public class CommandTimer implements Command {
 
     @Override
     /*
-    do not run more than one timer command at any time
+    do not run more than one timer command at any time (mistakes were made that night)
      */
     public boolean requireSynchronous() {
         return true;
