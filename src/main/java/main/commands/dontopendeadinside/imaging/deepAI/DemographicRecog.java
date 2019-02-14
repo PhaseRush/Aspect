@@ -17,7 +17,13 @@ public class DemographicRecog extends DeepAI implements Command {
         String targetUrl = getTargetUrl(event, args);
         String json = fetchJson("https://api.deepai.org/api/demographic-recognition", targetUrl);
 
-        Face target = BotUtils.gson.fromJson(json, Container.class).output.faces[0];
+        Face target = null;
+        try {
+            target = BotUtils.gson.fromJson(json, Container.class).output.faces[0];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            BotUtils.send(event.getChannel(), "Sorry, no face found :(");
+            return;
+        }
         BotUtils.send(event.getChannel(), new EmbedBuilder()
                 .withTitle("Demographic Recognition")
                 .withDesc(generateDesc(target)));
@@ -29,7 +35,7 @@ public class DemographicRecog extends DeepAI implements Command {
                 .put(0, 1, Cell.of("Estimate"))
                 .put(0, 2, Cell.of("Certainty"))
 
-                .put(1, 0, Cell.of("Age range", "Gender", "Race"))
+                .put(1, 0, Cell.of("Age range", "Gender", "Ethnicity"))
                 .put(1, 1, Cell.of(generateStats(target)))
                 .put(1, 2, Cell.of(generateError(target)));
 
