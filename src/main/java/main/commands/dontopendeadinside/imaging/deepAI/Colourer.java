@@ -1,5 +1,6 @@
 package main.commands.dontopendeadinside.imaging.deepAI;
 
+import com.google.gson.JsonSyntaxException;
 import main.Command;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -13,8 +14,12 @@ public class Colourer extends DeepAI implements Command {
         String targetUrl = getTargetUrl(event, args);
         String json = fetchJson("https://api.deepai.org/api/colorizer", targetUrl);
 
-        String colouredUrl = BotUtils.gson.fromJson(json, Container.class).output_url;
-        BotUtils.send(event.getChannel(), new EmbedBuilder().withTitle("Colourized").withImage(colouredUrl));
+        try {
+            String colouredUrl = BotUtils.gson.fromJson(json, Container.class).output_url;
+            BotUtils.send(event.getChannel(), new EmbedBuilder().withTitle("Colourized").withImage(colouredUrl));
+        }catch (JsonSyntaxException e) {
+            BotUtils.send(event.getChannel(), "Failed to parse url; try another image");
+        }
     }
 
     @Override

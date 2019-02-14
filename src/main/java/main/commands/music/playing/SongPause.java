@@ -31,8 +31,21 @@ public class SongPause implements Command {
 
     @Override
     public String getDesc() {
-        return null;
+        return "Toggles pause/unpause on current music player";
     }
+
+
+    @Override
+    public Status mayRun(MessageReceivedEvent event, List<String> args) {
+        if (MasterManager.getGuildAudioPlayer(event.getGuild()).getPlayer() == null) {
+            return Status.STATE_PRECONDITION_ERROR;
+        } else if (event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel() != null) {
+            return Status.RUN_STATE_ERROR;
+        }
+
+        return Status.OK;
+    }
+
 
     @Override
     public boolean requireSynchronous() {

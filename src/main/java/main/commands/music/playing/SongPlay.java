@@ -26,7 +26,7 @@ public class SongPlay implements Command {
             BotUtils.send(event.getChannel(), "Player is now unpaused.");
         }
 
-        String searchStr = String.join(" ", args);
+        String searchStr = String.join(" ", args); // might want to use ", "
         MasterManager.loadAndPlay(event.getChannel(), searchStr, event, false, "");
     }
 

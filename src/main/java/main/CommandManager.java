@@ -283,7 +283,7 @@ public class CommandManager {
 
                 cmdPrintLog(event, finalCommandStr, argsList);
             } else {
-                BotUtils.send(event.getChannel(), "Error running command");
+                BotUtils.send(event.getChannel(), "Cannot run command due to either incorrect arguments or user's status too low");
             }
 
             // Handle state json

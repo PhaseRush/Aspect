@@ -12,6 +12,10 @@ public interface Command {
         return true;
     }
 
+    default Status mayRun(MessageReceivedEvent event, List<String> args) {
+        return Status.OK;
+    }
+
     default boolean requireSynchronous(){
         return false;
     }
@@ -28,7 +32,20 @@ public interface Command {
         return true;
     }
 
-//    default String getFailReason(MessageReceivedEvent event, List<String> args) {
-//        return BotUtils.GITHUB_URL;
-//    }
+    enum Status {
+        OK("OK"),
+        MISSING_PERMS("Missing permissions"),
+        WRONG_ARGS("Command parameters are wrong"),
+        STATE_PRECONDITION_ERROR("There are unsatisfied preconditions"),
+        RUN_STATE_ERROR("Error encountered while running (not user problem)");
+
+        private final String desc;
+        Status(String desc) {
+            this.desc = desc;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+    }
 }
