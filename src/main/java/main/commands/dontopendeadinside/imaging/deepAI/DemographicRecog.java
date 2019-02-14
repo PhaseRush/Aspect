@@ -17,7 +17,7 @@ public class DemographicRecog extends DeepAI implements Command {
         String targetUrl = getTargetUrl(event, args);
         String json = fetchJson("https://api.deepai.org/api/demographic-recognition", targetUrl);
 
-        Face target = null;
+        Face target;
         try {
             target = BotUtils.gson.fromJson(json, Container.class).output.faces[0];
         } catch (ArrayIndexOutOfBoundsException e) {
