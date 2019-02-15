@@ -37,7 +37,8 @@ public interface Command {
         MISSING_PERMS("Missing permissions"),
         WRONG_ARGS("Command parameters are wrong"),
         STATE_PRECONDITION_ERROR("There are unsatisfied preconditions"),
-        RUN_STATE_ERROR("Error encountered while running (not user problem)");
+        RUN_STATE_ERROR("Error encountered while running (not user problem)"),
+        DEFAULT("Unknown error");
 
         private final String desc;
         Status(String desc) {

@@ -295,6 +295,16 @@ public class CommandManager {
 //            }
         };
 
+        Runnable runCmd = () -> {
+            Command.Status status = cmd.mayRun(event, argsList);
+            if (status == Command.Status.OK) {
+                cmd.runCommand(event, argsList);
+                cmdPrintLog(event, finalCommandStr, argsList);
+            } else {
+                BotUtils.send(event.getChannel(), status.getDesc());
+            }
+        };
+
         // Execute the command on the server specific Executor if synchrony is required
         if (cmd.requireSynchronous()) {
             String id = event.getGuild().getStringID();
