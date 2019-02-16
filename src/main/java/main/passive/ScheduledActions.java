@@ -3,6 +3,7 @@ package main.passive;
 import com.sun.management.OperatingSystemMXBean;
 import main.Main;
 import main.utility.metautil.BotUtils;
+import main.utility.metautil.Global;
 import main.utility.structures.DoubleRingBuffer;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
@@ -46,7 +47,7 @@ public class ScheduledActions {
     @EventSubscriber
     public void cpuLoadWatcher(ReadyEvent event) {
         final Runnable cpuHawk = () -> {
-            if ( !sentMessage.get() && Main.osBean.getSystemLoadAverage() > 1) {
+            if ( !sentMessage.get() && Global.osBean.getSystemLoadAverage() > 1) {
                 BotUtils.send(
                         Main.client.getUserByID(Long.valueOf(BotUtils.DEV_DISCORD_STRING_ID)).getOrCreatePMChannel(),
                         "cpu sad :(");

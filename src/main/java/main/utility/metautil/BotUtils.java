@@ -83,7 +83,6 @@ public class BotUtils {
     public static String WF_BOTTOM_TEXT_ID;
     public static String TICKET_MASTER_API_KEY;
     public static IChannel BOTTOM_TEXT;
-    public static String PRIVATE_CHANNEL_INFO_URL;
     public static String DEEP_AI_API_KEY;
 
     //dev meta -- USE FOR GIST GENERATION

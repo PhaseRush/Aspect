@@ -4,6 +4,7 @@ import main.Command;
 import main.CommandManager;
 import main.Main;
 import main.utility.metautil.BotUtils;
+import main.utility.metautil.Global;
 import org.jetbrains.annotations.NotNull;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IGuild;
@@ -28,7 +29,7 @@ public class CpuStats implements Command {
 
     @NotNull
     public static String genMessage() {
-        OperatingSystemMXBean osBean = Main.osBean;
+        OperatingSystemMXBean osBean = Global.osBean;
         Runtime r = Runtime.getRuntime();
         double maxM = r.maxMemory() / 1E6;
 
