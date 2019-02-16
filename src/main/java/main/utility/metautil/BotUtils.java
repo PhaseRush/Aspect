@@ -29,6 +29,8 @@ import sx.blah.discord.util.RequestBuffer;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -41,6 +43,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -187,6 +190,13 @@ public class BotUtils {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static List<String> readFromFile(String path) {
+        try (Stream<String> stream = Files.lines(Paths.get(path))) {
+            return stream.collect(Collectors.toList());
+        } catch (IOException e) {}
+        return null;
     }
 
     // Helper functions to make certain aspects of the bot easier to use.
