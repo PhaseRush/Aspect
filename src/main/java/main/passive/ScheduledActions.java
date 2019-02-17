@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScheduledActions {
     private static ScheduledFuture<?> scheduledFuture = null;
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     // kaitlyn quoter
     private static final long kaitGeneralChatID = 197158565004312576L;
@@ -67,11 +67,6 @@ public class ScheduledActions {
         };
 
         scheduledFuture = scheduler.scheduleAtFixedRate(systemProber, 3, 30, TimeUnit.SECONDS); // start with more offset to not collide with other process
-    }
-
-    @EventSubscriber
-    public void redditCatSender(ReadyEvent event) {
-
     }
 
 

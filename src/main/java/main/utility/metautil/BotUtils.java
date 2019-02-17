@@ -86,6 +86,13 @@ public class BotUtils {
     public static String PRIVATE_CHANNEL_INFO_URL;
     public static String DEEP_AI_API_KEY;
 
+    public static String REDDIT_IGN;
+    public static String REDDIT_PW;
+    public static String REDDIT_CLIENT_ID;
+    public static String REDDIT_SECRET;
+
+
+
     //dev meta -- USE FOR GIST GENERATION
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
@@ -116,6 +123,8 @@ public class BotUtils {
         // dictionary
         String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
         dictionary = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
+
+
     }
 
 
@@ -758,6 +767,7 @@ public class BotUtils {
         dispatchListeners.add(new PrivateChannelVerification()); // Thanks Resuna!
         dispatchListeners.add(new CutePassive());
         dispatchListeners.add(new ScheduledActions());
+        dispatchListeners.add(new ScheduledSubreddits());
 
         return dispatchListeners;
     }

@@ -39,7 +39,7 @@ public class Main {
         startTime = System.currentTimeMillis();
         startInstant = Instant.now();
 
-        if (args.length != 17) {
+        if (args.length != 21) {
             System.out.println("You screwed up the runtime config params!\targs:" + args.length) ;
             System.exit(9001);
             return; // :)
@@ -76,6 +76,12 @@ public class Main {
 
         // Deep AI
         BotUtils.DEEP_AI_API_KEY = args[16];
+
+        // Reddit integration
+        BotUtils.REDDIT_IGN = args[17];
+        BotUtils.REDDIT_PW = args[18];
+        BotUtils.REDDIT_CLIENT_ID = args[19];
+        BotUtils.REDDIT_SECRET = args[20];
 
         // League of Legends
         Orianna.setRiotAPIKey(args[3]);
