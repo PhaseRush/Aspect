@@ -14,7 +14,6 @@ import net.dean.jraw.models.TimePeriod;
 import net.dean.jraw.oauth.Credentials;
 import net.dean.jraw.oauth.OAuthHelper;
 import net.dean.jraw.pagination.DefaultPaginator;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -25,7 +24,7 @@ public class RedditUtil {
     public static RedditClient reddit;
 
     // Prishe: "uwu"
-    public static List<IChannel> cuteSubscribers;
+//    public static List<IChannel> cuteSubscribers;
 //            =BotUtils.readFromFileToStringList(System.getProperty("user.dir") + "/data/cuties.txt")
 //            .stream().filter(s -> !s.contains("::"))
 //            .map(s -> Long.valueOf(s.substring(0, s.indexOf(';')))).map(longID -> Main.client.getChannelByID(longID)).collect(Collectors.toList());

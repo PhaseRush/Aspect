@@ -63,7 +63,7 @@ public class ScheduledSubreddits {
 
             };
 
-            scheduledFuture = scheduler.scheduleAtFixedRate(runner, 5, 5, TimeUnit.SECONDS);
+            scheduledFuture = scheduler.scheduleAtFixedRate(runner, 1, 300, TimeUnit.SECONDS);
             System.out.println("reddit sch");
         }
     }
@@ -76,6 +76,6 @@ public class ScheduledSubreddits {
         return new EmbedBuilder()
                 .withTitle(picPost.getTitle())
                 .withImage(picPost.getUrl())
-                .withFooterText(picPost.getSubreddit() + ", " + picPost.getScore() + " points");
+                .withFooterText("r/" + picPost.getSubreddit() + ", " + picPost.getScore() + " points");
     }
 }

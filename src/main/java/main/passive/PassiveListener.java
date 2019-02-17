@@ -2,6 +2,7 @@ package main.passive;
 
 import com.google.common.math.BigIntegerMath;
 import info.debatty.java.stringsimilarity.Levenshtein;
+import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -76,6 +77,14 @@ public class PassiveListener {
                 if (afterR.contains(" "))
                     subR = afterR.substring(0, afterR.indexOf(" "));
                 else subR = afterR.replaceAll("[.,#!$%^&*;:{}=\\-_`~()]",""); //dont replace '/'
+
+                // check name length limit (20)
+                if (subR.length() > 20) return;
+                try { // expensive check so do last
+                    RedditUtil.reddit.subreddit(subR).about();
+                } catch (NullPointerException e) {
+                    return; // doesnt exist
+                }
 
                 BotUtils.send(event.getChannel(), "https://www.reddit.com/" + subR);
             }
