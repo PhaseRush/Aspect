@@ -201,11 +201,23 @@ public class BotUtils {
         }
     }
 
-    public static List<String> readFromFile(String path) {
+    public static List<String> readFromFileToStringList(String path) {
         try (Stream<String> stream = Files.lines(Paths.get(path))) {
             return stream.collect(Collectors.toList());
         } catch (IOException e) {}
         return null;
+    }
+
+    public static String readFromFileToString(String path) {
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(new File(path));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String text = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        return text;
     }
 
     // Helper functions to make certain aspects of the bot easier to use.

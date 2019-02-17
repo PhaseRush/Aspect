@@ -1,7 +1,7 @@
 package main.utility;
 
+import com.google.gson.reflect.TypeToken;
 import javafx.util.Pair;
-import main.Main;
 import main.utility.metautil.BotUtils;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
@@ -16,17 +16,23 @@ import net.dean.jraw.oauth.OAuthHelper;
 import net.dean.jraw.pagination.DefaultPaginator;
 import sx.blah.discord.handle.obj.IChannel;
 
+import java.lang.reflect.Type;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class RedditUtil {
 
     public static RedditClient reddit;
 
     // Prishe: "uwu"
-    public static List<IChannel> cuteSubscribers = BotUtils.readFromFile(System.getProperty("user.dir") + "/data/cuties.txt")
-            .stream().filter(s -> !s.contains("::"))
-            .map(s -> Long.valueOf(s.substring(0, s.indexOf(';')))).map(longID -> Main.client.getChannelByID(longID)).collect(Collectors.toList());
+    public static List<IChannel> cuteSubscribers;
+//            =BotUtils.readFromFileToStringList(System.getProperty("user.dir") + "/data/cuties.txt")
+//            .stream().filter(s -> !s.contains("::"))
+//            .map(s -> Long.valueOf(s.substring(0, s.indexOf(';')))).map(longID -> Main.client.getChannelByID(longID)).collect(Collectors.toList());
+
+    // Map <Subreddit, Subscriber IDs>
+    private static Type typeOfMap = new TypeToken<Map<String, SubscriptionFrequency[]>>() { }.getType();
+    public static Map<String, SubscriptionFrequency[]> map = BotUtils.gson.fromJson(BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/subreddit_subscriptions.json"), typeOfMap);
 
 
     static {
@@ -35,7 +41,6 @@ public class RedditUtil {
         Credentials creds = Credentials.script(BotUtils.REDDIT_IGN, BotUtils.REDDIT_PW, BotUtils.REDDIT_CLIENT_ID, BotUtils.REDDIT_SECRET);
         NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
         reddit = OAuthHelper.automatic(adapter, creds);
-
     }
 
     public static DefaultPaginator<Submission> retreiveListing(String subredditName, int limit, SubredditSort sort, TimePeriod time) {
@@ -70,16 +75,17 @@ public class RedditUtil {
         return null; // return this if nothing in this List has images
     }
 
+    public static class SubscriptionFrequency {
+        public long channel_id;
+        public int frequency_seconds;
 
-    public class NextImageResponse {
-        private int index;
-        private DefaultPaginator paginator;
-        private Submission imageSubmission;
-
-        NextImageResponse(DefaultPaginator paginator, int index, Submission imageSubmission) {
-            this.paginator = paginator;
-            this.index = index;
-            this.imageSubmission = imageSubmission;
+        public SubscriptionFrequency(long i, int j) {
+            channel_id = i;
+            frequency_seconds = j;
         }
+    }
+
+    public static Map<String, SubscriptionFrequency[]> getMap() {
+        return map;
     }
 }
