@@ -81,10 +81,11 @@ public class PassiveListener {
                 // check name length limit (20)
                 if (subR.length() > 20) return;
                 try { // expensive check so do last
-                    RedditUtil.reddit.subreddit(subR).about();
-                } catch (NullPointerException e) {
+                    RedditUtil.reddit.subreddit(subR.substring(2)).about();
+                } catch (NullPointerException | StringIndexOutOfBoundsException e) {
                     return; // doesnt exist
-                }
+                } // string error
+
 
                 BotUtils.send(event.getChannel(), "https://www.reddit.com/" + subR);
             }
