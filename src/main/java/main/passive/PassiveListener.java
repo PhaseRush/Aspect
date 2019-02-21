@@ -136,7 +136,7 @@ public class PassiveListener {
         }
     }
 
-    @EventSubscriber
+    //@EventSubscriber
     public void thanksgiving(MessageReceivedEvent event) {
         long lastTime = lastThanksgivingMap.getOrDefault(event.getGuild().getLongID(), 0L);
 

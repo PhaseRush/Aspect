@@ -120,7 +120,7 @@ public class LeagueUtil {
     }
 
     private static void populateBronze() {
-        helpBronze.add("Ignorance is bliss. Or at least, complete lack of map awareness");
+        helpBronze.add("Ignorance is bliss. Or at least, complete lack of initDataMap awareness");
         helpBronze.add("Play Annie");
         helpBronze.add("Can't demote from silver if you never make silver");
         helpBronze.add("You can purchase items in the shop. Alt-F4 opens said shop");

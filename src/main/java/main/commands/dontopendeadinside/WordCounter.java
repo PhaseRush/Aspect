@@ -107,7 +107,7 @@ WordCounter implements Command {
                 rankCounter++;
             } catch (IllegalArgumentException e) {
                 eb.appendDesc("\n\n Listing the top 25:");
-                break; //already at 25 fields. Since map is sorted, just break loop
+                break; //already at 25 fields. Since initDataMap is sorted, just break loop
             }
         }
 

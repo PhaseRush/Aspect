@@ -30,7 +30,7 @@ public class ReNickName implements Command {
         //save all current nicknames
 
         //ty @xaanit
-        //List<String> currentNicks = iGuild.getUsers().stream().map( u -> u.getNicknameForGuild(iGuild)).collect(Collectors.toList());
+        //List<String> currentNicks = iGuild.getUsers().stream().initDataMap( u -> u.getNicknameForGuild(iGuild)).collect(Collectors.toList());
 
         for (IUser u : iGuild.getUsers())
             nickMap.put(u.getStringID(), u.getNicknameForGuild(iGuild));

@@ -127,7 +127,7 @@ public class AnimatedGifEncoder {
             }
             image = im;
             getImagePixels(); // convert to correct format if necessary
-            analyzePixels(); // build color table & map pixels
+            analyzePixels(); // build color table & initDataMap pixels
             if (firstFrame) {
                 writeLSD(); // logical screen descriptior
                 writePalette(); // global color table
@@ -266,7 +266,7 @@ public class AnimatedGifEncoder {
     }
 
     /**
-     * Analyzes image colors and creates color map.
+     * Analyzes image colors and creates color initDataMap.
      */
     protected void analyzePixels() {
         int len = pixels.length;
@@ -275,14 +275,14 @@ public class AnimatedGifEncoder {
         NeuQuant nq = new NeuQuant(pixels, len, sample);
         // initialize quantizer
         colorTab = nq.process(); // create reduced palette
-        // convert map from BGR to RGB
+        // convert initDataMap from BGR to RGB
         for (int i = 0; i < colorTab.length; i += 3) {
             byte temp = colorTab[i];
             colorTab[i] = colorTab[i + 2];
             colorTab[i + 2] = temp;
             usedEntry[i / 3] = false;
         }
-        // map image pixels to new palette
+        // initDataMap image pixels to new palette
         int k = 0;
         for (int i = 0; i < nPix; i++) {
             int index =

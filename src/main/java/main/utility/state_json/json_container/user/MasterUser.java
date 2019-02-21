@@ -20,7 +20,7 @@ public class MasterUser {
     List<Reminder> reminders;
 
     //stats
-    int numCommandsCalled; //might want to make a map for each command
+    int numCommandsCalled; //might want to make a initDataMap for each command
     int songsQueued; //might change this to played;
     long totalMusicTime;
 

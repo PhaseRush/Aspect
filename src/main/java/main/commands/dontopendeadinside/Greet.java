@@ -50,7 +50,7 @@ public class Greet implements Command {
 //        BotUtils.send(event.getChannel(),
 //                event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()
 //                        .ifNotNullDo(c -> c.getConnectedUsers())
-//                        .map(u->(customMap.containsKey(u.getLongID())?
+//                        .initDataMap(u->(customMap.containsKey(u.getLongID())?
 //                                    customMap.get(u.getLongID()) :
 //                                    BotUtils.getNickOrDefault(u, event.getGuild())))
 //                                .collect(some StringBuilder)
@@ -84,13 +84,13 @@ public class Greet implements Command {
 
         BotUtils.send(event.getChannel(), sb.toString());
 
-        // update map
+        // update initDataMap
         idTimeMap.put(event.getAuthor().getLongID(), System.currentTimeMillis());
     }
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-//        if (idTimeMap.containsKey(event.getAuthor().getLongID())) { // if already in map, see if > 60 seconds
+//        if (idTimeMap.containsKey(event.getAuthor().getLongID())) { // if already in initDataMap, see if > 60 seconds
 //            return (System.currentTimeMillis() - idTimeMap.get(event.getAuthor().getLongID())) > 1000 * 60;
 //        } else {
 //            return true;

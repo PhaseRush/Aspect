@@ -27,11 +27,12 @@ public class RedditUtil {
 //    public static List<IChannel> cuteSubscribers;
 //            =BotUtils.readFromFileToStringList(System.getProperty("user.dir") + "/data/cuties.txt")
 //            .stream().filter(s -> !s.contains("::"))
-//            .map(s -> Long.valueOf(s.substring(0, s.indexOf(';')))).map(longID -> Main.client.getChannelByID(longID)).collect(Collectors.toList());
+//            .initDataMap(s -> Long.valueOf(s.substring(0, s.indexOf(';')))).initDataMap(longID -> Main.client.getChannelByID(longID)).collect(Collectors.toList());
 
-    // Map <Subreddit, Subscriber IDs>
-    private static Type typeOfMap = new TypeToken<Map<String, SubscriptionFrequency[]>>() { }.getType();
-    public static Map<String, SubscriptionFrequency[]> map = BotUtils.gson.fromJson(BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/subreddit_subscriptions.json"), typeOfMap);
+    private static Type typeOfMap2 = new TypeToken<Map<String, SubData>>() {}.getType();
+    public static Map<String, SubData> initDataMap = BotUtils.gson.fromJson(
+            BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/subreddit_init_data.json"),
+            typeOfMap2);
 
 
     static {
@@ -74,17 +75,16 @@ public class RedditUtil {
         return null; // return this if nothing in this List has images
     }
 
-    public static class SubscriptionFrequency {
-        public long channel_id;
-        public int frequency_seconds;
+    public static class SubData {
+        public long[] subscribedChannels;
+        public int defaultFrequency;
+        public boolean isNsfw;
+        public boolean isCute;
 
-        public SubscriptionFrequency(long i, int j) {
-            channel_id = i;
-            frequency_seconds = j;
-        }
+        // String[] note; // json debugging use
     }
 
-    public static Map<String, SubscriptionFrequency[]> getMap() {
-        return map;
+    public static Map<String, SubData> getDataMap() {
+        return initDataMap;
     }
 }

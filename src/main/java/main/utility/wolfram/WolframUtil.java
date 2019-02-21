@@ -113,7 +113,7 @@ public class WolframUtil {
                 handleFieldFormatting(map.get(s));
         }
 
-        //turn map into list of embedfields
+        //turn initDataMap into list of embedfields
         List<EmbedField> formattedFields = new ArrayList<>();
         for (String fieldName : map.keySet()) {
             formattedFields.add(new EmbedField(fieldName, map.get(fieldName).toString(), false));

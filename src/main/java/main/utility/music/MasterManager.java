@@ -119,7 +119,7 @@ public class MasterManager {
 //                        return;
 //                }
 
-                //use customUrl map --was broken, now fixed
+                //use customUrl initDataMap --was broken, now fixed
                 if (MusicUtils.customUrls.containsKey(trackUrl)) {
                     loadAndPlay(channel, MusicUtils.customUrls.get(trackUrl), event, insertFront, "");
                     return; //Don't need to search Youtube

@@ -334,6 +334,8 @@ public class BotUtils {
             } catch (DiscordException e) {
                 System.err.println("Embed could not be sent with error: ");
                 e.printStackTrace();
+            } catch (NullPointerException npe) { // subreddit scheduler
+                // ignored
             }
         });
     }
@@ -652,14 +654,14 @@ public class BotUtils {
     }
 
     /**
-     * Utility for sorting a map
+     * Utility for sorting a initDataMap
      * needs work for sorting by key, since Entry#compareingByKey does not return correct type
      * @param map to sort
      * @param smallestToLargest sort from smallest to largest?
      * @param sortByValue sort by value?
      * @param <K>
      * @param <V>
-     * @return sorted map
+     * @return sorted initDataMap
      */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortMap(Map<K, V> map, boolean smallestToLargest, boolean sortByValue) {
         List<Entry<K, V>> entryList = new ArrayList<>(map.entrySet());

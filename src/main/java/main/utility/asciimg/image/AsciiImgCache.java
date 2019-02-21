@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Character cache that keeps a map of precalculated pixel data of each
+ * Character cache that keeps a initDataMap of precalculated pixel data of each
  * character that is eligible for ascii art.
  */
 public class AsciiImgCache implements
@@ -85,7 +85,7 @@ public class AsciiImgCache implements
      *
      * @param font          the font
      * @param characterSize the character size
-     * @return the map
+     * @return the initDataMap
      */
     private static Map<Character, GrayscaleMatrix> createCharacterImages(
             final Font font, final Dimension characterSize,
@@ -126,7 +126,7 @@ public class AsciiImgCache implements
     }
 
     /**
-     * A map of characters to their bitmaps.
+     * A initDataMap of characters to their bitmaps.
      */
     protected final Map<Character, GrayscaleMatrix> imageCache;
 

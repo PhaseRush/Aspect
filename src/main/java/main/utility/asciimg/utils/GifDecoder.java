@@ -230,7 +230,7 @@ public class GifDecoder {
                 }
                 int sx = i * iw; // start of line in source
                 while (dx < dlim) {
-                    // map color and insert in destination
+                    // initDataMap color and insert in destination
                     int index = ((int) pixels[sx++]) & 0xff;
                     int c = act[index];
                     if (c != 0) {
