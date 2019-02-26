@@ -8,7 +8,7 @@ import sx.blah.discord.handle.obj.IChannel;
 import java.util.Comparator;
 import java.util.List;
 
-public class VChannelInject implements Command {
+public class JoinVoiceChannel implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (args.get(0).matches("\\d.*")) {
@@ -21,7 +21,6 @@ public class VChannelInject implements Command {
                     .findFirst()
                     .ifPresent(ch -> event.getGuild().getVoiceChannelsByName(ch).get(0).join());
         }
-
     }
 
     @Override
@@ -43,6 +42,6 @@ public class VChannelInject implements Command {
 
     @Override
     public String getDesc() {
-        return "Forces Aspect into a voice channel";
+        return "Forces Aspect into a voice channel without additionally playing anything";
     }
 }

@@ -126,7 +126,7 @@ public class CommandManager {
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
-        commandMap.put("join", new VChannelInject());
+        commandMap.put("join", new JoinVoiceChannel());
         commandMap.put("nowplaying", songInfo);
         commandMap.put("np", songInfo);
         commandMap.put("current", songInfo);
@@ -285,7 +285,7 @@ public class CommandManager {
             if (cmd.canRun(event, argsList)) {
                 cmd.runCommand(event, argsList);
 
-                cmdPrintLog(event, finalCommandStr, argsList);
+                if (cmd.loggable()) cmdPrintLog(event, finalCommandStr, argsList);
             } else {
                 BotUtils.send(event.getChannel(), "Cannot run command due to either incorrect arguments or user's status too low");
             }
@@ -299,15 +299,15 @@ public class CommandManager {
 //            }
         };
 
-        Runnable runCmd = () -> {
-            Command.Status status = cmd.mayRun(event, argsList);
-            if (status == Command.Status.OK) {
-                cmd.runCommand(event, argsList);
-                cmdPrintLog(event, finalCommandStr, argsList);
-            } else {
-                BotUtils.send(event.getChannel(), status.getDesc());
-            }
-        };
+//        Runnable runCmd = () -> {
+//            Command.Status status = cmd.mayRun(event, argsList);
+//            if (status == Command.Status.OK) {
+//                cmd.runCommand(event, argsList);
+//                cmdPrintLog(event, finalCommandStr, argsList);
+//            } else {
+//                BotUtils.send(event.getChannel(), status.getDesc());
+//            }
+//        };
 
         // Execute the command on the server specific Executor if synchrony is required
         if (cmd.requireSynchronous()) {
