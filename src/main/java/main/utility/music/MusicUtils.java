@@ -9,8 +9,7 @@ import java.util.Map;
 
 public class MusicUtils {
 
-    public static List<ReactionEmoji> floatingReactions = new LinkedList<>();
-    public static char[] nextTrackUnicodeArray = {'\u23ED', '\uFE0F'}; //no bueno
+    private static List<ReactionEmoji> floatingReactions = new LinkedList<>();
 
     public static Map<String, String> customUrls = new LinkedHashMap<>();
 
@@ -25,7 +24,7 @@ public class MusicUtils {
 
 
 
-        // my custom music playlists
+        // my custom music playlists -- DO NOT SHIFT THIS LINE (Linked form github)
         customUrls.put("music", "https://www.youtube.com/playlist?list=PLN2wnTVWJMHdufDvt6HyYzeuhN2DFe8cE");
         customUrls.put("tier2", "https://www.youtube.com/playlist?list=PLN2wnTVWJMHcoslyAE8aY53IBDXK2N9-X");
 
@@ -45,5 +44,8 @@ public class MusicUtils {
         customUrls.put("trap", "https://www.youtube.com/playlist?list=PLPgtsFyiwUoLAFd6-yNNtrF3l9H1EQ9Nx");
         customUrls.put("fbass", "https://www.youtube.com/playlist?list=PLe8jmEHFkvsbRwwi0ode5c9iMQ2dyJU3N");
         customUrls.put("lofi", "https://www.youtube.com/watch?v=hHW1oY26kxQ");
+
+        // Youtube custom songs
+        customUrls.put("kda", "https://www.youtube.com/watch?v=UOxkGD8qRB4");
     }
 }

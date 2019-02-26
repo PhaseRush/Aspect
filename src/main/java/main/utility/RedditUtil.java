@@ -24,11 +24,6 @@ public class RedditUtil {
     public static RedditClient reddit;
 
     // Prishe: "uwu"
-//    public static List<IChannel> cuteSubscribers;
-//            =BotUtils.readFromFileToStringList(System.getProperty("user.dir") + "/data/cuties.txt")
-//            .stream().filter(s -> !s.contains("::"))
-//            .initDataMap(s -> Long.valueOf(s.substring(0, s.indexOf(';')))).initDataMap(longID -> Main.client.getChannelByID(longID)).collect(Collectors.toList());
-
     private static Type typeOfMap2 = new TypeToken<Map<String, SubData>>() {}.getType();
     public static Map<String, SubData> initDataMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/subreddit_init_data.json"),
@@ -43,7 +38,7 @@ public class RedditUtil {
         reddit = OAuthHelper.automatic(adapter, creds);
     }
 
-    public static DefaultPaginator<Submission> retreiveListing(String subredditName, int limit, SubredditSort sort, TimePeriod time) {
+    public static DefaultPaginator<Submission> retrieveListing(String subredditName, int limit, SubredditSort sort, TimePeriod time) {
         return RedditUtil.reddit.subreddit(subredditName).posts()
                 .limit(limit)
                 .sorting(sort)

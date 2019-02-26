@@ -51,7 +51,7 @@ public class ScheduledSubreddits {
 
     private void schedule(Map<String, SubData> map, int periodSeconds) {
         for (Map.Entry<String, SubData> entry : map.entrySet()) {
-            DefaultPaginator<Submission> defaultPaginator = retreiveListing(entry.getKey(), Paginator.RECOMMENDED_MAX_LIMIT, SubredditSort.HOT, TimePeriod.DAY);
+            DefaultPaginator<Submission> defaultPaginator = retrieveListing(entry.getKey(), Paginator.RECOMMENDED_MAX_LIMIT, SubredditSort.HOT, TimePeriod.DAY);
             final int[] currIdx = {0}; // need this to be final for lambda
 
             // define the function that will actually do the work
@@ -65,11 +65,11 @@ public class ScheduledSubreddits {
             };
 
             scheduledFuture = scheduler.scheduleAtFixedRate(runner, 3, periodSeconds, TimeUnit.SECONDS);
-            System.out.println("Reddit scheduled for : r/" + entry.getKey());
+            System.out.println("Scheduled : r/" + entry.getKey() + " in " + map.entrySet().size() + " channels");
         }
     }
 
-    public EmbedBuilder embedInit(DefaultPaginator<Submission> defaultPaginator, int[] currIdx) {
+    private EmbedBuilder embedInit(DefaultPaginator<Submission> defaultPaginator, int[] currIdx) {
         Pair<Submission, Integer> sub = getNextImage(defaultPaginator, currIdx[0]);
         Submission picPost = sub.getKey();
         currIdx[0] = sub.getValue() + 1; // increment everytime

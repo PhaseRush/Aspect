@@ -334,7 +334,7 @@ public class BotUtils {
             } catch (DiscordException e) {
                 System.err.println("Embed could not be sent with error: ");
                 e.printStackTrace();
-            } catch (NullPointerException npe) { // subreddit scheduler
+            } catch (NullPointerException npe) { // subreddit scheduler, likely due to the client not having access to the channel
                 // ignored
             }
         });
