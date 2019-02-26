@@ -34,7 +34,7 @@ public class ScheduledSubreddits {
                 .collect(Collectors.toMap(
                         Map.Entry::getKey, Map.Entry::getValue
                 )),
-                600
+                3600
         );
     }
 

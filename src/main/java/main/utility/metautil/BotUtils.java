@@ -529,15 +529,21 @@ public class BotUtils {
         int imageCount = 0;
         if (iMessage.getFormattedContent().contains("gyazo.com")) {
             imageCount++;
-        } else {
-            for (Attachment a : iMessage.getAttachments()) {
-                if (a.getUrl().endsWith(".png") || a.getUrl().endsWith(".jpeg") || a.getUrl().equals(".jpg")) {
-                    imageCount++;
-                }
+        }
+
+        for (Attachment a : iMessage.getAttachments()) {
+            if (a.getUrl().endsWith(".png") || a.getUrl().endsWith(".jpeg") || a.getUrl().equals(".jpg")) {
+                imageCount++;
             }
         }
+
         return imageCount;
     }
+
+    public static boolean isPicture(String url) {
+        return url.contains("gyazo.com") || url.endsWith(".png") || url.endsWith(".jpeg") || url.equals(".jpg");
+    }
+
 
     public synchronized static void reactAllEmojis(IMessage iMessage, List<ReactionEmoji> emojis) {
         for (ReactionEmoji e : emojis)
