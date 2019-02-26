@@ -152,6 +152,18 @@ public class PassiveListener {
 //        }
 //    }
 
+    @EventSubscriber
+    public void pikachuFace(MessageReceivedEvent event) {
+        String msg = event.getMessage().getFormattedContent().toLowerCase().trim();
+
+        if (msg.length() < 15) return; // too short to be pikachu
+
+        double similarity = Math.min(
+                BotUtils.stringSimilarity(msg, "insert pikachu face"),
+                BotUtils.stringSimilarity(msg, "surprised pikachu face"));
+
+        if (similarity < 3) BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://i.imgur.com/sohWhy9.png"));
+    }
 
 
     @EventSubscriber
