@@ -137,26 +137,29 @@ public class PassiveListener {
     }
 
     //@EventSubscriber
-    public void thanksgiving(MessageReceivedEvent event) {
-        long lastTime = lastThanksgivingMap.getOrDefault(event.getGuild().getLongID(), 0L);
+//    public void thanksgiving(MessageReceivedEvent event) {
+//        long lastTime = lastThanksgivingMap.getOrDefault(event.getGuild().getLongID(), 0L);
+//
+//        if (System.currentTimeMillis() - lastTime < 1000*60) return;
+//
+//        String msg = event.getMessage().getFormattedContent();
+//        double similarity = BotUtils.stringSimilarity(msg, "Happy Thanksgiving");
+//
+//        //BotUtils.send(event.getChannel(), String.valueOf(similarity));
+//        if (similarity < 3) {
+//            BotUtils.send(event.getChannel(), "Happy Thanksgiving!");
+//            lastThanksgivingMap.put(event.getGuild().getLongID(), System.currentTimeMillis());
+//        }
+//    }
 
-        if (System.currentTimeMillis() - lastTime < 1000*60) return;
-
-        String msg = event.getMessage().getFormattedContent();
-        double similarity = BotUtils.stringSimilarity(msg, "Happy Thanksgiving");
-
-        //BotUtils.send(event.getChannel(), String.valueOf(similarity));
-        if (similarity < 3) {
-            BotUtils.send(event.getChannel(), "Happy Thanksgiving!");
-            lastThanksgivingMap.put(event.getGuild().getLongID(), System.currentTimeMillis());
-        }
-    }
 
 
     @EventSubscriber
     public void userJoin(UserJoinEvent event) {
         BotUtils.send(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
     }
+
+
 
 //    @EventSubscriber
 //    public void testing(MessageReceivedEvent event) {
