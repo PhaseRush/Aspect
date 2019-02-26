@@ -82,10 +82,10 @@ public class UserWordFrequency implements Command {
                         wordCharCount[Math.min(9, word.length())]++;
 
                         freqMap.put(word, freqMap.getOrDefault(word, 0) + 1);
-//                        if (BotUtils.dictionary.contains(word)) { // word is in dictionary
+//                        if (BotUtils.dictionarySet.contains(word)) { // word is in dictionarySet
 //                            freqMap.put(word, freqMap.getOrDefault(word, 0) + 1); // @tterrag#1098
 //                        } else { // perform spell check
-                        if (!BotUtils.dictionary.contains(word)) numTypos++;
+                        if (!BotUtils.dictionarySet.contains(word)) numTypos++;
 
                         try {
                             List<RuleMatch> matches = langTool.check(word);

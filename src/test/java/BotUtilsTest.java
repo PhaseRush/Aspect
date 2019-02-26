@@ -21,7 +21,7 @@ class BotUtilsTest {
 
     @Test
     void dictionary_Init() {
-        assertEquals(BotUtils.dictionary.size(), 466544);
+        assertEquals(BotUtils.dictionarySet.size(), 466544);
     }
 
     @Test
@@ -117,9 +117,9 @@ class BotUtilsTest {
 
     @Test
     void SHA256_const() {
-        assertEquals(BotUtils.dictionary.size(), 466544);
+        assertEquals(BotUtils.dictionarySet.size(), 466544);
 
-        BotUtils.dictionary
+        BotUtils.dictionarySet
                 .forEach((s) ->
                         assertEquals(
                                 org.apache.commons.codec.digest.DigestUtils.sha256Hex(s),

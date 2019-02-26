@@ -79,6 +79,7 @@ public class CommandManager {
         commandMap.put("dic", urbanDictionary);
         commandMap.put("def", urbanDictionary);
         commandMap.put("wiki", new Wikipedia()); // :)
+        commandMap.put("dictfilter", new DictionaryFilter());
 
 
         //dontdeadopeninside

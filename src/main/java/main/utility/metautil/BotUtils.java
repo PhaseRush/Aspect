@@ -107,8 +107,9 @@ public class BotUtils {
     private static String[] wfboBut = {"alas", "although", "however", "nevertheless", "though"};
     private static String[] wfboOk = {"adequate", "common", "decent", "sufficient", "tolerable", "admissible", "copacetic"};
 
-    // dictionary
-    public static Set<String> dictionary;
+    // dictionarySet
+    public static Set<String> dictionarySet;
+    public static ArrayList<String> dictionaryList;
 
     // Utility objects
     private static ExecutorService listenerExecuter = Executors.newCachedThreadPool();
@@ -120,10 +121,10 @@ public class BotUtils {
             messageDigest = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException ignored) {}
 
-        // dictionary
+        // dictionarySet
         String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
-        dictionary = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
-
+        dictionarySet = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
+        dictionaryList = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(ArrayList::new));
 
     }
 
@@ -826,12 +827,12 @@ public class BotUtils {
      *  credit to https://github.com/Lmperatoreq/HastebinAPI
      */
     public static String makeHasteGetUrl(String contents) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection)new URL("https://hastebin.com/documents").openConnection();
+        HttpURLConnection connection = (HttpURLConnection)new URL("https://hastebin.com/documents").openConnection(); // might want to try hasteb.in
 
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
 
-        connection.setRequestProperty("user-agent", "Java/Aspect-DiscordBot");
+        connection.setRequestProperty("user-agent", "Scala/Scarcity-Epson");
 
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 

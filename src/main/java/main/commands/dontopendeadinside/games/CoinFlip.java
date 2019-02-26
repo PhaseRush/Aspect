@@ -27,17 +27,7 @@ public class CoinFlip implements Command {
     }
 
     @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return false;
-    }
-
-    @Override
-    public Status mayRun(MessageReceivedEvent event, List<String> args) {
-        return null;
-    }
-
-    @Override
     public String getDesc() {
-        return null;
+        return "Flips a coin and shows an image of either heads or tails";
     }
 }
