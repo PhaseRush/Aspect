@@ -14,7 +14,7 @@ public class DictionaryFilter implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         System.out.println(args.get(0));
         String condensed = BotUtils.dictionaryList.stream()
-                .filter(args.get(0).startsWith("\\")?
+                .filter(args.get(0).startsWith("\\") ?
                         word -> word.matches(args.get(0).substring(1, args.get(0).length()-1)) :
                         word -> word.contains(args.get(0)))
                 .collect(Collectors.joining(", "));

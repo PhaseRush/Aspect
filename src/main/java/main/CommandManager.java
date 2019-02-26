@@ -126,6 +126,7 @@ public class CommandManager {
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
+        commandMap.put("join", new VChannelInject());
         commandMap.put("nowplaying", songInfo);
         commandMap.put("np", songInfo);
         commandMap.put("current", songInfo);
