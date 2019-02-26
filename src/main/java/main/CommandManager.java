@@ -4,6 +4,7 @@ import main.commands.dontopendeadinside.Greet;
 import main.commands.dontopendeadinside.Summarize;
 import main.commands.dontopendeadinside.UserWordFrequency;
 import main.commands.dontopendeadinside.WordCounter;
+import main.commands.dontopendeadinside.games.CoinFlip;
 import main.commands.dontopendeadinside.games.RollDice;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
@@ -90,6 +91,7 @@ public class CommandManager {
         commandMap.put("img", new Imaging()); // showcase?
         commandMap.put("identify", new PokemonIdentifier()); // showcase?
         commandMap.put("roll", new RollDice());
+        commandMap.put("flip", new CoinFlip());
 
         // Deep AI
         Colourer color = new Colourer();
