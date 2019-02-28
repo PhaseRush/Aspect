@@ -2,6 +2,7 @@ package main.passive;
 
 import com.google.common.math.BigIntegerMath;
 import info.debatty.java.stringsimilarity.Levenshtein;
+import main.commands.dontopendeadinside.games.CoinFlip;
 import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
@@ -163,6 +164,14 @@ public class PassiveListener {
                 BotUtils.stringSimilarity(msg, "surprised pikachu face"));
 
         if (similarity < 3) BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://i.imgur.com/sohWhy9.png"));
+    }
+
+    @EventSubscriber
+    public void coinFlip(MessageReceivedEvent event) {
+        String msg = event.getMessage().getFormattedContent().toLowerCase().trim();
+        if (msg.length() < 6) return;
+
+        if (BotUtils.stringSimilarity(msg, "flip a coin") < 3) CoinFlip.flip(event);
     }
 
 

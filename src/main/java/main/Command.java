@@ -32,6 +32,10 @@ public interface Command {
         return true;
     }
 
+    default boolean loggable() {
+        return true;
+    }
+
     enum Status {
         OK("OK"),
         MISSING_PERMS("Missing permissions"),

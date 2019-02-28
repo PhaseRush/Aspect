@@ -4,6 +4,7 @@ import main.commands.dontopendeadinside.Greet;
 import main.commands.dontopendeadinside.Summarize;
 import main.commands.dontopendeadinside.UserWordFrequency;
 import main.commands.dontopendeadinside.WordCounter;
+import main.commands.dontopendeadinside.games.CoinFlip;
 import main.commands.dontopendeadinside.games.RollDice;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
@@ -78,6 +79,7 @@ public class CommandManager {
         commandMap.put("dic", urbanDictionary);
         commandMap.put("def", urbanDictionary);
         commandMap.put("wiki", new Wikipedia()); // :)
+        commandMap.put("dictfilter", new DictionaryFilter());
 
 
         //dontdeadopeninside
@@ -90,6 +92,7 @@ public class CommandManager {
         commandMap.put("img", new Imaging()); // showcase?
         commandMap.put("identify", new PokemonIdentifier()); // showcase?
         commandMap.put("roll", new RollDice());
+        commandMap.put("flip", new CoinFlip());
 
         // Deep AI
         Colourer color = new Colourer();
@@ -123,6 +126,7 @@ public class CommandManager {
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
+        commandMap.put("join", new JoinVoiceChannel());
         commandMap.put("nowplaying", songInfo);
         commandMap.put("np", songInfo);
         commandMap.put("current", songInfo);
@@ -282,7 +286,7 @@ public class CommandManager {
             if (cmd.canRun(event, argsList)) {
                 cmd.runCommand(event, argsList);
 
-                cmdPrintLog(event, finalCommandStr, argsList);
+                if (cmd.loggable()) cmdPrintLog(event, finalCommandStr, argsList);
             } else {
                 BotUtils.send(event.getChannel(), "Cannot run command due to either incorrect arguments or user's status too low");
             }
@@ -296,15 +300,15 @@ public class CommandManager {
 //            }
         };
 
-        Runnable runCmd = () -> {
-            Command.Status status = cmd.mayRun(event, argsList);
-            if (status == Command.Status.OK) {
-                cmd.runCommand(event, argsList);
-                cmdPrintLog(event, finalCommandStr, argsList);
-            } else {
-                BotUtils.send(event.getChannel(), status.getDesc());
-            }
-        };
+//        Runnable runCmd = () -> {
+//            Command.Status status = cmd.mayRun(event, argsList);
+//            if (status == Command.Status.OK) {
+//                cmd.runCommand(event, argsList);
+//                cmdPrintLog(event, finalCommandStr, argsList);
+//            } else {
+//                BotUtils.send(event.getChannel(), status.getDesc());
+//            }
+//        };
 
         // Execute the command on the server specific Executor if synchrony is required
         if (cmd.requireSynchronous()) {

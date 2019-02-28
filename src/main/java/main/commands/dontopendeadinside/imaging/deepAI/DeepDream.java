@@ -23,7 +23,7 @@ public class DeepDream extends DeepAI implements Command {
 
     @Override
     public String getDesc() {
-        return "Exaggerates feature attributes or textures using information that the bvlc_goolenet model learned during training.";
+        return "Exaggerates feature attributes or textures using information that the bvlc_goolenet model learned during training (API).";
     }
     private class Container {
         private String output_url;

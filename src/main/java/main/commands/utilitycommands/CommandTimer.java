@@ -28,10 +28,10 @@ public class CommandTimer implements Command {
         long end = System.nanoTime();
         double durationMillis = (end - start)/1E6;
 
-        try { // try to make sure this sends AFTER all output of target command
-            Thread.sleep(1000);
-        } catch (InterruptedException ignored) { // if interrupted dont care, just send the time
-        }
+//        try { // try to make sure this sends AFTER all output of target command
+//            Thread.sleep(1000);
+//        } catch (InterruptedException ignored) { // if interrupted dont care, just send the time
+//        }
 
         BotUtils.send(event.getChannel(),
                 "Runtime for `" + targetCmd +  "/" +cmd.getClass().getName() + "` : " +
