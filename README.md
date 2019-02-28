@@ -55,7 +55,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
 | bulkdelete | 1 | deletes all msg in channel up to x mins | `$bulkdelete 3` |
-| time | 0 | displays time in Vancouver, Canada | `$time` |
+| timev | 0 | displays time in Vancouver, Canada | `$time` |
 | deletemsg | 2 | deletes msg by \[x] in past \[y] mins | `$deletemsg 264213620026638336, 10` |
 
 #### Meta
@@ -69,6 +69,11 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | membercount | 0 | displays number of members in current server | `$membercount` |
 | poll | 2..* | constructs poll | `$poll Question, option1, op2,...` |
 | cpuload | 0 | displays system info | `$cpuload` |
+
+#### Meta Utility
+| command | #Params | Description | Example|
+| --- | --- | --- | --- |
+| time | 1.. | times execution duration of (nested) command | `$time ping` |
 
 #### League of Legends
 
