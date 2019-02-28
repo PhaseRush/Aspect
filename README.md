@@ -74,6 +74,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
+| lolign | 1 | shows availability of summoner name | `$lolign AKatHelicopter` |
 | lollevel | 1 | shows level of summoner | `$lollevel SchrödingersKat` |
 | lolsum | 1 | shows info of summoner | `$lolsum SchrödingersKat` |
 | lolregions | 0 | shows available regions | `$lolregions` | 
