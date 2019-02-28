@@ -81,7 +81,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | lolitem | 0, 1| shows info about item, or \[x] items | `$lolitem (3)` |
 | lolrecent | 1 | WIP - shows recent match | `$lolrecent SchrödingersKat` |
 | allskins | 1 | lists all skins for \[champion] | `$allskins katarina` |
-| skin | 2 | shows picture of skin | `$skin katarina, \[4 or Kitty Cat Katarina\]` |
+| skin | 2 | shows picture of skin | `$skin katarina, [4 or Kitty Cat Katarina]` |
 
 #### Warframe
 
