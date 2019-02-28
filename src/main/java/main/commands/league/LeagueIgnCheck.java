@@ -26,10 +26,15 @@ public class LeagueIgnCheck implements Command {
     }
 
     private String getCalUrl(String html) {
-        int startIdx = html.indexOf("http://www.google.com/calendar/render?action=TEMPLATE&text=Summoner+name+");
-        html = html.substring(startIdx);
-        int endIdx = html.indexOf("xml") + 3;
-        return html.substring(0, endIdx);
+        try {
+            int startIdx = html.indexOf("http://www.google.com/calendar/render?action=TEMPLATE&text=Summoner+name+");
+            html = html.substring(startIdx);
+            int endIdx = html.indexOf("xml") + 3;
+            return html.substring(0, endIdx);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "not available";
+        }
     }
 
     @Override
