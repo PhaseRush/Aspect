@@ -201,6 +201,7 @@ public class CommandManager {
         commandMap.put("allskins", new ListSkins());
         commandMap.put("skin", new SkinDetail());
         commandMap.put("lolrecent", new PreviousMatch());
+        commandMap.put("lolign", new LeagueIgnCheck());
 
         //Warframe
         commandMap.put("wfdaily", new WfDailyDeals());
