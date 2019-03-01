@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CutePassive {
 
@@ -15,15 +17,16 @@ public class CutePassive {
     private static List<Long> cuteWhiteList = Arrays.asList(417926479813279754L, 402728027223490572L); //singleton list for now
     private Random r = ThreadLocalRandom.current();
 
+    private Pattern owo = Pattern.compile("(?i)\\b([o0U*]+[\\s]*[wv3]+[\\s]*[*U0o]+)+\\b"); // added '3' for vivi
+
 
     @EventSubscriber
     public void owo(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; // bots get no owo :3
-        if (event.getMessage().getContent().equalsIgnoreCase("owo")) {
-            int rand = r.nextInt(100);
 
-            if (rand == 1) BotUtils.send(event.getChannel(), "degenerate");
-            else if (rand % 4 == 0) BotUtils.send(event.getChannel(), "owo");
+        Matcher match = owo.matcher(event.getMessage().getFormattedContent()); // get a matcher
+        if (match.find()) { // use grouping
+            if (r.nextInt() % 4 == 0) BotUtils.send(event.getChannel(), match.group());
         }
     }
 

@@ -900,6 +900,9 @@ public class BotUtils {
                 .orElse(null);
     }
 
+    public static String concatArgs(List<String> args) {
+        return String.join(" ", args);
+    }
 
     @Override
     public String toString() {

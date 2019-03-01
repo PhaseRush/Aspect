@@ -325,8 +325,7 @@ public class CommandManager {
 
     private void cmdPrintLog(MessageReceivedEvent event, String commandStr, List<String> argsList) {
         StringBuilder commandArgs = new StringBuilder();
-        for (String s : argsList)
-            commandArgs.append(s).append("\t");
+        for (String s : argsList) commandArgs.append(s).append("\t");
 
         StringBuilder commandPrint = new StringBuilder()
                 .append(LocalDateTime.now().atZone(ZoneId.of("America/Los_Angeles")).toLocalDateTime().toString()).append("\t")

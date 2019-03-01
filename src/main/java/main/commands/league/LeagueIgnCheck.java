@@ -13,7 +13,7 @@ import java.util.Optional;
 public class LeagueIgnCheck implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String html = BotUtils.getStringFromUrl("https://lolnames.gg/en/na/" + args.get(0).trim() + "/");
+        String html = BotUtils.getStringFromUrl("https://lolnames.gg/en/na/" + BotUtils.concatArgs(args) + "/");
         Optional<Element> element = Jsoup.parse(html).getAllElements().stream()
                 .filter(e -> e.hasClass("text-center"))
                 .filter(e -> e.tag().getName().equals("h4"))
@@ -23,6 +23,7 @@ public class LeagueIgnCheck implements Command {
                 new EmbedBuilder()
                         .withTitle(element1.text())
                         .withDesc("Click to add to calendar\n" + getCalUrl(html))));
+
     }
 
     private String getCalUrl(String html) {

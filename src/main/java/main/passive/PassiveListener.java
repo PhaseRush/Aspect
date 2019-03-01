@@ -8,6 +8,8 @@ import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
+import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionAddEvent;
+import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionRemoveEvent;
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
@@ -159,6 +161,8 @@ public class PassiveListener {
 
         if (msg.length() < 15) return; // too short to be pikachu
 
+        if (!(msg.startsWith("s") || msg.startsWith("i"))) return;
+
         double similarity = Math.min(
                 BotUtils.stringSimilarity(msg, "insert pikachu face"),
                 BotUtils.stringSimilarity(msg, "surprised pikachu face"));
@@ -178,6 +182,22 @@ public class PassiveListener {
     @EventSubscriber
     public void userJoin(UserJoinEvent event) {
         BotUtils.send(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
+    }
+
+    @EventSubscriber
+    public void addedReaction(ReactionAddEvent event) {
+        if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+        event.getMessage().addReaction(event.getReaction());
+    }
+
+    @EventSubscriber
+    public void removedReaction(ReactionRemoveEvent event) {
+        if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+        try {
+            event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction());
+        } catch (Exception e) {
+            // ignored
+        }
     }
 
 
