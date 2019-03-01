@@ -32,7 +32,7 @@ public class CutePassive {
 
     @EventSubscriber
     public void meow(MessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) return; //bot get no meowPattern
+        if (event.getAuthor().isBot()) return; // bots get no meow
         if (System.currentTimeMillis() - lastMeow < 1000) return; //meowPattern no more than 1/sec
         //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
         if (!event.getMessage().getFormattedContent().matches("(?i)\\b(me+o+w)\\b")) return; //actually check the pattern
@@ -43,7 +43,7 @@ public class CutePassive {
 
     @EventSubscriber
     public void pat(MessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) return; //bot get no pat
+        if (event.getAuthor().isBot()) return; // bots get no pat
         if (System.currentTimeMillis() - lastPat < 1000) return; //pat no more than 1/sec
         //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
         if (!event.getMessage().getFormattedContent().matches("(?i)\\b(p(a+|e+)t)\\b")) return; //if no pat, NO PAT FOR U

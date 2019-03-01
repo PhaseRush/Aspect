@@ -22,7 +22,7 @@ public class LeagueIgnCheck implements Command {
         element.ifPresent(element1 -> BotUtils.send(event.getChannel(),
                 new EmbedBuilder()
                         .withTitle(element1.text())
-                        .withDesc("Click to add to calendar\n" + getCalUrl(html))));
+                        .withDesc("[Add to Google Calendar](" + getCalUrl(html)+ ")")));
 
     }
 
