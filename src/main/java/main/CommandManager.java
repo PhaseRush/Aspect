@@ -15,6 +15,7 @@ import main.commands.dontopendeadinside.imaging.deepAI.Colourer;
 import main.commands.dontopendeadinside.imaging.deepAI.DeepDream;
 import main.commands.dontopendeadinside.imaging.deepAI.DemographicRecog;
 import main.commands.dontopendeadinside.imaging.deepAI.Waifu2x;
+import main.commands.electronicArts.ApexLegendsPlayerStats;
 import main.commands.fortnite.FortniteStats;
 import main.commands.humor.AnalyzeUser;
 import main.commands.humor.Insult;
@@ -178,6 +179,9 @@ public class CommandManager {
         commandMap.put("fn", new FortniteStats());
         //commandMap.put("fnshop", new FortniteShopSelect());
         //commandMap.put("fnselect", new FortniteShopDetail());
+
+        // Apex Legends
+        commandMap.put("apex", new ApexLegendsPlayerStats());
 
         //Overwatch
         commandMap.put("ow", new OverwatchStats());

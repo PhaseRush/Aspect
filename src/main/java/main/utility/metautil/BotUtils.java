@@ -78,6 +78,7 @@ public class BotUtils {
     public static String CLOUDSIGHT_API_KEY;
     public static String SMMRY_API_KEY;
     public static String FORTNITE_API_KEY; //updated key with fortnitetracker.com/site-api
+    public static String APEX_LEGENDS_API_KEY; // using same service as fortnite tracker
     public static String WOLFRAM_API_KEY;
     public static String YOUTUBE_API_KEY;
     public static String WF_BOTTOM_TEXT_ID;
