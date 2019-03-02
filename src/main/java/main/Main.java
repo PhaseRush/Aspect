@@ -39,7 +39,7 @@ public class Main {
         startTime = System.currentTimeMillis();
         startInstant = Instant.now();
 
-        if (args.length != 21) {
+        if (args.length != 22) {
             System.out.println("You screwed up the runtime config params!\targs:" + args.length) ;
             System.exit(9001);
             return; // :)
@@ -82,6 +82,9 @@ public class Main {
         BotUtils.REDDIT_PW = args[18];
         BotUtils.REDDIT_CLIENT_ID = args[19];
         BotUtils.REDDIT_SECRET = args[20];
+
+        // Apex Legends
+        BotUtils.APEX_LEGENDS_API_KEY = args[21];
 
         // League of Legends
         Orianna.setRiotAPIKey(args[3]);
