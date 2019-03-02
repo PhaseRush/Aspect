@@ -1,5 +1,6 @@
 package main.commands.electronicArts;
 
+import com.google.gson.JsonSyntaxException;
 import com.inamik.text.tables.Cell;
 import com.inamik.text.tables.GridTable;
 import main.Command;
@@ -25,7 +26,7 @@ public class ApexLegendsPlayerStats implements Command {
         ALPlayerInfo.ALPlayerData player = null;
         try {
             player = BotUtils.gson.fromJson(json1, ALPlayerInfo.class).getData();
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException |JsonSyntaxException e) {
             e.printStackTrace();
             System.out.println(json1);
             return;
@@ -45,8 +46,15 @@ public class ApexLegendsPlayerStats implements Command {
                 .withUrl("https://apex.tracker.gg/profile/"+getTrackerPlatform(args)+"/"+ign)
                 .withThumbnail(iconResult.avatar)
                 .withDesc(generateDesc(player))
-                .withFooterText("f");
+                .withFooterText("footer placeholder");
 
+        System.out.println(generateDesc(player));
+
+
+//        BotUtils.send(event.getChannel(),
+//                eb.withImage("attachment://stats.png"),
+//                new ByteArrayInputStream(Visuals.genTextImage(generateDesc(player)).toByteArray()),
+//                "stats.png");
 
         BotUtils.send(event.getChannel(), eb);
     }
@@ -55,7 +63,7 @@ public class ApexLegendsPlayerStats implements Command {
         GridTable table = GridTable.of(player.getChildren().size()*6 + 1, 4)
                 .put(0,0, Cell.of("--"))
                 .put(0, 1, Cell.of("value"))
-                .put(0, 2, Cell.of("Percentile"))
+                .put(0, 2, Cell.of("Top %"))
                 .put(0,3, Cell.of("Rank"));
 
         // iterate over legends
@@ -78,16 +86,16 @@ public class ApexLegendsPlayerStats implements Command {
                         .put(currRow+j+1, 3, Cell.of(val(stat.getRank())));
             }
 
-            if (("```js\n                                               " +TableUtil.render(table).toString() + "```").length() >= 1500) break;
+            if (("```js\n                                               \n" +TableUtil.render(table).toString() + "```").length() >= 1500) break;
         }
 
-        System.out.println("length before border: " + ("```js\n                                     " +TableUtil.render(table).toString() + "```").length());
+        System.out.println("length before border: " + ("```js\n                                     \n" +TableUtil.render(table).toString() + "```").length());
 
         //table = Border.DOUBLE_LINE.apply(table); //
 
-        System.out.println("length after border: " + ("```js\n                                     " +TableUtil.render(table).toString() + "```").length());
+        System.out.println("length after border: " + ("```js\n                                     \n" +TableUtil.render(table).toString() + "```").length());
 
-        return "```js\n                                        " +TableUtil.render(table).toString() + "```"; // surround in js code block (number colouring)
+        return "```js\n                                            " +TableUtil.render(table).toString() + "```"; // surround in js code block (number colouring)
     }
 
     private String sanitizeName(String name) {
@@ -97,6 +105,7 @@ public class ApexLegendsPlayerStats implements Command {
         if (name.equals("Damage")) return "Dmg";
         if (name.equals("Matches Played")) return "Matches";
         if (name.equals("Care Package Kills")) return "CarePack Ks";
+        if (name.startsWith("Legend")) return "Legend Spec";
         return name;
     }
 
