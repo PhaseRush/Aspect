@@ -110,7 +110,7 @@ public class PassiveListener {
         String msg = event.getMessage().getFormattedContent();
         Matcher matcher = unexpFactRegex.matcher(msg);
 
-        String group = "";
+        String group;
         if (matcher.find()) {
             group = matcher.group();
         } else return;
