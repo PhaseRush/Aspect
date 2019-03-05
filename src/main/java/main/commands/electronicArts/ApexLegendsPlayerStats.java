@@ -32,24 +32,25 @@ public class ApexLegendsPlayerStats implements Command {
             return;
         }
 
-        String json2 = BotUtils.getStringFromUrl("https://apextab.com/api/search.php?platform="+getIconUrlPlatform(args) +"&search=" + ign);
-        IconEncap.IconResult iconResult;
-        try {
-            iconResult = BotUtils.gson.fromJson(json2, IconEncap.class).results[0];
-        } catch (NullPointerException e) { // this means ign is not valid, since there is no icon
-            BotUtils.send(event.getChannel(), "Make sure your username is valid. If it is, contact the dev @Requiem#8148 to report this error");
-            return;
-        }
+
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Apex Legends :: " + player.getMetadata().getPlatformUserHandle() + " lv. " + player.getMetadata().getLevel())
                 .withUrl("https://apex.tracker.gg/profile/"+getTrackerPlatform(args)+"/"+ign)
-                .withThumbnail(iconResult.avatar)
                 .withDesc(generateDesc(player))
                 .withFooterText("footer placeholder");
 
         System.out.println(generateDesc(player));
 
+
+
+        try {
+            String json2 = BotUtils.getStringFromUrl("https://apextab.com/api/search.php?platform="+getIconUrlPlatform(args) +"&search=" + ign);
+            IconEncap.IconResult iconResult = BotUtils.gson.fromJson(json2, IconEncap.class).results[0];
+            eb.withThumbnail(iconResult.avatar);
+        } catch (NullPointerException e) { // this means ign is not valid, since there is no icon
+            //BotUtils.send(event.getChannel(), "Make sure your username is valid. If it is, contact the dev @Requiem#8148 to report this error");
+        }
 
 //        BotUtils.send(event.getChannel(),
 //                eb.withImage("attachment://stats.png"),

@@ -14,6 +14,6 @@ public class GetGuildPfp implements Command {
 
     @Override
     public String getDesc() {
-        return null;
+        return "returns link to current guild's profile picture";
     }
 }

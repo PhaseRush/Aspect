@@ -11,6 +11,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionAddEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionRemoveEvent;
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
+import sx.blah.discord.handle.impl.events.guild.voice.user.UserVoiceChannelEvent;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
@@ -32,7 +33,6 @@ public class PassiveListener {
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
-
 
     @EventSubscriber
     @SuppressWarnings("ConstantConditions") //not working
@@ -199,6 +199,24 @@ public class PassiveListener {
             // ignored
         }
     }
+
+    /**
+     * Vivi stop sleeping!
+     * enjoy this lullabuy
+     */
+    @EventSubscriber
+    public void viviStopSleeping (UserVoiceChannelEvent event) {
+        if (event.getUser().getStringID().equals("167418444067766273"))
+            event.getGuild().getAFKChannel().getConnectedUsers().stream()
+                    .filter(u -> u.getStringID().equals("167418444067766273"))
+                    .findFirst()
+                    .ifPresent(u -> event.getClient().getConnectedVoiceChannels().stream()
+                            .filter(ch -> event.getGuild().getVoiceChannels().contains(ch))
+                            .findFirst()
+                            .ifPresent(u::moveToVoiceChannel)
+                    );
+    }
+
 
 //    @EventSubscriber
 //    public void testing(MessageReceivedEvent event) {
