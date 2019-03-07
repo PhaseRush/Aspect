@@ -11,19 +11,23 @@ import sx.blah.discord.util.EmbedBuilder;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class Stats implements Command {
-    static double[] timeScale = {
+    private static double[] timeScale = {
             -15, -14.5, -14, -13.5, -13, -12.5, -12, -11.5, -11, -10.5,
             -10, -9.5, -9, -8.5, -8, -7.5, -7, -6.5, -6, -5.5, -5,
             -4.5, -4, -3.5, -3, -2.5, -2, -1.5, -1, -.5, 0};
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.send(event.getChannel(), generateStats("stats_img.png"), generateImage(), "stats_img.png");
+        BotUtils.send(event.getChannel(),
+                generateStats("stats_img.png"),
+                generateImage(),
+                "stats_img_"+Instant.now().toEpochMilli()+".png");
     }
 
     private EmbedBuilder generateStats(String imgDir) {
@@ -79,11 +83,7 @@ public class Stats implements Command {
 
     @Override
     public String getDesc() {
-        return null;
+        return "Shows meta statistics regarding Aspect";
     }
 
-    @Override
-    public String getSyntax() {
-        return null;
-    }
 }

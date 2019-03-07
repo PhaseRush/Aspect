@@ -124,6 +124,7 @@ public class CommandManager {
         SongQueue songQueue = new SongQueue();
         SongSkip songSkip = new SongSkip();
         SongPlayPrev songPlayPrev = new SongPlayPrev();
+        SongPause songPause = new SongPause();
         commandMap.put("lvoice", songStop);
         commandMap.put("stop", songStop);
         commandMap.put("play", new SongPlay());
@@ -139,12 +140,12 @@ public class CommandManager {
         commandMap.put("q", songQueue);
         commandMap.put("pq", new SongPastQueue());
         commandMap.put("fq", new FilterQueue());
-        //commandMap.put("")
         commandMap.put("loop", new SongLoop());
         commandMap.put("shuffle", new ShuffleQueue());
         commandMap.put("purge", new PurgeQueue());
         commandMap.put("insert", new SongInsert());
-        commandMap.put("pause", new SongPause());
+        commandMap.put("pause", songPause);
+        commandMap.put("||", songPause);
         commandMap.put("resume", new SongResume());
         commandMap.put("qdel", songDelete);
         commandMap.put("songdel", songDelete);

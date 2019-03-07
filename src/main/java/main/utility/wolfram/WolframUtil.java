@@ -93,7 +93,7 @@ public class WolframUtil {
         return embedFields;
     }
 
-    public static Iterable<? extends EmbedField> handleRepeatedFields(List<EmbedField> embedFields) {
+    private static Iterable<? extends EmbedField> handleRepeatedFields(List<EmbedField> embedFields) {
         Map<String, StringBuilder> map = new LinkedHashMap<>();
 
         //populate field names
