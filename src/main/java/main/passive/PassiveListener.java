@@ -7,6 +7,7 @@ import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import sx.blah.discord.api.events.EventSubscriber;
+import sx.blah.discord.handle.impl.events.guild.channel.ChannelEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionAddEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionRemoveEvent;
@@ -14,13 +15,9 @@ import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.impl.events.guild.voice.user.UserVoiceChannelEvent;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
-import sx.blah.discord.util.RateLimitException;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
@@ -52,21 +49,16 @@ public class PassiveListener {
     @EventSubscriber
     public void reactToEmojiMessage(MessageReceivedEvent event) {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+        getEmojiFromMsg(event, event.getMessage().getFormattedContent()).ifPresent(emoji -> event.getMessage().addReaction(emoji));
+    }
 
-        try {
-            for (IEmoji e : event.getGuild().getEmojis()) {
-                if (event.getMessage().getFormattedContent().contains(e.getName())) {
-                    try {
-                        event.getMessage().addReaction(e);
-                        break;
-                    } catch (RateLimitException exception) {
-                        break;
-                    }
-                }
+    private Optional<IEmoji> getEmojiFromMsg(ChannelEvent event, String msgContent) {
+        for (IEmoji e : event.getGuild().getEmojis()) {
+            if (msgContent.contains(e.getName())) {
+                return Optional.of(e);
             }
-        } catch (NullPointerException e) {
-            //caught if in server with no custom emojis. (ie. pms)
         }
+        return Optional.empty();
     }
 
 
@@ -194,7 +186,8 @@ public class PassiveListener {
     public void removedReaction(ReactionRemoveEvent event) {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
         try {
-            event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction());
+            if (!getEmojiFromMsg(event, event.getMessage().getFormattedContent()).isPresent()) // if not present, then remove
+                event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction());
         } catch (Exception e) {
             // ignored
         }
