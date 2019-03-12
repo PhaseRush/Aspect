@@ -902,6 +902,12 @@ public class BotUtils {
                 .orElse(null);
     }
 
+    public static boolean containsIgnoreCase(List<String> list, String s) {
+        return list.stream()
+                .map(String::toLowerCase)
+                .anyMatch(str -> str.equals(s.toLowerCase()));
+    }
+
     public static String concatArgs(List<String> args) {
         return String.join(" ", args);
     }

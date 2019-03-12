@@ -1,7 +1,6 @@
 package main.passive;
 
 import com.google.common.math.BigIntegerMath;
-import info.debatty.java.stringsimilarity.Levenshtein;
 import main.commands.dontopendeadinside.games.CoinFlip;
 import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
@@ -26,7 +25,6 @@ import java.util.regex.Pattern;
 public class PassiveListener {
     private static ExecutorService executor = Executors.newFixedThreadPool(2);
     private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
-    private static Levenshtein levenshtein = new Levenshtein();
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
@@ -120,7 +118,7 @@ public class PassiveListener {
         String alexa = "alexa play despacito";
 
         //BotUtils.send(event.getChannel(), String.valueOf(levenshtein.distance(msg,alexa)));
-        if (levenshtein.distance(msg, alexa) < 3 || msg.contains(alexa)) {
+        if (BotUtils.stringSimilarity(msg, alexa) <3 || msg.contains(alexa)) {
             if (event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel()
                     != event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()) {
 
@@ -194,7 +192,7 @@ public class PassiveListener {
 
     /**
      * Vivi stop sleeping!
-     * enjoy this lullabuy
+     * enjoy this lullaby
      */
     @EventSubscriber
     public void viviStopSleeping (UserVoiceChannelEvent event) {

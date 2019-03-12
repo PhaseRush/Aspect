@@ -5,6 +5,7 @@ import main.commands.dontopendeadinside.Summarize;
 import main.commands.dontopendeadinside.UserWordFrequency;
 import main.commands.dontopendeadinside.WordCounter;
 import main.commands.dontopendeadinside.games.CoinFlip;
+import main.commands.dontopendeadinside.games.Minesweeper;
 import main.commands.dontopendeadinside.games.RollDice;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
@@ -106,6 +107,7 @@ public class CommandManager {
         // misc features
         commandMap.put("events", new EventsNearLocation());
         commandMap.put("greet", new Greet());
+        commandMap.put("sweep", new Minesweeper());
 
         //humor
         commandMap.put("cute", new CuteImg());
