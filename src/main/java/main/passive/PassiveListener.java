@@ -32,9 +32,8 @@ public class PassiveListener {
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
 
     @EventSubscriber
-    @SuppressWarnings("ConstantConditions") //not working
     public void kaitlynsHangOut(MessageReceivedEvent event) {
-        if (event.getChannel().isPrivate()) return; //suppress errors
+        if (event.getChannel().isPrivate()) return;
         //please, no one ask. please please please please please
         if (event.getGuild().getStringID().equals("197158565004312576")) {
             String message = event.getMessage().getFormattedContent().toLowerCase();

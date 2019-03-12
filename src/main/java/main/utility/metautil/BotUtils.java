@@ -577,7 +577,11 @@ public class BotUtils {
     public static void joinVC(MessageReceivedEvent event) {
         IVoiceChannel voiceChannel = event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel();
 
-        if (voiceChannel == null) {
+        if (voiceChannel == null ||
+                event.getClient().getConnectedVoiceChannels().stream()
+                        .filter(vc -> vc.getGuild().equals(event.getGuild()))
+                        .collect(Collectors.toSet())
+                        .isEmpty()) {
             BotUtils.send(event.getChannel(), "Join a voice chanel first, then use this command again");
             return;
         }
