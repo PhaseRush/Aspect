@@ -14,7 +14,7 @@ public class WolframAdvanced implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         boolean formatVerticalBar = args.size() == 2;
 
-        EmbedBuilder eb = WolframUtil.runQuery(args.get(0), formatVerticalBar, true);
+        EmbedBuilder eb = WolframUtil.runQuery(BotUtils.concatArgs(args), formatVerticalBar, true);
 
         BotUtils.send(event.getChannel(), eb);
     }

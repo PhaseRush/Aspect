@@ -15,9 +15,9 @@ public class WolframBasic implements Command {
 
         EmbedBuilder eb;
         try {
-            eb = WolframUtil.runQuery(args.get(0), formatVerticalBar, false);
+            eb = WolframUtil.runQuery(BotUtils.concatArgs(args), formatVerticalBar, false);
         } catch (Exception e) {
-            eb = WolframUtil.runQuery(args.get(0), formatVerticalBar, true);
+            eb = WolframUtil.runQuery(BotUtils.concatArgs(args), false, true);
             eb.appendDesc("Defaulting to advanced query");
         }
 

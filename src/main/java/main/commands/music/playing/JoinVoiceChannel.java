@@ -16,6 +16,7 @@ public class JoinVoiceChannel implements Command {
         } else {
             event.getGuild().getVoiceChannels().stream()
                     .map(IChannel::getName)
+                    .map(String::toLowerCase)
                     .sorted(Comparator.comparingDouble(ch -> BotUtils.stringSimilarity(ch, args.get(0))))
                     .filter(ch -> BotUtils.stringSimilarity(ch, args.get(0)) < Math.max(2, ch.length()/5))
                     .findFirst()

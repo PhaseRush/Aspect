@@ -245,6 +245,7 @@ public class CommandManager {
         // Other meta util
         commandMap.put("dumpusers", new UsersToGist());
         commandMap.put("emotes", new DumpEmotes());
+        commandMap.put("resetcpu", new ResetCpuHawk());
     }
 
     @EventSubscriber
