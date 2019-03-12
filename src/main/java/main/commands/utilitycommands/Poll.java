@@ -50,6 +50,6 @@ public class Poll implements Command {
 
     @Override
     public String getDesc() {
-        return "Constructs a Poll with an arbitrary number of options. ```$poll [question], [option1], [option2],...";
+        return "Constructs a Poll with an arbitrary number of options. ```$poll [question], [option1], [option2],...```";
     }
 }

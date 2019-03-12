@@ -26,7 +26,7 @@ public class ScheduledActions {
     private static IChannel kaitGenChannel;
 
     // cpu 100% watcher
-    AtomicBoolean sentMessage = new AtomicBoolean(false);
+    public static AtomicBoolean sentMessage = new AtomicBoolean(false);
 
     // graph profiler
     static public DoubleRingBuffer cpuQueue = new DoubleRingBuffer(30);
