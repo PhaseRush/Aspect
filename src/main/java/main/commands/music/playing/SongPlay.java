@@ -32,7 +32,7 @@ public class SongPlay implements Command {
 
     @Override
     public String getDesc() {
-        return "plays song url, or searches youtube if url is not valid.";
+        return "Plays music. Supports keywords (use $listmusic), YouTube urls (songs and playlists)";
     }
 
     @Override
