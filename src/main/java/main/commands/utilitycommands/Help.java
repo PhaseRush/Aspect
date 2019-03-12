@@ -19,7 +19,8 @@ public class Help implements Command {
 
         String targetCmd = BotUtils.cmdSpellCorrect(args.get(0));
         if (targetCmd == null) {
-            BotUtils.send(event.getChannel(), "Your spelling is way off; try again.");
+            BotUtils.send(event.getChannel(), "Your target command doesnt match any alias - DM'd a list of all commands");
+            BotUtils.send(event.getAuthor().getOrCreatePMChannel(), String.join("\n", CommandManager.commandMap.keySet()));
             return;
         }
         BotUtils.send(event.getChannel(),
@@ -28,6 +29,6 @@ public class Help implements Command {
 
     @Override
     public String getDesc() {
-        return "Details at: " + BotUtils.GITHUB_URL;
+        return "Gives a list of all commands, or the description of a single command";
     }
 }

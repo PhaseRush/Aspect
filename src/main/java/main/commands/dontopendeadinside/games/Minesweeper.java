@@ -5,10 +5,12 @@ import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 // taken and adapted from : https://github.com/DiscordBolt/BoltBot/blob/b345ea221f10db2b26d30505bdbbb93a2f52e20a/src/main/java/com/discordbolt/boltbot/discord/modules/games/minesweeper/Minesweeper.java
 public class Minesweeper implements Command {
     private static final int SAFE_ZONE = 3;
+    private static final Random r = new Random();
 
 
     @Override
@@ -28,7 +30,6 @@ public class Minesweeper implements Command {
 
         int boardSize = size.orElse(BoardSize.MEDIUM).getBoardLength();
         int bombCount = difficulty.orElse(GameDifficulty.MEDIUM).getBombCount();
-        System.out.println("size: " + boardSize + "\nbombs: " + bombCount);
 
         int[][] gameBoard;
         boolean[][] mask;
@@ -81,10 +82,9 @@ public class Minesweeper implements Command {
             }
         }
 
-        Random gen = new Random();
         while(bombCount > 0){
-            int x = gen.nextInt(boardLength);
-            int y = gen.nextInt(boardLength);
+            int x = r.nextInt(boardLength);
+            int y = r.nextInt(boardLength);
             if(board[x][y] != -1 && board[x][y] != -2){
                 board[x][y] = -1;
                 bombCount--;
@@ -221,6 +221,12 @@ public class Minesweeper implements Command {
 
     @Override
     public String getDesc() {
-        return "Generates a game of minesweeper to play";
+        return "Generates a game of minesweeper to play. Settings:\n" +
+                Arrays.stream(GameDifficulty.values())
+                        .map(GameDifficulty::name)
+                        .collect(Collectors.joining(", ")) + " \n" +
+                Arrays.stream(BoardSize.values())
+                        .map(BoardSize::name)
+                        .collect(Collectors.joining(", "));
     }
 }
