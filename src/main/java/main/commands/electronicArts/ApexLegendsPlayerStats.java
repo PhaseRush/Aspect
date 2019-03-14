@@ -23,10 +23,10 @@ public class ApexLegendsPlayerStats implements Command {
                 BotUtils.APEX_LEGENDS_API_KEY);
         //System.out.println(json1);
 
-        ALPlayerInfo.ALPlayerData player = null;
+        ALPlayerInfo.ALPlayerData player;
         try {
             player = BotUtils.gson.fromJson(json1, ALPlayerInfo.class).getData();
-        } catch (IllegalStateException |JsonSyntaxException e) {
+        } catch (IllegalStateException | JsonSyntaxException e) {
             e.printStackTrace();
             System.out.println(json1);
             return;

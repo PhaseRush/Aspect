@@ -24,14 +24,13 @@ public class RedditUtil {
     public static RedditClient reddit;
 
     // Prishe: "uwu"
-    private static Type typeOfMap2 = new TypeToken<Map<String, SubData>>() {}.getType();
-    public static Map<String, SubData> initDataMap = BotUtils.gson.fromJson(
+    private static Type InputJsonMapType = new TypeToken<Map<String, SubData>>() {}.getType();
+    private static Map<String, SubData> initDataMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/subreddit_init_data.json"),
-            typeOfMap2);
+            InputJsonMapType);
 
 
     static {
-        // reddit
         UserAgent userAgent = new UserAgent("Aspect", "com.github.PhaseRush.Aspect", "v2.0", BotUtils.REDDIT_IGN);
         Credentials creds = Credentials.script(BotUtils.REDDIT_IGN, BotUtils.REDDIT_PW, BotUtils.REDDIT_CLIENT_ID, BotUtils.REDDIT_SECRET);
         NetworkAdapter adapter = new OkHttpNetworkAdapter(userAgent);
