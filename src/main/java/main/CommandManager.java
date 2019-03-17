@@ -7,6 +7,7 @@ import main.commands.dontopendeadinside.WordCounter;
 import main.commands.dontopendeadinside.games.CoinFlip;
 import main.commands.dontopendeadinside.games.Minesweeper;
 import main.commands.dontopendeadinside.games.RollDice;
+import main.commands.dontopendeadinside.imaging.Haruwu;
 import main.commands.dontopendeadinside.imaging.Imaging;
 import main.commands.dontopendeadinside.imaging.Render;
 import main.commands.dontopendeadinside.imaging.Tex;
@@ -118,6 +119,7 @@ public class CommandManager {
         commandMap.put("freq", new UserWordFrequency());
         commandMap.put("lyze", new AnalyzeUser());
         commandMap.put("bob", new SpongeBobify());
+        commandMap.put("uwu", new Haruwu());
 
         //music -- Showcase
         SongInfo songInfo = new SongInfo();

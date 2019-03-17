@@ -8,22 +8,33 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import java.util.List;
 
 public abstract class DeepAI implements Command {
-    protected String getTargetUrl(MessageReceivedEvent event, List<String> args) {
+    protected static String getTargetUrl(MessageReceivedEvent event, List<String> args) {
         String targetUrl;
         try {
             targetUrl = event.getMessage().getAttachments().get(0).getUrl();
-        } catch (Exception e) { // if caught then they posted url instead of attaching photo
-            targetUrl = args.get(0);
+        } catch (Exception e) { // if caught then they posted url or tagged someone instead of attaching photo
+            if (event.getMessage().getMentions().isEmpty()) {
+                targetUrl = args.get(0); // url
+            } else {
+                targetUrl = event.getMessage().getMentions().get(0).getAvatarURL(); // tagged person's pfp
+            }
         }
         return targetUrl;
     }
 
-    protected String fetchJson(String baseUrl, String targetUrl) {
+    protected static String fetchJson(String baseUrl, String targetUrl) {
         FormBody form = new FormBody.Builder()
                 .add("image", targetUrl)
                 .build();
 
         return BotUtils.getStringFromUrl(baseUrl, "api-key", BotUtils.DEEP_AI_API_KEY, form);
+    }
+
+    public static String fetchWaifu2x(MessageReceivedEvent event, List<String> args) {
+        String targetUrl = getTargetUrl(event, args);
+        String json = fetchJson("https://api.deepai.org/api/waifu2x", targetUrl);
+
+        return BotUtils.gson.fromJson(json, Waifu2x.Container.class).output_url;
     }
 
     /**
