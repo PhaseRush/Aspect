@@ -18,12 +18,43 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Visuals {
     private Random r = new Random();
     private static Random rs = ThreadLocalRandom.current();
+
+    static {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        try {
+            Font mont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir") + "/data/Montserrat-MediumItalic.ttf"));
+            mont.deriveFont(20);
+            ge.registerFont(mont);
+        } catch (FontFormatException | IOException ignored) {}
+    }
+    public enum Fonts {
+        MONTSERRAT("Montserrat");
+
+        private Font font;
+
+        public String toString() {
+            return font.getName();
+        }
+
+        public Font getFont() {
+            return font;
+        }
+
+        Fonts(String fontName) {
+            this.font =
+                    Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts())
+                            .filter(f -> f.getName().contains(fontName))
+                            .findFirst()
+                            .get();
+        }
+    }
 
     public static Color getVibrantColor() {
         // this always generates the same color on startup.

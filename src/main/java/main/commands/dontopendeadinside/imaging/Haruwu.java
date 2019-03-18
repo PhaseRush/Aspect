@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.util.List;
-import java.util.Objects;
 
 public class Haruwu implements Command {
 
@@ -23,21 +22,20 @@ public class Haruwu implements Command {
         BotUtils.send(event.getChannel(),
                 new EmbedBuilder().withImage("attachment://overlay_pfp.png"),
                 new ByteArrayInputStream(
-                        Objects.requireNonNull(Visuals.buffImgToOutputStream(
-                                overlay(img, "uwu"),
+                        Visuals.buffImgToOutputStream(
+                                overlay(img, determineText(args)),
                                 "png"
-                        )).toByteArray()
+                        ).toByteArray()
                 ),
                 "overlay_pfp.png"
         );
     }
 
-
     private BufferedImage overlay(BufferedImage old, String text) {
         BufferedImage img = new BufferedImage(old.getWidth(), old.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
         g2d.drawImage(old, 0,0, null);
-        g2d.setFont(new Font("Roboto", Font.PLAIN, 20));
+        g2d.setFont(Visuals.Fonts.MONTSERRAT.getFont());
 
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         g2d.setColor(Color.BLACK);
@@ -59,6 +57,11 @@ public class Haruwu implements Command {
         return img;
     }
 
+    private String determineText(List<String> args) {
+        if (args.size() < 2) return "uwu";
+        else return args.get(1);
+    }
+
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
         return BotUtils.isDev(event) || event.getAuthor().getStringID().equals("292350757691457537");
@@ -66,6 +69,6 @@ public class Haruwu implements Command {
 
     @Override
     public String getDesc() {
-        return null;
+        return "overlays text over target's upscale pfp, or uses \"uwu\" if no text is provided";
     }
 }
