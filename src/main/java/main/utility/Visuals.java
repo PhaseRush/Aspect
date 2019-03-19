@@ -29,28 +29,29 @@ public class Visuals {
     static {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         try {
-            Font mont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir") + "/data/Montserrat-MediumItalic.ttf"));
-            mont.deriveFont(20);
+            Font mont = Font.createFont(Font.PLAIN, new File(System.getProperty("user.dir") + "/data/Montserrat.ttf"))
+                    .deriveFont(20f);
             ge.registerFont(mont);
-        } catch (FontFormatException | IOException ignored) {}
+
+            System.out.println("Mont size: " + mont.getSize());
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
     }
     public enum Fonts {
-        MONTSERRAT("Montserrat");
+        MONTSERRAT();
 
         private Font font;
 
-        public String toString() {
-            return font.getName();
-        }
 
         public Font getFont() {
             return font;
         }
 
-        Fonts(String fontName) {
+        Fonts() {
             this.font =
                     Arrays.stream(GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts())
-                            .filter(f -> f.getName().contains(fontName))
+                            .filter(f -> f.getName().toUpperCase().contains(toString()))
                             .findFirst()
                             .get();
         }
@@ -273,7 +274,7 @@ public class Visuals {
          */
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
-        Font font = new Font("Arial", Font.PLAIN, 48);
+        Font font = Fonts.MONTSERRAT.getFont().deriveFont(48f);
         g2d.setFont(font);
         FontMetrics fm = g2d.getFontMetrics();
         int width = fm.stringWidth(text);

@@ -35,7 +35,7 @@ public class Haruwu implements Command {
         BufferedImage img = new BufferedImage(old.getWidth(), old.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
         g2d.drawImage(old, 0,0, null);
-        g2d.setFont(Visuals.Fonts.MONTSERRAT.getFont());
+        g2d.setFont(Visuals.Fonts.MONTSERRAT.getFont().deriveFont(20f));
 
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
         g2d.setColor(Color.BLACK);
