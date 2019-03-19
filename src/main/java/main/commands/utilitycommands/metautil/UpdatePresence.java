@@ -18,15 +18,19 @@ public class UpdatePresence implements Command {
             ActivityType activity = null;
             switch (args.get(0)) {
                 case "P":
+                case "p":
                     activity = ActivityType.PLAYING;
                     break;
                 case "S":
+                case "s":
                     activity = ActivityType.STREAMING;
                     break;
                 case "L":
+                case "l":
                     activity = ActivityType.LISTENING;
                     break;
                 case "W":
+                case "w":
                     activity = ActivityType.WATCHING;
                     break;
             }
