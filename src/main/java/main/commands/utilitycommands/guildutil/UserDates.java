@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-public class JoinedDates implements Command {
+public class UserDates implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         BotUtils.send(event.getChannel(),
@@ -29,14 +29,16 @@ public class JoinedDates implements Command {
                 new StringBuilder("\nAverage account age: ")
                         .append(
                                 Duration.of(
-                                        event.getGuild().getUsers().stream()
+                                        Instant.now().toEpochMilli() // now
+                                        - // minus
+                                        (event.getGuild().getUsers().stream()
                                                 .mapToLong(u -> u.getCreationDate().toEpochMilli())
                                                 .sum()  // total time for all users
-                                                / //divided by
-                                                event.getGuild().getUsers().size(), // number of users
+                                                / //divided by number of users
+                                                event.getGuild().getUsers().size()), // average creation millis of all users
                                         ChronoUnit.MILLIS
                                 ).toDays()
-                        )
+                        ).append(" days old")
                         .append("\nOldest member: ")
                         .append(
                                 BotUtils.getNickOrDefault(

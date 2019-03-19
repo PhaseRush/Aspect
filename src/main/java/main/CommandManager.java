@@ -179,7 +179,8 @@ public class CommandManager {
         commandMap.put("cleanup", new DeleteWaifus());
         commandMap.put("time", new CommandTimer());
         commandMap.put("stats", new Stats());
-        commandMap.put("users", new JoinedDates());
+        commandMap.put("users", new UserDates());
+        commandMap.put("share", new ScreenShare());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());
