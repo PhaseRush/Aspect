@@ -20,18 +20,22 @@ public class UpdatePresence implements Command {
                 case "P":
                 case "p":
                     activity = ActivityType.PLAYING;
+                    WfPassive.killCetusUpdater();
                     break;
                 case "S":
                 case "s":
                     activity = ActivityType.STREAMING;
+                    WfPassive.killCetusUpdater();
                     break;
                 case "L":
                 case "l":
                     activity = ActivityType.LISTENING;
+                    WfPassive.killCetusUpdater();
                     break;
                 case "W":
                 case "w":
                     activity = ActivityType.WATCHING;
+                    WfPassive.killCetusUpdater();
                     break;
             }
 

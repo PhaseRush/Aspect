@@ -48,11 +48,14 @@ public class WfPassive {
                 //System.out.println("Updated Cetus Status " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute));
             };
 
-           cetusStatusUpdater = scheduler.scheduleAtFixedRate(cetusTimeRunner, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
+            cetusStatusUpdater = scheduler.scheduleAtFixedRate(cetusTimeRunner, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("warframe cetus passive time error");
         }
+    }
+    public static boolean killCetusUpdater() {
+        return cetusStatusUpdater.cancel(true);
     }
 
 
