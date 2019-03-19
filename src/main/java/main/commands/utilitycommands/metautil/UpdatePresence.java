@@ -45,7 +45,7 @@ public class UpdatePresence implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return event.getAuthor().getStringID().equals(BotUtils.DEV_DISCORD_STRING_ID);
+        return BotUtils.isDev(event);
     }
 
 }
