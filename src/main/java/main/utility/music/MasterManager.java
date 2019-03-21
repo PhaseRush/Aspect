@@ -39,7 +39,9 @@ public class MasterManager {
 
     //thanks to decc the hecc
     static {
-        playerManager.setFrameBufferDuration(5000); //5 second audio buffer MIGHT NEED TO CHANGE FOR EQUALIZER
+        playerManager.setFrameBufferDuration(500); //5 second audio buffer MIGHT NEED TO CHANGE FOR EQUALIZER (changed from 5k to 500)
+        playerManager.getConfiguration().setFilterHotSwapEnabled(true); // need for eq
+
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
     }
