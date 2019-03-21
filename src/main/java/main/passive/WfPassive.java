@@ -13,7 +13,6 @@ import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.StatusType;
 import sx.blah.discord.util.EmbedBuilder;
 
-import java.time.Instant;
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -34,9 +33,6 @@ public class WfPassive {
         BotUtils.setBottomText();
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-        // calculate initial delay
-        Instant instant = Instant.parse(WarframeUtil.getCetus().getExpiry());
-
         try {
             final Runnable cetusTimeRunner = () -> {
                 WarframeCetusTimeObject cetus = WarframeUtil.getCetus();
@@ -55,7 +51,11 @@ public class WfPassive {
         }
     }
     public static boolean killCetusUpdater() {
-        return cetusStatusUpdater.cancel(true);
+        try {
+            return cetusStatusUpdater.cancel(true);
+        } catch (NullPointerException ignored) {} // throws if not running in the first place
+
+        return false;
     }
 
 
