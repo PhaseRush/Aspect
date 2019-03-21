@@ -16,6 +16,36 @@ import java.io.ByteArrayOutputStream;
 
 public class LineChart {
 
+
+    public static BufferedImage generateOnePlot(String chartName, String dataName, float[] dataSet1x, float[] dataSet1y) {
+        XYSeries series = new XYSeries(dataName);
+
+        for (int i = 0; i < dataSet1x.length; i++) {
+            series.add(dataSet1x[i], dataSet1y[i]);
+        }
+
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+
+        XYPlot plot = new XYPlot();
+        plot.setDataset(dataset);
+
+        plot.setRenderer(new XYSplineRenderer());
+        plot.setDomainAxis(new NumberAxis("Band"));
+        plot.setRangeAxis(new NumberAxis("Weight"));
+
+        //generate the chart
+        JFreeChart chart = new JFreeChart(chartName, Visuals.Fonts.MONTSERRAT.getFont(), plot, false);
+        chart.setBackgroundPaint(Color.WHITE);
+
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        chartPanel.setBackground(Color.BLACK);
+
+        return chart.createBufferedImage(800,500);
+    }
+
     public static ByteArrayOutputStream generateTwoPlot(String name1, String name2, double[] dataSet1x, double[] dataSet2x, double[] dataSet1y, double[] dataSet2y) {
         XYSeries series1 = new XYSeries(name1);
         XYSeries series2 = new XYSeries(name2);
@@ -23,7 +53,7 @@ public class LineChart {
         for (int i = 0; i < dataSet1y.length; i++) {
             series1.add(dataSet1x[i], dataSet1y[i]);
         }
-            for (int i = 0; i < dataSet2y.length; i++) {
+        for (int i = 0; i < dataSet2y.length; i++) {
             series2.add(dataSet2x[i], dataSet2y[i]);
         }
 
@@ -63,4 +93,5 @@ public class LineChart {
         BufferedImage objBufferedImage = chart.createBufferedImage(800,500);
         return Visuals.buffImgToOutputStream(objBufferedImage, "png");
     }
+
 }
