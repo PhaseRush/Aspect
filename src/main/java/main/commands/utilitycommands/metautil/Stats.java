@@ -11,7 +11,6 @@ import sx.blah.discord.util.EmbedBuilder;
 
 import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +26,7 @@ public class Stats implements Command {
         BotUtils.send(event.getChannel(),
                 generateStats("stats_img.png"),
                 generateImage(),
-                "stats_img_"+Instant.now().toEpochMilli()+".png");
+                "stats_img.png");
     }
 
     private EmbedBuilder generateStats(String imgDir) {
