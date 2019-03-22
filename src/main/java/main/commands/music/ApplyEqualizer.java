@@ -67,13 +67,15 @@ public class ApplyEqualizer implements Command {
     // Predefined EQ configs
     private enum Filters {
         // zero'd eq
-        ZERO    (new float[] {  0,     0,      0,     0,      0,     0,      0,     0,     0,     0,     0,     0,     0,     0,     0    }),
+        ZERO    (new float[] {     0,      0,     0,     0,      0,     0,      0,     0,     0,     0,     0,     0,     0,     0,     0 }),
         // bass boost
         BASS    (new float[] {  0.2f,  0.15f,  0.1f,  0.05f,  0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f }),
         // treble boost
         TREB    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f, -0.0f,  0.05f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
+        // hill
+        HILL    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f,     0,   0.1f,  0.2f,  0.3f,  0.2f,  0.1f,     0,-0.05f, -0.1f, -0.15f,-0.2f }),
         // no
-        EAR_RPE (new float[] {  0                                                                                                         });
+        EAR_RPE (new float[] {     1,      1,     1,      1,     1,      1,     1,     1,     1,     1,     1,     1,     1,     1,     1 });
 
         private float[] filter;
 
@@ -120,18 +122,12 @@ public class ApplyEqualizer implements Command {
         return pair.getKey(); // return the eq fac
     }
 
-
     private float getDiff(List<String> args) {
         try {
             return Float.valueOf(args.get(1));
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             return 0;
         }
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return true;
     }
 
     @Override
@@ -142,5 +138,29 @@ public class ApplyEqualizer implements Command {
     @Override
     public String getDesc() {
         return "Applies an equalizer to the music music";
+    }
+
+    // adds each element of two into one, requires one.len >= two.len
+    private float[] add(float[] one, float[] two) {
+        for (int i = 0; i < one.length; i++) {
+            one[i] += two[i];
+        }
+        return one;
+    }
+
+    // adds s to each element in one
+    private float[] add(float[] one, float s) {
+        for (int i = 0; i < one.length; i++) {
+            one[i] += s;
+        }
+        return one;
+    }
+
+    // multiplies each element in one by s
+    private float[] mul(float[] one, float s) {
+        for (int i = 0; i < one.length; i++) {
+            one[i] *= s;
+        }
+        return one;
     }
 }
