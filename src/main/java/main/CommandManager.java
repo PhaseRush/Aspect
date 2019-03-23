@@ -233,7 +233,7 @@ public class CommandManager {
         commandMap.put("wfmarket", new WfMarketListing());
         commandMap.put("wfdropinfo", new WfDropInfo());
         commandMap.put("wfrelic", new WfRelicInfo());
-
+        commandMap.put("wfrand", new WfRandomLoadout());
         commandMap.put("wfmod", new WfModInfo());
 
         //Nasa // Showcase

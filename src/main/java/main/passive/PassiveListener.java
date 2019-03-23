@@ -17,13 +17,11 @@ import sx.blah.discord.util.EmbedBuilder;
 
 import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PassiveListener {
-    private static ExecutorService executor = Executors.newFixedThreadPool(2);
+    // private static ExecutorService executor = Executors.newFixedThreadPool(2);
     private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
