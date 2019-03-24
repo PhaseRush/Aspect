@@ -26,8 +26,8 @@ import main.commands.humor.SpongeBobify;
 import main.commands.humor.cute.CuteImg;
 import main.commands.humor.cute.ListCuties;
 import main.commands.league.*;
-import main.commands.music.ApplyEqualizer;
 import main.commands.music.CustomQueues;
+import main.commands.music.MusicEqualizer;
 import main.commands.music.playing.*;
 import main.commands.music.queue.*;
 import main.commands.music.sfx.SoundEffect;
@@ -159,7 +159,7 @@ public class CommandManager {
         commandMap.put("sfx", new SoundEffect());
         commandMap.put("listsfx", new SoundEffectList());
 
-        commandMap.put("eq", new ApplyEqualizer());
+        commandMap.put("eq", new MusicEqualizer());
 
         //Realm of the Mad God
         commandMap.put("katinv", new KatInv());

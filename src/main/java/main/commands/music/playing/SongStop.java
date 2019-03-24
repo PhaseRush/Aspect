@@ -2,6 +2,7 @@ package main.commands.music.playing;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import main.Command;
+import main.commands.music.MusicEqualizer;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import main.utility.music.TrackScheduler;
@@ -27,6 +28,13 @@ public class SongStop implements Command {
         AudioTrack currentTrack = scheduler.getCurrentTrack();
         try {currentTrack.setPosition(currentTrack.getDuration());} //sets it to the end of this song
         catch (Exception ignored) {}
+
+        // clear EQ filter
+        MasterManager.getGuildAudioPlayer(event.getGuild()).getPlayer()
+                .setFilterFactory(MusicEqualizer.applyFilter(
+                        event.getGuild(),
+                        MusicEqualizer.Filters.ZERO.getFilter(),
+                        1));
 
         scheduler.getQueue().clear(); //purge entire queue
         scheduler.getPastQueue().clear();

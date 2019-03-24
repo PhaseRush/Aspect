@@ -15,7 +15,7 @@ import sx.blah.discord.util.EmbedBuilder;
 import java.io.ByteArrayInputStream;
 import java.util.*;
 
-public class ApplyEqualizer implements Command {
+public class MusicEqualizer implements Command {
     private static final float[] BANDS = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
     // keep track of each guild's equalizer
@@ -24,8 +24,6 @@ public class ApplyEqualizer implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         AudioPlayer player = MasterManager.getGuildAudioPlayer(event.getGuild()).getPlayer();
-
-        float diff = getDiff(args);
 
 
         // check if user passed in a filter. if so, determine what it is
@@ -41,8 +39,9 @@ public class ApplyEqualizer implements Command {
 
         if (filter.isPresent()) {
             player.setFilterFactory(
-                    applyFilter(event.getGuild(), filter.get(), diff)
+                    applyFilter(event.getGuild(), filter.get().filter, 1)
             );
+            BotUtils.send(event.getChannel(), "Applied " + filter.get().name() + " \n " + generateCurrEq(event));
         } else { // user did not use a filter (or spelling is just atrocious) so try other commands
             switch (args.get(0)) {
                 case "stop" :
@@ -56,6 +55,29 @@ public class ApplyEqualizer implements Command {
                             "equalizer.png"
                     );
                     break;
+                case "mult" :
+                    try {
+                        applyFilter(event.getGuild(),
+                                eqMap.getOrDefault(
+                                        event.getGuild(),
+                                        new Pair<>(new EqualizerFactory(), Filters.IDENTITY.filter)
+                                ).getValue(),
+                                Float.valueOf(args.get(1)) // scalar
+                        );
+                        BotUtils.reactWithCheckMark(event.getMessage());
+                    } catch (NumberFormatException e) {
+                        BotUtils.send(event.getChannel(), "Must use valid multiplier");
+                    }
+                    break;
+                case "custom" :
+                    try {
+
+                    } catch (Exception e) {
+                        BotUtils.send(event.getChannel(), "There was an error processing the input");
+                    }
+                    break;
+                case "dump" :
+                    BotUtils.send(event.getChannel(), generateCurrEq(event));
                 default:
                     BotUtils.reactWithX(event.getMessage());
                     return;
@@ -64,12 +86,23 @@ public class ApplyEqualizer implements Command {
         BotUtils.reactWithCheckMark(event.getMessage()); // success
     }
 
+    private String generateCurrEq(MessageReceivedEvent event) {
+        float[] thisEq = eqMap.getOrDefault(event.getGuild(), new Pair<>(new EqualizerFactory(), Filters.ZERO.filter)).getValue();
+
+        return new StringBuilder("Equalizer settings spread (" + thisEq.length + " bands) : ")
+                .append(Arrays.toString(thisEq)).toString();
+
+    }
+
     // Predefined EQ configs
-    private enum Filters {
+    public enum Filters {
         // zero'd eq
         ZERO    (new float[] {     0,      0,     0,     0,      0,     0,      0,     0,     0,     0,     0,     0,     0,     0,     0 }),
+        // all 0.1
+        IDENTITY(new float[] {  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f}),
         // bass boost
         BASS    (new float[] {  0.2f,  0.15f,  0.1f,  0.05f,  0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f }),
+        BASS2   (mul(BASS.getFilter(), 0.5f)),
         // treble boost
         TREB    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f, -0.0f,  0.05f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
         // hill
@@ -101,14 +134,14 @@ public class ApplyEqualizer implements Command {
     }
 
 
-    private EqualizerFactory applyFilter(IGuild guild, Filters filter, float diff) {
-        Pair<EqualizerFactory, float[]> pair = eqMap.getOrDefault(guild, new Pair<>(new EqualizerFactory(), filter.getFilter()));
+    public static EqualizerFactory applyFilter(IGuild guild, float[] filter, float scalar) {
+        Pair<EqualizerFactory, float[]> pair = eqMap.getOrDefault(guild, new Pair<>(new EqualizerFactory(), filter));
         float[] currFilter = pair.getValue();
-        float[] newFilter = new float[filter.getFilter().length];
+        float[] newFilter = new float[filter.length];
 
         // init newFilter with the new weights and vals
         for (int i = 0; i < currFilter.length; i++) {
-            float eqVi = currFilter[i] + filter.getFilter()[i] + diff;
+            float eqVi = currFilter[i] + filter[i]*scalar;
             newFilter[i] = eqVi;
             currFilter[i] = eqVi;
         }
@@ -122,14 +155,6 @@ public class ApplyEqualizer implements Command {
         return pair.getKey(); // return the eq fac
     }
 
-    private float getDiff(List<String> args) {
-        try {
-            return Float.valueOf(args.get(1));
-        } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            return 0;
-        }
-    }
-
     @Override
     public boolean requireSynchronous() {
         return true;
@@ -141,7 +166,7 @@ public class ApplyEqualizer implements Command {
     }
 
     // adds each element of two into one, requires one.len >= two.len
-    private float[] add(float[] one, float[] two) {
+    private static float[] merge(float[] one, float[] two) {
         for (int i = 0; i < one.length; i++) {
             one[i] += two[i];
         }
@@ -149,18 +174,26 @@ public class ApplyEqualizer implements Command {
     }
 
     // adds s to each element in one
-    private float[] add(float[] one, float s) {
+    private static float[] add(float[] one, float s) {
         for (int i = 0; i < one.length; i++) {
             one[i] += s;
         }
         return one;
     }
 
-    // multiplies each element in one by s
-    private float[] mul(float[] one, float s) {
+    // multiplies each element in one by scalar
+    private static float[] mul(float[] one, float scalar) {
         for (int i = 0; i < one.length; i++) {
-            one[i] *= s;
+            one[i] *= scalar;
         }
         return one;
+    }
+
+    private static float[] dupe(float val, int num) {
+        float[] f = new float[num];
+        for (int i = 0; i < num; i++) {
+            f[i] = val;
+        }
+        return f;
     }
 }
