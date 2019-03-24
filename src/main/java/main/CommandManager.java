@@ -39,6 +39,9 @@ import main.commands.overwatch.OverwatchStats;
 import main.commands.pokemon.PokemonIdentifier;
 import main.commands.rotmg.*;
 import main.commands.utilitycommands.*;
+import main.commands.utilitycommands.channel.BulkDelete;
+import main.commands.utilitycommands.channel.DeleteWaifus;
+import main.commands.utilitycommands.channel.WordReaction;
 import main.commands.utilitycommands.guild.DumpEmotes;
 import main.commands.utilitycommands.guild.UsersToGist;
 import main.commands.utilitycommands.guildutil.*;
@@ -184,6 +187,7 @@ public class CommandManager {
         commandMap.put("stats", new Stats());
         commandMap.put("users", new UserDates());
         commandMap.put("share", new ScreenShare());
+        commandMap.put("rxn", new WordReaction());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());

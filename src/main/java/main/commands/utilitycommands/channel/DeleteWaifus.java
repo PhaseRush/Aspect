@@ -1,4 +1,4 @@
-package main.commands.utilitycommands;
+package main.commands.utilitycommands.channel;
 
 import main.Command;
 import main.utility.metautil.BotUtils;

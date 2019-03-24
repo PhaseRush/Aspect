@@ -504,6 +504,14 @@ public class BotUtils {
         return emojis;
     }
 
+    public static ReactionEmoji getRegionalChar(char c) {
+        return ReactionEmoji.of(
+                String.valueOf(
+                        new char[] {0xD83C, (char) (0xDDE6 + c - 97)}
+                )
+        );
+    }
+
     // need to use unicode
     public static List<ReactionEmoji> initializeNumberEmojis() {
         List<ReactionEmoji> emojis = new ArrayList<>();
