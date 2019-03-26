@@ -14,6 +14,7 @@ import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.impl.events.guild.voice.user.UserVoiceChannelEvent;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
+import sx.blah.discord.util.RequestBuffer;
 
 import java.math.BigInteger;
 import java.util.*;
@@ -26,6 +27,8 @@ public class PassiveListener {
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
+
+    // private static AtomicReference<Long> reactionCooldown = new AtomicReference<>(Instant.MIN.toEpochMilli()); // 0
 
     @EventSubscriber
     public void kaitlynsHangOut(MessageReceivedEvent event) {
@@ -174,7 +177,7 @@ public class PassiveListener {
     @EventSubscriber
     public void addedReaction(ReactionAddEvent event) {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
-        event.getMessage().addReaction(event.getReaction());
+        RequestBuffer.request(() -> event.getMessage().addReaction(event.getReaction()));
     }
 
     @EventSubscriber
@@ -182,9 +185,9 @@ public class PassiveListener {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
         try {
             if (!getEmojiFromMsg(event, event.getMessage().getFormattedContent()).isPresent()) // if not present, then remove
-                event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction());
-        } catch (Exception e) {
-            // ignored
+                RequestBuffer.request(() ->
+                        event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction()));
+        } catch (Exception ignored) {
         }
     }
 
