@@ -497,8 +497,7 @@ public class BotUtils {
         List<ReactionEmoji> emojis = new ArrayList<>();
 
         for (int i = 0; i < 26; i++) {
-            char[] charArray = {0xD83C, (char) (0xDDE6 + i)};
-            emojis.add(ReactionEmoji.of(String.valueOf(charArray)));
+            emojis.add(getRegionalChar((char)('a' + i)));
         }
 
         return emojis;
@@ -556,7 +555,7 @@ public class BotUtils {
 
 
     // dont need sync b/c could be diff servers
-    public static void reactAllEmojis(IMessage iMessage, List<ReactionEmoji> emojis) {
+    public static void reactAllEmojis(IMessage iMessage, Collection<ReactionEmoji> emojis) {
         for (ReactionEmoji e : emojis)
             RequestBuffer.request(() -> iMessage.addReaction(e)).get(); //.get() is literally magic and fixes the entire universe -- because it blocks thread until last emoji finished
     }

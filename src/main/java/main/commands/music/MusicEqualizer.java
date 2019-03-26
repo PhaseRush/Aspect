@@ -45,6 +45,7 @@ public class MusicEqualizer implements Command {
         } else { // user did not use a filter (or spelling is just atrocious) so try other commands
             switch (args.get(0)) {
                 case "stop" :
+                case "null" :
                     player.setFilterFactory(null);
                     eqMap.remove(event.getGuild()); // remove eq
                     break;
@@ -57,12 +58,13 @@ public class MusicEqualizer implements Command {
                     break;
                 case "mult" :
                     try {
-                        applyFilter(event.getGuild(),
+                        replaceFilter(
+                                event.getGuild(),
                                 eqMap.getOrDefault(
                                         event.getGuild(),
-                                        new Pair<>(new EqualizerFactory(), Filters.IDENTITY.filter)
+                                        new Pair<>(new EqualizerFactory(), Filters.ZERO.filter)
                                 ).getValue(),
-                                Float.valueOf(args.get(1)) // scalar
+                                Float.valueOf(args.get(1))
                         );
                         BotUtils.reactWithCheckMark(event.getMessage());
                     } catch (NumberFormatException e) {
@@ -155,6 +157,18 @@ public class MusicEqualizer implements Command {
         return pair.getKey(); // return the eq fac
     }
 
+    public static EqualizerFactory replaceFilter(IGuild guild, float[] filter, float scalar) {
+        Pair<EqualizerFactory, float[]> pair = eqMap.getOrDefault(guild, new Pair<>(new EqualizerFactory(), mul(filter, scalar)));
+
+        for (int i = 0; i < filter.length; i++) {
+            pair.getKey().setGain(i, filter[i] * scalar); // add the values to current filter
+        }
+
+        eqMap.put(guild, new Pair<>(pair.getKey(), filter)); // update map with newFilter
+
+        return pair.getKey(); // return the eq fac
+    }
+
     @Override
     public boolean requireSynchronous() {
         return true;
@@ -195,5 +209,9 @@ public class MusicEqualizer implements Command {
             f[i] = val;
         }
         return f;
+    }
+
+    public static Pair<EqualizerFactory, float[]> getGuildEq (IGuild guild) {
+        return eqMap.get(guild);
     }
 }

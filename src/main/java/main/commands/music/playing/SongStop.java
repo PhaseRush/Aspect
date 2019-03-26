@@ -30,11 +30,11 @@ public class SongStop implements Command {
         catch (Exception ignored) {}
 
         // clear EQ filter
-        MasterManager.getGuildAudioPlayer(event.getGuild()).getPlayer()
-                .setFilterFactory(MusicEqualizer.applyFilter(
-                        event.getGuild(),
-                        MusicEqualizer.Filters.ZERO.getFilter(),
-                        1));
+        MusicEqualizer.replaceFilter(
+                event.getGuild(),
+                MusicEqualizer.Filters.ZERO.getFilter(),
+                0
+        );
 
         scheduler.getQueue().clear(); //purge entire queue
         scheduler.getPastQueue().clear();

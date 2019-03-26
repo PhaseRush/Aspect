@@ -9,10 +9,7 @@ import sx.blah.discord.handle.obj.IMessage;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class WordReaction implements Command {
     @Override
@@ -22,10 +19,10 @@ public class WordReaction implements Command {
                 getRxns(args.get(0)));
     }
 
-    private List<ReactionEmoji> getRxns(String word) {
-        List<ReactionEmoji> emojis = new ArrayList<>();
+    private Set<ReactionEmoji> getRxns(String word) {
+        Set<ReactionEmoji> emojis = new LinkedHashSet<>();
         for (char c : word.toCharArray()) {
-            emojis.add(BotUtils.getRegionalChar(c)); // iffy
+            emojis.add(BotUtils.getRegionalChar(c));
         }
 
         return emojis;
@@ -39,6 +36,7 @@ public class WordReaction implements Command {
             } catch (NumberFormatException e) {
             } // was not id :(
         }
+
         // next check if someone was mentioned, ret most recent msg by them in last 10 minutes if so
         if (!caller.getMentions().isEmpty()) {
             // def custom comparator to get most recent

@@ -187,7 +187,7 @@ public class CommandManager {
         commandMap.put("stats", new Stats());
         commandMap.put("users", new UserDates());
         commandMap.put("share", new ScreenShare());
-        commandMap.put("rxn", new WordReaction());
+        commandMap.put("rx", new WordReaction());
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());
