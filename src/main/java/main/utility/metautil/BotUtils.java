@@ -917,6 +917,9 @@ public class BotUtils {
     public static String concatArgs(List<String> args) {
         return String.join(" ", args);
     }
+    public static String concatArgs(List<String> args, String delim) {
+        return String.join(delim, args);
+    }
 
     @Override
     public String toString() {

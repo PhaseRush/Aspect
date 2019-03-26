@@ -28,21 +28,6 @@ public class PassiveListener {
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
 
-    // private static AtomicReference<Long> reactionCooldown = new AtomicReference<>(Instant.MIN.toEpochMilli()); // 0
-
-    @EventSubscriber
-    public void kaitlynsHangOut(MessageReceivedEvent event) {
-        if (event.getChannel().isPrivate()) return;
-        //please, no one ask. please please please please please
-        if (event.getGuild().getStringID().equals("197158565004312576")) {
-            String message = event.getMessage().getFormattedContent().toLowerCase();
-            if (message.contains("penis"))
-                BotUtils.send(event.getChannel(), "penis.");
-            //use embed to hide url in message
-            if (message.contains("turtle"))
-                BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
-        }
-    }
 
     @EventSubscriber
     public void reactToEmojiMessage(MessageReceivedEvent event) {
@@ -168,6 +153,19 @@ public class PassiveListener {
         if (BotUtils.stringSimilarity(msg, "flip a coin") < 3) CoinFlip.flip(event);
     }
 
+    @EventSubscriber
+    public void kaitlynsHangOut(MessageReceivedEvent event) {
+        if (event.getChannel().isPrivate()) return;
+        //please, no one ask. please please please please please
+        if (event.getGuild().getStringID().equals("197158565004312576")) {
+            String message = event.getMessage().getFormattedContent().toLowerCase();
+            if (message.contains("penis"))
+                BotUtils.send(event.getChannel(), "penis.");
+            //use embed to hide url in message
+            if (message.contains("turtle"))
+                BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://assets3.thrillist.com/v1/image/2551479/size/tmg-article_tall.jpg"));
+        }
+    }
 
     @EventSubscriber
     public void userJoin(UserJoinEvent event) {

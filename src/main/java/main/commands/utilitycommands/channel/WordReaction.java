@@ -6,6 +6,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.util.MessageHistory;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -48,8 +49,8 @@ public class WordReaction implements Command {
         }
 
         // last case, return most recent msg
-        IMessage ret = channel.getMessageHistoryTo(caller.getTimestamp(), 2).get(0);
-        return ret;
+        MessageHistory hist = channel.getMessageHistoryFrom(caller.getTimestamp(), 2);
+        return hist.get(0);
     }
 
     @Override
