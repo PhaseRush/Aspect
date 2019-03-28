@@ -920,6 +920,12 @@ public class BotUtils {
     public static String concatArgs(List<String> args, String delim) {
         return String.join(delim, args);
     }
+    public static String concatArgs(String[] args) {
+        return concatArgs(Arrays.stream(args).collect(Collectors.toList()));
+    }
+    public static String concatArgs(String[] args, String delim) {
+        return concatArgs(Arrays.stream(args).collect(Collectors.toList()), delim);
+    }
 
     @Override
     public String toString() {

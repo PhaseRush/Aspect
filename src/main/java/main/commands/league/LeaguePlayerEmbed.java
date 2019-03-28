@@ -62,8 +62,8 @@ public class LeaguePlayerEmbed implements Command {
                 .withThumbnail("http://opgg-static.akamaized.net/images/medals/" + BotUtils.capitalizeFirstLowerRest(rank) + "_" + "" + ".png")
                 .withDesc(ign + " is a " + (isRanked ? rank + " " + division.name() : "") + " " + cm.getChampion().getName()
                         + " main "  + (isRanked? "in " + summoner.getLeague(Queue.RANKED_SOLO_5x5).getName() : ""))
-                .withColor(validProfileIcon ? (Visuals.analyizeImageColor(summoner.getProfileIcon().getImage().get())) : Visuals.getVibrantColor())
-                //.withColor(Visuals.analyizeWeightedImageColor(summoner.getProfileIcon().getImage().get(), 4))
+                .withColor(validProfileIcon ? (Visuals.analyzeImageColor(summoner.getProfileIcon().getImage().get())) : Visuals.getVibrantColor())
+                //.withColor(Visuals.analyzeWeightedImageColor(summoner.getProfileIcon().getImage().get(), 4))
                 .withTimestamp(System.currentTimeMillis())
                 .withAuthorUrl(getOpggUrl(ign))
                 .withAuthorIcon((validProfileIcon ? summoner.getProfileIcon().getImage().getURL() : null))
@@ -81,7 +81,7 @@ public class LeaguePlayerEmbed implements Command {
         IMessage iMessage = event.getChannel().sendMessage(eb.build());
         iMessage.addReaction(ReactionEmoji.of("blobfish", 362999190453747712L)); //why....
 
-        System.out.println("HSB Converted: " + (validProfileIcon ? Visuals.analyizeImageColor(summoner.getProfileIcon().getImage().get()) : "No valid profile icon"));
+        System.out.println("HSB Converted: " + (validProfileIcon ? Visuals.analyzeImageColor(summoner.getProfileIcon().getImage().get()) : "No valid profile icon"));
     }
 
     private String getOpggUrl(String ign) { //todo hard coded NA value

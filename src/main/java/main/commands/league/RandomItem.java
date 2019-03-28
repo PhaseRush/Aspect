@@ -19,7 +19,7 @@ public class RandomItem implements Command {
         eb.withTitle("League of Legends analytics - 8.11")
                 .withUrl("https://github.com/PhaseRush/Aspect")
                 .withDesc("Here's your chosen item. Alternatives are provided upon request\n```" + primaryItem.getName()+ "```\n" + primaryItem.getPlaintext())
-                .withColor(Visuals.analyizeImageColor(primaryItem.getImage().get()))
+                .withColor(Visuals.analyzeImageColor(primaryItem.getImage().get()))
                 .withTimestamp(System.currentTimeMillis())
                 .withImage(primaryItem.getImage().getURL());
         

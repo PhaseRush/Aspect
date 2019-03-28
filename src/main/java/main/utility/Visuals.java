@@ -38,6 +38,7 @@ public class Visuals {
             e.printStackTrace();
         }
     }
+
     public enum Fonts {
         MONTSERRAT();
 
@@ -66,7 +67,7 @@ public class Visuals {
     generate random vibrant color with seed
      */
     public static Color getVibrantColor(String seed) {
-        return null;
+        return Color.getHSBColor(new Random(Long.valueOf(seed)).nextFloat(), .9f, 1.0f);
     }
 
     public static BufferedImage urlToBufferedImage(String url) {
@@ -110,7 +111,7 @@ public class Visuals {
         return null;
     }
 
-    public static Color analyizeImageColor(BufferedImage bi) {
+    public static Color analyzeImageColor(BufferedImage bi) {
         long sumR = 0, sumG = 0, sumB = 0;
 
         for (int i = 0; i < bi.getWidth(); i++) { // gets fucked at some urls
@@ -130,10 +131,10 @@ public class Visuals {
     }
 
     public static Color analyzeImageColor(Image img) {
-        return analyizeImageColor(convertImageToBufferedImage(img));
+        return analyzeImageColor(convertImageToBufferedImage(img));
     }
 
-    public static Color analyizeWeightedImageColor(Image i, int ratio) {
+    public static Color analyzeWeightedImageColor(Image i, int ratio) {
         BufferedImage bi = convertImageToBufferedImage(i);
 
         BufferedImage img = bi.getSubimage(bi.getWidth()/ratio, bi.getHeight()/ratio, bi.getWidth()*(ratio-1)/ratio, bi.getHeight()*(ratio-1)/ratio); // fill in the corners of the desired crop location here
@@ -141,7 +142,7 @@ public class Visuals {
         Graphics g = copyOfImage.createGraphics();
         g.drawImage(img, 0, 0, null);
 
-        return analyizeImageColor(copyOfImage);
+        return analyzeImageColor(copyOfImage);
     }
 
     // https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage

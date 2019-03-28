@@ -36,7 +36,7 @@ public class SkinDetail implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle(skin.getName())
-                .withColor(Visuals.analyizeWeightedImageColor(Visuals.urlToBufferedImage(skinUrl), 4))
+                .withColor(Visuals.analyzeWeightedImageColor(Visuals.urlToBufferedImage(skinUrl), 4))
                 .withImage(skinUrl);
 
         event.getChannel().sendMessage(eb.build());

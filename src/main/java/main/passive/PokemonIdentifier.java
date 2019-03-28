@@ -74,7 +74,7 @@ public class PokemonIdentifier {
 
             EmbedBuilder eb = new EmbedBuilder()
                     .withTitle("Aspect | Pokédex")
-                    .withColor(Visuals.analyizeImageColor(target))
+                    .withColor(Visuals.analyzeImageColor(target))
                     .withDesc("I am ```" + (99.99 - (Double)answer.getValue()) + "%``` confident that this Pokémon is: ```" + answer.getKey() + "```")
                     .withFooterText("This operation took " + (System.currentTimeMillis() - startTime) + " ms.");
 

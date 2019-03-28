@@ -89,7 +89,7 @@ WordCounter implements Command {
         int seconds = (int) (timeElapsed % 60000) / 1000;
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle(useRegex? "Regex Matcher" : "Word Counter")
-                //.withColor(Visuals.analyizeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
+                //.withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
                 .withColor(Visuals.getVibrantColor())
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
                 .withDesc("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\nFormat: x/y, where x is number of matches and y is the total messages by user")

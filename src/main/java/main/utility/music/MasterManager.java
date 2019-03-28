@@ -154,7 +154,7 @@ public class MasterManager {
                     String firstVideoThumbnailUrl = searchResults.get(0).getSnippet().getThumbnails().getDefault().getUrl();
                     EmbedBuilder itemOptionEmbed = new EmbedBuilder()
                             .withThumbnail(firstVideoThumbnailUrl)
-                            .withColor(Visuals.analyizeImageColor(Visuals.urlToBufferedImage(firstVideoThumbnailUrl)));
+                            .withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage(firstVideoThumbnailUrl)));
 
                     List<String> optionsForEmbed = new ArrayList<>();
                     for (SearchResult singleVideo : searchResults) {

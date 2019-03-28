@@ -16,6 +16,35 @@ import java.io.ByteArrayInputStream;
 import java.util.*;
 
 public class MusicEqualizer implements Command {
+    // Predefined EQ configs
+    public enum Filters {
+        // zero'd eq
+        ZERO    (new float[] {     0,      0,     0,     0,      0,     0,      0,     0,     0,     0,     0,     0,     0,     0,     0 }),
+        // all 0.1
+        TENP    (new float[] {  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
+        // bass boost
+        BASS    (new float[] {  0.2f,  0.15f,  0.1f,  0.05f,  0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f }),
+        BASS2   (mul(BASS.getFilter(), 0.5f)),
+        // treble boost
+        TREB    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f, -0.0f,  0.05f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
+        // hill
+        HILL    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f,     0,   0.1f,  0.2f,  0.3f,  0.2f,  0.1f,     0,-0.05f, -0.1f, -0.15f,-0.2f }),
+        // no
+        EAR_RPE (dupe(Float.MAX_VALUE, 15)),
+        // for pop/ edm/ electronic music
+        POP     (new float[] {  .2f,    .1f,    0f,    -.1f,  -.2f,   -.1f,    0f,   .7f,  .15f,   .5f,  -.1f,    0f,   .7f,   .15f, .25f });
+
+        private float[] filter;
+
+        Filters(float[] filter) {
+            this.filter = filter;
+        }
+
+        public float[] getFilter() {
+            return filter;
+        }
+    }
+
     private static final float[] BANDS = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
     // keep track of each guild's equalizer
@@ -46,10 +75,12 @@ public class MusicEqualizer implements Command {
             switch (args.get(0)) {
                 case "stop" :
                 case "null" :
+                case "quit" :
                     player.setFilterFactory(null);
                     eqMap.remove(event.getGuild()); // remove eq
                     break;
                 case "show" :
+                case "curr" :
                     BotUtils.send(event.getChannel(),
                             new EmbedBuilder().withImage("attachment://equalizer.png"),
                             generateEqChart(event.getGuild()),
@@ -80,6 +111,11 @@ public class MusicEqualizer implements Command {
                     break;
                 case "dump" :
                     BotUtils.send(event.getChannel(), generateCurrEq(event));
+                case "all"  :
+                case "list" :
+                    BotUtils.send(event.getChannel(),
+                            Arrays.toString(
+                                    Filters.class.getEnumConstants()).replaceAll("^.|.$", ""));
                 default:
                     BotUtils.reactWithX(event.getMessage());
                     return;
@@ -94,33 +130,6 @@ public class MusicEqualizer implements Command {
         return new StringBuilder("Equalizer settings spread (" + thisEq.length + " bands) : ")
                 .append(Arrays.toString(thisEq)).toString();
 
-    }
-
-    // Predefined EQ configs
-    public enum Filters {
-        // zero'd eq
-        ZERO    (new float[] {     0,      0,     0,     0,      0,     0,      0,     0,     0,     0,     0,     0,     0,     0,     0 }),
-        // all 0.1
-        IDENTITY(new float[] {  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f}),
-        // bass boost
-        BASS    (new float[] {  0.2f,  0.15f,  0.1f,  0.05f,  0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f }),
-        BASS2   (mul(BASS.getFilter(), 0.5f)),
-        // treble boost
-        TREB    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f, -0.0f,  0.05f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
-        // hill
-        HILL    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f,     0,   0.1f,  0.2f,  0.3f,  0.2f,  0.1f,     0,-0.05f, -0.1f, -0.15f,-0.2f }),
-        // no
-        EAR_RPE (new float[] {     1,      1,     1,      1,     1,      1,     1,     1,     1,     1,     1,     1,     1,     1,     1 });
-
-        private float[] filter;
-
-        Filters(float[] filter) {
-            this.filter = filter;
-        }
-
-        public float[] getFilter() {
-            return filter;
-        }
     }
 
     private ByteArrayInputStream generateEqChart(IGuild guild) {

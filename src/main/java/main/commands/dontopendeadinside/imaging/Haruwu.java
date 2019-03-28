@@ -16,14 +16,12 @@ public class Haruwu implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        String url = DeepAI.fetchWaifu2x(event, args);
-        BufferedImage img = Visuals.urlToBufferedImage(url);
-
         BotUtils.send(event.getChannel(),
                 new EmbedBuilder().withImage("attachment://overlay_pfp.png"),
                 new ByteArrayInputStream(
                         Visuals.buffImgToOutputStream(
-                                overlay(img, determineText(args)),
+                                overlay(Visuals.urlToBufferedImage(DeepAI.fetchWaifu2x(event, args)),
+                                        determineText(args)),
                                 "png"
                         ).toByteArray()
                 ),
