@@ -888,13 +888,13 @@ public class BotUtils {
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
         ZonedDateTime zonedNow = zonedDateTime.toLocalDate().atStartOfDay(zoneId);
 
-        Instant todayXam = zonedNow.plusHours(hour24).toInstant();
+        Instant todayXhr = zonedNow.plusHours(hour24).toInstant();
 
-        Instant tmrXam = zonedNow.plusDays(1).plusHours(hour24).toInstant();
+        Instant tmrXhr = zonedNow.plusDays(1).plusHours(hour24).toInstant();
 
-        Instant nextXam = (todayXam.isAfter(now) ? todayXam : tmrXam);
+        Instant nextXhr = (todayXhr.isAfter(now) ? todayXhr : tmrXhr);
 
-        return nextXam.toEpochMilli() - now.toEpochMilli();
+        return nextXhr.toEpochMilli() - now.toEpochMilli();
     }
 
     public static String cmdSpellCorrect(String inputStr) {

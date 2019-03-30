@@ -16,15 +16,15 @@ public class Haruwu implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.send(event.getChannel(),
+        BotUtils.send(
+                event.getChannel(),
                 new EmbedBuilder().withImage("attachment://overlay_pfp.png"),
                 new ByteArrayInputStream(
                         Visuals.buffImgToOutputStream(
                                 overlay(Visuals.urlToBufferedImage(DeepAI.fetchWaifu2x(event, args)),
                                         determineText(args)),
                                 "png"
-                        ).toByteArray()
-                ),
+                        ).toByteArray()),
                 "overlay_pfp.png"
         );
     }
