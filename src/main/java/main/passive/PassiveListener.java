@@ -12,6 +12,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.Reactio
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionRemoveEvent;
 import sx.blah.discord.handle.impl.events.guild.member.UserJoinEvent;
 import sx.blah.discord.handle.impl.events.guild.voice.user.UserVoiceChannelEvent;
+import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RequestBuffer;
@@ -169,7 +170,19 @@ public class PassiveListener {
 
     @EventSubscriber
     public void userJoin(UserJoinEvent event) {
-        BotUtils.send(event.getGuild().getDefaultChannel(), "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
+        List<IChannel> channels = event.getGuild().getChannels();
+        IChannel target = null;
+
+        for (IChannel ch : channels) {
+            String name = ch.getName().replaceAll("^[ -~]", "").toLowerCase();
+            if (name.contains("bot") || name.contains("spam")) {
+                target = ch;
+                break;
+            }
+        }
+
+        BotUtils.send(target == null ? event.getGuild().getDefaultChannel() : target,
+                "Welcome " + event.getUser().getName() + " to " + event.getGuild().getName() + "!");
     }
 
     @EventSubscriber

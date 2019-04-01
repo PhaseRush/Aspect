@@ -31,7 +31,7 @@ public class JoinVoiceChannel implements Command {
                                         BotUtils.stringSimilarity(o.getValue(), arg.toLowerCase()))))
                                 .filter(pair ->
                                         BotUtils.stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/5) ||
-                                                BotUtils.stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/5))
+                                        BotUtils.stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/5))
                                 .findFirst()
                                 .get().getKey()
                 ).get(0);
