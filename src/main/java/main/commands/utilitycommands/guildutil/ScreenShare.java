@@ -1,7 +1,6 @@
 package main.commands.utilitycommands.guildutil;
 
 import main.Command;
-import main.commands.music.playing.JoinVoiceChannel;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
@@ -19,7 +18,7 @@ public class ScreenShare implements Command {
             eb.appendDesc(event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel().getStringID()+"/)");
         } else { // used arg
             try { // try name first
-                eb.appendDesc(JoinVoiceChannel.fuzzyVoiceMatch(event, args.get(0)).getStringID() + "/)");
+                eb.appendDesc(BotUtils.fuzzyVoiceMatch(event, args.get(0)).getStringID() + "/)");
             } catch (NoSuchElementException e) { // used id
                 eb.appendDesc(args.get(0)).appendDesc("/)");
             }
@@ -38,7 +37,7 @@ public class ScreenShare implements Command {
                             Long.valueOf(args.get(0))) != null);
         } catch (NumberFormatException ignored) { // dont care, means that didnt use id but instead used name
             try {
-                return JoinVoiceChannel.fuzzyVoiceMatch(event, args.get(0)) != null;
+                return BotUtils.fuzzyVoiceMatch(event, args.get(0)) != null;
             } catch (Exception e) { // no matching name either
                 return false;
             }

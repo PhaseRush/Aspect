@@ -868,6 +868,7 @@ public class BotUtils {
                 .withColor(Visuals.getVibrantColor())
                 .withDesc(Jsoup.parse(quote.content).text() + "\n\t- " + quote.title);
     }
+
     private static class QuoteContainer {
         private int id;
         private String title;
@@ -906,6 +907,23 @@ public class BotUtils {
                 .filter(p -> p.getValue() < 2) // the order of this filter and min has caused fat debates in #programming-help
                 .map(Pair::getKey)
                 .orElse(null);
+    }
+
+    public static IVoiceChannel fuzzyVoiceMatch(MessageReceivedEvent event, String arg) {
+        return
+                event.getGuild().getVoiceChannelsByName(
+                        event.getGuild().getVoiceChannels().stream()
+                                .map(IChannel::getName)
+                                .map(name -> new Pair<>(name, name.toLowerCase().replaceAll("^[ -~]", "")))
+                                .sorted(Comparator.comparingDouble(o -> Math.min(
+                                        stringSimilarity(o.getKey(), arg),
+                                        stringSimilarity(o.getValue(), arg.toLowerCase()))))
+                                .filter(pair ->
+                                        stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/5) ||
+                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/5))
+                                .findFirst()
+                                .get().getKey()
+                ).get(0);
     }
 
     public static boolean containsIgnoreCase(List<String> list, String s) {
