@@ -33,6 +33,7 @@ public class PassiveListener {
     @EventSubscriber
     public void reactToEmojiMessage(MessageReceivedEvent event) {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+        if (event.getChannel().isPrivate()) return;
         getEmojiFromMsg(event, event.getMessage().getFormattedContent()).ifPresent(emoji -> event.getMessage().addReaction(emoji));
     }
 
