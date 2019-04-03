@@ -36,6 +36,10 @@ public interface Command {
         return true;
     }
 
+    default List<String> getAutocorrectBlackList() {
+        return null;
+    }
+
     enum Status {
         OK("OK"),
         MISSING_PERMS("Missing permissions"),

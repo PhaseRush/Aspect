@@ -9,9 +9,16 @@ import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DemographicRecog extends DeepAI implements Command {
+    private static List<String> AutocorrectBlackList = Arrays.asList("fate");
+
+    public List<String> getAutocorrectBlackList() {
+        return AutocorrectBlackList;
+    }
+
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String targetUrl = getTargetUrl(event, args);

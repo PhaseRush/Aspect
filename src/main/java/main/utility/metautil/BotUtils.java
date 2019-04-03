@@ -906,6 +906,11 @@ public class BotUtils {
                 .min(Comparator.comparingDouble(Pair::getValue))
                 .filter(p -> p.getValue() < 2) // the order of this filter and min has caused fat debates in #programming-help
                 .map(Pair::getKey)
+
+                // this part is for checking the blacklist
+                .map(name -> new Pair<>(name, CommandManager.commandMap.get(name)))
+                .filter(pair -> !pair.getValue().getAutocorrectBlackList().contains(inputStr))
+                .map(Pair::getKey)
                 .orElse(null);
     }
 
