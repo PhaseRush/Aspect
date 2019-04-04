@@ -277,10 +277,14 @@ public class CommandManager {
             if (!event.getMessage().getContent().startsWith("<@" + event.getClient().getOurUser().getStringID() + ">")) {
                 return; // does not start with prefix AND does not start by tagging our user
             } else { // tagged
-                argArray = event.getMessage().getContent().substring(22).split(" ", 2);
-                commandStr = argArray[0];
+                argArray = event.getMessage().getContent().substring(21).trim().split(" ", 2);
+                if (event.getMessage().getContent().substring(21).trim().equals("")) { // if no command args at all, use help command
+                    commandStr = "help";
+                } else {
+                    commandStr = argArray[0];
+                }
             }
-        } else { // does start with bot prefix
+        } else { // start with bot prefix
             // Given a message "/test arg1, arg2", argArray will contain ["$test", "arg1, arg2, ...."]
             argArray = event.getMessage().getContent().split(" ", 2);
             // Extract the "command" part of the first arg out by ditching the amount of characters present in the prefix
