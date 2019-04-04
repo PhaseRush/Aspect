@@ -274,11 +274,11 @@ public class CommandManager {
 
         // If message doesn't start with BOT_PREFIX, check if it tags us
         if (!event.getMessage().getFormattedContent().startsWith(BotUtils.DEFAULT_BOT_PREFIX)) {
-            if (!event.getMessage().getContent().startsWith("<@" + event.getClient().getOurUser().getStringID() + ">")) {
+            if (!event.getMessage().getContent().matches("<@(!)?" + event.getClient().getOurUser().getStringID() + ">.*")) {
                 return; // does not start with prefix AND does not start by tagging our user
             } else { // tagged
                 argArray = event.getMessage().getContent().substring(21).trim().split(" ", 2);
-                if (event.getMessage().getContent().substring(21).trim().equals("")) { // if no command args at all, use help command
+                if (event.getMessage().getContent().replaceFirst("!", "").substring(21).trim().equals("")) { // if no command args at all, use help command
                     commandStr = "help";
                 } else {
                     commandStr = argArray[0];
