@@ -268,14 +268,28 @@ public class CommandManager {
 
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) {
-        // If message doesn't start with BOT_PREFIX, return
-        if (!event.getMessage().getFormattedContent().startsWith(BotUtils.DEFAULT_BOT_PREFIX)) return;
+        String[] argArray;
+        String commandStr;
+        List<String> argsList = new ArrayList<>();
 
-        // Given a message "/test arg1, arg2", argArray will contain ["!test", "arg1, arg2, ...."]
-        String[] argArray = event.getMessage().getContent().split(" ", 2);
+        // If message doesn't start with BOT_PREFIX, check if it tags us
+        if (!event.getMessage().getFormattedContent().startsWith(BotUtils.DEFAULT_BOT_PREFIX)) {
+            if (!event.getMessage().getContent().startsWith("<@" + event.getClient().getOurUser().getStringID() + ">")) {
+                return; // does not start with prefix AND does not start by tagging our user
+            } else { // tagged
+                argArray = event.getMessage().getContent().substring(22).split(" ", 2);
+                commandStr = argArray[0];
+            }
+        } else { // does start with bot prefix
+            // Given a message "/test arg1, arg2", argArray will contain ["$test", "arg1, arg2, ...."]
+            argArray = event.getMessage().getContent().split(" ", 2);
+            // Extract the "command" part of the first arg out by ditching the amount of characters present in the prefix
+            commandStr = argArray[0].substring(BotUtils.DEFAULT_BOT_PREFIX.length());
+        }
 
-        // Extract the "command" part of the first arg out by ditching the amount of characters present in the prefix
-        String commandStr = argArray[0].substring(BotUtils.DEFAULT_BOT_PREFIX.length());
+        // turn arg array into list
+        if (argArray.length != 1) argsList.addAll(Arrays.asList(argArray[1].split(",[ ]?")));
+
 
         // Return if command is not inside of commandMap
         // Instead of delegating the work to a switch, automatically do it via calling the mapping if it exists
@@ -290,12 +304,6 @@ public class CommandManager {
             }
             else return; // no correction
         }
-
-        // Load the rest of the args in the array into a List for safer access
-        // CHANGED IMPLEMENTATION TO BETTER SEPARATE COMMAS AND SPACES
-        List<String> argsList = new ArrayList<>();
-        if (argArray.length != 1)
-            argsList.addAll(Arrays.asList(argArray[1].split(", ")));
 
         // Get the command
         Command cmd = commandMap.get(commandStr);

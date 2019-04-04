@@ -924,8 +924,8 @@ public class BotUtils {
                                         stringSimilarity(o.getKey(), arg),
                                         stringSimilarity(o.getValue(), arg.toLowerCase()))))
                                 .filter(pair ->
-                                        stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/5) ||
-                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/5))
+                                        stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/2) ||
+                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/2))
                                 .findFirst()
                                 .get().getKey()
                 ).get(0);

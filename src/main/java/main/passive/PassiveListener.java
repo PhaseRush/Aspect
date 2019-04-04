@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class PassiveListener {
     // private static ExecutorService executor = Executors.newFixedThreadPool(2);
-    private static Pattern unexpFactRegex = Pattern.compile("[0-9]+!");
+    private static Pattern unexpFactRegex = Pattern.compile("\\b[0-9]+!");
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
