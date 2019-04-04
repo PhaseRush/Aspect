@@ -36,7 +36,7 @@ public class TableUtil {
         return sb;
     }
     public static StringBuilder renderInCodeBlock(GridTable g) {
-        return new StringBuilder("```js\n                              ")
+        return new StringBuilder("```js\n") // removed padding spaces
                 .append(render(g))
                 .append("```");
     }

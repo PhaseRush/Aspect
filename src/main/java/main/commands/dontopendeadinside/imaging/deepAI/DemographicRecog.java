@@ -44,7 +44,7 @@ public class DemographicRecog extends DeepAI implements Command {
 
                 .put(1, 0, Cell.of("Age range", "Gender", "Ethnicity"))
                 .put(1, 1, Cell.of(generateStats(target)))
-                .put(1, 2, Cell.of(generateError(target)));
+                .put(1, 2, Cell.of(generateCertainty(target)));
 
         table = Border.DOUBLE_LINE.apply(table);
 
@@ -59,7 +59,7 @@ public class DemographicRecog extends DeepAI implements Command {
         return obj;
     }
 
-    private String[] generateError(Face target) {
+    private String[] generateCertainty(Face target) {
         String[] obj = new String[3];
         obj[0] = target.age_range_confidence*100 + " %";
         obj[1] = target.gender_confidence*100 + " %";
