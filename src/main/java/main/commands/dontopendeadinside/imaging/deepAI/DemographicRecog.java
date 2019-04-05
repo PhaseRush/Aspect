@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DemographicRecog extends DeepAI implements Command {
-    private static List<String> AutocorrectBlackList = Arrays.asList("fate");
+    private static List<String> autocorrectBlackList = Arrays.asList("fate"); // conflict with mudae
 
     public List<String> getAutocorrectBlackList() {
-        return AutocorrectBlackList;
+        return autocorrectBlackList;
     }
 
     @Override

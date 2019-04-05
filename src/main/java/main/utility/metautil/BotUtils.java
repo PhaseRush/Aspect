@@ -18,6 +18,7 @@ import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.api.internal.json.objects.EmbedObject;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
@@ -115,7 +116,7 @@ public class BotUtils {
     public static ArrayList<String> dictionaryList;
 
     // Utility objects
-    private static ExecutorService listenerExecuter = Executors.newCachedThreadPool();
+    private static ExecutorService listenerExecuter = Executors.newSingleThreadExecutor();
 
     // prefix map util
     private static Type prefixMapType = new TypeToken<HashMap<String, String>>() {}.getType();
@@ -886,6 +887,20 @@ public class BotUtils {
         Instant nextXhr = (todayXhr.isAfter(now) ? todayXhr : tmrXhr);
 
         return nextXhr.toEpochMilli() - now.toEpochMilli();
+    }
+
+    public static void unregListenerAfter10sec(IMessage embedMessage, IListener reactionListener, MessageReceivedEvent event) {
+        Runnable removeListener = () -> {	                    // unregister listener after x ms
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException ignored) {
+            } finally { //please just execute this no matter what
+                event.getClient().getDispatcher().unregisterListener(reactionListener);
+                if (!embedMessage.isDeleted()) embedMessage.delete();
+
+            }
+        };
+        listenerExecuter.execute(removeListener);
     }
 
     public static String cmdSpellCorrect(String inputStr) {

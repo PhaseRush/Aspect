@@ -37,10 +37,13 @@ public class SetPrefix implements Command {
                     case "\uD83C\uDDE6":
                         BotUtils.setPrefix(event.getGuild(), args.get(0));
                         BotUtils.reactWithCheckMark(event.getMessage());
+                        BotUtils.send(event.getChannel(), "Prefix for " + event.getGuild().getName() + " has been changed to " + args.get(0));
                         break;
                     case "\uD83C\uDDE7":
                         BotUtils.setPrefix(event.getChannel(), args.get(0));
                         BotUtils.reactWithCheckMark(event.getMessage());
+                        BotUtils.send(event.getChannel(), "Prefix for " + event.getChannel().getName() + " has been changed to " + args.get(0));
+
                         break;
                     default:
                         BotUtils.send(event.getChannel(), "Not a valid reaction, exiting. Use help if needed");
@@ -54,6 +57,7 @@ public class SetPrefix implements Command {
         // react with emojis
         BotUtils.reactAllEmojis(confirmMsg, Arrays.asList(ReactionEmoji.of("\uD83C\uDDE6"), ReactionEmoji.of("\uD83C\uDDE7")));
         event.getClient().getDispatcher().registerListener(reactionListener);
+        BotUtils.unregListenerAfter10sec(confirmMsg, reactionListener, event);
     }
 
     @Override

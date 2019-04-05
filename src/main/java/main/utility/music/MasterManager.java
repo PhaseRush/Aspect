@@ -28,14 +28,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MasterManager {
     private static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     private static final Map<Long, GuildMusicManager> musicManagers  = new HashMap<>();
-    // 100% cpu
-    private static final ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     //thanks to decc the hecc
     static {
@@ -204,21 +200,7 @@ public class MasterManager {
                     // register listener
                     event.getClient().getDispatcher().registerListener(reactionListener);
 
-                    // unregister listener after x ms
-                    // candidate for 100% cpu
-                    // BotUtils.unregisterListener(reactionListener, 10000, embedMessage);
-                    // unregister listener after 10 seconds time	        // unregister listener after 10000 ms
-                    Runnable removeListener = () -> {	                    // unregister listener after x ms
-                        try {
-                            Thread.sleep(10000);
-                        } catch (InterruptedException ignored) {
-                        } finally { //please just execute this no matter what
-                            event.getClient().getDispatcher().unregisterListener(reactionListener);
-                            if (!embedMessage.isDeleted()) embedMessage.delete();
-
-                        }
-                    };
-                    executorService.execute(removeListener);
+                    BotUtils.unregListenerAfter10sec(embedMessage, reactionListener, event);
 
                 } catch (IOException e) {
                     System.out.println("Audio - MasterManager.loadAndPlay.noMatches - IOException thrown");
@@ -234,8 +216,6 @@ public class MasterManager {
 
         });
     }
-
-
 
     //updated with boolean insertFront //got rid of syncrh. (dannie)
     private static void play(GuildMusicManager musicManager, AudioTrack track, boolean insertFront) {

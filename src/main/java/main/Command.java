@@ -3,6 +3,7 @@ package main;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
+import java.util.Collections;
 import java.util.List;
 
 public interface Command {
@@ -37,7 +38,7 @@ public interface Command {
     }
 
     default List<String> getAutocorrectBlackList() {
-        return null;
+        return Collections.emptyList();
     }
 
     enum Status {
