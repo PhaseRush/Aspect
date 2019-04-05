@@ -22,7 +22,7 @@ public class ScheduledActions {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     // kaitlyn quoter
-    private static final long kaitGeneralChatID = 197158565004312576L;
+    private static final long kaitGeneralChatID = 529900452196646947L;
     private static IChannel kaitGenChannel;
 
     // cpu 100% watcher
@@ -41,6 +41,11 @@ public class ScheduledActions {
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7), 1000*60*60*24, TimeUnit.MILLISECONDS);
         System.out.println("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7)).atZone(ZoneId.of("America/Los_Angeles")).toString());
+    }
+
+    @EventSubscriber
+    public void leagueQuotes(ReadyEvent e) {
+
     }
 
     @EventSubscriber
