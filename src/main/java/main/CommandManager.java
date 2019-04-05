@@ -289,6 +289,7 @@ public class CommandManager {
                 argArray = event.getMessage().getContent().substring(21).trim().split(" ", 2);
                 if (event.getMessage().getContent().replaceFirst("!", "").substring(21).trim().equals("")) { // if no command args at all, use help command
                     commandStr = "help";
+                    BotUtils.send(event.getChannel(), "My prefix here is : " + BotUtils.getPrefix(event));
                 } else {
                     commandStr = argArray[0];
                 }

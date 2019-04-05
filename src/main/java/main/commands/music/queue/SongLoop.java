@@ -30,7 +30,7 @@ public class SongLoop implements Command {
         } catch (NumberFormatException e) {
             BotUtils.send(event.getChannel(),
                     "Please use a number that is within the range [1 to " + Integer.MAX_VALUE + "], inclusive." +
-                    "\n If you want to loop indefinetly, use `" + BotUtils.getPrefix(event.getGuild()) + "loop`");
+                            "\n If you want to loop indefinetly, use `" + BotUtils.getPrefix(event) + "loop`");
             return;
         }
 

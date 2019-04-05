@@ -118,10 +118,10 @@ public class BotUtils {
 
     // prefix map util
     private static Type prefixMapType = new TypeToken<Map<String, String>>() {}.getType();
-    private static Map<String, String> prefixMap = BotUtils.gson.fromJson(
+    private static HashMap<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
             prefixMapType);
-    public static String getPrefix(MessageReceivedEvent event) {
+    public static String getPrefix(MessageReceivedEvent event) { // cant use IID b/c need to preserve channel > guild
         return prefixMap.getOrDefault(event.getChannel().getStringID(),
                 prefixMap.getOrDefault(event.getGuild().getStringID(),
                         BotUtils.DEFAULT_BOT_PREFIX));
