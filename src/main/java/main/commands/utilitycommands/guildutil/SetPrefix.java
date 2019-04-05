@@ -22,10 +22,10 @@ public class SetPrefix implements Command {
         EmbedBuilder confirmEb = new EmbedBuilder()
                 .withTitle(String.format("Would you like to set the prefix for the entire server (%s), or just this channel (%s) ?", event.getGuild().getName(), event.getChannel().getName()))
                 .withColor(Color.BLACK)
-                .withDesc(":regional_indicator_A: \tserver wide change" +
-                        ":regional_indicator_B:\tspecific text channel override" +
+                .withDesc(":regional_indicator_a: \tserver wide change" +
+                        "\n:regional_indicator_b:\tspecific text channel override" +
                         "\nNew prefix : `" + targetPrefix + "`" +
-                        "\nNote: next time, remember to use `" + targetPrefix + "prefix $" + "`" +
+                        "\nNote: next time, remember to use `" + targetPrefix + "setprefix $" + "`" +
                         "\nUse `[current prefix]help setPrefix` if you need help");
 
         IMessage confirmMsg = BotUtils.sendGet(event.getChannel(), confirmEb);
@@ -53,6 +53,7 @@ public class SetPrefix implements Command {
 
         // react with emojis
         BotUtils.reactAllEmojis(confirmMsg, Arrays.asList(ReactionEmoji.of("\uD83C\uDDE6"), ReactionEmoji.of("\uD83C\uDDE7")));
+        event.getClient().getDispatcher().registerListener(reactionListener);
     }
 
     @Override

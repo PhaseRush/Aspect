@@ -1,6 +1,7 @@
 package main.utility.metautil;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import info.debatty.java.stringsimilarity.Levenshtein;
@@ -53,7 +54,7 @@ public class BotUtils {
 
     //meta util -- Gson now public
     private static Random tlr = ThreadLocalRandom.current();
-    public static Gson gson = new Gson();
+    public static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static JsonParser jsonParser = new JsonParser();
     private static OkHttpClient client = new OkHttpClient();
 
@@ -117,7 +118,7 @@ public class BotUtils {
     private static ExecutorService listenerExecuter = Executors.newCachedThreadPool();
 
     // prefix map util
-    private static Type prefixMapType = new TypeToken<Map<String, String>>() {}.getType();
+    private static Type prefixMapType = new TypeToken<HashMap<String, String>>() {}.getType();
     private static HashMap<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
             prefixMapType);
