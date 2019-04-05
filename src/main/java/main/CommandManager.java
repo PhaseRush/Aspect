@@ -280,8 +280,7 @@ public class CommandManager {
         List<String> argsList = new ArrayList<>();
 
         // first check channel prefix, then guild prefix, then lastly use default
-        String prefix = prefixMap.getOrDefault(event.getChannel().getStringID(),
-                prefixMap.getOrDefault(event.getGuild().getStringID(), BotUtils.DEFAULT_BOT_PREFIX));
+        String prefix = BotUtils.getPrefix(event);
         // If message doesn't start with BOT_PREFIX, check if it tags us
         if (!event.getMessage().getFormattedContent().startsWith(prefix)) {
             if (!event.getMessage().getContent().matches("<@(!)?" + event.getClient().getOurUser().getStringID() + ">.*")) {

@@ -2,6 +2,7 @@ package main.utility.metautil;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import info.debatty.java.stringsimilarity.Levenshtein;
 import javafx.util.Pair;
 import main.CommandManager;
@@ -27,6 +28,7 @@ import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RequestBuffer;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
@@ -69,7 +71,6 @@ public class BotUtils {
 
     //guildID, commandPrefix
     private static final String mapFilePath = ""; //get rid of this
-    private static Map<Long, String> PREFIX_MAP = new HashMap<>(); //adding angle brackets surpress warnings :)
 
     //API keys
     public static String DEFAULT_BOT_PREFIX = "$";
@@ -115,6 +116,24 @@ public class BotUtils {
     // Utility objects
     private static ExecutorService listenerExecuter = Executors.newCachedThreadPool();
 
+    // prefix map util
+    private static Type prefixMapType = new TypeToken<Map<String, String>>() {}.getType();
+    private static Map<String, String> prefixMap = BotUtils.gson.fromJson(
+            BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
+            prefixMapType);
+    public static String getPrefix(MessageReceivedEvent event) {
+        return prefixMap.getOrDefault(event.getChannel().getStringID(),
+                prefixMap.getOrDefault(event.getGuild().getStringID(),
+                        BotUtils.DEFAULT_BOT_PREFIX));
+    }
+    public static void setPrefix(IIDLinkedObject idObject, String prefix) {
+        prefixMap.put(idObject.getStringID(), prefix);
+
+        writeToFile(System.getProperty("user.dir") + "/data/prefix_map.json",
+                gson.toJson(prefixMap),
+                false);
+    }
+
     // --- Static initializer --
     static {
         // encrypter
@@ -126,60 +145,30 @@ public class BotUtils {
         String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
         dictionarySet = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
         dictionaryList = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(ArrayList::new));
-
     }
 
 
-    public static String getPrefix(IGuild iGuild) {
-        try {
-            return PREFIX_MAP.get(Long.valueOf(iGuild.getStringID()));
-        } catch (NullPointerException e) {
-            System.out.println("This key doesn't exist");
-            return null;
-        }
-    }
 
-    public static void setPrefix(IGuild iGuild, String prefix) {
-        PREFIX_MAP.put(Long.valueOf(iGuild.getStringID()), prefix);
-    }
 
     public static void setBottomText() {
         BOTTOM_TEXT = Main.client.getChannelByID(Long.valueOf(WF_BOTTOM_TEXT_ID));
     }
 
-    public static void savePrefixMap() {
-        try {
-            gson.toJson(PREFIX_MAP, new FileWriter(mapFilePath));
-        } catch (IOException e) {
-            System.out.println("savePrefixMap - Read prefixMap from file error: IOException");
-        }
-    }
-
-    public static List<String> insults = populateInsults();
-
-    /**
-     * (slightly nsfw) Insults
-     * @return
-     */
-    private static List<String> populateInsults() {
-        List<String> list = new ArrayList<>();
-
-        list.add("You better pick a God and start praying.");
-        list.add("Your family tree is a 2 x 4");
-        list.add("If you were any more inbred you'd be a sandwich");
-        list.add("You're so ugly, you couldn't even arouse suspicion");
-        list.add("You continue to meet my expectations");
-        list.add("You're as useful as a Janna main playing [literally any champion that isn't Janna]");
-        list.add("Your mother is so old she has a separate entrance for black men.");
-        list.add("May you search for your children with a Geiger Counter.");
-        list.add("Your mom should've swallowed");
-        list.add("The only thing your mother wants for Christmas is a folded up flag");
-        list.add("You're not the dumbest person on planet Earth, but you better hope they don't die.");
-        list.add("If you were any stupider we'd have to water you");
-        list.add("I was pro-life before I met you");
-
-        return list;
-    }
+    public static List<String> insults = Arrays.asList(
+            "You better pick a God and start praying.",
+            "Your family tree is a 2 x 4",
+            "If you were any more inbred you'd be a sandwich",
+            "You're so ugly, you couldn't even arouse suspicion",
+            "You continue to meet my expectations",
+            "You're as useful as a Janna main playing [literally any champion that isn't Janna]",
+            "Your mother is so old she has a separate entrance for black men.",
+            "May you search for your children with a Geiger Counter.",
+            "Your mom should've swallowed",
+            "The only thing your mother wants for Christmas is a folded up flag",
+            "You're not the dumbest person on planet Earth, but you better hope they don't die.",
+            "If you were any stupider we'd have to water you",
+            "I was pro-life before I met you"
+    );
 
     // Handles the creation and getting of a IDiscordClient object for a token
     public static IDiscordClient getBuiltDiscordClient(String token) {
