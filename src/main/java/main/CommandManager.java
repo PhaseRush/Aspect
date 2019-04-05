@@ -1,5 +1,6 @@
 package main;
 
+import com.google.gson.reflect.TypeToken;
 import main.commands.dontopendeadinside.Greet;
 import main.commands.dontopendeadinside.Summarize;
 import main.commands.dontopendeadinside.UserWordFrequency;
@@ -58,6 +59,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.StatusType;
 
+import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -72,8 +74,13 @@ public class CommandManager {
     public static Map<String, Command> commandMap = new LinkedHashMap<>();
 
     public static Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
-    //talked to hec about using a static initializer but constructor is fine
 
+    private static Type prefixMapType = new TypeToken<Map<String, String>>() {}.getType();
+    public static Map<String, String> prefixMap = BotUtils.gson.fromJson(
+            BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
+            prefixMapType);
+
+    //talked to hec about using a static initializer but constructor is fine
     public CommandManager() {
         //Actual Testing
         //commandMap.put("bulba", new BulbapediaScraper());
@@ -272,8 +279,11 @@ public class CommandManager {
         String commandStr;
         List<String> argsList = new ArrayList<>();
 
+        // first check channel prefix, then guild prefix, then lastly use default
+        String prefix = prefixMap.getOrDefault(event.getChannel().getStringID(),
+                prefixMap.getOrDefault(event.getGuild().getStringID(), BotUtils.DEFAULT_BOT_PREFIX));
         // If message doesn't start with BOT_PREFIX, check if it tags us
-        if (!event.getMessage().getFormattedContent().startsWith(BotUtils.DEFAULT_BOT_PREFIX)) {
+        if (!event.getMessage().getFormattedContent().startsWith(prefix)) {
             if (!event.getMessage().getContent().matches("<@(!)?" + event.getClient().getOurUser().getStringID() + ">.*")) {
                 return; // does not start with prefix AND does not start by tagging our user
             } else { // tagged
@@ -288,7 +298,7 @@ public class CommandManager {
             // Given a message "/test arg1, arg2", argArray will contain ["$test", "arg1, arg2, ...."]
             argArray = event.getMessage().getContent().split(" ", 2);
             // Extract the "command" part of the first arg out by ditching the amount of characters present in the prefix
-            commandStr = argArray[0].substring(BotUtils.DEFAULT_BOT_PREFIX.length());
+            commandStr = argArray[0].substring(prefix.length());
         }
 
         // turn arg array into list
