@@ -34,7 +34,7 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void morningGreeter(ReadyEvent event) {
-        final Runnable quoter= () -> BotUtils.send(kaitGenChannel, BotUtils.getQuoteEmbed());
+        final Runnable quoter = () -> BotUtils.send(kaitGenChannel, BotUtils.getQuoteEmbed());
 
         // initialize channel
         kaitGenChannel = Main.client.getChannelByID(kaitGeneralChatID);
@@ -44,8 +44,10 @@ public class ScheduledActions {
     }
 
     @EventSubscriber
-    public void leagueQuotes(ReadyEvent e) {
+    public void leagueQuotes(ReadyEvent event) {
+        final Runnable quoter = () -> {
 
+        };
     }
 
     @EventSubscriber

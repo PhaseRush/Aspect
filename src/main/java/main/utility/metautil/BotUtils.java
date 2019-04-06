@@ -10,6 +10,7 @@ import main.CommandManager;
 import main.Main;
 import main.passive.*;
 import main.utility.Visuals;
+import main.utility.miscJsonObj.leaguequotes.LeagueQuoteContainer;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -123,12 +124,18 @@ public class BotUtils {
     private static HashMap<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
             prefixMapType);
+    // league quote map
+    private static Type leagueQuoteMapType = new TypeToken<HashMap<String, LeagueQuoteContainer>>() {}.getType();
+    public static HashMap<String, LeagueQuoteContainer> leagueQuoteMap = gson.fromJson(
+            readFromFileToString(System.getProperty("user.dir") + "/data/league_quotes.json"),
+            leagueQuoteMapType);
+
     public static String getPrefix(MessageReceivedEvent event) { // cant use IID b/c need to preserve channel > guild
         return prefixMap.getOrDefault(event.getChannel().getStringID(),
                 prefixMap.getOrDefault(event.getGuild().getStringID(),
                         BotUtils.DEFAULT_BOT_PREFIX));
     }
-    public static void setPrefix(IIDLinkedObject idObject, String prefix) {
+    public static synchronized void setPrefix(IIDLinkedObject idObject, String prefix) {
         prefixMap.put(idObject.getStringID(), prefix);
 
         writeToFile(System.getProperty("user.dir") + "/data/prefix_map.json",
@@ -850,7 +857,7 @@ public class BotUtils {
     }
 
     public static EmbedBuilder getQuoteEmbed() {
-        String jsonArray = BotUtils.getStringFromUrl("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1");
+        String jsonArray = getStringFromUrl("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1");
         String json = jsonArray.substring(1, jsonArray.length()-1);
         QuoteContainer quote = gson.fromJson(json, QuoteContainer.class);
 
@@ -865,6 +872,13 @@ public class BotUtils {
         private String title;
         private String content;
         private String link;
+    }
+
+    public static EmbedBuilder getLeagueQuoteEmbed() {
+        EmbedBuilder eb = new EmbedBuilder()
+                .withTitle("");
+
+        return eb;
     }
 
     /**
