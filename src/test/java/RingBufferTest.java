@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RingBufferTest {
-    DoubleRingBuffer buffer;
+    private DoubleRingBuffer buffer;
 
     @BeforeEach
     void beforeEach() {
@@ -28,9 +28,7 @@ public class RingBufferTest {
         assertEquals(10, buffer.size());
 
         for (int i = 1; i < 11; i++) {
-            assertEquals(buffer.pop(), i);
+            assertEquals(i, buffer.pop());
         }
-
     }
-
 }

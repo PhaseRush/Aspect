@@ -131,6 +131,7 @@ public class BotUtils {
             leagueQuoteMapType);
 
     public static String getPrefix(MessageReceivedEvent event) { // cant use IID b/c need to preserve channel > guild
+        if (event.getChannel().isPrivate()) return BotUtils.DEFAULT_BOT_PREFIX;
         return prefixMap.getOrDefault(event.getChannel().getStringID(),
                 prefixMap.getOrDefault(event.getGuild().getStringID(),
                         BotUtils.DEFAULT_BOT_PREFIX));
@@ -801,6 +802,7 @@ public class BotUtils {
     }
 
     public static String getNickOrDefault(MessageReceivedEvent event) {
+        if (event.getChannel().isPrivate()) return event.getAuthor().getName();
         String nick = event.getAuthor().getNicknameForGuild(event.getGuild());
         if (nick == null) return event.getAuthor().getName();
         else return nick;

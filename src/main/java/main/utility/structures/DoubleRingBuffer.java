@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DoubleRingBuffer  {
 
     private final int max;
-    public int size;
+    private int size;
     private final AtomicInteger pointer = new AtomicInteger(0);
     private final AtomicDoubleArray buffer;
 
