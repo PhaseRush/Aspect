@@ -20,13 +20,13 @@ public class Tex implements Command {
     }
 
     private String sanitize(List<String> args) {
-        String all = args.get(0);
+        StringBuilder all = new StringBuilder(args.get(0));
 
         for (int i = 1; i < args.size(); i++) {
-            all += "," + args.get(i); // need comma
+            all.append(",").append(args.get(i)); // need comma
         }
 
-        return all.replace("\\\\", "\\\\\\\\"); // make single backslash -> double backslash
+        return all.toString().replace("\\\\", "\\\\\\\\"); // make single backslash -> double backslash
     }
 
     @Override

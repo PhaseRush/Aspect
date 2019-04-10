@@ -22,7 +22,7 @@ public class ScheduledActions {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     // kaitlyn quoter
-    private static final long kaitGeneralChatID = 529900452196646947L;
+    private static final long kaitGeneralChatID = 562375333807128576L; // Vowed's#questions-or-ranting
     private static IChannel kaitGenChannel;
 
     // cpu 100% watcher

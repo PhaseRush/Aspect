@@ -16,13 +16,8 @@ public class Render implements Command {
         BotUtils.send(
                 event.getChannel(),
                 new EmbedBuilder().withImage("attachment://render.png"),
-                new ByteArrayInputStream(Visuals.genTextImage(args.get(0)).toByteArray()),
+                new ByteArrayInputStream(Visuals.genTextImage(BotUtils.concatArgs(args)).toByteArray()),
                 "render.png");
-    }
-
-    @Override
-    public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return args.size() == 1;
     }
 
     @Override
