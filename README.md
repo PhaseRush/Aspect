@@ -147,6 +147,15 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | setinv | - | For use by dev only | `$setinv \[x]` |
 
 
+#### Other Commands
+dictfilter :: filter the entire english dictionary by some regex or substring
+wyr :: would you rather
+face :: demographic recognition given image of face
+uwu :: spams uwu (or other text) over target's pfp
+upscale :: upscales image using Waifu2x
+sweep :: minesweeper game
+
+
 #### WIP Commands:
 - [ ] General: fetch: command that searches google and compiles keywords and top image
 - [ ] Google image search
