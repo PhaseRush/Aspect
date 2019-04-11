@@ -35,6 +35,7 @@ public class PassiveListener {
         try {
             if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
             if (event.getChannel().isPrivate()) return;
+            if (event.getAuthor().isBot()) return;
             getEmojiFromMsg(event, event.getMessage().getFormattedContent()).ifPresent(emoji -> event.getMessage().addReaction(emoji));
         } catch (NullPointerException ignored) {} // dont care
     }
@@ -191,12 +192,14 @@ public class PassiveListener {
     @EventSubscriber
     public void addedReaction(ReactionAddEvent event) {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+        if (event.getAuthor().isBot()) return;
         RequestBuffer.request(() -> event.getMessage().addReaction(event.getReaction()));
     }
 
     @EventSubscriber
     public void removedReaction(ReactionRemoveEvent event) {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
+        if (event.getAuthor().isBot()) return;
         try {
             if (!getEmojiFromMsg(event, event.getMessage().getFormattedContent()).isPresent()) // if not present, then remove
                 RequestBuffer.request(() ->
