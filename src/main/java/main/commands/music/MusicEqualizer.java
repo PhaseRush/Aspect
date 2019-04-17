@@ -2,12 +2,12 @@ package main.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import javafx.util.Pair;
 import main.Command;
 import main.utility.Visuals;
 import main.utility.grapher.LineChart;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
+import main.utility.structures.Pair;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.util.EmbedBuilder;
@@ -48,7 +48,7 @@ public class MusicEqualizer implements Command {
     private static final float[] BANDS = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
 
     // keep track of each guild's equalizer
-    private static final Map<IGuild, Pair<EqualizerFactory,float[]>> eqMap = new HashMap<>();
+    private static final Map<IGuild, main.utility.structures.Pair<EqualizerFactory,float[]>> eqMap = new HashMap<>();
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -64,7 +64,7 @@ public class MusicEqualizer implements Command {
                     return Integer.compare(first, second);
                 })
                 .filter(p -> BotUtils.stringSimilarity(args.get(0), p.getValue()) < 2)
-                .map(Pair::getKey);
+                .map(main.utility.structures.Pair::getKey);
 
         if (filter.isPresent()) {
             player.setFilterFactory(

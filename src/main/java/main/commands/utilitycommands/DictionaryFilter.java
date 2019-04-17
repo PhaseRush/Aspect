@@ -20,6 +20,7 @@ public class DictionaryFilter implements Command {
                         word -> word.contains(args.get(0)))
                 .collect(Collectors.joining(", "));
 
+        condensed = condensed.length() == 0 ? "No words match the query." : condensed;
 
         EmbedBuilder eb = new EmbedBuilder().withTitle("English :: pattern match");
         try {
@@ -33,7 +34,7 @@ public class DictionaryFilter implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        if (!args.isEmpty() && !args.get(0).startsWith("\\")) { // if trying to use regex, it better compile
+        if (args.get(0).startsWith(" \\")) { // if trying to use regex, it better compile
             try {
                 Pattern.compile(args.get(0).substring(1, args.get(0).length()-1));
             } catch (Exception e) {

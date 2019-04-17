@@ -1,8 +1,8 @@
 package main.utility;
 
 import com.google.gson.reflect.TypeToken;
-import javafx.util.Pair;
 import main.utility.metautil.BotUtils;
+import main.utility.structures.Pair;
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.NetworkAdapter;
 import net.dean.jraw.http.OkHttpNetworkAdapter;

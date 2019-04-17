@@ -1,8 +1,8 @@
 package main.commands.utilitycommands.guildutil;
 
-import javafx.util.Pair;
 import main.Command;
 import main.utility.metautil.BotUtils;
+import main.utility.structures.Pair;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -11,6 +11,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+/**
+ * flexing functional programming
+ */
 public class UserDates implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {

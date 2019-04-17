@@ -1,9 +1,9 @@
 package main.passive;
 
-import javafx.util.Pair;
 import main.Main;
 import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
+import main.utility.structures.Pair;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.models.SubredditSort;
 import net.dean.jraw.models.TimePeriod;

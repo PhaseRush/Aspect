@@ -5,12 +5,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import info.debatty.java.stringsimilarity.Levenshtein;
-import javafx.util.Pair;
 import main.CommandManager;
 import main.Main;
 import main.passive.*;
 import main.utility.Visuals;
 import main.utility.miscJsonObj.leaguequotes.LeagueQuoteContainer;
+import main.utility.structures.Pair;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -924,14 +924,14 @@ public class BotUtils {
                 .filter(e -> e.getValue().correctable()) // thanks phanta
                 .filter(e -> Math.abs(e.getKey().length() - inputStr.length()) < 2)
                 .map(e -> new Pair<>(e.getKey(), BotUtils.stringSimilarityInt(e.getKey(), inputStr)))
-                .min(Comparator.comparingDouble(Pair::getValue))
+                .min(Comparator.comparingDouble(main.utility.structures.Pair::getValue))
                 .filter(p -> p.getValue() < 2) // the order of this filter and min has caused fat debates in #programming-help
-                .map(Pair::getKey)
+                .map(main.utility.structures.Pair::getKey)
 
                 // this part is for checking the blacklist
                 .map(name -> new Pair<>(name, CommandManager.commandMap.get(name)))
                 .filter(pair -> !pair.getValue().getAutocorrectBlackList().contains(inputStr))
-                .map(Pair::getKey)
+                .map(main.utility.structures.Pair::getKey)
                 .orElse(null);
     }
 
