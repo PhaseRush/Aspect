@@ -3,7 +3,8 @@ package main.utility.structures;
 import java.util.Objects;
 
 /**
- * This is a pair.
+ * "They told me to grow a pair"
+ *      -Kat, while inside a StarBucks, 2019
  */
 public class Pair<K,V> {
     private K key;
