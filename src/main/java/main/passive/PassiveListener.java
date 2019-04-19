@@ -36,7 +36,8 @@ public class PassiveListener {
             if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
             if (event.getChannel().isPrivate()) return;
             if (event.getAuthor().isBot()) return;
-            getEmojiFromMsg(event, event.getMessage().getFormattedContent()).ifPresent(emoji -> event.getMessage().addReaction(emoji));
+            getEmojiFromMsg(event, event.getMessage().getFormattedContent()).ifPresent(emoji ->
+                    RequestBuffer.request(() -> event.getMessage().addReaction(emoji)));
         } catch (NullPointerException ignored) {} // dont care
     }
 
@@ -232,12 +233,4 @@ public class PassiveListener {
 //            System.out.println("hi");
 //        }
 //    }
-
-    @Override
-    public String toString() {
-        return "This is janky asf";
-    }
-
-    //THIS IS JUST A JOKE. If youre a recruiter plz understand that i have a good sense of humour;
-    @Override public boolean equals(Object o) {return true;}
 }
