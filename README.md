@@ -18,18 +18,18 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| stop/lvoice | 0 | Stops current song, leaves voice | `$stop, $lvoice` |
-| play | 1 | Adds param to Queue | `$play \[YT song/plist]` |
-| nowplaying/current/np| 0 | Displays info about current song | `$nowplaying` |
-| skip | 0, 1 | skips 1 song, or \[param\] songs | `$skip (15)` |
+| stop/lvoice | 0 | Stops current song, leaves voice | `$stop |
+| play | 1 | Adds param to Queue | `$play [YT song/plist]` |
+| nowplaying/current/np| 0 | Displays info about current song | `$np` |
+| skip | 0, 1 | skips 1 song, or \[param\] songs | `$skip 13` |
 | queue/q | 0 | lists the first 15 songs in queue | `$queue` |
-| loop - WIP| 0, 1 | loops indefinetly, or \[param\] times | `$loop (3)` |
+| loop | 0, 1 | loops indefinetly, or \[param\] times | `$loop 3` |
 | shuffle | 0 | shuffles current queue | `$shuffle` |
 | sfx | 1 | plays \[param\] sound effect | `$sfx purple` | 
 | listsfx | 0 | lists all available sound effects | `$listsfx` |
 | qdel/songdel | 1 | removes song in position x from queue | `$qdel 4` |
 | listmusic | 0 | lists all preconfigured playlists | `$listmusic` |
-| pq | 0 | lists past queue (past songs) | `$pq` |
+| pq - WIP | 0 | lists past queue (past songs) | `$pq` |
 
 #### Misc.
 
