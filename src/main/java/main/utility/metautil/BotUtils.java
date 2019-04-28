@@ -822,6 +822,7 @@ public class BotUtils {
         return event.getAuthor().getStringID().equals(DEV_DISCORD_STRING_ID);
     }
 
+    // this java app doesnt run on mac hopefully
     public static boolean isWindows() {
         return System.getProperty("os.name").toLowerCase().contains("win");
     }
@@ -946,7 +947,7 @@ public class BotUtils {
                                         stringSimilarity(o.getValue(), arg.toLowerCase()))))
                                 .filter(pair ->
                                         stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/2) ||
-                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/2))
+                                        stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/2))
                                 .findFirst()
                                 .get().getKey()
                 ).get(0);

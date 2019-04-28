@@ -5,6 +5,8 @@ import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import main.utility.metautil.BotUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.IDiscordClient;
 
 import java.lang.management.ManagementFactory;
@@ -32,6 +34,9 @@ public class Main {
     // IBM Translator
     public static LanguageTranslator translator;
 
+    // SLF4J logger
+    private static Logger log = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args){
 
         // ------------------------------------------------------------ //
@@ -40,7 +45,7 @@ public class Main {
         startInstant = Instant.now();
 
         if (args.length != 22) {
-            System.out.println("You screwed up the runtime config params!\targs:" + args.length) ;
+            log.error("You screwed up the runtime config params!\targs: {}", args.length);
             System.exit(9001);
             return; // :)
         }
@@ -105,6 +110,7 @@ public class Main {
         BotUtils.DEV_GITHUB_NAME = args[13];
         BotUtils.DEV_GITHUB_PASSWORD = args[14];
 
+        log.info("All API keys set");
         // ------------------------------------------------------------ //
 
         // Self Client Initialization
@@ -120,8 +126,9 @@ public class Main {
         // Only login after all events are registered - otherwise some may be missed.
         client.login();
 
+        log.info("Client logged into Discord");
         // ------------------------------------------------------------ //
 
-        System.out.println("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");
+        log.info("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");
     }
 }

@@ -20,6 +20,11 @@ public class DeleteMsg implements Command {
     }
 
     @Override
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
+        return BotUtils.isDev(event);
+    }
+
+    @Override
     public String getDesc() {
         return "Deletes message by user. $deletemsg userId, [minutes to runDelete from]";
     }
