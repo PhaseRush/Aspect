@@ -20,9 +20,13 @@ import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
 
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class PassiveListener {
     // private static ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -44,13 +48,9 @@ public class PassiveListener {
     }
 
     private List<IEmoji> getEmojiFromMsg(ChannelEvent event, String msgContent) {
-        List<IEmoji> emojis = new ArrayList<>();
-        for (IEmoji e : event.getGuild().getEmojis()) {
-            if (msgContent.matches("\\b" + e.getName() + "\\b")) {
-                emojis.add(e);
-            }
-        }
-        return emojis;
+        return event.getGuild().getEmojis().stream()
+                .filter(emoji -> msgContent.matches("\\b" + emoji.getName() + "\\b"))
+                .collect(Collectors.toList());
     }
 
 
