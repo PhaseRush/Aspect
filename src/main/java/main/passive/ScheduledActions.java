@@ -7,10 +7,10 @@ import main.utility.structures.DoubleRingBuffer;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IUser;
 
 import java.lang.management.ManagementFactory;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -24,6 +24,12 @@ public class ScheduledActions {
     // kaitlyn quoter
     private static final long kaitGeneralChatID = 562375333807128576L; // Vowed's#questions-or-ranting
     private static IChannel kaitGenChannel;
+
+    // streak btw (btw (btw))
+    private final long RESUNA_ID = 1L;
+    private final long KAIT_ID = 1L;
+    private static IUser resuna;
+    private static IUser kait;
 
     // cpu 100% watcher
     public static AtomicBoolean sentMessage = new AtomicBoolean(false);
@@ -39,15 +45,30 @@ public class ScheduledActions {
         // initialize channel
         kaitGenChannel = Main.client.getChannelByID(kaitGeneralChatID);
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7), 1000*60*60*24, TimeUnit.MILLISECONDS);
-        System.out.println("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7)).atZone(ZoneId.of("America/Los_Angeles")).toString());
+        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
+        System.out.println("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
     }
 
     @EventSubscriber
     public void leagueQuotes(ReadyEvent event) {
         final Runnable quoter = () -> {
-
         };
+    }
+
+    @EventSubscriber
+    public void streak(ReadyEvent event) {
+        resuna = Main.client.getUserByID(RESUNA_ID);
+        kait = Main.client.getUserByID(KAIT_ID);
+
+        final Runnable streaker = () -> {
+            BotUtils.send(resuna.getOrCreatePMChannel(), "Streak");
+            BotUtils.send(kait.getOrCreatePMChannel(), "Streak");
+        };
+
+        scheduledFuture = scheduler.scheduleAtFixedRate(streaker,
+                BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"),
+                24*60*60*1000,
+                TimeUnit.MILLISECONDS);
     }
 
     @EventSubscriber
@@ -67,7 +88,7 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void cpuUsageProfiler(ReadyEvent event) {
-        
+
         final Runnable systemProber = () -> {
             cpuQueue.push(ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class).getSystemCpuLoad()*100); // convert to %
             memQueue.push((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1E6);

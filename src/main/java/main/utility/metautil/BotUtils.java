@@ -42,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.zone.ZoneRulesException;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
@@ -891,19 +892,39 @@ public class BotUtils {
      * @param hour24 24 hour format for desired target time
      * @return milliseconds until hour24
      */
-    public static long millisToNextHour24(int hour24) {
+    public static long millisToNextHour24(int hour24, String timeZoneName) {
+        return millisToNextHHMMSSMMMM(hour24, 0, 0, 0, timeZoneName);
+    }
+
+    public static long millisToNextHHMMSSMMMM(int hours24, int minutes, int seconds, int millis, String timeZoneName) {
+        // validate timezone
+        if (!ZoneId.getAvailableZoneIds().contains(timeZoneName)) throw new ZoneRulesException("Invalid zone name:\t" + timeZoneName);
+
         Instant now = Instant.now();
-        ZoneId zoneId = ZoneId.of("America/Los_Angeles");
+        ZoneId zoneId = ZoneId.of(timeZoneName);
         ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(now, zoneId);
         ZonedDateTime zonedNow = zonedDateTime.toLocalDate().atStartOfDay(zoneId);
 
-        Instant todayXhr = zonedNow.plusHours(hour24).toInstant();
+        // today at input time
+        Instant todayInst = zonedNow.plusHours(hours24)
+                .plusMinutes(minutes)
+                .plusSeconds(seconds)
+                .plusNanos((long)(millis * 10E6))
+                .toInstant();
 
-        Instant tmrXhr = zonedNow.plusDays(1).plusHours(hour24).toInstant();
+        // tmr at input time
+        Instant tmrInst = zonedNow
+                .plusDays(1) // tmr
+                .plusHours(hours24)
+                .plusMinutes(minutes)
+                .plusSeconds(seconds)
+                .plusNanos((long)(millis * 10E6))
+                .toInstant();
 
-        Instant nextXhr = (todayXhr.isAfter(now) ? todayXhr : tmrXhr);
+        // take the one that is right after now
+        Instant nextInst = (todayInst.isAfter(now) ? todayInst : tmrInst);
 
-        return nextXhr.toEpochMilli() - now.toEpochMilli();
+        return nextInst.toEpochMilli() - now.toEpochMilli();
     }
 
     public static void unregListenerAfter10sec(IMessage embedMessage, IListener reactionListener, MessageReceivedEvent event) {
@@ -947,7 +968,7 @@ public class BotUtils {
                                         stringSimilarity(o.getValue(), arg.toLowerCase()))))
                                 .filter(pair ->
                                         stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/2) ||
-                                        stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/2))
+                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/2))
                                 .findFirst()
                                 .get().getKey()
                 ).get(0);
