@@ -896,6 +896,17 @@ public class BotUtils {
         return millisToNextHHMMSSMMMM(hour24, 0, 0, 0, timeZoneName);
     }
 
+    /**
+     * used to determine milliseconds until next specified time.
+     *
+     * example: 18:40 in Vancouver (local)
+     * @param hours24  18
+     * @param minutes 40
+     * @param seconds 0
+     * @param millis 0
+     * @param timeZoneName "America/Los_Angeles"
+     * @return millis until next 18:40 in Vancouver (local)
+     */
     public static long millisToNextHHMMSSMMMM(int hours24, int minutes, int seconds, int millis, String timeZoneName) {
         // validate timezone
         if (!ZoneId.getAvailableZoneIds().contains(timeZoneName)) throw new ZoneRulesException("Invalid zone name:\t" + timeZoneName);
