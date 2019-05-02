@@ -5,6 +5,7 @@ import main.commands.dontopendeadinside.games.CoinFlip;
 import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
+import net.dean.jraw.ApiException;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.ChannelEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -66,7 +67,7 @@ public class PassiveListener {
                 if (subR.length() > 20) return;
                 try { // expensive check so do last
                     RedditUtil.reddit.subreddit(subR.substring(2)).about();
-                } catch (NullPointerException | StringIndexOutOfBoundsException e) {
+                } catch (NullPointerException | StringIndexOutOfBoundsException | ApiException e) {
                     return; // doesnt exist
                 } // string error
 
