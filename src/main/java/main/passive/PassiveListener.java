@@ -16,6 +16,7 @@ import sx.blah.discord.handle.impl.events.guild.voice.user.UserVoiceChannelEvent
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IEmoji;
 import sx.blah.discord.util.EmbedBuilder;
+import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
 
 import java.math.BigInteger;
@@ -37,18 +38,19 @@ public class PassiveListener {
             if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
             if (event.getChannel().isPrivate()) return;
             if (event.getAuthor().isBot()) return;
-            getEmojiFromMsg(event, event.getMessage().getFormattedContent()).ifPresent(emoji ->
-                    RequestBuffer.request(() -> event.getMessage().addReaction(emoji)));
-        } catch (NullPointerException ignored) {} // dont care
+            getEmojiFromMsg(event, event.getMessage().getFormattedContent())
+                    .forEach(emoji -> RequestBuffer.request(() -> event.getMessage().addReaction(emoji)));
+        } catch (NullPointerException | RateLimitException ignored) {} // dont care
     }
 
-    private Optional<IEmoji> getEmojiFromMsg(ChannelEvent event, String msgContent) {
+    private List<IEmoji> getEmojiFromMsg(ChannelEvent event, String msgContent) {
+        List<IEmoji> emojis = new ArrayList<>();
         for (IEmoji e : event.getGuild().getEmojis()) {
-            if (msgContent.contains(e.getName())) {
-                return Optional.of(e);
+            if (msgContent.matches("\\b" + e.getName() + "\\b")) {
+                emojis.add(e);
             }
         }
-        return Optional.empty();
+        return emojis;
     }
 
 
@@ -203,9 +205,8 @@ public class PassiveListener {
         if (reactionsBlacklist.contains(event.getGuild().getLongID())) return;
         if (event.getAuthor().isBot()) return;
         try {
-            if (!getEmojiFromMsg(event, event.getMessage().getFormattedContent()).isPresent()) // if not present, then remove
-                RequestBuffer.request(() ->
-                        event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction()));
+            getEmojiFromMsg(event, event.getMessage().getFormattedContent())
+                    .forEach(emoji -> RequestBuffer.request(() -> event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction())));
         } catch (Exception ignored) {
         }
     }
