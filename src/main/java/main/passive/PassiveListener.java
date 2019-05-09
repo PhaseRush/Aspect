@@ -49,7 +49,7 @@ public class PassiveListener {
 
     private List<IEmoji> getEmojiFromMsg(ChannelEvent event, String msgContent) {
         return event.getGuild().getEmojis().stream()
-                .filter(emoji -> msgContent.matches("\\b" + emoji.getName() + "\\b"))
+                .filter(emoji -> msgContent.matches("\\b:?" + emoji.getName() + ":?\\b"))
                 .collect(Collectors.toList());
     }
 

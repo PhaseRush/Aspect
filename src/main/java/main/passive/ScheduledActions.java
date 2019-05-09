@@ -22,14 +22,8 @@ public class ScheduledActions {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     // kaitlyn quoter
-    private static final long kaitGeneralChatID = 562375333807128576L; // Vowed's#questions-or-ranting
-    private static IChannel kaitGenChannel;
-
-    // streak btw (btw (btw))
-    private final long RESUNA_ID = 1L;
-    private final long KAIT_ID = 1L;
-    private static IUser resuna;
-    private static IUser kait;
+    private static final long kaitQuoteChannelId = 562375333807128576L; // Vowed's#questions-or-ranting
+    private static IChannel kaitQuoteChannel;
 
     // cpu 100% watcher
     public static AtomicBoolean sentMessage = new AtomicBoolean(false);
@@ -40,10 +34,10 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void morningGreeter(ReadyEvent event) {
-        final Runnable quoter = () -> BotUtils.send(kaitGenChannel, BotUtils.getQuoteEmbed());
+        final Runnable quoter = () -> BotUtils.send(kaitQuoteChannel, BotUtils.getQuoteEmbed());
 
         // initialize channel
-        kaitGenChannel = Main.client.getChannelByID(kaitGeneralChatID);
+        kaitQuoteChannel = Main.client.getChannelByID(kaitQuoteChannelId);
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
         System.out.println("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
@@ -57,18 +51,24 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void streak(ReadyEvent event) {
-        resuna = Main.client.getUserByID(RESUNA_ID);
-        kait = Main.client.getUserByID(KAIT_ID);
+        IUser resuna = Main.client.getUserByID(105688694219886592L);
+        IUser kait = Main.client.getUserByID(187328584698953728L);
+        IUser dev = Main.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID);
 
         final Runnable streaker = () -> {
             BotUtils.send(resuna.getOrCreatePMChannel(), "Streak");
             BotUtils.send(kait.getOrCreatePMChannel(), "Streak");
+            BotUtils.send(dev.getOrCreatePMChannel(), "Streak sent");
         };
 
+        long initDelay = BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT");
+        long initDelay2 = BotUtils.millisToNextHHMMSSMMMM(16, 40,0, 0, "America/Los_Angeles");
         scheduledFuture = scheduler.scheduleAtFixedRate(streaker,
-                BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"),
+                initDelay2,
                 24*60*60*1000,
                 TimeUnit.MILLISECONDS);
+
+        System.out.println("Streak Scheduler has been init to " + initDelay2 + " ms");
     }
 
     @EventSubscriber
@@ -76,7 +76,7 @@ public class ScheduledActions {
         final Runnable cpuHawk = () -> {
             if ( !sentMessage.get() && Main.osBean.getSystemLoadAverage() > 1) {
                 BotUtils.send(
-                        Main.client.getUserByID(Long.valueOf(BotUtils.DEV_DISCORD_STRING_ID)).getOrCreatePMChannel(),
+                        Main.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
                         "cpu sad :(");
 
                 sentMessage.set(true);

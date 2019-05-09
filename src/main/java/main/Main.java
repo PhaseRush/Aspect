@@ -13,6 +13,7 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Aspect -- Discord bot built with love
@@ -35,9 +36,12 @@ public class Main {
     public static LanguageTranslator translator;
 
     // SLF4J logger
-    private static Logger log = LoggerFactory.getLogger(Main.class);
+    private static final Logger LOG = LoggerFactory.getLogger("Aspect");
 
     public static void main(String[] args){
+        Locale.setDefault(Locale.US);
+        System.out.println("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));
+        System.out.println("Millis until 18:00 CDT " + BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"));
 
         // ------------------------------------------------------------ //
 
@@ -45,7 +49,7 @@ public class Main {
         startInstant = Instant.now();
 
         if (args.length != 22) {
-            log.error("You screwed up the runtime config params!\targs: {}", args.length);
+            LOG.error("You screwed up the runtime config params!\targs: {}", args.length);
             System.exit(9001);
             return; // :)
         }
@@ -110,7 +114,7 @@ public class Main {
         BotUtils.DEV_GITHUB_NAME = args[13];
         BotUtils.DEV_GITHUB_PASSWORD = args[14];
 
-        log.info("All API keys set");
+        LOG.info("All API keys set");
         // ------------------------------------------------------------ //
 
         // Self Client Initialization
@@ -126,9 +130,9 @@ public class Main {
         // Only login after all events are registered - otherwise some may be missed.
         client.login();
 
-        log.info("Client logged into Discord");
+        LOG.info("Client logged into Discord");
         // ------------------------------------------------------------ //
 
-        log.info("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");
+        LOG.info("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");
     }
 }
