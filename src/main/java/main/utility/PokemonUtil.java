@@ -1,5 +1,6 @@
 package main.utility;
 
+import main.Aspect;
 import sx.blah.discord.handle.impl.obj.Embed;
 import sx.blah.discord.util.EmbedBuilder;
 

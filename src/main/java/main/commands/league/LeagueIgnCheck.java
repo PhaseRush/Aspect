@@ -1,5 +1,6 @@
 package main.commands.league;
 
+import main.Aspect;
 import main.Command;
 import main.utility.metautil.BotUtils;
 import org.jsoup.Jsoup;
@@ -14,7 +15,7 @@ public class LeagueIgnCheck implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String url = "https://lolnames.gg/en/na/" + args.get(0).replaceAll("[_\\s]", "%20") + "/";
-        Aspect.LOG.info(url);
+        Aspect.LOG.info("League IGN triggered with url:\t" + url);
         String html = BotUtils.getStringFromUrl(url);
         Optional<Element> element = Jsoup.parse(html).getAllElements().stream()
                 .filter(e -> e.hasClass("text-center"))

@@ -3,6 +3,7 @@ package main.commands.electronicArts;
 import com.google.gson.JsonSyntaxException;
 import com.inamik.text.tables.Cell;
 import com.inamik.text.tables.GridTable;
+import main.Aspect;
 import main.Command;
 import main.utility.TableUtil;
 import main.utility.apexlegends.ALChild;

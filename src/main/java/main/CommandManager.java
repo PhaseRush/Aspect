@@ -380,7 +380,7 @@ public class CommandManager {
                 .append("cmd: " + commandStr).append("\t")
                 .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
 
-        Aspect.LOG.info(commandPrint);
+        Aspect.LOG.info(commandPrint.toString());
     }
 
     @Override

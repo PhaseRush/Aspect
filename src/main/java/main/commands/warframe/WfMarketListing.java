@@ -1,5 +1,6 @@
 package main.commands.warframe;
 
+import main.Aspect;
 import main.Command;
 import main.utility.Visuals;
 import main.utility.WarframeUtil;

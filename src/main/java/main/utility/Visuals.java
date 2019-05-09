@@ -1,5 +1,6 @@
 package main.utility;
 
+import main.Aspect;
 import main.utility.metautil.BotUtils;
 import main.utility.miscJsonObj.CatMediaContainer;
 import org.jetbrains.annotations.Nullable;

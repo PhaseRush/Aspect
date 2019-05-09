@@ -1,5 +1,6 @@
 package main.commands.utilitycommands.metautil;
 
+import main.Aspect;
 import main.Command;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 

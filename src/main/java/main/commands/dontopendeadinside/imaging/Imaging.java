@@ -1,6 +1,7 @@
 package main.commands.dontopendeadinside.imaging;
 
 import com.google.gson.Gson;
+import main.Aspect;
 import main.Command;
 import main.utility.Visuals;
 import main.utility.imaging.ImagingGetBody;

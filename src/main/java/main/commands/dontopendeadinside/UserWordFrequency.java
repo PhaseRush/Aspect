@@ -3,6 +3,7 @@ package main.commands.dontopendeadinside;
 import com.inamik.text.tables.Cell;
 import com.inamik.text.tables.GridTable;
 import com.inamik.text.tables.grid.Border;
+import main.Aspect;
 import main.Command;
 import main.utility.LangUtil;
 import main.utility.TableUtil;

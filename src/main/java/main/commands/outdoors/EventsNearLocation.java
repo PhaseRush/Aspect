@@ -5,6 +5,7 @@ import com.ticketmaster.api.discovery.operation.SearchEventsOperation;
 import com.ticketmaster.api.discovery.response.PagedResponse;
 import com.ticketmaster.api.discovery.response.RateLimit;
 import com.ticketmaster.discovery.model.Events;
+import main.Aspect;
 import main.Command;
 import main.utility.Visuals;
 import main.utility.gist.GistUtils;

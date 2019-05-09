@@ -1,5 +1,6 @@
 package main.passive;
 
+import main.Aspect;
 import main.utility.PokemonUtil;
 import main.utility.Visuals;
 import main.utility.metautil.BotUtils;

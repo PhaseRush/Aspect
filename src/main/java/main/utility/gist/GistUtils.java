@@ -1,6 +1,7 @@
 package main.utility.gist;
 
 
+import main.Aspect;
 import main.utility.gist.gist_json.GistContainer;
 import main.utility.metautil.BotUtils;
 import org.eclipse.egit.github.core.Gist;

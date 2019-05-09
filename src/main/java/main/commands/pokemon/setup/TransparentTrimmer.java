@@ -1,5 +1,6 @@
 package main.commands.pokemon.setup;
 
+import main.Aspect;
 import main.Command;
 import main.utility.Visuals;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -8,6 +9,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public class TransparentTrimmer implements Command {
@@ -19,9 +21,9 @@ public class TransparentTrimmer implements Command {
         if (!event.getAuthor().getStringID().equals("264213620026638336")) return;
 
         File folder = new File(winFileDir);
-        for (final File imageFile : folder.listFiles()) {
-            Aspect.LOG.info(imageFile.getName()+"\n");
-            if (imageFile.getName().startsWith("Naganadel") || imageFile.getName().startsWith("Tynamo")) continue;
+        Arrays.stream(folder.listFiles()).forEach(imageFile -> {
+            Aspect.LOG.info(imageFile.getName() + "\n");
+            if (imageFile.getName().startsWith("Naganadel") || imageFile.getName().startsWith("Tynamo")) return;
             try {
                 BufferedImage img = ImageIO.read(imageFile);
                 BufferedImage cropped = Visuals.cropTransparent(img);
@@ -29,7 +31,7 @@ public class TransparentTrimmer implements Command {
             } catch (IOException e) {
                 Aspect.LOG.info("screwed up");
             }
-        }
+        });
     }
 
     @Override

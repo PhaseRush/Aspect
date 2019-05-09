@@ -1,5 +1,6 @@
 package main.commands.warframe;
 
+import main.Aspect;
 import main.Command;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;

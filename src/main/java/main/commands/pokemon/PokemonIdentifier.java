@@ -1,5 +1,6 @@
 package main.commands.pokemon;
 
+import main.Aspect;
 import main.Command;
 import main.utility.PokemonUtil;
 import main.utility.metautil.BotUtils;

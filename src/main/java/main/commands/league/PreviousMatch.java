@@ -7,6 +7,7 @@ import com.merakianalytics.orianna.types.core.match.MatchHistory;
 import com.merakianalytics.orianna.types.core.match.Participant;
 import com.merakianalytics.orianna.types.core.match.Timeline;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
+import main.Aspect;
 import main.Command;
 import main.utility.league.LeagueUtil;
 import main.utility.metautil.BotUtils;

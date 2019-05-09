@@ -1,6 +1,7 @@
 package main.commands.rotmg;
 
 import com.google.gson.Gson;
+import main.Aspect;
 import main.Command;
 import main.utility.Visuals;
 import main.utility.metautil.BotUtils;
