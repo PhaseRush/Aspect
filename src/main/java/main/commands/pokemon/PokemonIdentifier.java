@@ -24,7 +24,7 @@ public class PokemonIdentifier implements Command {
                     return event.getChannel().sendFile("Difference Image: ", diffImgFile);
                 } catch (FileNotFoundException e) {
                     BotUtils.send(event.getChannel(), "Error sending difference image");
-                    System.out.println("Could not find difference image");
+                    Aspect.LOG.info("Could not find difference image");
                 }
                 return null;
             }).get();

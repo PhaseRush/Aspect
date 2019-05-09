@@ -39,7 +39,7 @@ public class PokemonIdentifier {
                 targetUrl = embed.getImage().getUrl(); //event.getMessage().getFormattedContent();
             } else return;
 
-            System.out.println("Starting pokemon identification at " + LocalDateTime.now().toString());
+            Aspect.LOG.info("Starting pokemon identification at " + LocalDateTime.now().toString());
 
             StringBuilder logBuilder = new StringBuilder("Attempting match on: " + targetUrl + "\n");
             BufferedImage target = Visuals.cropTransparent(Visuals.urlToBufferedImageWithAgentHeader(targetUrl)); //important
@@ -52,7 +52,7 @@ public class PokemonIdentifier {
             for (String s : PokemonUtil.pokemonArray) {
                 try {
                     if (counter%100 == 0)
-                        System.out.println(counter + " Path:" + PokemonUtil.baseDir + s + ".png");
+                        Aspect.LOG.info(counter + " Path:" + PokemonUtil.baseDir + s + ".png");
                     testImg = ImageIO.read(new File(PokemonUtil.baseDir + s + ".png")); //change dir here @todo
                     double sim = PokemonUtil.calcSim(target, testImg);
                     logBuilder.append("Imaging #" + counter + " : " + s + " score: " + sim + "\n");
@@ -60,11 +60,11 @@ public class PokemonIdentifier {
                     similarityMap.put(s, sim);
                     if (sim < threshold) { //if this is already ~perfect~ close enough match, dont do any more
                         shouldSendDiff = false;
-                        System.out.println(counter + " Path:" + PokemonUtil.baseDir + s + ".png"); // print out for debug
+                        Aspect.LOG.info(counter + " Path:" + PokemonUtil.baseDir + s + ".png"); // print out for debug
                         break;
                     }
                 } catch (IOException e) {
-                    //System.out.println(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
+                    //Aspect.LOG.info(s + " was not found"); //just one of the files not in the 775 / 807, can fine tune
                 }
                 counter++;
                 Thread.yield(); //@todo newly added yield in attempt to spread out cpu usage. Keep eye on this. -- WORKS FINE
@@ -93,14 +93,14 @@ public class PokemonIdentifier {
                 try {
                     ImageIO.write(diffImg, "png", diffImgFile);
                 } catch (IOException e) {
-                    System.out.println("IOException writing difference file");
+                    Aspect.LOG.info("IOException writing difference file");
                 }
                 PokemonUtil.shouldSendDiff = true;
 //                RequestBuffer.request(() -> {
 //                    try {
 //                        return event.getChannel().sendFile("Difference Image: ", diffImgFile);
 //                    } catch (FileNotFoundException e) {
-//                        System.out.println("Could not find difference image");
+//                        Aspect.LOG.info("Could not find difference image");
 //                    }
 //                    return null;
 //                }).get();

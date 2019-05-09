@@ -81,7 +81,7 @@ public class LeaguePlayerEmbed implements Command {
         IMessage iMessage = event.getChannel().sendMessage(eb.build());
         iMessage.addReaction(ReactionEmoji.of("blobfish", 362999190453747712L)); //why....
 
-        System.out.println("HSB Converted: " + (validProfileIcon ? Visuals.analyzeImageColor(summoner.getProfileIcon().getImage().get()) : "No valid profile icon"));
+        Aspect.LOG.info("HSB Converted: " + (validProfileIcon ? Visuals.analyzeImageColor(summoner.getProfileIcon().getImage().get()) : "No valid profile icon"));
     }
 
     private String getOpggUrl(String ign) { //todo hard coded NA value

@@ -203,7 +203,7 @@ public class MasterManager {
                     BotUtils.unregListenerAfter10sec(embedMessage, reactionListener, event);
 
                 } catch (IOException e) {
-                    System.out.println("Audio - MasterManager.loadAndPlay.noMatches - IOException thrown");
+                    Aspect.LOG.info("Audio - MasterManager.loadAndPlay.noMatches - IOException thrown");
                     e.printStackTrace();
                 }
 

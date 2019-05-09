@@ -25,10 +25,10 @@ public class GistUtils {
 
         try {
             gist = new GistService(client).createGist(gist);
-            System.out.println("Gist url : " + gist.getUrl());
+            Aspect.LOG.info("Gist url : " + gist.getUrl());
             return gist.getUrl();
         } catch (IOException e) {
-            System.out.println("make gist error");
+            Aspect.LOG.info("make gist error");
             e.printStackTrace();
         }
         return null;

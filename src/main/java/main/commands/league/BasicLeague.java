@@ -11,7 +11,7 @@ import java.util.List;
 public class BasicLeague implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        System.out.println(args.get(0));
+        Aspect.LOG.info(args.get(0));
         Summoner summoner = Orianna.summonerNamed(args.get(0)).get();
 
         BotUtils.send(event.getChannel(), summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server");

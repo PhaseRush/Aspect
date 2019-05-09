@@ -261,7 +261,7 @@ public class BotUtils {
                         e.printStackTrace();
                         return null;
                     } catch (MissingPermissionsException e) {
-                        System.out.println("Missing Permissions: " + channel.getName() + " Msg: " + message);
+                        Aspect.LOG.info("Missing Permissions: " + channel.getName() + " Msg: " + message);
                         return null;
                     }
                 }).get();
@@ -277,7 +277,7 @@ public class BotUtils {
                         e.printStackTrace();
                         return null;
                     } catch (MissingPermissionsException e) {
-                        System.out.println("Missing Permissions: " + channel.getName() + " EmbedBuilder: " + embedBuilder.toString());
+                        Aspect.LOG.info("Missing Permissions: " + channel.getName() + " EmbedBuilder: " + embedBuilder.toString());
                         return null;
                     }
                 }).get();
@@ -293,7 +293,7 @@ public class BotUtils {
                         e.printStackTrace();
                         return null;
                     } catch (MissingPermissionsException e) {
-                        System.out.println("Missing Permissions: " + channel.getName() + " EmbedObject: " + embedObject.toString());
+                        Aspect.LOG.info("Missing Permissions: " + channel.getName() + " EmbedObject: " + embedObject.toString());
                         return null;
                     }
                 }).get();
@@ -325,7 +325,7 @@ public class BotUtils {
             System.err.println("Message could not be sent with error: ");
             e.printStackTrace();
         } catch (MissingPermissionsException e) {
-            System.out.println("Missing Permissions for message list: " + channel.getName());
+            Aspect.LOG.info("Missing Permissions for message list: " + channel.getName());
         }
     }
 
@@ -370,7 +370,7 @@ public class BotUtils {
             try {
                 message.addReaction(emoji);
             } catch (Exception e) {
-                System.out.println("error in botutils#requestGet");
+                Aspect.LOG.info("error in botutils#requestGet");
             }
         }).get();
     }

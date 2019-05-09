@@ -273,7 +273,7 @@ public class CommandManager {
     public void onReadyEvent(ReadyEvent event) {
         event.getClient().changePresence(StatusType.ONLINE, ActivityType.LISTENING, " your commands");
         readyTime = System.currentTimeMillis();
-        System.out.println("Aspect is online and ready at " + LocalTime.now().toString());
+        Aspect.LOG.info("Aspect is online and ready at " + LocalTime.now().toString());
     }
 
     @EventSubscriber
@@ -342,7 +342,7 @@ public class CommandManager {
 //                CommandStats cmdStats = MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getCommandStats();
 //                cmdStats.setCallCount(cmdStats.getCallCount() + 1);
 //            } catch (Exception e) {
-//                System.out.println("CommandManager - error updating CommandStats json");
+//                Aspect.LOG.info("CommandManager - error updating CommandStats json");
 //            }
         };
 
@@ -380,7 +380,7 @@ public class CommandManager {
                 .append("cmd: " + commandStr).append("\t")
                 .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
 
-        System.out.println(commandPrint);
+        Aspect.LOG.info(commandPrint);
     }
 
     @Override

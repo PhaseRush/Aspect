@@ -154,10 +154,10 @@ public class WfMarketListing implements Command {
                 try {
                     Thread.sleep(secondsTimeout * 1000);
                 } catch (InterruptedException e1) {
-                    System.out.println("guess this is fucked");
+                    Aspect.LOG.info("guess this is fucked");
                 } finally { //please just execute this no matter what
                     e.getClient().getDispatcher().unregisterListener(reactionListener);
-                    System.out.println("Listener Deleted");
+                    Aspect.LOG.info("Listener Deleted");
                 }
             }
         };

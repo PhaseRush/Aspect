@@ -835,7 +835,7 @@ public class BulbapediaScraper implements Command {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
-                System.out.println("bulba scraper sleep error");
+                Aspect.LOG.info("bulba scraper sleep error");
             }
         }
 

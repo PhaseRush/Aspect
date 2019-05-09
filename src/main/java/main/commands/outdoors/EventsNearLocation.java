@@ -60,7 +60,7 @@ public class EventsNearLocation implements Command {
                 .forEach((e) -> eb.appendField(e.getName(), e.getDescription(), false));
 
         String debug = BotUtils.gson.toJson(page);
-        System.out.println(GistUtils.makeGistGetHtmlUrl("Events Testing", "PagedResponse<Event>", debug));
+        Aspect.LOG.info(GistUtils.makeGistGetHtmlUrl("Events Testing", "PagedResponse<Event>", debug));
 
         BotUtils.send(event.getChannel(), eb);
     }

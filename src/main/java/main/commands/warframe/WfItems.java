@@ -16,7 +16,7 @@ public class WfItems implements Command {
         WarframeItemPayloadContainer obj = BotUtils.gson.fromJson(json, WarframeItemPayloadContainer.class);
 
         for (WarframeItem i : obj.getPayload().getItems().getEn()) {
-            System.out.println(i.getItem_name());
+            Aspect.LOG.info(i.getItem_name());
         }
     }
 

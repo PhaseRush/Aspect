@@ -41,13 +41,13 @@ public class WfPassive {
                 Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
 
                 //int minute = LocalDateTime.now().getMinute();
-                //System.out.println("Updated Cetus Status " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute));
+                //Aspect.LOG.info("Updated Cetus Status " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute));
             };
 
             cetusStatusUpdater = scheduler.scheduleAtFixedRate(cetusTimeRunner, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("warframe cetus passive time error");
+            Aspect.LOG.info("warframe cetus passive time error");
         }
     }
     public static boolean killCetusUpdater() {

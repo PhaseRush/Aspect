@@ -108,7 +108,7 @@ public class Imaging implements Command {
                 //reach this point means status was not an endcase status (not one of "completed" or "skipped")
                 numFailedGets++;
                 if (numFailedGets % 5 == 0) {
-                    System.out.println("Img looped: " + numFailedGets);
+                    Aspect.LOG.info("Img looped: " + numFailedGets);
                 }
                 returnHandle.cancel(true);
 
@@ -157,7 +157,7 @@ public class Imaging implements Command {
 
         IMessage embedMessage = event.getChannel().sendMessage(eb.build());
         //BotUtils.reactAllEmojis(embedMessage, emojis); //makes stuff freak out
-        System.out.println("img analysis failed : " + numFailedGets);
+        Aspect.LOG.info("img analysis failed : " + numFailedGets);
     }
 
     public static String postWithJson(String url, String json) throws IOException { //could also throw NullPE

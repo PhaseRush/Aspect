@@ -34,7 +34,7 @@ public class WfItemInfo implements Command {
         //if its a perfect match, just use the first String - WHICH IS IN INDEX 1
         if (intendedItemNames.get(0).equals("Index 1 is a perfect match")) {
             finishCommand(intendedItemNames.get(1)); //changed this
-            System.out.println("perfect match trigger");
+            Aspect.LOG.info("perfect match trigger");
         } else { //ask user first before getting url name
             handleUserReactionWait(intendedItemNames);
         }
@@ -140,10 +140,10 @@ public class WfItemInfo implements Command {
                 try {
                     Thread.sleep(secondsTimeout * 1000);
                 } catch (InterruptedException e1) {
-                    System.out.println("guess this is fucked");
+                    Aspect.LOG.info("guess this is fucked");
                 } finally { //please just execute this no matter what
                     e.getClient().getDispatcher().unregisterListener(reactionListener);
-                    System.out.println("Listener Deleted");
+                    Aspect.LOG.info("Listener Deleted");
                 }
             }
         };

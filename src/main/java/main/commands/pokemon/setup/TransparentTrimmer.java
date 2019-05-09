@@ -20,14 +20,14 @@ public class TransparentTrimmer implements Command {
 
         File folder = new File(winFileDir);
         for (final File imageFile : folder.listFiles()) {
-            System.out.println(imageFile.getName()+"\n");
+            Aspect.LOG.info(imageFile.getName()+"\n");
             if (imageFile.getName().startsWith("Naganadel") || imageFile.getName().startsWith("Tynamo")) continue;
             try {
                 BufferedImage img = ImageIO.read(imageFile);
                 BufferedImage cropped = Visuals.cropTransparent(img);
                 ImageIO.write(cropped, "png", imageFile);
             } catch (IOException e) {
-                System.out.println("screwed up");
+                Aspect.LOG.info("screwed up");
             }
         }
     }

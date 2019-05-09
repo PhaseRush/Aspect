@@ -43,7 +43,7 @@ public class RotmgGuildInfo  implements Command {
                 }
         }
         channel.sendMessage(eb.withFooterText("This operation took me " + String.valueOf((System.currentTimeMillis() - startTime)) + "ms to compute :3").build());
-        System.out.println("triggered guildinfo highlight");
+        Aspect.LOG.info("triggered guildinfo highlight");
     }
 
     @Override

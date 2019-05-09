@@ -14,7 +14,7 @@ public class LeagueIgnCheck implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String url = "https://lolnames.gg/en/na/" + args.get(0).replaceAll("[_\\s]", "%20") + "/";
-        System.out.println(url);
+        Aspect.LOG.info(url);
         String html = BotUtils.getStringFromUrl(url);
         Optional<Element> element = Jsoup.parse(html).getAllElements().stream()
                 .filter(e -> e.hasClass("text-center"))

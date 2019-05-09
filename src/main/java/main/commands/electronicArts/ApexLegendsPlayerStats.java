@@ -21,14 +21,14 @@ public class ApexLegendsPlayerStats implements Command {
         String json1 = BotUtils.getStringFromUrl("https://public-api.tracker.gg/apex/v1/standard/profile/"+getTrackerPlatform(args)+"/"+ign,
                 "TRN-Api-Key",
                 BotUtils.APEX_LEGENDS_API_KEY);
-        //System.out.println(json1);
+        //Aspect.LOG.info(json1);
 
         ALPlayerInfo.ALPlayerData player;
         try {
             player = BotUtils.gson.fromJson(json1, ALPlayerInfo.class).getData();
         } catch (IllegalStateException | JsonSyntaxException e) {
             e.printStackTrace();
-            System.out.println(json1);
+            Aspect.LOG.info(json1);
             return;
         }
 
@@ -40,7 +40,7 @@ public class ApexLegendsPlayerStats implements Command {
                 .withDesc(generateDesc(player))
                 .withFooterText("footer placeholder");
 
-        System.out.println(generateDesc(player));
+        Aspect.LOG.info(generateDesc(player));
 
 
 
@@ -90,11 +90,11 @@ public class ApexLegendsPlayerStats implements Command {
             if (("```js\n                                               \n" +TableUtil.render(table).toString() + "```").length() >= 1500) break;
         }
 
-        System.out.println("length before border: " + ("```js\n                                     \n" +TableUtil.render(table).toString() + "```").length());
+        Aspect.LOG.info("length before border: " + ("```js\n                                     \n" +TableUtil.render(table).toString() + "```").length());
 
         //table = Border.DOUBLE_LINE.apply(table); //
 
-        System.out.println("length after border: " + ("```js\n                                     \n" +TableUtil.render(table).toString() + "```").length());
+        Aspect.LOG.info("length after border: " + ("```js\n                                     \n" +TableUtil.render(table).toString() + "```").length());
 
         return "```js\n                                            " +TableUtil.render(table).toString() + "```"; // surround in js code block (number colouring)
     }

@@ -33,7 +33,7 @@ public class PreviousMatch implements Command {
         for (Frame f : matchFrames) {
             Set<Participant> participants = f.getParticipantFrames().keySet();
             for (Participant p : participants) {
-                System.out.println(p.getItems().get(0).getName());
+                Aspect.LOG.info(p.getItems().get(0).getName());
             }
         }
 

@@ -72,7 +72,7 @@ public class UserWordFrequency implements Command {
                     numChars += msg.getFormattedContent().length();
                     numMsgs++;
 
-                    // System.out.println(numMsgs + " : " + msg.getFormattedContent() + " : " + msg.getTimestamp());
+                    // Aspect.LOG.info(numMsgs + " : " + msg.getFormattedContent() + " : " + msg.getTimestamp());
                     if (msg.getEditedTimestamp().isPresent()) numEdits++;
                     if (msg == null || msg.getFormattedContent() == null) continue; // if only picture or smth who knows
                     for (String word : msg.getFormattedContent().trim().toLowerCase().replaceAll("[^A-Za-z0-9\\s]", "").split("\\s")) {
@@ -149,7 +149,7 @@ public class UserWordFrequency implements Command {
         freqMap = BotUtils.sortMap(freqMap, false, true);
         typoMap = BotUtils.sortMap(typoMap, false, true);
 
-        System.out.println("typomap size: " + typoMap.size());
+        Aspect.LOG.info("typomap size: " + typoMap.size());
 
         // chars per word table
         sb.append("```js\nCharacters per word distribution                  \n");
@@ -183,7 +183,7 @@ public class UserWordFrequency implements Command {
         try {
             BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + BotUtils.makeHasteGetUrl(hasteContent));
         } catch (IOException e) {
-            System.out.println("Error: User word frequency, haste creation");
+            Aspect.LOG.info("Error: User word frequency, haste creation");
             e.printStackTrace();
         }
     }

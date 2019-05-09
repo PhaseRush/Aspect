@@ -33,7 +33,7 @@ public class WolframUtil {
         List<EmbedField> embedFields;
         try {
             // For educational purposes, print out the URL we are about to send:
-            System.out.println("Query URL:\n" + engine.toURL(query));
+            Aspect.LOG.info("Query URL:\n" + engine.toURL(query));
 
             // This sends the URL to the Wolfram|Alpha server, gets the XML result
             // and parses it into an object hierarchy held by the WAQueryResult object.
@@ -41,11 +41,11 @@ public class WolframUtil {
             queryResult.acquireImages();
 
             if (queryResult.isError()) {
-                System.out.println("Query error");
-                System.out.println("  error code: " + queryResult.getErrorCode());
-                System.out.println("  error message: " + queryResult.getErrorMessage());
+                Aspect.LOG.info("Query error");
+                Aspect.LOG.info("  error code: " + queryResult.getErrorCode());
+                Aspect.LOG.info("  error message: " + queryResult.getErrorMessage());
             } else if (!queryResult.isSuccess()) {
-                System.out.println("Query was not understood; no results available.");
+                Aspect.LOG.info("Query was not understood; no results available.");
             } else {
                 // Have result, check if advanced
                 embedFields = addFields(queryResult, formatVerticalBar, advanced);

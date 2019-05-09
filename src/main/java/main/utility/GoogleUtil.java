@@ -30,10 +30,10 @@ public class GoogleUtil {
         try {
             HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         } catch (GeneralSecurityException e) {
-            System.out.println("GoogleUtil. Static initializer. GeneralSecurityException thrown");
+            Aspect.LOG.info("GoogleUtil. Static initializer. GeneralSecurityException thrown");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("GoogleUtil. Static initializer. IOException thrown");
+            Aspect.LOG.info("GoogleUtil. Static initializer. IOException thrown");
             e.printStackTrace();
         }
 
@@ -47,12 +47,12 @@ public class GoogleUtil {
 
     public static void prettyPrintYoutube(Collection<SearchResult> searchResults, String query) {
 
-        System.out.println("\n=============================================================");
-        System.out.println("   First " + "x number of" + " videos for search on \"" + query + "\".");
-        System.out.println("=============================================================\n");
+        Aspect.LOG.info("\n=============================================================");
+        Aspect.LOG.info("   First " + "x number of" + " videos for search on \"" + query + "\".");
+        Aspect.LOG.info("=============================================================\n");
 
         if (searchResults.size() == 0) {
-            System.out.println(" There aren't any results for your query.");
+            Aspect.LOG.info(" There aren't any results for your query.");
         }
 
         //while (iteratorSearchResults.hasNext()) {
@@ -64,10 +64,10 @@ public class GoogleUtil {
             if (rId.getKind().equals("youtube#video")) { //probably don't need if set type to video
                 Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
 
-                System.out.println(" Video Id" + rId.getVideoId());
-                System.out.println(" Title: " + singleVideo.getSnippet().getTitle());
-                System.out.println(" Thumbnail: " + thumbnail.getUrl());
-                System.out.println("\n-------------------------------------------------------------\n");
+                Aspect.LOG.info(" Video Id" + rId.getVideoId());
+                Aspect.LOG.info(" Title: " + singleVideo.getSnippet().getTitle());
+                Aspect.LOG.info(" Thumbnail: " + thumbnail.getUrl());
+                Aspect.LOG.info("\n-------------------------------------------------------------\n");
             }
         }
     }

@@ -33,7 +33,7 @@ public class Visuals {
                     .deriveFont(20f);
             ge.registerFont(mont);
 
-            System.out.println("Mont size: " + mont.getSize());
+            Aspect.LOG.info("Mont size: " + mont.getSize());
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }
@@ -88,10 +88,10 @@ public class Visuals {
                 out.write(buf, 0, n);
             return out.toByteArray();
         } catch (MalformedURLException e) {
-            System.out.println("bad url - visuals.urlToByteArray");
+            Aspect.LOG.info("bad url - visuals.urlToByteArray");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("io exception - visuals.urlToByteArray");
+            Aspect.LOG.info("io exception - visuals.urlToByteArray");
             e.printStackTrace();
         }
         return null;
@@ -104,7 +104,7 @@ public class Visuals {
             InputStream inputStream = connection.getInputStream();
             return ImageIO.read(inputStream);
         } catch (IOException e) {
-            System.out.println("url to buff img w/agent header - visuals");
+            Aspect.LOG.info("url to buff img w/agent header - visuals");
             e.printStackTrace();
         }
 

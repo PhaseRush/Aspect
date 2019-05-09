@@ -72,9 +72,9 @@ public class TrackScheduler {
                 if(endReason.mayStartNext) {
                     //check looping condition
                     if (looping) { // fucking kms reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                        // System.out.println("Looping, count = " + loopCount);
+                        // Aspect.LOG.info("Looping, count = " + loopCount);
                         if (loopCount == maxLoop) { //end loop, behave as if else below (WORKING)
-                            //System.out.println("called nextTrack (is looping, but reached max loop)");
+                            //Aspect.LOG.info("called nextTrack (is looping, but reached max loop)");
                             loopCount = 0;
                             maxLoop = -1;
                             looping = false;
@@ -84,11 +84,11 @@ public class TrackScheduler {
                             currentSongEmbed.delete();
                             queue.add(0, previousTrack.makeClone());
                             nextTrack();
-                            //System.out.println("called player.startTrack is looping");
+                            //Aspect.LOG.info("called player.startTrack is looping");
                             loopCount++;
                         }
                     } else { //not looping (WORKING)
-                        //System.out.println("called nextTrack (not looping)");
+                        //Aspect.LOG.info("called nextTrack (not looping)");
                         loopCount = 0;
                         maxLoop = -1;
                         currentSongEmbed.delete();
@@ -190,7 +190,7 @@ public class TrackScheduler {
         EmbedBuilder eb = generateCurrentTrackEmbed(nextTrack);
         try { currentSongEmbed = lastEmbedChannel.sendMessage(eb.build());
         } catch (RateLimitException e) { //person skipping too much, triggered rate limitation
-            System.out.println("handlefloatingplayer getting ratelimited");
+            Aspect.LOG.info("handlefloatingplayer getting ratelimited");
             //e.printStackTrace();
         }
 
@@ -359,7 +359,7 @@ public class TrackScheduler {
     }
 
     private StringBuilder buildQueueStrB(MessageReceivedEvent event, List<AudioTrack> localQueue, String queueName, boolean mobileFormat) {
-        // System.out.println("inside build: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()));
+        // Aspect.LOG.info("inside build: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()));
         if (localQueue.isEmpty()) return new StringBuilder(queueName + " for " + event.getGuild().getName() + " is empty :(");
         // generate message head
         StringBuilder sb = new StringBuilder(queueName + " for " + event.getGuild().getName() + ": "

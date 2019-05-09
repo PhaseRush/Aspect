@@ -127,7 +127,7 @@ public class AnnotationListener {
 
         int localMinute = LocalTime.now().getMinute();
 
-        System.out.println("Kitty Kat is ready to go at:  " + "\u001B[37;1m" +LocalDateTime.now().getHour() + " : " + ((numDigits(localMinute) == 1) ? "0" + localMinute : localMinute) + "\u001B[0m");
+        Aspect.LOG.info("Kitty Kat is ready to go at:  " + "\u001B[37;1m" +LocalDateTime.now().getHour() + " : " + ((numDigits(localMinute) == 1) ? "0" + localMinute : localMinute) + "\u001B[0m");
     }
 
     //Literally copied from StackOverflow
@@ -227,7 +227,7 @@ public class AnnotationListener {
             if (elevatedUserStringIDs.contains(author.getStringID())) {
                 if(message.contains(",")) {
                     new MessageDeleter(message.substring(10), author, channel).runDelete(guild);
-                    System.out.println(author.getName() + "triggered MessageDelete at: " + LocalTime.now().toString());
+                    Aspect.LOG.info(author.getName() + "triggered MessageDelete at: " + LocalTime.now().toString());
                 } else {
                     channel.sendMessage("<@" + author.getStringID() + ">, you forgot to use a comma");
                     return; //do not execute rest
@@ -305,7 +305,7 @@ public class AnnotationListener {
         try {
             TimeUnit.MILLISECONDS.sleep(250);
         } catch (InterruptedException ie) {
-            System.out.println("Thread Sleep Problem. main.AnnotationListener.onMessageReceived");
+            Aspect.LOG.info("Thread Sleep Problem. main.AnnotationListener.onMessageReceived");
             ie.printStackTrace();
         }
     }
@@ -509,7 +509,7 @@ public class AnnotationListener {
 
         if (iChannel.getStringID().equals("293883245244973057")) { //graveyard iChannel
             mooshroomHandleGraveyard(iChannel, iMessage);
-            System.out.println("triggered graveyard");
+            Aspect.LOG.info("triggered graveyard");
             return; //dont bother executing anything else if it was the graveyard iChannel
         }
 
@@ -539,7 +539,7 @@ public class AnnotationListener {
                 br = new BufferedReader(new FileReader(katInvFilePath));
                 katInvImgur = br.readLine(); //should only take first and only line in txt file.
             } catch (IOException e) {
-                System.out.println("KatInv Url Read Error 1");
+                Aspect.LOG.info("KatInv Url Read Error 1");
             } finally {
                 iChannel.sendMessage(katInvImgur); //send this no matter what
             }
@@ -558,11 +558,11 @@ public class AnnotationListener {
                 iChannel.sendMessage("<@264213620026638336>, <@" + author.getStringID() + "> tried to change your inventory! :3");
             }
             readerWriter.writeToFile(katInvFilePath, katInvImgur, false, false);
-            System.out.println("Inventory Updated");
+            Aspect.LOG.info("Inventory Updated");
 
         } else if ("!updateinv".equals(message)) {
             iChannel.sendMessage("<@264213620026638336> UPDATE YOUR IMGUR YOU BAKA ;-;  !!!");
-            System.out.println("Inventory successfully updated by Katarina");
+            Aspect.LOG.info("Inventory successfully updated by Katarina");
         } else if ("!judge".equals(message)) {
             iChannel.sendMessage("get good.");
 
@@ -619,7 +619,7 @@ public class AnnotationListener {
                 //log event in txt file
                 readerWriter.writeToFile("C:\\Users\\Positron\\IdeaProjects\\KittyKatDiscordBot\\txtfiles\\Mooshroom\\nukehistory.txt", author.getName() + " EventID: " + author.getStringID() + " Nuked the " + iChannel.getName() + " iChannel in the " + iChannel.getGuild().getName() + " server on: " + new Date().toString(), true, true);
 
-                System.out.println("Logged Nuke");
+                Aspect.LOG.info("Logged Nuke");
                 return;
             } else { //not me or bongoes
                 iChannel.sendMessage("Only elevated users have access.");
@@ -635,7 +635,7 @@ public class AnnotationListener {
 
             try {
                 String withoutCommandPrefix = message.substring(9); //might need to fix here
-                System.out.println("withoutCommandPrefix: " + withoutCommandPrefix);
+                Aspect.LOG.info("withoutCommandPrefix: " + withoutCommandPrefix);
                 String[] parsedInput = withoutCommandPrefix.split("\\s*,\\s*");
                 playerName = parsedInput[0];
                 playerIGN = parsedInput[1];
@@ -689,7 +689,7 @@ public class AnnotationListener {
             String url = "http://www.tiffit.net/RealmInfo/api/user?u="+ cutInput + "&f=";
             String json = getJson(url);
             handleRealmEyeTotalCharScore(json, iChannel, author, cutInput, url, startTime);
-            System.out.println(author.getName() + " triggered total score on " + cutInput + " at " + LocalDateTime.now().format(timeFormatter));
+            Aspect.LOG.info(author.getName() + " triggered total score on " + cutInput + " at " + LocalDateTime.now().format(timeFormatter));
 
         } else if (message.toLowerCase().startsWith("!redesc")) {
             String cutInput = message.substring(8);
@@ -790,7 +790,7 @@ public class AnnotationListener {
                 }
         }
         channel.sendMessage(eb.withFooterText("This operation took me " + String.valueOf((System.currentTimeMillis() - startTime)) + "ms to compute :3").build());
-        System.out.println("triggered guildinfo highlight");
+        Aspect.LOG.info("triggered guildinfo highlight");
     }
 
     private void handleRealmEyeGuildMemberMatch(IChannel channel, String json, IGuild mooshroomDiscord) {
@@ -814,7 +814,7 @@ public class AnnotationListener {
 
         sb.append("```");
         channel.sendMessage(sb.toString());
-        System.out.println("Triggered member matching");
+        Aspect.LOG.info("Triggered member matching");
     }
 
     private void handleRealmEyeTotalCharScore(String json, IChannel channel, IUser author, String cutInput, String url, double startTime) {
@@ -900,7 +900,7 @@ public class AnnotationListener {
                     //log to file
                     readerWriter.writeToFile("C:\\Users\\Positron\\IdeaProjects\\KittyKatDiscordBot\\txtfiles\\Mooshroom\\nukehistory.txt", author.getName() + " EventID: " + author.getStringID() + " unNuked the " + channel.getName() + " channel in the " + channel.getGuild().getName() + " server on: " + new Date().toString(), true, true);
 
-                    System.out.println("triggered unnuke logging");
+                    Aspect.LOG.info("triggered unnuke logging");
                     return;
                 }
             }
@@ -948,7 +948,7 @@ public class AnnotationListener {
             Thread.sleep(1000*60*35);
             displayIMessage.delete();
         } catch (Exception e) { //also catches null pointer
-            System.out.println("Error in HandleAudioWithMessage");
+            Aspect.LOG.info("Error in HandleAudioWithMessage");
         }
     }
 

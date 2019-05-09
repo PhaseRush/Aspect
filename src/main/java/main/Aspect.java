@@ -40,8 +40,8 @@ public class Aspect {
 
     public static void main(String[] args){
         Locale.setDefault(Locale.US);
-        System.out.println("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));
-        System.out.println("Millis until 18:00 CDT " + BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"));
+        Aspect.LOG.info("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));
+        Aspect.LOG.info("Millis until 18:00 CDT " + BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"));
 
         // ------------------------------------------------------------ //
 

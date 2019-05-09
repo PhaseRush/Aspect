@@ -65,7 +65,7 @@ public class ScheduledSubreddits {
             };
 
             scheduledFuture = scheduler.scheduleAtFixedRate(runner, 3, periodSeconds, TimeUnit.SECONDS);
-            System.out.println("Scheduled : r/" + entry.getKey() + " in " + map.entrySet().size() + " channels");
+            Aspect.LOG.info("Scheduled : r/" + entry.getKey() + " in " + map.entrySet().size() + " channels");
         }
     }
 

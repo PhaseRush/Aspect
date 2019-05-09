@@ -40,7 +40,7 @@ public class ScheduledActions {
         kaitQuoteChannel = Aspect.client.getChannelByID(kaitQuoteChannelId);
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
-        System.out.println("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
+        Aspect.LOG.info("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
     }
 
     @EventSubscriber
@@ -68,7 +68,7 @@ public class ScheduledActions {
                 24*60*60*1000,
                 TimeUnit.MILLISECONDS);
 
-        System.out.println("Streak Scheduler has been init to " + initDelay2 + " ms");
+        Aspect.LOG.info("Streak Scheduler has been init to " + initDelay2 + " ms");
     }
 
     @EventSubscriber

@@ -12,7 +12,7 @@ public class WfModInfo implements Command {
         String modName = args.get(0);
         String json = BotUtils.getStringFromUrl("https://api.warframestats.us/mods/search/" + modName);
 
-        System.out.println(json);
+        Aspect.LOG.info(json);
 
     }
 

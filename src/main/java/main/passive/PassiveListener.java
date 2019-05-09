@@ -232,7 +232,7 @@ public class PassiveListener {
 //    @EventSubscriber
 //    public void testing(MessageReceivedEvent event) {
 //        if (event.getChannel().getStringID().equals("481734359343300609")) {
-//            System.out.println("hi");
+//            Aspect.LOG.info("hi");
 //        }
 //    }
 }

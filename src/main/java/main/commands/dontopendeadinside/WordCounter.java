@@ -154,7 +154,7 @@ WordCounter implements Command {
             BotUtils.send(channel, s3);
             BotUtils.send(channel, "okay fine gimme sec.");
 
-            System.out.println("Kait's whack line wooooooo");
+            Aspect.LOG.info("Kait's whack line wooooooo");
         }
     }
 

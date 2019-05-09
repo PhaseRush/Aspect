@@ -860,11 +860,11 @@ public class PokemonUtil {
         double targetWidth = target.getWidth();
         double testHeight = answerImg.getHeight();
         double testWidth = answerImg.getWidth();
-        System.out.println("Target W x H: " + targetWidth + " x " + targetHeight);
-        System.out.println("Ans before W x H: " + testWidth + " x " + testHeight);
+        Aspect.LOG.info("Target W x H: " + targetWidth + " x " + targetHeight);
+        Aspect.LOG.info("Ans before W x H: " + testWidth + " x " + testHeight);
         BufferedImage scaledAnswer = answerImg; //changed this
         scaledAnswer = getScaledWithNearestNeighbour(answerImg, targetHeight, targetWidth, testHeight, testWidth, scaledAnswer);
-        System.out.println("Ans after W x H: " + scaledAnswer.getWidth() + " x " + scaledAnswer.getHeight());
+        Aspect.LOG.info("Ans after W x H: " + scaledAnswer.getWidth() + " x " + scaledAnswer.getHeight());
 
 
         for (int x = 0; x < target.getWidth(); x++) {

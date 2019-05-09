@@ -27,7 +27,7 @@ public class SongQueue implements Command {
         previousQMsg = BotUtils.sendGet(event.getChannel(), sb.toString());
 
 //        try {
-//            System.out.println("sleeping in queue");
+//            Aspect.LOG.info("sleeping in queue");
 //            Thread.sleep(2000);
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();

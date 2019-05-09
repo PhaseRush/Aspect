@@ -17,7 +17,7 @@ public class Testing implements Command {
         try (BufferedWriter output = new BufferedWriter(new FileWriter(file))) {
             output.write("test text");
         } catch (IOException e) {
-            System.out.println("rip file writing");
+            Aspect.LOG.info("rip file writing");
         }
     }
 

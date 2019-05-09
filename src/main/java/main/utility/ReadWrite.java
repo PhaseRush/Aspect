@@ -16,14 +16,14 @@ public class ReadWrite {
             bw.write(msgToWrite);
 
         } catch (IOException e) {
-            System.out.println("IOE1 in general writeToFile method");
+            Aspect.LOG.info("IOE1 in general writeToFile method");
         } finally {
             try {
                 if (bw != null) {
                     bw.close();
                 }
             } catch (IOException ex) {
-                System.out.println("IOE2 in general writeToFile method");
+                Aspect.LOG.info("IOE2 in general writeToFile method");
             }
         }
 
@@ -41,7 +41,7 @@ public class ReadWrite {
                 sb.append(sCurrentLine);
             }
         } catch (IOException e) {
-            System.out.println("ReadWrite - IOE 1 wiejfi");
+            Aspect.LOG.info("ReadWrite - IOE 1 wiejfi");
         } finally {
             try {
 
@@ -49,7 +49,7 @@ public class ReadWrite {
                     br.close();
 
             } catch (IOException ex) {
-                System.out.println("ReadWrite - IOE 2 waiejf");
+                Aspect.LOG.info("ReadWrite - IOE 2 waiejf");
 
             }
         }
@@ -66,7 +66,7 @@ public class ReadWrite {
                 toReturn.add(sCurrentLine);
             }
         } catch (IOException e) {
-            System.out.println("IOE 1 wiejfi");
+            Aspect.LOG.info("IOE 1 wiejfi");
         } finally {
             try {
 
@@ -74,7 +74,7 @@ public class ReadWrite {
                     br.close();
 
             } catch (IOException ex) {
-                System.out.println("IOE 2 waiejf");
+                Aspect.LOG.info("IOE 2 waiejf");
 
             }
         }
