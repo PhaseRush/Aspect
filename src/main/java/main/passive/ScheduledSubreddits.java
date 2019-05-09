@@ -1,6 +1,6 @@
 package main.passive;
 
-import main.Main;
+import main.Aspect;
 import main.utility.RedditUtil;
 import main.utility.metautil.BotUtils;
 import main.utility.structures.Pair;
@@ -59,7 +59,7 @@ public class ScheduledSubreddits {
                 EmbedBuilder eb = embedInit(defaultPaginator, currIdx);
 
                 Arrays.stream(entry.getValue().subscribedChannels)
-                        .mapToObj(longId -> Main.client.getChannelByID(longId))
+                        .mapToObj(longId -> Aspect.client.getChannelByID(longId))
                         .forEach(channel -> BotUtils.send(channel, eb));
 
             };

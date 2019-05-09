@@ -1,6 +1,6 @@
 package main.utility.metautil.permissions;
 
-import main.Main;
+import main.Aspect;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IIDLinkedObject;
 import sx.blah.discord.handle.obj.IRole;
@@ -33,14 +33,14 @@ public class ServerRestriction implements Restrictable {
     }
 
     private boolean check(IUser user, long minRoleId) {
-        IGuild guild = Main.client.getGuildByID(guildID);
+        IGuild guild = Aspect.client.getGuildByID(guildID);
 
         List<Long> userRoles = user.getRolesForGuild(guild).stream()
                 .map(IIDLinkedObject::getLongID)
                 .collect(Collectors.toList());
 
         return userRoles.indexOf(user.getRolesForGuild(guild).get(1).getLongID()) <
-                userRoles.indexOf(Main.client.getRoleByID(minRoleId).getLongID());
+                userRoles.indexOf(Aspect.client.getRoleByID(minRoleId).getLongID());
     }
 
 }

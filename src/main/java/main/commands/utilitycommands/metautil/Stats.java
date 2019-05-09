@@ -1,8 +1,8 @@
 package main.commands.utilitycommands.metautil;
 
+import main.Aspect;
 import main.Command;
 import main.CommandManager;
-import main.Main;
 import main.passive.ScheduledActions;
 import main.utility.grapher.LineChart;
 import main.utility.metautil.BotUtils;
@@ -33,24 +33,24 @@ public class Stats implements Command {
         return new EmbedBuilder()
                 .withTitle("Aspect v2.0")
                 .withColor(Color.BLACK)
-                .withThumbnail(Main.client.getApplicationIconURL())
+                .withThumbnail(Aspect.client.getApplicationIconURL())
                 .withDesc(generateDesc())
-                .withFooterIcon(Main.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getAvatarURL())
+                .withFooterIcon(Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getAvatarURL())
                 .withFooterText("Built with love. " + BotUtils.GITHUB_URL_SHORT)
 
                 // attach rendered image
                 .withImage("attachment://" + imgDir)
 
                 // fields
-                .appendField("Guilds", String.valueOf(Main.client.getGuilds().size()), true)
+                .appendField("Guilds", String.valueOf(Aspect.client.getGuilds().size()), true)
                 .appendField("Users",
                         "Unique: " +
-                                Main.client.getGuilds().stream()
+                                Aspect.client.getGuilds().stream()
                                         .flatMap(g -> g.getUsers().stream())
                                         .collect(Collectors.toSet()).size() +
 
                                 "\nTotal: " +
-                                Main.client.getGuilds().stream()
+                                Aspect.client.getGuilds().stream()
                                         .mapToInt(u -> u.getUsers().size()).sum(),
                         true)
 

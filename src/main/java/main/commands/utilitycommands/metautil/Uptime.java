@@ -1,7 +1,7 @@
 package main.commands.utilitycommands.metautil;
 
+import main.Aspect;
 import main.Command;
-import main.Main;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
@@ -15,7 +15,7 @@ public class Uptime implements Command {
     }
 
     public static String genUptime() {
-        long millis = System.currentTimeMillis() - Main.startTime;
+        long millis = System.currentTimeMillis() - Aspect.startTime;
         int sec = (int) (millis / 1000) % 60;
         int min = (int) ((millis / (1000 * 60)) % 60);
         int hr = (int) ((millis / (1000 * 60 * 60)) % 24);
@@ -23,7 +23,7 @@ public class Uptime implements Command {
         int days = (int) TimeUnit.MILLISECONDS.toDays(millis);
         return "```Uptime:   " + days + " d  " + hr + ":" + (min < 10 ? "0" + min : min) + ":" + (sec < 10 ? "0" + sec : sec) +
                 "  =  " + millis + " ms" +
-                "\nStart instant:\t" + Main.startInstant.toString() + "```";
+                "\nStart instant:\t" + Aspect.startInstant.toString() + "```";
     }
 
     @Override

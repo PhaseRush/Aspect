@@ -568,7 +568,7 @@ public class GifDecoder {
     }
 
     /**
-     * Main file parser.  Reads GIF content blocks.
+     * Aspect file parser.  Reads GIF content blocks.
      */
     protected void readContents() {
         // read GIF file content blocks

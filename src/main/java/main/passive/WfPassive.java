@@ -1,6 +1,6 @@
 package main.passive;
 
-import main.Main;
+import main.Aspect;
 import main.utility.Visuals;
 import main.utility.WarframeUtil;
 import main.utility.metautil.BotUtils;
@@ -38,7 +38,7 @@ public class WfPassive {
                 WarframeCetusTimeObject cetus = WarframeUtil.getCetus();
 
                 //BotUtils.send(BotUtils.BOTTOM_TEXT, WarframeUtil.cetusCycleString());
-                Main.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
+                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
 
                 //int minute = LocalDateTime.now().getMinute();
                 //System.out.println("Updated Cetus Status " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute));

@@ -1,7 +1,7 @@
 package main.commands.utilitycommands.guild;
 
+import main.Aspect;
 import main.Command;
-import main.Main;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.api.internal.json.objects.EmbedObject;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -22,7 +22,7 @@ public class DumpEmotes implements Command {
         Set<IEmoji> allEmojis = new HashSet<>();
 
         if (!args.isEmpty() && args.get(0).equals("all")) {
-            Main.client.getGuilds().stream()
+            Aspect.client.getGuilds().stream()
                     .map(IGuild::getEmojis)
                     .forEach(allEmojis::addAll);
         } else {

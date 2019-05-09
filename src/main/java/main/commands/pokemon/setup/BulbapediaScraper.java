@@ -1,7 +1,7 @@
 package main.commands.pokemon.setup;
 
+import main.Aspect;
 import main.Command;
-import main.Main;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 
@@ -821,7 +821,7 @@ public class BulbapediaScraper implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (!event.getAuthor().getStringID().equals("264213620026638336")) return;
 
-        IChannel channel = Main.client.getChannelByID(500523363102359552L);
+        IChannel channel = Aspect.client.getChannelByID(500523363102359552L);
 
         //length will be == 807
         String[] pokemons = allPoke.split("\n");

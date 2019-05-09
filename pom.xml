@@ -252,7 +252,7 @@
                     <archive>
                         <manifest>
                             <!-- Specify your own main class here: {package}.{class} -->
-                            <mainClass>main.Main</mainClass>
+                            <mainClass>main.Aspect</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -193,7 +193,7 @@ public class NeuQuant {
             netindex[j] = maxnetpos; /* really 256 */
     }
 
-    /* Main Learning Loop
+    /* Aspect Learning Loop
        ------------------ */
     public void learn() {
 

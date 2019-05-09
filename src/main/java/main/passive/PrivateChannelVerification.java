@@ -1,7 +1,7 @@
 package main.passive;
 
 import com.google.gson.Gson;
-import main.Main;
+import main.Aspect;
 import main.utility.metautil.BotUtils;
 import main.utility.privatechannel.IdKeyInfo;
 import main.utility.privatechannel.PrivateIdKeyPairContainer;
@@ -29,13 +29,13 @@ public class PrivateChannelVerification {
         String hashedInput = BotUtils.SHA256(event.getMessage().getFormattedContent().substring(2));
 
         for (IdKeyInfo p : verifications) {
-            IChannel targetChannel = Main.client.getChannelByID(p.getLongID());
+            IChannel targetChannel = Aspect.client.getChannelByID(p.getLongID());
             IGuild thisGuild = targetChannel.getGuild();
             //this user is in the server that this channel is in.
             if (thisGuild.getUsers().contains(event.getAuthor())) {
                 //check hashed password equality
                 if (hashedInput.equals(BotUtils.SHA256(p.getPassword()))) {
-                    IRole role = Main.client.getRoleByID(p.getLongRoleID());
+                    IRole role = Aspect.client.getRoleByID(p.getLongRoleID());
                     if (event.getAuthor().hasRole(role)) {
                         BotUtils.send(event.getChannel(), "You already have the role to access `" + targetChannel.getName() + "` in `" + thisGuild.getName() + "`");
                     } else {

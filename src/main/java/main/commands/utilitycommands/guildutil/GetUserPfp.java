@@ -1,7 +1,7 @@
 package main.commands.utilitycommands.guildutil;
 
+import main.Aspect;
 import main.Command;
-import main.Main;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IUser;
@@ -22,7 +22,7 @@ public class GetUserPfp implements Command {
             users.addAll(event.getMessage().getMentions());
         } else {
             try {
-                users.add(Main.client.getUserByID(Long.valueOf(args.get(0))));
+                users.add(Aspect.client.getUserByID(Long.valueOf(args.get(0))));
             } catch (Exception e) {
                 BotUtils.send(event.getChannel(), "Invalid parameter. Use the person's ID or @tag them");
                 return;

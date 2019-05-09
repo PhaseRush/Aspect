@@ -21,7 +21,7 @@ import java.util.Locale;
  * @URL github.com/PhaseRush/Aspect
  * 2018/11/28
  */
-public class Main {
+public class Aspect {
     // Aspect client
     public static IDiscordClient client;
 

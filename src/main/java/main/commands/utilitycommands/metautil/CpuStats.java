@@ -1,8 +1,8 @@
 package main.commands.utilitycommands.metautil;
 
+import main.Aspect;
 import main.Command;
 import main.CommandManager;
-import main.Main;
 import main.utility.metautil.BotUtils;
 import org.jetbrains.annotations.NotNull;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -28,7 +28,7 @@ public class CpuStats implements Command {
 
     @NotNull
     public static String genMessage() {
-        OperatingSystemMXBean osBean = Main.osBean;
+        OperatingSystemMXBean osBean = Aspect.osBean;
         Runtime r = Runtime.getRuntime();
         double maxM = r.maxMemory() / 1E6;
 
@@ -50,7 +50,7 @@ public class CpuStats implements Command {
         StringBuilder sb = new StringBuilder("The following servers have synchronous maps:```js\n                                                     ");
 
         for (Map.Entry e : CommandManager.syncExecuteMap.entrySet()) {
-            IGuild guild = Main.client.getGuildByID(Long.valueOf((String) e.getKey()));
+            IGuild guild = Aspect.client.getGuildByID(Long.valueOf((String) e.getKey()));
             sb.append(guild.getName().replaceAll("'", "")).append(" @ ")
                     .append(guild.getStringID())
                     .append("\n");

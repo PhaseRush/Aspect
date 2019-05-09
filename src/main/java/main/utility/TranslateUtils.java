@@ -5,7 +5,7 @@ import com.ibm.watson.developer_cloud.language_translator.v3.model.TranslationRe
 import com.ibm.watson.developer_cloud.service.exception.NotFoundException;
 import com.ibm.watson.developer_cloud.service.exception.RequestTooLargeException;
 import com.ibm.watson.developer_cloud.service.exception.ServiceResponseException;
-import main.Main;
+import main.Aspect;
 
 public class TranslateUtils {
     public static String transEnFr(String engl) {
@@ -15,7 +15,7 @@ public class TranslateUtils {
                 .modelId("en-fr")
                 .build();
         try {
-            TranslationResult translationResult = Main.translator.translate(translateOptions).execute();
+            TranslationResult translationResult = Aspect.translator.translate(translateOptions).execute();
             return translationResult.getTranslations().get(0).getTranslationOutput();
         } catch (NotFoundException e) {
             // Handle Not Found (404) exception

@@ -5,8 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import info.debatty.java.stringsimilarity.Levenshtein;
+import main.Aspect;
 import main.CommandManager;
-import main.Main;
 import main.passive.*;
 import main.utility.Visuals;
 import main.utility.miscJsonObj.leaguequotes.LeagueQuoteContainer;
@@ -162,7 +162,7 @@ public class BotUtils {
 
 
     public static void setBottomText() {
-        BOTTOM_TEXT = Main.client.getChannelByID(Long.valueOf(WF_BOTTOM_TEXT_ID));
+        BOTTOM_TEXT = Aspect.client.getChannelByID(Long.valueOf(WF_BOTTOM_TEXT_ID));
     }
 
     public static List<String> insults = Arrays.asList(
@@ -383,7 +383,7 @@ public class BotUtils {
 //                Thread.sleep(timeoutMillis);
 //            } catch (InterruptedException ignored) {
 //            } finally { //please just execute this no matter what
-//                Main.client.getDispatcher().unregisterListener(reactionListener);
+//                Aspect.client.getDispatcher().unregisterListener(reactionListener);
 //                if (!embedMsg.isDeleted()) embedMsg.delete();
 //            }
 //        });

@@ -1,7 +1,7 @@
 package main.commands.pokemon.setup;
 
+import main.Aspect;
 import main.Command;
-import main.Main;
 import main.utility.Visuals;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
@@ -20,7 +20,7 @@ public class ImageTransposer implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (!event.getAuthor().getStringID().equals("264213620026638336")) return;
-        IChannel channel = Main.client.getChannelByID(500523363102359552L);
+        IChannel channel = Aspect.client.getChannelByID(500523363102359552L);
         List<IMessage> allMsg = channel.getFullMessageHistory();
         for (IMessage msg : allMsg) {
             String withoutDomain = msg.getFormattedContent().substring(40);

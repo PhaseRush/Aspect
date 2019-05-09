@@ -1,7 +1,7 @@
 package main.passive;
 
 import com.sun.management.OperatingSystemMXBean;
-import main.Main;
+import main.Aspect;
 import main.utility.metautil.BotUtils;
 import main.utility.structures.DoubleRingBuffer;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -37,7 +37,7 @@ public class ScheduledActions {
         final Runnable quoter = () -> BotUtils.send(kaitQuoteChannel, BotUtils.getQuoteEmbed());
 
         // initialize channel
-        kaitQuoteChannel = Main.client.getChannelByID(kaitQuoteChannelId);
+        kaitQuoteChannel = Aspect.client.getChannelByID(kaitQuoteChannelId);
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
         System.out.println("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
@@ -51,9 +51,9 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void streak(ReadyEvent event) {
-        IUser resuna = Main.client.getUserByID(105688694219886592L);
-        IUser kait = Main.client.getUserByID(187328584698953728L);
-        IUser dev = Main.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID);
+        IUser resuna = Aspect.client.getUserByID(105688694219886592L);
+        IUser kait = Aspect.client.getUserByID(187328584698953728L);
+        IUser dev = Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID);
 
         final Runnable streaker = () -> {
             BotUtils.send(resuna.getOrCreatePMChannel(), "Streak");
@@ -74,9 +74,9 @@ public class ScheduledActions {
     @EventSubscriber
     public void cpuLoadWatcher(ReadyEvent event) {
         final Runnable cpuHawk = () -> {
-            if ( !sentMessage.get() && Main.osBean.getSystemLoadAverage() > 1) {
+            if ( !sentMessage.get() && Aspect.osBean.getSystemLoadAverage() > 1) {
                 BotUtils.send(
-                        Main.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
+                        Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
                         "cpu sad :(");
 
                 sentMessage.set(true);
