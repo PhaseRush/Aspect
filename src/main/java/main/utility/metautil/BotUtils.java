@@ -577,8 +577,8 @@ public class BotUtils {
     public static String getRandomFromListString(List<String> listString) {
         return listString.get(tlr.nextInt(listString.size()));
     }
-    public static String getRandomFromArrayString(String[] strings) {
-        return strings[ThreadLocalRandom.current().nextInt(strings.length)];
+    public static String getRandomFromArrayString(String[] array) {
+        return array[ThreadLocalRandom.current().nextInt(array.length)];
     }
 
     public static void joinVC(MessageReceivedEvent event) {

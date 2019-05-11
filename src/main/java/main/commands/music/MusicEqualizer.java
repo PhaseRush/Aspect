@@ -103,7 +103,7 @@ public class MusicEqualizer implements Command {
                     }
                     break;
                 case "custom" :
-                    try {
+                    try { // TODO: 2019-05-10  
 
                     } catch (Exception e) {
                         BotUtils.send(event.getChannel(), "There was an error processing the input");
@@ -198,18 +198,20 @@ public class MusicEqualizer implements Command {
 
     // adds s to each element in one
     private static float[] add(float[] one, float s) {
+        float[] newOne = new float[one.length];
         for (int i = 0; i < one.length; i++) {
-            one[i] += s;
+            newOne[i] = one[i] + s;
         }
-        return one;
+        return newOne;
     }
 
     // multiplies each element in one by scalar
     private static float[] mul(float[] one, float scalar) {
+        float[] newOne = new float[one.length];
         for (int i = 0; i < one.length; i++) {
-            one[i] *= scalar;
+            newOne[i] = one[i] * scalar;
         }
-        return one;
+        return newOne;
     }
 
     private static float[] dupe(float val, int num) {
