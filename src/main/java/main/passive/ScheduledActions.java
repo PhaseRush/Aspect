@@ -25,6 +25,11 @@ public class ScheduledActions {
     private static final long kaitQuoteChannelId = 562375333807128576L; // Vowed's#questions-or-ranting
     private static IChannel kaitQuoteChannel;
 
+    private static final long kaitLeagueChannelId = 1L;
+    private static IChannel kaitLeagueChannel;
+    private static final long pantsuGenId = 402728027680931841L;
+    private static IChannel pantsuGenChannel;
+
     // cpu 100% watcher
     public static AtomicBoolean sentMessage = new AtomicBoolean(false);
 
@@ -46,22 +51,28 @@ public class ScheduledActions {
     @EventSubscriber
     public void leagueQuotes(ReadyEvent event) {
         final Runnable quoter = () -> {
+            BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
+            BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
         };
+
+        kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
+        pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
+
+        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 24, TimeUnit.HOURS);
+        Aspect.LOG.info("League quoter scheduled");
     }
 
     @EventSubscriber
     public void streak(ReadyEvent event) {
         IUser resuna = Aspect.client.getUserByID(105688694219886592L);
         IUser kait = Aspect.client.getUserByID(187328584698953728L);
-        IUser dev = Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID);
 
         final Runnable streaker = () -> {
             BotUtils.send(resuna.getOrCreatePMChannel(), "Streak");
             BotUtils.send(kait.getOrCreatePMChannel(), "Streak");
-            BotUtils.send(dev.getOrCreatePMChannel(), "Streak sent");
         };
 
-        long initDelay = BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT");
+        //long initDelay = BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT");
         long initDelay2 = BotUtils.millisToNextHHMMSSMMMM(16, 40,0, 0, "America/Los_Angeles");
         scheduledFuture = scheduler.scheduleAtFixedRate(streaker,
                 initDelay2,

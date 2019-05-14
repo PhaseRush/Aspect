@@ -4,3 +4,8 @@ target/*
 modules/*
 data/*
 Aspection.ahk
+
+.update.sh
+.update.sh.swp
+
+*.txt

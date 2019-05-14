@@ -28,6 +28,7 @@ import main.commands.humor.SpongeBobify;
 import main.commands.humor.cute.CuteImg;
 import main.commands.humor.cute.ListCuties;
 import main.commands.league.*;
+import main.commands.mooshroom.RPoints;
 import main.commands.music.CustomQueues;
 import main.commands.music.MusicEqualizer;
 import main.commands.music.playing.*;
@@ -234,6 +235,7 @@ public class CommandManager {
         commandMap.put("skin", new SkinDetail());
         commandMap.put("lolrecent", new PreviousMatch());
         commandMap.put("lolign", new LeagueIgnCheck());
+        commandMap.put("px", new RandomQuote());
 
         //Warframe
         commandMap.put("wfdaily", new WfDailyDeals());
@@ -250,11 +252,14 @@ public class CommandManager {
         commandMap.put("wfrand", new WfRandomLoadout());
         commandMap.put("wfmod", new WfModInfo());
 
-        //Nasa // Showcase
+        // Nasa // Showcase
         commandMap.put("apod", new NasaApod());
         commandMap.put("bluemarble", new BlueMarble());
 
-        //Wolfram Alpha -- Showcase
+        // Mooshroom meta
+        commandMap.put("rpoints", new RPoints());
+
+        // Wolfram Alpha -- Showcase
         WolframBasic wolframBasic= new WolframBasic();
         commandMap.put("wolfram", wolframBasic);
         commandMap.put("answer", wolframBasic);

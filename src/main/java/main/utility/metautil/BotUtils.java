@@ -24,7 +24,6 @@ import sx.blah.discord.api.internal.json.objects.EmbedObject;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.obj.ReactionEmoji;
 import sx.blah.discord.handle.obj.*;
-import sx.blah.discord.handle.obj.IMessage.Attachment;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
@@ -534,19 +533,17 @@ public class BotUtils {
      * @param iMessage
      * @return
      */
-    public static int numPictures(IMessage iMessage) {
-        int imageCount = 0;
-        if (iMessage.getFormattedContent().contains("gyazo.com")) {
-            imageCount++;
-        }
+    public static long numPictures(IMessage iMessage) {
+        return iMessage.getAttachments().stream()
+                .map(attachment -> attachment.getUrl().replaceAll("[^A-Za-z0-9]", ""))
+                .filter(BotUtils::anyContain)
+                .count()
+                + (anyContain(iMessage.getContent()) ? 1L : 0L);
+    }
 
-        for (Attachment a : iMessage.getAttachments()) {
-            if (a.getUrl().endsWith(".png") || a.getUrl().endsWith(".jpeg") || a.getUrl().equals(".jpg")) {
-                imageCount++;
-            }
-        }
-
-        return imageCount;
+    private static boolean anyContain(String s) {
+        return s.contains("png") || s.contains("jpeg") || s.contains("jpg") || s.contains("steamuserimage") ||
+                s.contains("gyazo") || s.contains("prntscr");
     }
 
     public static boolean isPicture(String url) {
@@ -879,10 +876,18 @@ public class BotUtils {
     }
 
     public static EmbedBuilder getLeagueQuoteEmbed() {
-        EmbedBuilder eb = new EmbedBuilder()
-                .withTitle("");
+        List<String> champs = new ArrayList<>(leagueQuoteMap.keySet());
+        String champName = champs.get(ThreadLocalRandom.current().nextInt(champs.size()));
+        LeagueQuoteContainer quoteObj = leagueQuoteMap.get(champName);
 
-        return eb;
+        List<String> champQuotes = quoteObj.getQuotes().values().stream()
+                .flatMap(strStrMap -> strStrMap.values().stream())
+                .collect(Collectors.toList());
+
+        String randQuote = champQuotes.get(ThreadLocalRandom.current().nextInt(champQuotes.size()));
+
+        return new EmbedBuilder()
+                .withDesc("\"" + randQuote + "\"\n\t-" + champName);
     }
 
     /**
