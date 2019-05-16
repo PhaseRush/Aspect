@@ -365,7 +365,7 @@ public class TrackScheduler {
         // generate message head
         StringBuilder sb = new StringBuilder(queueName + " for " + event.getGuild().getName() + ": "
                 + (localQueue.size() > 15 ? "(listing first 15 of) " + localQueue.size() + " songs" : "")
-                + "\nTotal duration: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()) + "```\n");
+                + "\nTotal duration: " + BotUtils.millisToHMS(localQueue.stream().mapToLong(AudioTrack::getDuration).sum()) + "```json\n");
 
         // generate embed desc
         for (int i = 0; i < (localQueue.size() > 15 ? 15 : localQueue.size()); i++) {

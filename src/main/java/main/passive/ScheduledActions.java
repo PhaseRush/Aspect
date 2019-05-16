@@ -39,28 +39,37 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void morningGreeter(ReadyEvent event) {
-        final Runnable quoter = () -> BotUtils.send(kaitQuoteChannel, BotUtils.getQuoteEmbed());
+        final Runnable quoter = () -> {
+            BotUtils.send(kaitQuoteChannel, BotUtils.getQuoteEmbed());
+            BotUtils.send(pantsuGenChannel, BotUtils.getLeagueQuoteEmbed());
+            BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
+        };
 
         // initialize channel
         kaitQuoteChannel = Aspect.client.getChannelByID(kaitQuoteChannelId);
+        pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
+        kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
+
+
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
     }
 
+/*
     @EventSubscriber
     public void leagueQuotes(ReadyEvent event) {
         final Runnable quoter = () -> {
-            BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
+            BotUtils.send(pantsuGenChannel, BotUtils.getLeagueQuoteEmbed());
             BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
         };
 
-        kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
         pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 24, TimeUnit.HOURS);
         Aspect.LOG.info("League quoter scheduled");
     }
+*/
 
     @EventSubscriber
     public void streak(ReadyEvent event) {
