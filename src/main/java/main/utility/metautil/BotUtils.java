@@ -887,7 +887,7 @@ public class BotUtils {
         String randQuote = champQuotes.get(ThreadLocalRandom.current().nextInt(champQuotes.size()));
 
         return new EmbedBuilder()
-                .withDesc("\"" + randQuote + "\"\n\t-" + champName);
+                .withDesc(randQuote + "\n\t-" + champName);
     }
 
     /**

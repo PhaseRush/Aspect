@@ -25,7 +25,7 @@ public class ScheduledActions {
     private static final long kaitQuoteChannelId = 562375333807128576L; // Vowed's#questions-or-ranting
     private static IChannel kaitQuoteChannel;
 
-    private static final long kaitLeagueChannelId = 1L;
+    private static final long kaitLeagueChannelId = 562367646369316925L;
     private static IChannel kaitLeagueChannel;
     private static final long pantsuGenId = 402728027680931841L;
     private static IChannel pantsuGenChannel;
@@ -39,24 +39,15 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void morningGreeter(ReadyEvent event) {
-        final Runnable quoter = () -> {
-            BotUtils.send(kaitQuoteChannel, BotUtils.getQuoteEmbed());
-            BotUtils.send(pantsuGenChannel, BotUtils.getLeagueQuoteEmbed());
-            BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
-        };
-
+        final Runnable quoter = () -> BotUtils.send(kaitQuoteChannel, BotUtils.getQuoteEmbed());
         // initialize channel
-        kaitQuoteChannel = Aspect.client.getChannelByID(kaitQuoteChannelId);
-        pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
-        kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
-
-
+        kaitQuoteChannel = event.getClient().getChannelByID(kaitQuoteChannelId);
 
         scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
     }
 
-/*
+
     @EventSubscriber
     public void leagueQuotes(ReadyEvent event) {
         final Runnable quoter = () -> {
@@ -65,11 +56,12 @@ public class ScheduledActions {
         };
 
         pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
+        kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 24, TimeUnit.HOURS);
+        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("League quoter scheduled");
     }
-*/
+
 
     @EventSubscriber
     public void streak(ReadyEvent event) {

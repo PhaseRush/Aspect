@@ -299,7 +299,7 @@ public class CommandManager {
                     commandStr = "help";
                     BotUtils.send(event.getChannel(), "My prefix here is : " + BotUtils.getPrefix(event));
                 } else {
-                    commandStr = argArray[0];
+                    commandStr = argArray[0].toLowerCase(); // enforce lowercase in case shift held down after $
                 }
             }
         } else { // start with bot prefix
