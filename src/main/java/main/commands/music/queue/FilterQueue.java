@@ -13,10 +13,14 @@ public class FilterQueue implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
+        String input = args.get(0);
+
         GuildMusicManager guildMusicManager = MasterManager.getGuildAudioPlayer(event.getGuild());
         guildMusicManager.getScheduler().setQueue(
                 guildMusicManager.getScheduler().getQueue().stream()
-                        .filter(track -> track.getInfo().title.toLowerCase().contains(args.get(0).toLowerCase()))
+                        .filter(input.startsWith("\\") ?
+                                track -> track.getInfo().title.matches(input.substring(input.indexOf("\\")+1, input.length()-1)) :
+                                track -> track.getInfo().title.toLowerCase().contains(args.get(0).toLowerCase()))
                         .collect(Collectors.toList())
         );
 
@@ -36,6 +40,6 @@ public class FilterQueue implements Command {
 
     @Override
     public String getDesc() {
-        return "Filters the current music queue by keywords in title";
+        return "Filters the current music queue by keywords in title.\nFor regex, surround with \\. ie `\\ki*tty\\\\sclaw[0-9]\\`";
     }
 }

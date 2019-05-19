@@ -21,7 +21,7 @@ public class WfAcolyteTracker implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Acolytes")
-                .withColor(Visuals.getVibrantColor());
+                .withColor(Visuals.getRandVibrandColour());
 
         for (WarframeAcolyte a : acolytes) {
             String hp = String.valueOf(a.getHealthPercent() * 100).substring(0, 4) + "%";

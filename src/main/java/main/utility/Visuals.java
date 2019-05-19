@@ -59,7 +59,7 @@ public class Visuals {
         }
     }
 
-    public static Color getVibrantColor() {
+    public static Color getRandVibrandColour() {
         // this always generates the same color on startup.
         return Color.getHSBColor(rs.nextFloat(), .9f, 1.0f);
     }
@@ -67,7 +67,7 @@ public class Visuals {
     /*
     generate random vibrant color with seed
      */
-    public static Color getVibrantColor(String seed) {
+    public static Color getRandVibrandColour(String seed) {
         return Color.getHSBColor(new Random(Long.valueOf(seed)).nextFloat(), .9f, 1.0f);
     }
 

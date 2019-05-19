@@ -47,7 +47,7 @@ public class WfRandomLoadout implements Command {
                 event.getChannel(),
                 new EmbedBuilder()
                         .withTitle("Warframe :: Random Loadout")
-                        .withColor(Visuals.getVibrantColor())
+                        .withColor(Visuals.getRandVibrandColour())
                         .withDesc("```" +
                                 "\nW : " + BotUtils.getRandomFromArrayString(warframes) +
                                 "\nP : " + BotUtils.getRandomFromArrayString(primaries) +

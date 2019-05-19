@@ -66,7 +66,7 @@ public class RealmEyePlayer {
     public EmbedBuilder charsToEmbed(String authorURL) {
         Visuals visuals = new Visuals();
         EmbedBuilder eb = visuals.getEmbedBuilderNoField("Scoring V1.1", "https://cdn.discordapp.com/embed/avatars/0.png", "description",
-                visuals.getVibrantColor(), System.currentTimeMillis(), "http://i.imgur.com/QRUPiHQ.gif",
+                visuals.getRandVibrandColour(), System.currentTimeMillis(), "http://i.imgur.com/QRUPiHQ.gif",
                 name, "https://cdn.discordapp.com/embed/avatars/0.png", authorURL);
 
 

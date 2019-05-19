@@ -334,7 +334,7 @@ public class AnnotationListener {
         }
 
         eb.withAuthorName(fp.getDisplayName() + ", " + gameType/* + ", level " + fp.getBattleRoyal().getProfile().getLevel()*/)
-                .withColor(vis.getVibrantColor())
+                .withColor(vis.getRandVibrandColour())
                 .withDesc("*FortniteStats Statistical Analysis*")
                 .appendField("Kills", String.valueOf(fGameType.getKills()), true)
                 .appendField("Kpm", String.valueOf(fGameType.getKpm()), true)
@@ -363,7 +363,7 @@ public class AnnotationListener {
         String question = splitParsed.get(0);
         EmbedBuilder eb = new EmbedBuilder()
                 .withDesc(buildPollOptions(questionList))
-                .withColor(vis.getVibrantColor())
+                .withColor(vis.getRandVibrandColour())
                 .withAuthorName(question)
                 .withTimestamp(System.currentTimeMillis());
 
@@ -779,7 +779,7 @@ public class AnnotationListener {
             return;
         }
 
-        EmbedBuilder eb = vis.getEmbedBuilderNoField(founder + ", Founder","https://realmeye.com/player/"+ founder,"desc",vis.getVibrantColor(),System.currentTimeMillis(),
+        EmbedBuilder eb = vis.getEmbedBuilderNoField(founder + ", Founder","https://realmeye.com/player/"+ founder,"desc",vis.getRandVibrandColour(),System.currentTimeMillis(),
                 "", realmGuild.getName(), "https://www.realmeye.com/s/c7/img/eye-big.png",
                 "https://realmeye.com/guild/"+ (realmGuild.getName().contains(" ") ? realmGuild.getName().replaceAll(" ", "%20") : realmGuild.getName()));
 
@@ -1030,7 +1030,7 @@ public class AnnotationListener {
                 .withUrl("https://discordapp.com")
                 .withDesc("Insert [named links](https://discordapp.com) here later! ```\nGotta remind Kat to put my !help here...```")
                 .withColor(new Color(16254707))
-                //.withColor(new Visuals().getVibrantColor())
+                //.withColor(new Visuals().getRandVibrandColour())
                 .withTimestamp(System.currentTimeMillis())
                 .withFooterText("Absolutely Kat~")
                 .withFooterIcon("https://cdn.discordapp.com/embed/avatars/0.png")

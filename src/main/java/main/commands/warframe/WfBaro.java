@@ -18,7 +18,7 @@ public class WfBaro implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Void Trader " + trader.getCharacter())
-                .withColor(Visuals.getVibrantColor());
+                .withColor(Visuals.getRandVibrandColour());
 
         if (!trader.isActive()) {
             eb.appendField(trader.getCharacter() + " is currently not active.", "Arrival: " + trader.getStartString() + " at " + trader.getLocation(), false);

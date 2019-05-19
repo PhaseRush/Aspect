@@ -27,7 +27,7 @@ public class WfDropInfo implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | " + args.get(0))
                 .withUrl("http://warframe.wikia.com/wiki/" + args.get(0).replaceAll("\\s", "_"))
-                .withColor(Visuals.getVibrantColor());
+                .withColor(Visuals.getRandVibrandColour());
 
         if (drops.size() > 10) { //clear extra large lists
             eb.withDesc("Showing first 10 entries out of " + drops.size());

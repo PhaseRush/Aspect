@@ -18,7 +18,7 @@ public class SongInfo implements Command {
         AudioTrackInfo songInfo = musicManager.getScheduler().getCurrentTrack().getInfo();
 
         EmbedBuilder eb = new EmbedBuilder()
-                .withColor(Visuals.getVibrantColor())
+                .withColor(Visuals.getRandVibrandColour())
                 .withTitle(songInfo.title)
                 .withDesc("By: " + songInfo.author + "\n" + musicManager.getScheduler().trackProgress())
                 .withUrl(songInfo.uri);

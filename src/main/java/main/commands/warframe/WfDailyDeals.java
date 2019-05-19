@@ -20,7 +20,7 @@ public class WfDailyDeals implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withDesc("Warframe Daily Deals")
-                .withColor(Visuals.getVibrantColor());
+                .withColor(Visuals.getRandVibrandColour());
 
         DailyDeal[] dd = worldState.getDailyDeals();
 

@@ -76,7 +76,7 @@ public class WfPassive {
 
             EmbedBuilder eb = new EmbedBuilder()
                     .withTitle("Warframe :: Filtered Alerts")
-                    .withColor(Visuals.getVibrantColor());
+                    .withColor(Visuals.getRandVibrandColour());
 
             if (alerts.size() == 0) return;
 

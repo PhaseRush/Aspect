@@ -48,7 +48,7 @@ public class WfMarketListing implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe Market | Price check for " + intendedItemName)
-                .withColor(Visuals.getVibrantColor())
+                .withColor(Visuals.getRandVibrandColour())
                 .withThumbnail(WarframeUtil.getItemImageUrl(intendedItemName));
         List<WarframeTradeListing> listings = payload.getPayload().getOrders();
 
@@ -96,7 +96,7 @@ public class WfMarketListing implements Command {
 
         EmbedBuilder itemOptionEmbed = new EmbedBuilder()
                 .withDesc("Your query did not exactly match any item.\n React with the corresponding letter to continue\n\n" + BotUtils.buildOptions(intendedItemNames, numOptions))
-                .withColor(Visuals.getVibrantColor());
+                .withColor(Visuals.getRandVibrandColour());
 
         IMessage embedMessage = RequestBuffer.request(() -> e.getChannel().sendMessage(itemOptionEmbed.build())).get();
         BotUtils.reactAllEmojis(embedMessage, BotUtils.getRegionals().subList(0, numOptions));
