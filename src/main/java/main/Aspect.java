@@ -36,7 +36,7 @@ public class Aspect {
     public static LanguageTranslator translator;
 
     // SLF4J logger
-    public static final Logger LOG = LoggerFactory.getLogger("Aspect");
+    public static final Logger LOG = LoggerFactory.getLogger("AspectLog");
 
     public static void main(String[] args){
         Aspect.LOG.info("Aspect Launching");
