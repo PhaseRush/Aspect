@@ -9,8 +9,8 @@
 
         <!-- Rolling File Appender -->
         <RollingFile name="RollingFile">
-            <FileName>${sys:user.dir}/Aspect_logs/aspect_log_debug.log</FileName>
-            <FilePattern>${sys:user.dir}/Aspect_logs/aspect_log_debug_%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
+            <FileName>${sys:user.dir}/Aspect_logs/aspect_log_info.log</FileName>
+            <FilePattern>${sys:user.dir}/Aspect_logs/aspect_log_info_%d{yyyy-MM-dd-hh-mm}.log</FilePattern>
             <PatternLayout>
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
@@ -22,11 +22,11 @@
 
     </Appenders>
     <Loggers>
-        <Logger name="AspectLog" level="debug" additivity="false">
+        <Logger name="AspectLog" level="info" additivity="false">
             <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="Console"/>
         </Logger>
-        <Root level="trace">
+        <Root level="info">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>

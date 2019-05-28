@@ -25,6 +25,7 @@ import main.commands.humor.AnalyzeUser;
 import main.commands.humor.Insult;
 import main.commands.humor.Ship;
 import main.commands.humor.SpongeBobify;
+import main.commands.humor.cute.CatPics;
 import main.commands.humor.cute.CuteImg;
 import main.commands.humor.cute.ListCuties;
 import main.commands.league.*;
@@ -77,7 +78,8 @@ public class CommandManager {
 
     public static Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
 
-    private static Type prefixMapType = new TypeToken<Map<String, String>>() {}.getType();
+    private static Type prefixMapType = new TypeToken<Map<String, String>>() {
+    }.getType();
     public static Map<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
             prefixMapType);
@@ -260,7 +262,7 @@ public class CommandManager {
         commandMap.put("rpoints", new RPoints());
 
         // Wolfram Alpha -- Showcase
-        WolframBasic wolframBasic= new WolframBasic();
+        WolframBasic wolframBasic = new WolframBasic();
         commandMap.put("wolfram", wolframBasic);
         commandMap.put("answer", wolframBasic);
         commandMap.put("solve", wolframBasic);
@@ -272,6 +274,9 @@ public class CommandManager {
         commandMap.put("dumpusers", new UsersToGist());
         commandMap.put("emotes", new DumpEmotes());
         commandMap.put("resetcpu", new ResetCpuHawk());
+
+        // other misc
+        commandMap.put("cat", new CatPics());
     }
 
     @EventSubscriber
@@ -320,11 +325,10 @@ public class CommandManager {
             if (commandStr.length() < 2) return; // dont cmdSpellCorrect on length 1 commands
 
             String corrected = BotUtils.cmdSpellCorrect(commandStr);
-            if (corrected != null)  {
+            if (corrected != null) {
                 commandStr = corrected; // set correction
                 BotUtils.send(event.getChannel(), "Command not found, instead executing : `" + commandStr + "`");
-            }
-            else return; // no correction
+            } else return; // no correction
         }
 
         // Get the command
@@ -370,8 +374,6 @@ public class CommandManager {
             commandExecutors.execute(runCommand);
         }
     }
-
-
 
 
     private void cmdPrintLog(MessageReceivedEvent event, String commandStr, List<String> argsList) {
