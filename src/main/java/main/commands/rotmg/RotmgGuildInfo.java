@@ -33,7 +33,7 @@ public class RotmgGuildInfo  implements Command {
             return;
         }
 
-        EmbedBuilder eb = Visuals.getEmbedBuilderNoField(founder + ", Founder", "https://realmeye.com/player/" + founder, "desc", Visuals.getRandVibrandColour(), System.currentTimeMillis(),
+        EmbedBuilder eb = Visuals.getEmbedBuilderNoField(founder + ", Founder", "https://realmeye.com/player/" + founder, "desc", Visuals.getRandVibrantColour(), System.currentTimeMillis(),
                 "", realmGuild.getName(), "https://www.realmeye.com/s/c7/img/eye-big.png",
                 "https://realmeye.com/guild/"+ (realmGuild.getName().contains(" ") ? realmGuild.getName().replaceAll(" ", "%20") : realmGuild.getName()));
 

@@ -58,7 +58,7 @@ public class FortniteStats implements Command {
         int minutesPlayed = (fGameType.getMinutesPlayed() == 0? (int) fGameType.getKpm() * fGameType.getKills(): fGameType.getMinutesPlayed());
 
         eb.withAuthorName(fp.getDisplayName() + ", " + gameType/* + ", level " + fp.getBattleRoyal().getProfile().getLevel()*/)
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withDesc("*FortniteStats Statistical Analysis*")
                 .appendField("Kills", String.valueOf(fGameType.getKills()), true)
                 .appendField("Kpm", String.valueOf(fGameType.getKpm()), true)

@@ -88,7 +88,7 @@ public class WarframeUtil {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Alerts")
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         for (WarframeAlert alert : alerts) {
             WarframeMission mission = alert.getMission();

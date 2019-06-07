@@ -124,7 +124,7 @@ public class UserWordFrequency implements Command {
         // generate pretty embed
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Message Stats for " + BotUtils.getNickOrDefault(target, event.getGuild()) + " (1 week)")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withThumbnail(target.getAvatarURL())
                 .withFooterText("This took " + minutes + ":" + (seconds<10? "0":"") + seconds + " with " + matchErrors + " dict errors");
 
@@ -215,7 +215,7 @@ public class UserWordFrequency implements Command {
     private EmbedBuilder initLoadingEb() {
         EmbedBuilder embedBuilder = new EmbedBuilder()
                 .withTitle("... analysing")
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
         try {
             embedBuilder.withImage(Visuals.getCatMedia());
         } catch (Exception ignored) {

@@ -274,6 +274,7 @@ public class CommandManager {
         commandMap.put("dumpusers", new UsersToGist());
         commandMap.put("emotes", new DumpEmotes());
         commandMap.put("resetcpu", new ResetCpuHawk());
+        commandMap.put("haste", new FileToHaste());
 
         // other misc
         commandMap.put("cat", new CatPics());

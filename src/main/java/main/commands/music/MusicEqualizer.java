@@ -19,20 +19,20 @@ public class MusicEqualizer implements Command {
     // Predefined EQ configs
     public enum Filters {
         // zero'd eq
-        ZERO    (new float[] {     0,      0,     0,     0,      0,     0,      0,     0,     0,     0,     0,     0,     0,     0,     0 }),
+        ZERO(new float[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}),
         // all 0.1
-        TENP    (new float[] {  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,   0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
+        TENP(new float[]{0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
         // bass boost
-        BASS    (new float[] {  0.2f,  0.15f,  0.1f,  0.05f,  0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f }),
-        BASS2   (mul(BASS.getFilter(), 0.5f)),
+        BASS(new float[]{0.2f, 0.15f, 0.1f, 0.05f, 0.0f, -0.05f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f, -0.1f}),
+        BASS2(mul(BASS.getFilter(), 0.5f)),
         // treble boost
-        TREB    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f, -0.0f,  0.05f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f,  0.1f }),
+        TREB(new float[]{-0.2f, -0.15f, -0.1f, -0.05f, -0.0f, 0.05f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f}),
         // hill
-        HILL    (new float[] { -0.2f, -0.15f, -0.1f, -0.05f,     0,   0.1f,  0.2f,  0.3f,  0.2f,  0.1f,     0,-0.05f, -0.1f, -0.15f,-0.2f }),
+        HILL(new float[]{-0.2f, -0.15f, -0.1f, -0.05f, 0, 0.1f, 0.2f, 0.3f, 0.2f, 0.1f, 0, -0.05f, -0.1f, -0.15f, -0.2f}),
         // no
-        EAR_RPE (dupe(Float.MAX_VALUE, 15)),
+        EAR_RPE(dupe(Float.MAX_VALUE, 15)),
         // for pop/ edm/ electronic music
-        POP     (new float[] {  .2f,    .1f,    0f,    -.1f,  -.2f,   -.1f,    0f,   .7f,  .15f,   .5f,  -.1f,    0f,   .7f,   .15f, .25f });
+        POP(new float[]{.1f, .1f, .1f, -.1f, -.1f, -.1f, .05f, .05f, .05f, -.1f, -.1f, -.1f, .1f, .1f, .1f});
 
         private float[] filter;
 
@@ -45,10 +45,10 @@ public class MusicEqualizer implements Command {
         }
     }
 
-    private static final float[] BANDS = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+    private static final float[] BANDS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
     // keep track of each guild's equalizer
-    private static final Map<IGuild, main.utility.structures.Pair<EqualizerFactory,float[]>> eqMap = new HashMap<>();
+    private static final Map<IGuild, main.utility.structures.Pair<EqualizerFactory, float[]>> eqMap = new HashMap<>();
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -57,14 +57,14 @@ public class MusicEqualizer implements Command {
 
         // check if user passed in a filter. if so, determine what it is
         Optional<Filters> filter = Arrays.stream(Filters.values())
-                .map(f -> new Pair<>(f, f.name().toLowerCase().replaceAll("_","")))
+                .map(f -> new Pair<>(f, f.name().toLowerCase().replaceAll("_", "")))
                 .min((o1, o2) -> {
                     int first = BotUtils.stringSimilarityInt(o1.getValue(), args.get(0));
                     int second = BotUtils.stringSimilarityInt(o2.getValue(), args.get(0));
                     return Integer.compare(first, second);
                 })
                 .filter(p -> BotUtils.stringSimilarity(args.get(0), p.getValue()) < 2)
-                .map(main.utility.structures.Pair::getKey);
+                .map(Pair::getKey);
 
         if (filter.isPresent()) {
             player.setFilterFactory(
@@ -73,21 +73,22 @@ public class MusicEqualizer implements Command {
             BotUtils.send(event.getChannel(), "Applied " + filter.get().name() + " \n " + generateCurrEq(event));
         } else { // user did not use a filter (or spelling is just atrocious) so try other commands
             switch (args.get(0)) {
-                case "stop" :
-                case "null" :
-                case "quit" :
+                case "stop":
+                case "null":
+                case "quit":
+                case "clear":
                     player.setFilterFactory(null);
                     eqMap.remove(event.getGuild()); // remove eq
                     break;
-                case "show" :
-                case "curr" :
+                case "show":
+                case "curr":
                     BotUtils.send(event.getChannel(),
                             new EmbedBuilder().withImage("attachment://equalizer.png"),
                             generateEqChart(event.getGuild()),
                             "equalizer.png"
                     );
                     break;
-                case "mult" :
+                case "mult":
                     try {
                         replaceFilter(
                                 event.getGuild(),
@@ -102,17 +103,17 @@ public class MusicEqualizer implements Command {
                         BotUtils.send(event.getChannel(), "Must use valid multiplier");
                     }
                     break;
-                case "custom" :
+                case "custom":
                     try { // TODO: 2019-05-10  
 
                     } catch (Exception e) {
                         BotUtils.send(event.getChannel(), "There was an error processing the input");
                     }
                     break;
-                case "dump" :
+                case "dump":
                     BotUtils.send(event.getChannel(), generateCurrEq(event));
-                case "all"  :
-                case "list" :
+                case "all":
+                case "list":
                     BotUtils.send(event.getChannel(),
                             Arrays.toString(
                                     Filters.class.getEnumConstants()).replaceAll("^.|.$", ""));
@@ -127,8 +128,8 @@ public class MusicEqualizer implements Command {
     private String generateCurrEq(MessageReceivedEvent event) {
         float[] thisEq = eqMap.getOrDefault(event.getGuild(), new Pair<>(new EqualizerFactory(), Filters.ZERO.filter)).getValue();
 
-        return new StringBuilder("Equalizer settings spread (" + thisEq.length + " bands) : ")
-                .append(Arrays.toString(thisEq)).toString();
+        return "Equalizer settings spread (" + thisEq.length + " bands) : " +
+                Arrays.toString(thisEq);
 
     }
 
@@ -145,14 +146,14 @@ public class MusicEqualizer implements Command {
     }
 
 
-    public static EqualizerFactory applyFilter(IGuild guild, float[] filter, float scalar) {
-        Pair<EqualizerFactory, float[]> pair = eqMap.getOrDefault(guild, new Pair<>(new EqualizerFactory(), filter));
+    private static EqualizerFactory applyFilter(IGuild guild, float[] filter, float scalar) {
+        Pair<EqualizerFactory, float[]> pair = eqMap.getOrDefault(guild, new Pair<>(new EqualizerFactory(), Filters.ZERO.filter));
         float[] currFilter = pair.getValue();
         float[] newFilter = new float[filter.length];
 
         // init newFilter with the new weights and vals
         for (int i = 0; i < currFilter.length; i++) {
-            float eqVi = currFilter[i] + filter[i]*scalar;
+            float eqVi = currFilter[i] + filter[i] * scalar;
             newFilter[i] = eqVi;
             currFilter[i] = eqVi;
         }
@@ -222,7 +223,7 @@ public class MusicEqualizer implements Command {
         return f;
     }
 
-    public static Pair<EqualizerFactory, float[]> getGuildEq (IGuild guild) {
+    public static Pair<EqualizerFactory, float[]> getGuildEq(IGuild guild) {
         return eqMap.get(guild);
     }
 }

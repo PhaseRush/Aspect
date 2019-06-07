@@ -235,14 +235,14 @@ public class TrackScheduler {
     private Color generateBiasedColor() {
         float colorIncr = 40;
         if (currentSongEmbed == null) {
-            return Visuals.getRandVibrandColour();
+            return Visuals.getRandVibrantColour();
         }else { //hue could overflow
             Color color = currentSongEmbed.getEmbeds().get(0).getColor();
             float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
             try {
                 return Color.getHSBColor(hsb[0] + r.nextFloat() / colorIncr, hsb[1], hsb[2]); //hsb[1] = 0.9f, hsb[2] = 1.0f
             } catch (Exception e) { //catch if hue is > 1 (there is a chance, so just reset it with random color)
-                return Visuals.getRandVibrandColour();
+                return Visuals.getRandVibrantColour();
             }
         }
     }

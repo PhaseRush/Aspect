@@ -864,7 +864,7 @@ public class BotUtils {
 
         return new EmbedBuilder()
                 .withTitle("Have a good day, everyone!")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withDesc(Jsoup.parse(quote.content).text() + "\n\t- " + quote.title);
     }
 
@@ -887,7 +887,7 @@ public class BotUtils {
         String randQuote = champQuotes.get(ThreadLocalRandom.current().nextInt(champQuotes.size()));
 
         return new EmbedBuilder()
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withDesc(randQuote + "\n\t-" + champName);
     }
 

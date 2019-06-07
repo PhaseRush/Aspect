@@ -62,7 +62,7 @@ public class WfItemInfo implements Command {
                 .withTitle("Warframe | " + itemName)
                 .withUrl(item.getEn().getWiki_link())
                 .withThumbnail(WarframeUtil.getItemImageUrl(itemName))
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         StringBuilder drops = new StringBuilder();
         for (WarframeDetailedDrop d : item.getEn().getDrop()) {
@@ -82,7 +82,7 @@ public class WfItemInfo implements Command {
 
         EmbedBuilder itemOptionEmbed = new EmbedBuilder()
                 .withDesc("Your query did not exactly match any item.\n React with the corresponding letter to continue\n\n" + BotUtils.buildOptions(intendedItemNames, numOptions))
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         IMessage embedMessage = RequestBuffer.request(() -> e.getChannel().sendMessage(itemOptionEmbed.build())).get();
         BotUtils.reactAllEmojis(embedMessage, BotUtils.getRegionals().subList(0, numOptions));

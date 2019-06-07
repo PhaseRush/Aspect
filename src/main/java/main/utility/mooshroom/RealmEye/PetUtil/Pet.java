@@ -36,7 +36,7 @@ public class Pet {
         temp.withTitle(playerIGN.toUpperCase().substring(0,1) + playerIGN.toLowerCase().substring(1))
                 .withUrl("https://www.realmeye.com/pets-of/"+ playerIGN)
                 .withDesc("```[raw](" + realmEyeJsonUrl + ")```")
-                .withColor(new Visuals().getRandVibrandColour())
+                .withColor(new Visuals().getRandVibrantColour())
                 .withTimestamp(System.currentTimeMillis())
                 .withThumbnail("https://cdn.discordapp.com/embed/avatars/0.png")
                 .withAuthorName(name + ", " + skin + ": " + rarity + " " + family)

@@ -100,7 +100,7 @@ public class RPoints implements Command {
     private Color getColour(IUser targetUser) {
         BufferedImage buff = Visuals.urlToBufferedImage(targetUser.getAvatarURL());
         if (buff != null) return Visuals.analyzeImageColor(buff);
-        else return Visuals.getRandVibrandColour();
+        else return Visuals.getRandVibrantColour();
     }
 
     private synchronized void write() {

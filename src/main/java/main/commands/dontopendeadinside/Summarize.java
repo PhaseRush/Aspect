@@ -52,7 +52,7 @@ public class Summarize implements Command {
             EmbedBuilder eb = new EmbedBuilder()
                     .withTitle(smmryObject.getSm_api_title())
                     .withUrl(args.get(0))
-                    .withColor(Visuals.getRandVibrandColour())
+                    .withColor(Visuals.getRandVibrantColour())
                     .withDesc("Since the summary was too long, please refer to this link\n" + gist.getHtml_url() + //hitmlURL is NULL -- FIXED
                             "\nVisit this page if you prefer raw\n" + gist.getFiles().getSummary().getRaw_url());
 
@@ -62,7 +62,7 @@ public class Summarize implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withDesc(smmryObject.getSm_api_content() + "\n\n[Original](" + args.get(0) + ")")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withFooterText("Reduced content by " + smmryObject.getSm_api_content_reduced() + " to " + smmryObject.getSm_api_character_count() + " characters in " + (System.currentTimeMillis() - startTime) + " ms");
 
         BotUtils.send(event.getChannel(), eb);

@@ -29,7 +29,7 @@ public class Poll implements Command {
                 .withAuthorName((authorNickname == null ? event.getAuthor().getName() : authorNickname))
                 .withAuthorIcon(event.getAuthor().getAvatarURL())
                 .withDesc("\t**" + args.get(0) + "**" + "\n" + buildPollOptions(optionsList))
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         IMessage embedMessage = RequestBuffer.request(() -> event.getChannel().sendMessage(eb.build())).get();
         BotUtils.reactAllEmojis(embedMessage, regionalIndicators.subList(0, optionsList.size()));

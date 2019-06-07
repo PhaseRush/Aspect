@@ -153,7 +153,7 @@ public class Imaging implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect Image Recognition")
                 .withDesc("```" + getBody.getName() + "```")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withFooterText("This operation took me " + (System.currentTimeMillis() - startTIme + "ms after " + (numFailedGets == 0 ? "no failed attempts" : numFailedGets + " failed attempts")));
 
         IMessage embedMessage = event.getChannel().sendMessage(eb.build());

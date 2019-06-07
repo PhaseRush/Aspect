@@ -27,7 +27,7 @@ public class WouldYourRather implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Would you rather...")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withFooterText(wyr.link)
 
                 .withDesc(wyr.title + "\n\n" +

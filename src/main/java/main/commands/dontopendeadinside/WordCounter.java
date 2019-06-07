@@ -12,6 +12,8 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.MissingPermissionsException;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -21,12 +23,12 @@ WordCounter implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
 
         handleKaitlyn(event); // yes.
+        BotUtils.send(event.getChannel(), initLoadingEb());
 
         long startTime = System.currentTimeMillis();
         Map<IUser, Integer> userWordCountMap = new LinkedHashMap<>();
         Map<IUser, Integer> userMsgCountMap = new LinkedHashMap<>();
         IChannel channel = event.getChannel();
-        boolean useAllchannels = false;
 
         if (args.size() < 1) {
             sendErrorMsg(event);
@@ -37,10 +39,11 @@ WordCounter implements Command {
         String regexString = args.get(0).substring(1); // set this regardless if being used or not. Low overhead
 
         List<IChannel> textChannels = new ArrayList<>();
+        boolean useAllChannels = false;
         if (args.size() == 2) {
             if (args.get(1).equals("all")) {
                 textChannels.addAll(event.getGuild().getChannels());
-                useAllchannels = true;
+                useAllChannels = true;
             }
         } else if (args.size() == 1) {
             textChannels.add(event.getChannel());
@@ -48,14 +51,14 @@ WordCounter implements Command {
 
         // send message before executing search
         if (useRegex) {
-            BotUtils.send(event.getChannel(), "Attempting to use regex " + (useAllchannels? "in all channels" : "in this channel") + ": ```" + regexString + "```");
+            BotUtils.send(event.getChannel(), "Attempting to use regex " + (useAllChannels ? "in all channels" : "in this channel") + ": ```" + regexString + "```");
         }
 
         // heavy workload
         int messageCounter = 0;
         for (IChannel textChannel : textChannels) {
             try {
-                for (IMessage m : textChannel.getFullMessageHistory()) {
+                for (IMessage m : textChannel.getMessageHistoryFrom(Instant.now().minus(1, ChronoUnit.WEEKS))) {
                     IUser author = m.getAuthor();
                     if (useRegex) {
                         if (m.getContent().matches(regexString)) {
@@ -70,7 +73,7 @@ WordCounter implements Command {
                     userMsgCountMap.put(author, userMsgCountMap.getOrDefault(author, 0) + 1); //@tterrag#1098
                 }
             } catch (MissingPermissionsException e) {
-                BotUtils.send(channel,  "Skipping: " + textChannel.getName() + "\t(Missing READ_MESSAGES permission)");
+                BotUtils.send(channel, "Skipping: " + textChannel.getName() + "\t(Missing READ_MESSAGES permission)");
             }
         }
 
@@ -89,20 +92,20 @@ WordCounter implements Command {
         int minutes = (int) (timeElapsed / 60000);
         int seconds = (int) (timeElapsed % 60000) / 1000;
         EmbedBuilder eb = new EmbedBuilder()
-                .withTitle(useRegex? "Regex Matcher" : "Word Counter")
+                .withTitle(useRegex ? "Regex Matcher" : "Word Counter")
                 //.withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage(mostGoodPerson.getKey().getAvatarURL()))) //has problems.
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withThumbnail(mostGoodPerson.getKey().getAvatarURL())
                 .withDesc("Top spammer: " + (nick == null ? mostGoodPerson.getKey().getName() : nick) + "\nFormat: x/y, where x is number of matches and y is the total messages by user")
                 .withFooterText("It took me " + minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " to scan through " +
-                        messageCounter + " messages in " + textChannels.size() + " channel" + (textChannels.size() == 1? "" : "s")); //added plural case
+                        messageCounter + " messages in " + textChannels.size() + " channel" + (textChannels.size() == 1 ? "" : "s")); //added plural case
 
         int rankCounter = 1;
         for (Entry<IUser, Integer> entry : userWordCountMap.entrySet()) {
             try {
                 String eachNick = entry.getKey().getNicknameForGuild(event.getGuild());
                 eb.appendField(rankCounter + ": " + (eachNick == null ? entry.getKey().getName() : eachNick),
-                        (useRegex? "" : args.get(0).replaceAll("\\*", "\\\\*")) +
+                        (useRegex ? "" : args.get(0).replaceAll("\\*", "\\\\*")) +
                                 " count: " + entry.getValue().toString() + " / " + userMsgCountMap.get(entry.getKey()), false);
 
                 rankCounter++;
@@ -128,19 +131,32 @@ WordCounter implements Command {
 //                ,sb.toString()
 //        ));
 
-        StringBuilder hasteContent = new StringBuilder("Aspect :: " + (useRegex? "Regex Matcher" : "Word Counter") + sb.toString());
+        StringBuilder hasteContent = new StringBuilder("Aspect :: " + (useRegex ? "Regex Matcher" : "Word Counter") + sb.toString());
 
         //GistContainer gist = BotUtils.gson.fromJson(json, GistContainer.class);
         try {
             String hasteURL = BotUtils.makeHasteGetUrl(hasteContent.toString());
             BotUtils.send(event.getChannel(), "To view full statistics, visit\n\n" + hasteURL);
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
 
     private void sendErrorMsg(MessageReceivedEvent event) {
         BotUtils.send(event.getChannel(), "This command needs a word to search for in this server. It can optionally use a regex to match instead." +
                 "\nFind all occurrences of the word \"hello\" in all text channels: \n```\n$count hello, all```" +
-                "\nMatch a greeting to all names that start with a capital R, K, or C, followed by at least 5 lower case letters: \n```\n$count \\(hi\\s)[R|K|C][a-z]{5,}```");
+                "\nMatch a greeting to all names that start with a capital R, K, or C, followed by at least 5 lower case letters: \n```\n$count /(hi\\s)[R|K|C][a-z]{5,}```");
+    }
+
+    private EmbedBuilder initLoadingEb() {
+        EmbedBuilder embedBuilder = new EmbedBuilder()
+                .withTitle("... counting")
+                .withColor(Visuals.getRandVibrantColour());
+        try {
+            embedBuilder.withImage(Visuals.getCatMedia());
+        } catch (Exception ignored) {
+        }
+
+        return embedBuilder;
     }
 
     private void handleKaitlyn(MessageReceivedEvent event) {

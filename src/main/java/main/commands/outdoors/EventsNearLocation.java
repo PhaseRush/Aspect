@@ -52,7 +52,7 @@ public class EventsNearLocation implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Events in " + query[0] + ", " + query[1])
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withFooterText("Information provided by TicketMaster");
 
         if (page.getContent() == null) BotUtils.send(event.getChannel(), "pages null, u dun fucked");

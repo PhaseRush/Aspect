@@ -89,7 +89,7 @@ public class Character {
         temp.withTitle(playerIGN.substring(0,1).toUpperCase() + playerIGN.substring(1)) //might format later
                 .withUrl("https://realmeye.com/players/"+playerIGN)
                 .withDesc("```raw[" + realmEyeJsonUrl +"]```")
-                .withColor(new Visuals().getRandVibrandColour())
+                .withColor(new Visuals().getRandVibrantColour())
                 .withTimestamp(System.currentTimeMillis())
                 .withThumbnail("https://www.realmeye.com/s/c5/img/eye-big.png")
                 //.withAuthorName("Knight, 4/8")

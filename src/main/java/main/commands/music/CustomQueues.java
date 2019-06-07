@@ -23,7 +23,7 @@ public class CustomQueues implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Preconfigured Playlists")
                 .withDesc(sb.toString())
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         BotUtils.send(event.getChannel(), eb);
     }

@@ -26,7 +26,7 @@ public class WfVoidFissures implements Command {
         //make embed response
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe Void Fissures")
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         //filter based on relic type (ie meso)
         if (args.size() == 1) {

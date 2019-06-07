@@ -24,7 +24,7 @@ public class FortniteShopDetail implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withDesc("***Fortnite Item Shop***")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .withFooterText("Expires: " + shop.getExpiration().substring(10));
 
         for (CatalogEntry entry : selected.getCatalogEntries()) {

@@ -29,7 +29,7 @@ public class WolframUtil {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Wolfram Alpha Query")
-                .withColor(Visuals.getRandVibrandColour());
+                .withColor(Visuals.getRandVibrantColour());
 
         List<EmbedField> embedFields;
         try {

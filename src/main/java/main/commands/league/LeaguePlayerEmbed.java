@@ -63,7 +63,7 @@ public class LeaguePlayerEmbed implements Command {
                 .withThumbnail("http://opgg-static.akamaized.net/images/medals/" + BotUtils.capitalizeFirstLowerRest(rank) + "_" + "" + ".png")
                 .withDesc(ign + " is a " + (isRanked ? rank + " " + division.name() : "") + " " + cm.getChampion().getName()
                         + " main "  + (isRanked? "in " + summoner.getLeague(Queue.RANKED_SOLO_5x5).getName() : ""))
-                .withColor(validProfileIcon ? (Visuals.analyzeImageColor(summoner.getProfileIcon().getImage().get())) : Visuals.getRandVibrandColour())
+                .withColor(validProfileIcon ? (Visuals.analyzeImageColor(summoner.getProfileIcon().getImage().get())) : Visuals.getRandVibrantColour())
                 //.withColor(Visuals.analyzeWeightedImageColor(summoner.getProfileIcon().getImage().get(), 4))
                 .withTimestamp(System.currentTimeMillis())
                 .withAuthorUrl(getOpggUrl(ign))

@@ -57,7 +57,7 @@ public class Ship implements Command {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("**Rejection Simulator**")
-                .withColor(Visuals.getRandVibrandColour())
+                .withColor(Visuals.getRandVibrantColour())
                 .appendField("Cupid", cupidDisplayName, true)
                 .appendField("Psyche", psycheDisplayName, true)//runs
                 .appendField("% Divorce after 2 years", String.valueOf(loveScore), true)
