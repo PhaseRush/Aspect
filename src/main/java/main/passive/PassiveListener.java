@@ -2,9 +2,13 @@ package main.passive;
 
 import com.google.api.services.youtube.model.VideoStatistics;
 import com.google.common.math.BigIntegerMath;
+import com.inamik.text.tables.Cell;
+import com.inamik.text.tables.GridTable;
+import com.inamik.text.tables.grid.Border;
 import main.commands.dontopendeadinside.games.CoinFlip;
 import main.utility.GoogleUtil;
 import main.utility.RedditUtil;
+import main.utility.TableUtil;
 import main.utility.Visuals;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
@@ -253,17 +257,25 @@ public class PassiveListener {
         BigDecimal dislikes = new BigDecimal(stats.getDislikeCount());
         BigDecimal totalRatings = likes.add(dislikes);
 
+        GridTable table = GridTable.of(5, 2)
+                .put(0, 0, Cell.of("Views"))
+                .put(0, 1, Cell.of(stats.getViewCount().toString()))
+                .put(1, 0, Cell.of("Likes"))
+                .put(1, 1, Cell.of(stats.getLikeCount() + " = " + likes.multiply(new BigDecimal(100)).divide(totalRatings, RoundingMode.HALF_DOWN) + "%"))
+                .put(2, 0, Cell.of("Dislikes"))
+                .put(2, 1, Cell.of(stats.getDislikeCount() + " = " + dislikes.multiply(new BigDecimal(100)).divide(totalRatings, RoundingMode.HALF_DOWN) + "%"))
+                .put(3, 0, Cell.of("Total Ratings"))
+                .put(3, 1, Cell.of(totalRatings.toString()))
+                .put(4, 0, Cell.of("Comments"))
+                .put(4, 1, Cell.of(stats.getCommentCount().toString()));
+
+        table = Border.DOUBLE_LINE.apply(table);
+
+
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("YouTube Analytics")
-                .withDesc(String.format("Views: %s\nLikes: %s = %s%%\nDislikes: %s = %s%%\nTotal Ratings: %s\nComments: %s",
-                        stats.getViewCount(),
-                        stats.getLikeCount(),
-                        likes.multiply(new BigDecimal(100)).divide(totalRatings, RoundingMode.HALF_DOWN),
-                        stats.getDislikeCount(),
-                        dislikes.multiply(new BigDecimal(100)).divide(totalRatings, RoundingMode.HALF_DOWN),
-                        totalRatings,
-                        stats.getCommentCount()
-                ));
+                .withDesc(TableUtil.renderInCodeBlock(table).toString());
+
         try {
             eb.withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage("https://i1.ytimg.com/vi/" + videoId + "/hqdefault.jpg")));
         } catch (Exception e) {// happens when cant retrieve image
