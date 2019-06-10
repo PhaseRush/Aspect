@@ -40,10 +40,14 @@ WordCounter implements Command {
 
         List<IChannel> textChannels = new ArrayList<>();
         boolean useAllChannels = false;
+        Instant messagesFromThis = Instant.now().minus(1, ChronoUnit.WEEKS);// default to 1 week
         if (args.size() == 2) {
-            if (args.get(1).equals("all")) {
-                textChannels.addAll(event.getGuild().getChannels());
-                useAllChannels = true;
+            switch (args.get(1)) {
+                case "every":
+                    textChannels.addAll(event.getGuild().getChannels());
+                    useAllChannels = true;
+                case "all":
+                    messagesFromThis = Instant.MIN;
             }
         } else if (args.size() == 1) {
             textChannels.add(event.getChannel());
@@ -58,7 +62,7 @@ WordCounter implements Command {
         int messageCounter = 0;
         for (IChannel textChannel : textChannels) {
             try {
-                for (IMessage m : textChannel.getMessageHistoryFrom(Instant.now().minus(1, ChronoUnit.WEEKS))) {
+                for (IMessage m : textChannel.getMessageHistoryFrom(messagesFromThis)) {
                     IUser author = m.getAuthor();
                     if (useRegex) {
                         if (m.getContent().matches(regexString)) {

@@ -97,7 +97,6 @@ public class BotUtils {
     public static String REDDIT_SECRET;
 
 
-
     //dev meta -- USE FOR GIST GENERATION
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
@@ -120,12 +119,14 @@ public class BotUtils {
     private static ExecutorService listenerExecuter = Executors.newSingleThreadExecutor();
 
     // prefix map util
-    private static Type prefixMapType = new TypeToken<HashMap<String, String>>() {}.getType();
+    private static Type prefixMapType = new TypeToken<HashMap<String, String>>() {
+    }.getType();
     private static HashMap<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
             prefixMapType);
     // league quote map
-    private static Type leagueQuoteMapType = new TypeToken<HashMap<String, LeagueQuoteContainer>>() {}.getType();
+    private static Type leagueQuoteMapType = new TypeToken<HashMap<String, LeagueQuoteContainer>>() {
+    }.getType();
     public static HashMap<String, LeagueQuoteContainer> leagueQuoteMap = gson.fromJson(
             readFromFileToString(System.getProperty("user.dir") + "/data/league_quotes.json"),
             leagueQuoteMapType);
@@ -136,6 +137,7 @@ public class BotUtils {
                 prefixMap.getOrDefault(event.getGuild().getStringID(),
                         BotUtils.DEFAULT_BOT_PREFIX));
     }
+
     public static synchronized void setPrefix(IIDLinkedObject idObject, String prefix) {
         prefixMap.put(idObject.getStringID(), prefix);
 
@@ -149,15 +151,14 @@ public class BotUtils {
         // encrypter
         try {
             messageDigest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException ignored) {}
+        } catch (NoSuchAlgorithmException ignored) {
+        }
 
         // dictionarySet
         String allString = BotUtils.getStringFromUrl("https://raw.githubusercontent.com/dwyl/english-words/master/words.txt");
         dictionarySet = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(TreeSet::new));
         dictionaryList = Arrays.stream(allString.split("\n")).map(String::toLowerCase).collect(Collectors.toCollection(ArrayList::new));
     }
-
-
 
 
     public static void setBottomText() {
@@ -205,7 +206,8 @@ public class BotUtils {
     public static List<String> readFromFileToStringList(String path) {
         try (Stream<String> stream = Files.lines(Paths.get(path))) {
             return stream.collect(Collectors.toList());
-        } catch (IOException e) {}
+        } catch (IOException e) {
+        }
         return null;
     }
 
@@ -305,7 +307,7 @@ public class BotUtils {
                 return channel.sendFile(file);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-                return  null;
+                return null;
             } catch (MissingPermissionsException e) {
                 send(channel, "Missing Permissions: " + channel.getName());
                 return null;
@@ -340,6 +342,7 @@ public class BotUtils {
             }
         });
     }
+
     public static void send(IChannel channel, EmbedBuilder embed, File file) {
         RequestBuffer.request(() -> {
             try {
@@ -353,6 +356,7 @@ public class BotUtils {
             }
         });
     }
+
     public static void send(IChannel channel, EmbedBuilder embed, InputStream inStream, String fileName) {
         RequestBuffer.request(() -> {
             try {
@@ -496,7 +500,7 @@ public class BotUtils {
         List<ReactionEmoji> emojis = new ArrayList<>();
 
         for (int i = 0; i < 26; i++) {
-            emojis.add(getRegionalChar((char)('a' + i)));
+            emojis.add(getRegionalChar((char) ('a' + i)));
         }
 
         return emojis;
@@ -505,7 +509,7 @@ public class BotUtils {
     public static ReactionEmoji getRegionalChar(char c) {
         return ReactionEmoji.of(
                 String.valueOf(
-                        new char[] {0xD83C, (char) (0xDDE6 + c - 97)}
+                        new char[]{0xD83C, (char) (0xDDE6 + c - 97)}
                 )
         );
     }
@@ -530,6 +534,7 @@ public class BotUtils {
     /**
      * was originally BotUtils#isAPicture
      * now returns num of pictures (untested)
+     *
      * @param iMessage
      * @return
      */
@@ -574,6 +579,7 @@ public class BotUtils {
     public static String getRandomFromListString(List<String> listString) {
         return listString.get(tlr.nextInt(listString.size()));
     }
+
     public static String getRandomFromArrayString(String[] array) {
         return array[ThreadLocalRandom.current().nextInt(array.length)];
     }
@@ -591,6 +597,7 @@ public class BotUtils {
     public static String capitalizeFirstLowerRest(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
+
     public static String capitalizeFirst(String s) {
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
@@ -619,6 +626,7 @@ public class BotUtils {
             return "error - url status request - getstringfromurl - with header";
         }
     }
+
     public static String getStringFromUrl(String url, String headerName1, String headerValue1, RequestBody requestBody) {
         Request request = new Request.Builder()
                 .url(url)
@@ -632,7 +640,8 @@ public class BotUtils {
             return "error - url status request - getstringfromurl - with header";
         }
     }
-    public static String getStringFromURL(String url, List<String> headerNames, List<String> headerValues){
+
+    public static String getStringFromURL(String url, List<String> headerNames, List<String> headerValues) {
         Request.Builder request = new Request.Builder()
                 .url(url);
         for (int i = 0; i < headerNames.size(); i++) {
@@ -659,6 +668,7 @@ public class BotUtils {
     /**
      * returns the ith char of the alphabet.
      * NOTE: 0-based index, ie: a is the 0th char
+     *
      * @param i
      * @return ith char of alphabet, null if input not valid
      */
@@ -669,9 +679,10 @@ public class BotUtils {
     /**
      * Utility for sorting a initDataMap
      * needs work for sorting by key, since Entry#compareingByKey does not return correct type
-     * @param map to sort
+     *
+     * @param map               to sort
      * @param smallestToLargest sort from smallest to largest?
-     * @param sortByValue sort by value?
+     * @param sortByValue       sort by value?
      * @param <K>
      * @param <V>
      * @return sorted initDataMap
@@ -710,11 +721,11 @@ public class BotUtils {
     /**
      * Limits the length of a String
      *
-     * @param s input string
-     * @param length target length
+     * @param s            input string
+     * @param length       target length
      * @param useDotDotDot end with "..."? length includes ...
-     * @param cutAtChar end the string at the following character?
-     * @param cutChar character to use if cutAtChar is true
+     * @param cutAtChar    end the string at the following character?
+     * @param cutChar      character to use if cutAtChar is true
      * @return string within target length
      */
     public static String limitStrLen(String s, int length, boolean useDotDotDot, boolean cutAtChar, char cutChar) {
@@ -743,11 +754,12 @@ public class BotUtils {
     public static double stringSimilarity(String s1, String s2) {
         return leven.distance(s1, s2);
     }
+
     public static int stringSimilarityInt(String s1, String s2) {
         return (int) leven.distance(s1, s2);
     }
 
-    public static String generateWeirdFlex(){
+    public static String generateWeirdFlex() {
         return new StringBuilder()
                 .append(getRandStrArr(wfboWeird)).append(" ")
                 .append(getRandStrArr(wfboFlex)).append(" ")
@@ -758,11 +770,12 @@ public class BotUtils {
 
     /**
      * generates sha-256 hash for an input string
+     *
      * @param input any arbitrary input String
      * @return sha256 hashed String output
      */
     public static String SHA256(String input) {
-        try{
+        try {
             byte[] hash = messageDigest.digest(input.getBytes(UTF_8));
             StringBuilder hexString = new StringBuilder();
 
@@ -773,7 +786,7 @@ public class BotUtils {
             }
 
             return hexString.toString();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return null;
 
@@ -826,20 +839,20 @@ public class BotUtils {
     }
 
     public static boolean isLinux() {
-        String os =  System.getProperty("os.name").toLowerCase();
+        String os = System.getProperty("os.name").toLowerCase();
         return os.contains("nix") || os.contains("nux") || os.contains("aix");
     }
 
     /**
-     *  credit to https://github.com/Lmperatoreq/HastebinAPI
+     * credit to https://github.com/Lmperatoreq/HastebinAPI
      */
     public static String makeHasteGetUrl(String contents) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection)new URL("https://hastebin.com/documents").openConnection(); // might want to try hasteb.in
+        HttpURLConnection connection = (HttpURLConnection) new URL("https://hastebin.com/documents").openConnection(); // might want to try hasteb.in
 
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
 
-        connection.setRequestProperty("user-agent", "Scala/Scarcity-Epson");
+        connection.setRequestProperty("user-agent", "Aspect");
 
         OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
 
@@ -859,7 +872,7 @@ public class BotUtils {
 
     public static EmbedBuilder getQuoteEmbed() {
         String jsonArray = getStringFromUrl("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1");
-        String json = jsonArray.substring(1, jsonArray.length()-1);
+        String json = jsonArray.substring(1, jsonArray.length() - 1);
         QuoteContainer quote = gson.fromJson(json, QuoteContainer.class);
 
         return new EmbedBuilder()
@@ -893,8 +906,9 @@ public class BotUtils {
 
     /**
      * returns milliseconds to next Xth hour
-     *
+     * <p>
      * note: Timezone is Los Angeles / Pacific
+     *
      * @param hour24 24 hour format for desired target time
      * @return milliseconds until hour24
      */
@@ -904,18 +918,20 @@ public class BotUtils {
 
     /**
      * used to determine milliseconds until next specified time.
-     *
+     * <p>
      * example: 18:40 in Vancouver (local)
-     * @param hours24  18
-     * @param minutes 40
-     * @param seconds 0
-     * @param millis 0
+     *
+     * @param hours24      18
+     * @param minutes      40
+     * @param seconds      0
+     * @param millis       0
      * @param timeZoneName "America/Los_Angeles"
      * @return millis until next 18:40 in Vancouver (local)
      */
     public static long millisToNextHHMMSSMMMM(int hours24, int minutes, int seconds, int millis, String timeZoneName) {
         // validate timezone
-        if (!ZoneId.getAvailableZoneIds().contains(timeZoneName)) throw new ZoneRulesException("Invalid zone name:\t" + timeZoneName);
+        if (!ZoneId.getAvailableZoneIds().contains(timeZoneName))
+            throw new ZoneRulesException("Invalid zone name:\t" + timeZoneName);
 
         Instant now = Instant.now();
         ZoneId zoneId = ZoneId.of(timeZoneName);
@@ -926,7 +942,7 @@ public class BotUtils {
         Instant todayInst = zonedNow.plusHours(hours24)
                 .plusMinutes(minutes)
                 .plusSeconds(seconds)
-                .plusNanos((long)(millis * 10E6))
+                .plusNanos((long) (millis * 10E6))
                 .toInstant();
 
         // tmr at input time
@@ -935,7 +951,7 @@ public class BotUtils {
                 .plusHours(hours24)
                 .plusMinutes(minutes)
                 .plusSeconds(seconds)
-                .plusNanos((long)(millis * 10E6))
+                .plusNanos((long) (millis * 10E6))
                 .toInstant();
 
         // take the one that is right after now
@@ -945,7 +961,7 @@ public class BotUtils {
     }
 
     public static void unregListenerAfter10sec(IMessage embedMessage, IListener reactionListener, MessageReceivedEvent event) {
-        Runnable removeListener = () -> {	                    // unregister listener after x ms
+        Runnable removeListener = () -> {                        // unregister listener after x ms
             try {
                 Thread.sleep(10000);
             } catch (InterruptedException ignored) {
@@ -979,13 +995,13 @@ public class BotUtils {
                 event.getGuild().getVoiceChannelsByName(
                         event.getGuild().getVoiceChannels().stream()
                                 .map(IChannel::getName)
-                                .map(name -> new Pair<>(name, name.toLowerCase().replaceAll("^[ -~]", "")))
+                                .map(name -> new Pair<>(name, name.toLowerCase().replaceAll("^[ -~]", "").trim()))
                                 .sorted(Comparator.comparingDouble(o -> Math.min(
                                         stringSimilarity(o.getKey(), arg),
                                         stringSimilarity(o.getValue(), arg.toLowerCase()))))
                                 .filter(pair ->
-                                        stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length()/2) ||
-                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length()/2))
+                                        stringSimilarity(pair.getKey(), arg) < Math.max(2, pair.getKey().length() / 2) ||
+                                                stringSimilarity(pair.getValue(), arg.toLowerCase()) < Math.max(2, pair.getValue().length() / 2))
                                 .findFirst()
                                 .get().getKey()
                 ).get(0);
@@ -1000,12 +1016,15 @@ public class BotUtils {
     public static String concatArgs(List<String> args) {
         return String.join(" ", args);
     }
+
     public static String concatArgs(List<String> args, String delim) {
         return String.join(delim, args);
     }
+
     public static String concatArgs(String[] args) {
         return concatArgs(Arrays.stream(args).collect(Collectors.toList()));
     }
+
     public static String concatArgs(String[] args, String delim) {
         return concatArgs(Arrays.stream(args).collect(Collectors.toList()), delim);
     }

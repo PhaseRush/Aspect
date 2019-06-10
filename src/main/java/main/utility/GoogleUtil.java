@@ -8,7 +8,9 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
+import com.google.api.services.youtube.model.VideoStatistics;
 import main.Aspect;
+import main.utility.metautil.BotUtils;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -39,12 +41,49 @@ public class GoogleUtil {
         }
 
         youtube = new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, request -> {
-        }).build();
+        })
+                .setApplicationName("AspectV2")
+                .build();
     }
+
+
+//    /**
+//     * Authorizes the installed application to access user's protected data.
+//     */
+//    private static Credential authorize() throws Exception {
+//        // load client secrets
+//        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
+//                new InputStreamReader(GoogleUtil.class.getResourceAsStream("/client_secrets.json"))); //file to input stream
+//        // set up authorization code flow
+//        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+//                httpTransport, JSON_FACTORY, clientSecrets,
+//                Collections.singleton(CalendarScopes.CALENDAR)).setDataStoreFactory(dataStoreFactory)
+//                .build();
+//        // authorize
+//        return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+//    }
 
     public static YouTube getYoutube() {
         return youtube;
     }
+
+    public static VideoStatistics getYTRatings(String videoId) {
+        System.out.println("trying with id: " + videoId);
+        try {
+            return youtube.videos()
+                    .list("statistics")
+                    .setKey(BotUtils.YOUTUBE_API_KEY)
+                    .setId(videoId)
+                    .execute()
+                    .getItems()
+                    .get(0)
+                    .getStatistics();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public static void prettyPrintYoutube(Collection<SearchResult> searchResults, String query) {
 

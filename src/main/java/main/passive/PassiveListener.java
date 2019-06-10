@@ -1,8 +1,11 @@
 package main.passive;
 
+import com.google.api.services.youtube.model.VideoStatistics;
 import com.google.common.math.BigIntegerMath;
 import main.commands.dontopendeadinside.games.CoinFlip;
+import main.utility.GoogleUtil;
 import main.utility.RedditUtil;
+import main.utility.Visuals;
 import main.utility.metautil.BotUtils;
 import main.utility.music.MasterManager;
 import net.dean.jraw.ApiException;
@@ -19,7 +22,10 @@ import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 import sx.blah.discord.util.RequestBuffer;
 
+import java.awt.*;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,6 +37,10 @@ import java.util.stream.Collectors;
 public class PassiveListener {
     // private static ExecutorService executor = Executors.newFixedThreadPool(2);
     private static Pattern unexpFactRegex = Pattern.compile("\\b[0-9]+!");
+
+    private static Pattern youtubeIdRegex = Pattern.compile
+            ("^.*(youtu\\.be\\/|v\\/|u\\/\\w\\/|embed\\/|watch\\?v=|\\&v=)([^#\\&\\?]*).*");
+    //("^.*(youtu\\.be\\/|v\\/|u\\/\\w\\/|embed\\/|watch\\?v=|\\&v=)([^#\\&\\?]*).*");
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
@@ -44,7 +54,8 @@ public class PassiveListener {
             if (event.getAuthor().isBot()) return;
             getEmojiFromMsg(event, event.getMessage().getFormattedContent())
                     .forEach(emoji -> RequestBuffer.request(() -> event.getMessage().addReaction(emoji)));
-        } catch (NullPointerException | RateLimitException ignored) {} // dont care
+        } catch (NullPointerException | RateLimitException ignored) {
+        } // dont care
     }
 
     private List<IEmoji> getEmojiFromMsg(ChannelEvent event, String msgContent) {
@@ -63,7 +74,7 @@ public class PassiveListener {
                 String subR;
                 if (afterR.contains(" "))
                     subR = afterR.substring(0, afterR.indexOf(" "));
-                else subR = afterR.replaceAll("[.,#!$%^&*;:{}=\\-_`~()]",""); //dont replace '/'
+                else subR = afterR.replaceAll("[.,#!$%^&*;:{}=\\-_`~()]", ""); //dont replace '/'
 
                 // check name length limit (20)
                 if (subR.length() > 20) return;
@@ -99,7 +110,7 @@ public class PassiveListener {
             group = matcher.group();
         } else return;
 
-        int num = Integer.valueOf(group.substring(0, group.length()-1));
+        int num = Integer.valueOf(group.substring(0, group.length() - 1));
         if (num > 797) return;
         BigInteger fact = BigIntegerMath.factorial(num);
 
@@ -113,7 +124,7 @@ public class PassiveListener {
         String alexa = "alexa play despacito";
 
         //BotUtils.send(event.getChannel(), String.valueOf(levenshtein.distance(msg,alexa)));
-        if (BotUtils.stringSimilarity(msg, alexa) <3 || msg.contains(alexa)) {
+        if (BotUtils.stringSimilarity(msg, alexa) < 3 || msg.contains(alexa)) {
             if (event.getClient().getOurUser().getVoiceStateForGuild(event.getGuild()).getChannel()
                     != event.getAuthor().getVoiceStateForGuild(event.getGuild()).getChannel()) {
 
@@ -151,7 +162,8 @@ public class PassiveListener {
                 BotUtils.stringSimilarity(msg, "insert pikachu face"),
                 BotUtils.stringSimilarity(msg, "surprised pikachu face"));
 
-        if (similarity < 3) BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://i.imgur.com/sohWhy9.png"));
+        if (similarity < 3)
+            BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://i.imgur.com/sohWhy9.png"));
     }
 
     @EventSubscriber
@@ -216,7 +228,7 @@ public class PassiveListener {
      * enjoy this lullaby
      */
     @EventSubscriber
-    public void viviStopSleeping (UserVoiceChannelEvent event) {
+    public void viviStopSleeping(UserVoiceChannelEvent event) {
         if (event.getUser().getStringID().equals("167418444067766273"))
             event.getGuild().getAFKChannel().getConnectedUsers().stream()
                     .filter(u -> u.getStringID().equals("167418444067766273"))
@@ -226,6 +238,39 @@ public class PassiveListener {
                             .findFirst()
                             .ifPresent(u::moveToVoiceChannel)
                     );
+    }
+
+    @EventSubscriber
+    public void youtubeStats(MessageReceivedEvent event) {
+        String msg = event.getMessage().getFormattedContent();
+        Matcher matcher = youtubeIdRegex.matcher(msg);
+        String videoId = matcher.matches() ? matcher.group(2) : null;
+        if (videoId == null) return; // weird edge case so return
+
+        VideoStatistics stats = GoogleUtil.getYTRatings(videoId);
+
+        BigDecimal likes = new BigDecimal(stats.getLikeCount());
+        BigDecimal dislikes = new BigDecimal(stats.getDislikeCount());
+        BigDecimal totalRatings = likes.add(dislikes);
+
+        EmbedBuilder eb = new EmbedBuilder()
+                .withTitle("YouTube Analytics")
+                .withDesc(String.format("Views: %s\nLikes: %s = %s%%\nDislikes: %s = %s%%\nTotal Ratings: %s\nComments: %s",
+                        stats.getViewCount(),
+                        stats.getLikeCount(),
+                        likes.multiply(new BigDecimal(100)).divide(totalRatings, RoundingMode.HALF_DOWN),
+                        stats.getDislikeCount(),
+                        dislikes.multiply(new BigDecimal(100)).divide(totalRatings, RoundingMode.HALF_DOWN),
+                        totalRatings,
+                        stats.getCommentCount()
+                ));
+        try {
+            eb.withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage("https://i1.ytimg.com/vi/" + videoId + "/hqdefault.jpg")));
+        } catch (Exception e) {// happens when cant retrieve image
+            eb.withColor(Color.BLACK);
+        }
+
+        BotUtils.send(event.getChannel(), eb);
     }
 
 
