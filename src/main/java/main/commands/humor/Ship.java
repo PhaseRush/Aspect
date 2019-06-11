@@ -75,7 +75,7 @@ public class Ship implements Command {
         if (cupid.getStringID().equals(psyche.getStringID()))
             return "You're gay";
         else
-            return BotUtils.getRandomFromListString(advice);
+            return BotUtils.getRandFromList(advice);
     }
 
     private String initNickname(IUser user, MessageReceivedEvent event) {

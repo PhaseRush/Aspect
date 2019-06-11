@@ -75,7 +75,7 @@ public class Greet implements Command {
                 vc -> vc.getConnectedUsers().stream()
                         .filter(u -> !u.isBot())
                         .forEach( u -> sb
-                                .append(BotUtils.getRandomFromArrayString(greetings) + ", ")
+                                .append(BotUtils.getRandFromArray(greetings) + ", ")
                                 .append((customMap.containsKey(u.getLongID())?
                                         customMap.get(u.getLongID()) :
                                         BotUtils.getNickOrDefault(u, event.getGuild()))

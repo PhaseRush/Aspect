@@ -9,7 +9,7 @@ import java.util.List;
 public class Insult implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.send(event.getChannel(), BotUtils.getRandomFromListString(BotUtils.insults));
+        BotUtils.send(event.getChannel(), BotUtils.getRandFromList(BotUtils.insults));
     }
 
     @Override

@@ -49,10 +49,10 @@ public class WfRandomLoadout implements Command {
                         .withTitle("Warframe :: Random Loadout")
                         .withColor(Visuals.getRandVibrantColour())
                         .withDesc("```" +
-                                "\nW : " + BotUtils.getRandomFromArrayString(warframes) +
-                                "\nP : " + BotUtils.getRandomFromArrayString(primaries) +
-                                "\nS : " + BotUtils.getRandomFromArrayString(secondaries) +
-                                "\nM : " + BotUtils.getRandomFromArrayString(melees) + "```"
+                                "\nW : " + BotUtils.getRandFromArray(warframes) +
+                                "\nP : " + BotUtils.getRandFromArray(primaries) +
+                                "\nS : " + BotUtils.getRandFromArray(secondaries) +
+                                "\nM : " + BotUtils.getRandFromArray(melees) + "```"
                         )
         );
     }

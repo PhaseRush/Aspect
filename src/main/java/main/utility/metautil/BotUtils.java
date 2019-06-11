@@ -576,12 +576,17 @@ public class BotUtils {
         RequestBuffer.request(() -> iMessage.addReaction(ReactionEmoji.of("\u274C")));
     }
 
-    public static String getRandomFromListString(List<String> listString) {
-        return listString.get(tlr.nextInt(listString.size()));
+    public static <T> T getRandFromList(List<T> list) {
+        try {
+            return list.get(tlr.nextInt(list.size()));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static String getRandomFromArrayString(String[] array) {
-        return array[ThreadLocalRandom.current().nextInt(array.length)];
+    public static <T> T getRandFromArray(T[] array) {
+        return array[tlr.nextInt(array.length)];
     }
 
     public static void joinVC(MessageReceivedEvent event) {
@@ -897,11 +902,21 @@ public class BotUtils {
                 .flatMap(strStrMap -> strStrMap.values().stream())
                 .collect(Collectors.toList());
 
-        String randQuote = champQuotes.get(ThreadLocalRandom.current().nextInt(champQuotes.size()));
+        List<Map.Entry<String, Map<String, String>>> statusListMap = new ArrayList<>(quoteObj.getQuotes().entrySet());
+        Map.Entry<String, Map<String, String>> randStatusQuote = getRandFromList(statusListMap);
 
+        while (randStatusQuote.getValue().values().isEmpty()) {
+            randStatusQuote = getRandFromList(statusListMap);
+        }
+
+        String statusQuote = getRandFromList(new ArrayList<>(randStatusQuote.getValue().values()));
+        if (statusQuote == null) {
+            System.out.println("test");
+        }
         return new EmbedBuilder()
                 .withColor(Visuals.getRandVibrantColour())
-                .withDesc(randQuote + "\n\t-" + champName);
+                .withDesc(statusQuote +
+                        "\n\t-" + champName + ",\t" + randStatusQuote.getKey());
     }
 
     /**

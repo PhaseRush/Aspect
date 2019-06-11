@@ -2,6 +2,7 @@ package main.commands.utilitycommands.metautil;
 
 import main.Aspect;
 import main.Command;
+import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
 import java.io.BufferedWriter;
@@ -20,6 +21,11 @@ public class Testing implements Command {
         } catch (IOException e) {
             Aspect.LOG.info("rip file writing");
         }
+    }
+
+    @Override
+    public boolean canRun(MessageReceivedEvent event, List<String> args) {
+        return BotUtils.isDev(event);
     }
 
     @Override
