@@ -60,7 +60,7 @@ public class Visuals {
     }
 
     public static Color getRandVibrantColour() {
-        // this always generates the same color on startup.
+        // this always generates the same color on startup b/c using thread local random
         return Color.getHSBColor(rs.nextFloat(), .9f, 1.0f);
     }
 
@@ -80,12 +80,12 @@ public class Visuals {
     }
 
     public static byte[] urlToImageByteArray(String url) {
-        try( InputStream in = new BufferedInputStream(new URL(url).openStream());
+        try (InputStream in = new BufferedInputStream(new URL(url).openStream());
              ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 
             byte[] buf = new byte[1024];
             int n = 0;
-            while (-1!=(n=in.read(buf)))
+            while (-1 != (n = in.read(buf)))
                 out.write(buf, 0, n);
             return out.toByteArray();
         } catch (MalformedURLException e) {
@@ -117,17 +117,17 @@ public class Visuals {
 
         for (int i = 0; i < bi.getWidth(); i++) { // gets fucked at some urls
             for (int j = 0; j < bi.getHeight(); j++) {
-                Color pixelColor = new Color(bi.getRGB(i,j));
+                Color pixelColor = new Color(bi.getRGB(i, j));
                 sumR += pixelColor.getRed();
                 sumG += pixelColor.getGreen();
                 sumB += pixelColor.getBlue();
             }
         }
-        long avgR = sumR/255;
-        long avgG = sumG/255;
-        long avgB = sumB/255;
+        long avgR = sumR / 255;
+        long avgG = sumG / 255;
+        long avgB = sumB / 255;
 
-        float[] hsbArray = Color.RGBtoHSB((int) avgR, (int)avgG, (int)avgB, null);
+        float[] hsbArray = Color.RGBtoHSB((int) avgR, (int) avgG, (int) avgB, null);
         return Color.getHSBColor(hsbArray[0], .9f, 1.0f);
     }
 
@@ -138,7 +138,7 @@ public class Visuals {
     public static Color analyzeWeightedImageColor(Image i, int ratio) {
         BufferedImage bi = convertImageToBufferedImage(i);
 
-        BufferedImage img = bi.getSubimage(bi.getWidth()/ratio, bi.getHeight()/ratio, bi.getWidth()*(ratio-1)/ratio, bi.getHeight()*(ratio-1)/ratio); // fill in the corners of the desired crop location here
+        BufferedImage img = bi.getSubimage(bi.getWidth() / ratio, bi.getHeight() / ratio, bi.getWidth() * (ratio - 1) / ratio, bi.getHeight() * (ratio - 1) / ratio); // fill in the corners of the desired crop location here
         BufferedImage copyOfImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics g = copyOfImage.createGraphics();
         g.drawImage(img, 0, 0, null);
@@ -148,8 +148,7 @@ public class Visuals {
 
     // https://stackoverflow.com/questions/13605248/java-converting-image-to-bufferedimage
     private static BufferedImage convertImageToBufferedImage(Image img) {
-        if (img instanceof BufferedImage)
-        {
+        if (img instanceof BufferedImage) {
             return (BufferedImage) img;
         }
 
@@ -178,9 +177,9 @@ public class Visuals {
         int minBottom = height - 1;
 
         top:
-        for (;top < bottom; top++){
-            for (int x = 0; x < width; x++){
-                if (raster.getSample(x, top, 0) != 0){
+        for (; top < bottom; top++) {
+            for (int x = 0; x < width; x++) {
+                if (raster.getSample(x, top, 0) != 0) {
                     minRight = x;
                     minBottom = top;
                     break top;
@@ -189,9 +188,9 @@ public class Visuals {
         }
 
         left:
-        for (;left < minRight; left++){
-            for (int y = height - 1; y > top; y--){
-                if (raster.getSample(left, y, 0) != 0){
+        for (; left < minRight; left++) {
+            for (int y = height - 1; y > top; y--) {
+                if (raster.getSample(left, y, 0) != 0) {
                     minBottom = y;
                     break left;
                 }
@@ -199,9 +198,9 @@ public class Visuals {
         }
 
         bottom:
-        for (;bottom > minBottom; bottom--){
-            for (int x = width - 1; x >= left; x--){
-                if (raster.getSample(x, bottom, 0) != 0){
+        for (; bottom > minBottom; bottom--) {
+            for (int x = width - 1; x >= left; x--) {
+                if (raster.getSample(x, bottom, 0) != 0) {
                     minRight = x;
                     break bottom;
                 }
@@ -209,9 +208,9 @@ public class Visuals {
         }
 
         right:
-        for (;right > minRight; right--){
-            for (int y = bottom; y >= top; y--){
-                if (raster.getSample(right, y, 0) != 0){
+        for (; right > minRight; right--) {
+            for (int y = bottom; y >= top; y--) {
+                if (raster.getSample(right, y, 0) != 0) {
                     break right;
                 }
             }
@@ -255,6 +254,7 @@ public class Visuals {
 
     /**
      * get rid of this thing as well someday
+     *
      * @param title
      * @param value
      * @param inLine
@@ -337,7 +337,7 @@ public class Visuals {
 
     public static void saveImg(BufferedImage img, String path) {
         try {
-            ImageIO.write(img, "png", new File(path+".png"));
+            ImageIO.write(img, "png", new File(path + ".png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -345,7 +345,7 @@ public class Visuals {
 
     public static String getCatMedia() {
         String json = BotUtils.getStringFromUrl("https://api.thecatapi.com/v1/images/search?size=full");
-        json = json.substring(1, json.length()-1);
+        json = json.substring(1, json.length() - 1);
         CatMediaContainer cat = BotUtils.gson.fromJson(json, CatMediaContainer.class);
         return cat.getUrl();
     }
@@ -356,7 +356,7 @@ public class Visuals {
 
         TeXIcon icon = formula.createTeXIcon(TeXConstants.STYLE_DISPLAY, 20);
 
-        icon.setInsets(new Insets(5,5,5,5));
+        icon.setInsets(new Insets(5, 5, 5, 5));
 
         BufferedImage texBuffImg =
                 new BufferedImage(
@@ -366,7 +366,7 @@ public class Visuals {
 
         Graphics2D g2d = texBuffImg.createGraphics();
         g2d.setColor(Color.white);
-        g2d.fillRect(0,0,icon.getIconWidth(),icon.getIconHeight());
+        g2d.fillRect(0, 0, icon.getIconWidth(), icon.getIconHeight());
         JLabel jl = new JLabel();
         jl.setForeground(new Color(0, 0, 0));
         icon.paintIcon(jl, g2d, 0, 0);

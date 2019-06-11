@@ -68,7 +68,7 @@ public class GoogleUtil {
     }
 
     public static VideoStatistics getYTRatings(String videoId) {
-        System.out.println("trying with id: " + videoId);
+        Aspect.LOG.info("Fetching YouTube ratings for ID: " + videoId);
         try {
             return youtube.videos()
                     .list("statistics")

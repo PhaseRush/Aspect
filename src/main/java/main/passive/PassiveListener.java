@@ -42,9 +42,8 @@ public class PassiveListener {
     // private static ExecutorService executor = Executors.newFixedThreadPool(2);
     private static Pattern unexpFactRegex = Pattern.compile("\\b[0-9]+!");
 
-    private static Pattern youtubeIdRegex = Pattern.compile
-            ("^.*(youtu\\.be\\/|v\\/|u\\/\\w\\/|embed\\/|watch\\?v=|\\&v=)([^#\\&\\?]*).*");
-    //("^.*(youtu\\.be\\/|v\\/|u\\/\\w\\/|embed\\/|watch\\?v=|\\&v=)([^#\\&\\?]*).*");
+    // matches youtube urls, videoId in group 2
+    private static Pattern youtubeIdRegex = Pattern.compile("^.*(youtu\\.be/|v/|u/\\w/|embed/|watch\\?v=|&v=)([^#&?]*).*");
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
@@ -71,8 +70,7 @@ public class PassiveListener {
 
     @EventSubscriber
     public void subredditLinker(MessageReceivedEvent event) {
-        String[] msgSplit = event.getMessage().getFormattedContent().split(" ");
-        for (String s : msgSplit) {
+        for (String s : event.getMessage().getFormattedContent().split(" ")) {
             if (s.matches("(.*\\s)*/?(r/).*")) {
                 String afterR = s.substring(s.indexOf("r/"));
                 String subR;
@@ -106,8 +104,7 @@ public class PassiveListener {
 
     @EventSubscriber
     public void unexpectedFactorial(MessageReceivedEvent event) {
-        String msg = event.getMessage().getFormattedContent();
-        Matcher matcher = unexpFactRegex.matcher(msg);
+        Matcher matcher = unexpFactRegex.matcher(event.getMessage().getFormattedContent());
 
         String group;
         if (matcher.find()) {
@@ -173,7 +170,7 @@ public class PassiveListener {
     @EventSubscriber
     public void coinFlip(MessageReceivedEvent event) {
         String msg = event.getMessage().getFormattedContent().toLowerCase().trim();
-        if (msg.length() < 6) return;
+        if (msg.length() < 6 || msg.length() > 20) return;
 
         if (BotUtils.stringSimilarity(msg, "flip a coin") < 3) CoinFlip.flip(event);
     }
@@ -244,10 +241,19 @@ public class PassiveListener {
                     );
     }
 
+    /**
+     * Sends an embed with
+     * -View count
+     * -Likes
+     * -Dislikes
+     * -Total Ratings
+     * -Comments
+     *
+     * @param event message event which may or may not contain a youtube link
+     */
     @EventSubscriber
     public void youtubeStats(MessageReceivedEvent event) {
-        String msg = event.getMessage().getFormattedContent();
-        Matcher matcher = youtubeIdRegex.matcher(msg);
+        Matcher matcher = youtubeIdRegex.matcher(event.getMessage().getFormattedContent());
         String videoId = matcher.matches() ? matcher.group(2) : null;
         if (videoId == null) return; // weird edge case so return
 
@@ -277,7 +283,7 @@ public class PassiveListener {
                 .withDesc(TableUtil.renderInCodeBlock(table).toString());
 
         try {
-            eb.withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage("https://i1.ytimg.com/vi/" + videoId + "/hqdefault.jpg")));
+            eb.withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage("https://i1.ytimg.com/vi/" + videoId + "/hqdefault.jpg"))); // analyze thumbnail
         } catch (Exception e) {// happens when cant retrieve image
             eb.withColor(Color.BLACK);
         }
