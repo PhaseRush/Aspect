@@ -48,7 +48,7 @@ public class WarframeUtil {
             levenMap.put(s, leven.distance(s.toLowerCase(), userString.toLowerCase()));
         }
 
-        Map<String, Double> sortedLeven = sortByValue(levenMap); //linkedHashMap
+        Map<String, Double> sortedLeven = BotUtils.sortMap(levenMap, true, true); //linkedHashMap
         List<String> sortedNames = new LinkedList<>();
 
         if (new LinkedList<>(sortedLeven.values()).get(0).equals(Double.valueOf("0")))
@@ -60,31 +60,31 @@ public class WarframeUtil {
     }
 
     //https://www.mkyong.com/java/how-to-sort-a-map-in-java/
-    public static Map<String, Double> sortByValue(Map<String, Double> unsortMap) {
-
-        // 1. Convert Map to List of Map
-        List<Map.Entry<String, Double>> list = new LinkedList<>(unsortMap.entrySet());
-
-        // 2. Sort list with Collections.sort(), provide a custom Comparator
-        //    Try switch the o1 o2 position for a different order
-        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
-            public int compare(Map.Entry<String, Double> o1,
-                               Map.Entry<String, Double> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
-
-        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
-        Map<String, Double> sortedMap = new LinkedHashMap<>();
-        for (Map.Entry<String, Double> entry : list) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-
-        return sortedMap;
-    }
+//    public static Map<String, Double> sortByValue(Map<String, Double> unsortMap) {
+//
+//        // 1. Convert Map to List of Map
+//        List<Map.Entry<String, Double>> list = new LinkedList<>(unsortMap.entrySet());
+//
+//        // 2. Sort list with Collections.sort(), provide a custom Comparator
+//        //    Try switch the o1 o2 position for a different order
+//        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+//            public int compare(Map.Entry<String, Double> o1,
+//                               Map.Entry<String, Double> o2) {
+//                return (o1.getValue()).compareTo(o2.getValue());
+//            }
+//        });
+//
+//        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+//        Map<String, Double> sortedMap = new LinkedHashMap<>();
+//        for (Map.Entry<String, Double> entry : list) {
+//            sortedMap.put(entry.getKey(), entry.getValue());
+//        }
+//
+//        return sortedMap;
+//    }
 
     public static EmbedBuilder generateAlertsEmbed() {
-        LinkedList<WarframeAlert> alerts = getCurrentAlerts();
+        List<WarframeAlert> alerts = getCurrentAlerts();
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Warframe | Alerts")
@@ -97,9 +97,9 @@ public class WarframeUtil {
         return eb;
     }
 
-    public static LinkedList<WarframeAlert> getCurrentAlerts() {
+    public static List<WarframeAlert> getCurrentAlerts() {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/alerts");
-        Type alertListType = new TypeToken<LinkedList<WarframeAlert>>() {
+        Type alertListType = new TypeToken<List<WarframeAlert>>() {
         }.getType();
         return new Gson().fromJson(json, alertListType);
     }

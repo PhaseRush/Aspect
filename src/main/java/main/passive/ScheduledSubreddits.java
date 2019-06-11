@@ -72,7 +72,7 @@ public class ScheduledSubreddits {
     private EmbedBuilder embedInit(DefaultPaginator<Submission> defaultPaginator, int[] currIdx) {
         Pair<Submission, Integer> sub = getNextImage(defaultPaginator, currIdx[0]);
         Submission picPost = sub.getKey();
-        currIdx[0] = sub.getValue() + 1; // increment everytime
+        currIdx[0] = sub.getValue() + 1; // increment every time
 
         return new EmbedBuilder()
                 .withTitle(picPost.getTitle())

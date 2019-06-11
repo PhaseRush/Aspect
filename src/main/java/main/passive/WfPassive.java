@@ -13,7 +13,7 @@ import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.StatusType;
 import sx.blah.discord.util.EmbedBuilder;
 
-import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -50,10 +50,12 @@ public class WfPassive {
             Aspect.LOG.info("warframe cetus passive time error");
         }
     }
+
     public static boolean killCetusUpdater() {
         try {
             return cetusStatusUpdater.cancel(true);
-        } catch (NullPointerException ignored) {} // throws if not running in the first place
+        } catch (NullPointerException ignored) {
+        } // throws if not running in the first place
 
         return false;
     }
@@ -64,7 +66,7 @@ public class WfPassive {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         final Runnable alertFilter = () -> {
-            LinkedList<WarframeAlert> alerts = WarframeUtil.getCurrentAlerts();
+            List<WarframeAlert> alerts = WarframeUtil.getCurrentAlerts();
             alerts.removeIf(warframeAlert -> {
                 boolean containsKeyword = false;
                 for (String s : WarframeUtil.alertFilters)

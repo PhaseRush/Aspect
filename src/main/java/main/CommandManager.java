@@ -237,7 +237,7 @@ public class CommandManager {
         commandMap.put("skin", new SkinDetail());
         commandMap.put("lolrecent", new PreviousMatch());
         commandMap.put("lolign", new LeagueIgnCheck());
-        commandMap.put("px", new RandomQuote());
+        commandMap.put("lolquote", new LeagueQuote());
 
         //Warframe
         commandMap.put("wfdaily", new WfDailyDeals());

@@ -5,6 +5,7 @@ import com.google.common.math.BigIntegerMath;
 import com.inamik.text.tables.Cell;
 import com.inamik.text.tables.GridTable;
 import com.inamik.text.tables.grid.Border;
+import main.Aspect;
 import main.commands.dontopendeadinside.games.CoinFlip;
 import main.utility.GoogleUtil;
 import main.utility.RedditUtil;
@@ -220,7 +221,8 @@ public class PassiveListener {
         try {
             getEmojiFromMsg(event, event.getMessage().getFormattedContent())
                     .forEach(emoji -> RequestBuffer.request(() -> event.getMessage().removeReaction(event.getClient().getOurUser(), event.getReaction())));
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            Aspect.LOG.warn(e.getLocalizedMessage());
         }
     }
 
@@ -242,7 +244,7 @@ public class PassiveListener {
     }
 
     /**
-     * Sends an embed with
+     * Sends an embed with when link with YouTube video detected
      * -View count
      * -Likes
      * -Dislikes
