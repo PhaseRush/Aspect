@@ -893,30 +893,27 @@ public class BotUtils {
         private String link;
     }
 
+    /**
+     * generates an embed which contains a league quote, the champion, and the status/state in which they say it
+     *
+     * @return EmbedBuilder with quote, champ, and stauts information
+     */
     public static EmbedBuilder getLeagueQuoteEmbed() {
-        List<String> champs = new ArrayList<>(leagueQuoteMap.keySet());
-        String champName = champs.get(ThreadLocalRandom.current().nextInt(champs.size()));
-        LeagueQuoteContainer quoteObj = leagueQuoteMap.get(champName);
-
-        List<String> champQuotes = quoteObj.getQuotes().values().stream()
-                .flatMap(strStrMap -> strStrMap.values().stream())
-                .collect(Collectors.toList());
-
-        List<Map.Entry<String, Map<String, String>>> statusListMap = new ArrayList<>(quoteObj.getQuotes().entrySet());
+        final List<String> champs = new ArrayList<>(leagueQuoteMap.keySet());
+        final String champName = champs.get(ThreadLocalRandom.current().nextInt(champs.size()));
+        final LeagueQuoteContainer quoteObj = leagueQuoteMap.get(champName);
+        final List<Map.Entry<String, Map<String, String>>> statusListMap = new ArrayList<>(quoteObj.getQuotes().entrySet());
         Map.Entry<String, Map<String, String>> randStatusQuote = getRandFromList(statusListMap);
 
         while (randStatusQuote.getValue().values().isEmpty()) {
             randStatusQuote = getRandFromList(statusListMap);
         }
 
-        String statusQuote = getRandFromList(new ArrayList<>(randStatusQuote.getValue().values()));
-        if (statusQuote == null) {
-            System.out.println("test");
-        }
+        final String statusQuote = getRandFromList(new ArrayList<>(randStatusQuote.getValue().values()));
+
         return new EmbedBuilder()
                 .withColor(Visuals.getRandVibrantColour())
-                .withDesc(statusQuote +
-                        "\n\t-" + champName + ",\t" + randStatusQuote.getKey());
+                .withDesc(statusQuote + "\n\t-" + champName + ",\t" + randStatusQuote.getKey());
     }
 
     /**
