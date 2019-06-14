@@ -38,7 +38,7 @@ public class Aspect {
     // SLF4J logger
     public static final Logger LOG = LoggerFactory.getLogger("AspectLog");
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Aspect.LOG.info("Aspect Launching");
         Locale.setDefault(Locale.US);
         Aspect.LOG.info("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));

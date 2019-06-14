@@ -898,9 +898,14 @@ public class BotUtils {
      *
      * @return EmbedBuilder with quote, champ, and stauts information
      */
-    public static EmbedBuilder getLeagueQuoteEmbed() {
+    public static EmbedBuilder getRandLeagueQuoteEmbed() {
         final List<String> champs = new ArrayList<>(leagueQuoteMap.keySet());
         final String champName = champs.get(ThreadLocalRandom.current().nextInt(champs.size()));
+
+        return getLeagueQuoteForChamp(champName);
+    }
+
+    public static EmbedBuilder getLeagueQuoteForChamp(String champName) {
         final LeagueQuoteContainer quoteObj = leagueQuoteMap.get(champName);
         final List<Map.Entry<String, Map<String, String>>> statusListMap = new ArrayList<>(quoteObj.getQuotes().entrySet());
         Map.Entry<String, Map<String, String>> randStatusQuote = getRandFromList(statusListMap);
@@ -938,7 +943,7 @@ public class BotUtils {
      * @param seconds      0
      * @param millis       0
      * @param timeZoneName "America/Los_Angeles"
-     * @return millis until next 18:40 in Vancouver (local)
+     * @return millis until specified time  (18:40 in vancouver for the example above)
      */
     public static long millisToNextHHMMSSMMMM(int hours24, int minutes, int seconds, int millis, String timeZoneName) {
         // validate timezone
@@ -986,20 +991,33 @@ public class BotUtils {
         listenerExecuter.execute(removeListener);
     }
 
+    /**
+     * @param inputStr input string to perform spell correction on
+     * @return name of command that mostly closely resembles the input string, or null if closest string has
+     * > 2 levenshtein distance, or if the command has blacklisted this particular spellcheck
+     * <p>
+     * note: cannot use autocorrect function because we have special blacklist requirements
+     */
     public static String cmdSpellCorrect(String inputStr) {
         return CommandManager.commandMap.entrySet().stream()
                 .filter(e -> e.getValue().correctable()) // thanks phanta
                 .filter(e -> Math.abs(e.getKey().length() - inputStr.length()) < 2)
                 .map(e -> new Pair<>(e.getKey(), BotUtils.stringSimilarityInt(e.getKey(), inputStr)))
-                .min(Comparator.comparingDouble(main.utility.structures.Pair::getValue))
+                .min(Comparator.comparingDouble(Pair::getValue))
                 .filter(p -> p.getValue() < 2) // the order of this filter and min has caused fat debates in #programming-help
-                .map(main.utility.structures.Pair::getKey)
+                .map(Pair::getKey)
 
                 // this part is for checking the blacklist
                 .map(name -> new Pair<>(name, CommandManager.commandMap.get(name)))
                 .filter(pair -> !pair.getValue().getAutocorrectBlackList().contains(inputStr))
-                .map(main.utility.structures.Pair::getKey)
+                .map(Pair::getKey)
                 .orElse(null);
+    }
+
+    public static String autoCorrect(String input, List<String> pool) {
+        return pool.stream()
+                .min(Comparator.comparingDouble(str -> leven.distance(str, input)))
+                .get();
     }
 
     public static IVoiceChannel fuzzyVoiceMatch(MessageReceivedEvent event, String arg) {

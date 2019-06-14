@@ -51,8 +51,8 @@ public class ScheduledActions {
     @EventSubscriber
     public void leagueQuotes(ReadyEvent event) {
         final Runnable quoter = () -> {
-            BotUtils.send(pantsuGenChannel, BotUtils.getLeagueQuoteEmbed());
-            BotUtils.send(kaitLeagueChannel, BotUtils.getLeagueQuoteEmbed());
+            BotUtils.send(pantsuGenChannel, BotUtils.getRandLeagueQuoteEmbed());
+            BotUtils.send(kaitLeagueChannel, BotUtils.getRandLeagueQuoteEmbed());
         };
 
         pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
