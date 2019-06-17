@@ -37,7 +37,7 @@ public class OverwatchStats implements Command {
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Aspect - Basic Overwatch Profile")
                 //.withThumbnail(stats.getIcon()) @todo
-                .withUrl("https://www.overbuff.com/players/pc/"+ ign + "-" + identifier)
+                .withUrl("https://www.overbuff.com/players/pc/" + ign + "-" + identifier)
                 .withDesc(generateDesc(stats));
 
         BotUtils.send(event.getChannel(), eb);
@@ -59,9 +59,9 @@ public class OverwatchStats implements Command {
         double compWR, quickWR;
         OWGames compGame = comp.getGames(), quickGame = quick.getGames();
         if (compGame.getPlayed() == 0) compWR = -1;
-        else compWR = (double)compGame.getWon()/(double)compGame.getPlayed();
+        else compWR = (double) compGame.getWon() / (double) compGame.getPlayed();
         if (quick.getGames().getPlayed() == 0) quickWR = -1;
-        else quickWR = (double)quickGame.getWon()/(double)quickGame.getPlayed();
+        else quickWR = (double) quickGame.getWon() / (double) quickGame.getPlayed();
 
         sb.append(StatsFactory.generateRow("Winrate", compWR, quickWR, width)).append("\n");
 

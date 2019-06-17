@@ -13,7 +13,7 @@ public class CutePassive {
 
     private static final Map<Long, Long> meowCdMap = new HashMap<>();
     private static final Map<Long, Long> patCdMap = new HashMap<>();
-    private static final List<Long> cuteWhiteList = Arrays.asList(417926479813279754L, 402728027223490572L); //singleton list for now
+    private static final List<Long> cuteWhiteList = Arrays.asList(417926479813279754L, 402728027223490572L);
     private static final Random r = ThreadLocalRandom.current();
 
     private static final Pattern OWO = Pattern.compile("(?i)\\b([o0U*]+[\\s]*[wv3]+[\\s]*[*U0o]+)+\\b"); // added '3' for vivi
@@ -33,6 +33,7 @@ public class CutePassive {
     @EventSubscriber
     public void meow(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; // bots get no meow
+        if (r.nextInt() % 10 != 0) return; // 10% chance
         if (System.currentTimeMillis() - meowCdMap.getOrDefault(event.getChannel().getLongID(), 0L) < 1000) return;
         //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
         if (!MEOW.matcher(event.getMessage().getFormattedContent()).find()) return; // doesnt match
@@ -44,6 +45,7 @@ public class CutePassive {
     @EventSubscriber
     public void pat(MessageReceivedEvent event) {
         if (event.getAuthor().isBot()) return; // bots get no pat
+        if (r.nextInt() % 10 != 0) return; // 10% chance
         if (System.currentTimeMillis() - patCdMap.getOrDefault(event.getChannel().getLongID(), 0L) < 1000) return;
         //if (!cuteWhiteList.contains(event.getGuild().getLongID())) return;
         if (!PAT.matcher(event.getMessage().getFormattedContent()).find()) return; //doesnt match
