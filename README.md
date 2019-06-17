@@ -22,6 +22,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | play | 1 | Adds param to Queue | `$play [YT song/plist]` |
 | nowplaying/current/np| 0 | Displays info about current song | `$np` |
 | skip | 0, 1 | skips 1 song, or \[param\] songs | `$skip 13` |
+| purge | 1 | deletes all songs after x in queue | `$purge 12` |
 | queue/q | 0 | lists the first 15 songs in queue | `$queue` |
 | loop | 0, 1 | loops indefinetly, or \[param\] times | `$loop 3` |
 | shuffle | 0 | shuffles current queue | `$shuffle` |
@@ -29,7 +30,10 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | listsfx | 0 | lists all available sound effects | `$listsfx` |
 | qdel/songdel | 1 | removes song in position x from queue | `$qdel 4` |
 | listmusic | 0 | lists all preconfigured playlists | `$listmusic` |
-| pq - WIP | 0 | lists past queue (past songs) | `$pq` |
+| pq | 0 | lists past queue (past songs) | `$pq` |
+| seek | 1 | goes to that timestamp in the current song | `$seek 4:20` |
+| eq | 1.. | applies an equalizer filter | `$eq [curr, bass, treb]` |
+
 
 #### Misc.
 
@@ -49,6 +53,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | render | 1 | renders an image with text param | `$render Hello!` |
 | freq | 1 | analyses word frequency for tagged user | `$freq @Requeim` |
 | bob | 1 | Spongebob-ify text parameter | `$bob haha so funny` |
+| haste | 1 | dumps ATTACHED file into hastebin | `$haste [attached file]` |
 
 #### General Commands
 
@@ -87,6 +92,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 | lolrecent | 1 | WIP - shows recent match | `$lolrecent SchrödingersKat` |
 | allskins | 1 | lists all skins for \[champion] | `$allskins katarina` |
 | skin | 2 | shows picture of skin | `$skin katarina, [4 or Kitty Cat Katarina]` |
+| lolquote | 0, 1 | shows a random quote (from specified champ) | `$lolquote zed` |
 
 #### Warframe
 
@@ -181,11 +187,12 @@ sweep :: minesweeper game
 - Privacy :: Can give users a role to access private channels if a custom password is pm'd to the bot. Uses SHA-256 for encryption.
 - Summarize :: If a summary exceeds a certain character count, Aspect will upload the summarized text to [Gist](https://gist.github.com/Aspection/)
 - Frequency :: Can count word frequencies and detect spelling mistakes. Provides message analytics for users.
+- Can dump an uploaded text file into hastebin.
 - ... and much, much more.
 
 #### Notes
 - music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
-- $bulkdelete restricted to people with a certain role/privilege
+- $bulkdelete (and certain other commands) restricted to people with a certain role/privileges
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
 
 
