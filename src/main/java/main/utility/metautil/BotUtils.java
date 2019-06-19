@@ -577,12 +577,7 @@ public class BotUtils {
     }
 
     public static <T> T getRandFromList(List<T> list) {
-        try {
-            return list.get(tlr.nextInt(list.size()));
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return list.get(tlr.nextInt(list.size()));
     }
 
     public static <T> T getRandFromArray(T[] array) {
