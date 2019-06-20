@@ -4,11 +4,9 @@ import main.Command;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LeagueQuote implements Command {
-    private final static List<String> allChampNames = new ArrayList<>(BotUtils.leagueQuoteMap.keySet());
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -16,7 +14,7 @@ public class LeagueQuote implements Command {
             BotUtils.send(event.getChannel(), BotUtils.getRandLeagueQuoteEmbed());
         } else {
             BotUtils.send(event.getChannel(),
-                    BotUtils.getLeagueQuoteForChamp(BotUtils.autoCorrect(args.get(0), allChampNames)));
+                    BotUtils.getLeagueQuoteForChamp(BotUtils.autoCorrectChampName(args.get(0))));
         }
     }
 

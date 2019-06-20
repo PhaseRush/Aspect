@@ -1009,10 +1009,14 @@ public class BotUtils {
                 .orElse(null);
     }
 
-    public static String autoCorrect(String input, List<String> pool) {
+    public static String autoCorrect(String input, Collection<String> pool) {
         return pool.stream()
                 .min(Comparator.comparingDouble(str -> leven.distance(str, input)))
                 .get();
+    }
+
+    public static String autoCorrectChampName(String input) {
+        return autoCorrect(input, leagueQuoteMap.keySet());
     }
 
     public static IVoiceChannel fuzzyVoiceMatch(MessageReceivedEvent event, String arg) {
