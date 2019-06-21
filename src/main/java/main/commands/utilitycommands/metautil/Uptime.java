@@ -15,7 +15,7 @@ public class Uptime implements Command {
     }
 
     public static String genUptime() {
-        long millis = System.currentTimeMillis() - Aspect.startTime;
+        long millis = System.currentTimeMillis() - Aspect.startInstant.toEpochMilli();
         int sec = (int) (millis / 1000) % 60;
         int min = (int) ((millis / (1000 * 60)) % 60);
         int hr = (int) ((millis / (1000 * 60 * 60)) % 24);

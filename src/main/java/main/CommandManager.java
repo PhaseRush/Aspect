@@ -227,6 +227,7 @@ public class CommandManager {
         commandMap.put("shutdown", new ForceShutdown());
         commandMap.put("uptime", new Uptime());
         commandMap.put("write", new Testing());
+        commandMap.put("reboot", new Reboot());
 
         //League of Legends -- Showcase
         commandMap.put("lollevel", new BasicLeague());

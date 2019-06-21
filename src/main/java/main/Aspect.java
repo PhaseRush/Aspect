@@ -26,7 +26,6 @@ public class Aspect {
     public static IDiscordClient client;
 
     // Timekeeping
-    public static long startTime;
     public static Instant startInstant;
 
     // System statistics
@@ -39,6 +38,7 @@ public class Aspect {
     public static final Logger LOG = LoggerFactory.getLogger("AspectLog");
 
     public static void main(String[] args) {
+        startInstant = Instant.now();
         Aspect.LOG.info("Aspect Launching");
         Locale.setDefault(Locale.US);
         Aspect.LOG.info("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));
@@ -46,8 +46,6 @@ public class Aspect {
 
         // ------------------------------------------------------------ //
 
-        startTime = System.currentTimeMillis();
-        startInstant = Instant.now();
 
         if (args.length != 22) {
             LOG.error("You screwed up the runtime config params!\targs: {}", args.length);
@@ -134,6 +132,6 @@ public class Aspect {
         LOG.info("Client logged into Discord");
         // ------------------------------------------------------------ //
 
-        LOG.info("Initialization time: " + (System.currentTimeMillis() - startTime) + " ms");
+        LOG.info("Initialization time: " + (System.currentTimeMillis() - startInstant.toEpochMilli()) + " ms");
     }
 }
