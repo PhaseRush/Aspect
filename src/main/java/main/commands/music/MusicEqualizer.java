@@ -66,6 +66,8 @@ public class MusicEqualizer implements Command {
                 .filter(p -> BotUtils.stringSimilarity(args.get(0), p.getValue()) < 2)
                 .map(Pair::getKey);
 
+
+
         if (filter.isPresent()) {
             player.setFilterFactory(
                     applyFilter(event.getGuild(), filter.get().filter, 1)

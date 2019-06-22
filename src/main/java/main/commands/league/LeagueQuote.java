@@ -16,6 +16,7 @@ public class LeagueQuote implements Command {
             BotUtils.send(event.getChannel(),
                     BotUtils.getLeagueQuoteForChamp(BotUtils.autoCorrectChampName(args.get(0))));
         }
+
     }
 
     @Override

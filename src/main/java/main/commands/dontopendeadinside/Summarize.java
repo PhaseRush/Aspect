@@ -40,7 +40,7 @@ public class Summarize implements Command {
             }
 
         //if too big, put into a Gist and link it in the channel instead of sending it directly
-        if (Integer.valueOf(smmryObject.getSm_api_character_count()) > 1000) {
+        if (Integer.valueOf(smmryObject.getSm_api_character_count()) > 1000) { // TODO: 2019-06-20 rewrite this using haste instead of gist 
             //try to favorably format string. (single line to multi-line) every sentence gets a new line.
             String formattedSummary = smmryObject.getSm_api_content().replaceAll("\\. ", ".\n");
 
