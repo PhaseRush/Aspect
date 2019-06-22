@@ -2,6 +2,7 @@ package main.passive;
 
 import com.sun.management.OperatingSystemMXBean;
 import main.Aspect;
+import main.commands.utilitycommands.metautil.Reboot;
 import main.utility.metautil.BotUtils;
 import main.utility.structures.DoubleRingBuffer;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -43,7 +44,7 @@ public class ScheduledActions {
         // initialize channel
         kaitQuoteChannel = event.getClient().getChannelByID(kaitQuoteChannelId);
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
+        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000 * 60 * 60 * 24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
     }
 
@@ -58,7 +59,7 @@ public class ScheduledActions {
         pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
         kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000*60*60*24, TimeUnit.MILLISECONDS);
+        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000 * 60 * 60 * 24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("League quoter scheduled");
     }
 
@@ -74,10 +75,10 @@ public class ScheduledActions {
         };
 
         //long initDelay = BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT");
-        long initDelay2 = BotUtils.millisToNextHHMMSSMMMM(16, 40,0, 0, "America/Los_Angeles");
+        long initDelay2 = BotUtils.millisToNextHHMMSSMMMM(16, 40, 0, 0, "America/Los_Angeles");
         scheduledFuture = scheduler.scheduleAtFixedRate(streaker,
                 initDelay2,
-                24*60*60*1000,
+                24 * 60 * 60 * 1000,
                 TimeUnit.MILLISECONDS);
 
         Aspect.LOG.info("Streak Scheduler has been init to " + initDelay2 + " ms");
@@ -86,12 +87,14 @@ public class ScheduledActions {
     @EventSubscriber
     public void cpuLoadWatcher(ReadyEvent event) {
         final Runnable cpuHawk = () -> {
-            if ( !sentMessage.get() && Aspect.osBean.getSystemLoadAverage() > 1) {
+            if (!sentMessage.get() && Aspect.osBean.getSystemLoadAverage() > 1) {
                 BotUtils.send(
                         Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
-                        "cpu sad :(");
+                        "Rebooting due to CPU overloading");
 
                 sentMessage.set(true);
+                Reboot.reboot(); // reboot if too high
+
             }
         };
 
@@ -102,8 +105,8 @@ public class ScheduledActions {
     public void cpuUsageProfiler(ReadyEvent event) {
 
         final Runnable systemProber = () -> {
-            cpuQueue.push(ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class).getSystemCpuLoad()*100); // convert to %
-            memQueue.push((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/1E6);
+            cpuQueue.push(ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class).getSystemCpuLoad() * 100); // convert to %
+            memQueue.push((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1E6);
         };
 
         scheduledFuture = scheduler.scheduleAtFixedRate(systemProber, 3, 30, TimeUnit.SECONDS); // start with more offset to not collide with other process
