@@ -33,6 +33,7 @@ public class ScheduledActions {
 
     // cpu 100% watcher
     public static AtomicBoolean sentMessage = new AtomicBoolean(false);
+    public static AtomicBoolean willRebootOnMax = new AtomicBoolean(true);
 
     // graph profiler
     static public DoubleRingBuffer cpuQueue = new DoubleRingBuffer(30);
@@ -87,15 +88,20 @@ public class ScheduledActions {
     @EventSubscriber
     public void cpuLoadWatcher(ReadyEvent event) {
         final Runnable cpuHawk = () -> {
-            if (!sentMessage.get() && Aspect.osBean.getSystemLoadAverage() > 1) {
-                BotUtils.send(
-                        Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
-                        "Rebooting due to CPU overloading");
+            if (Aspect.osBean.getSystemLoadAverage() > 1) {
+                if (!sentMessage.get()) {
+                    BotUtils.send(
+                            Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
+                            "Rebooting due to CPU overloading");
 
-                sentMessage.set(true);
-                Reboot.reboot(); // reboot if too high
+                    sentMessage.set(true);
+                }
 
+                if (willRebootOnMax.get()) {
+                    Reboot.reboot();
+                }
             }
+
         };
 
         scheduledFuture = scheduler.scheduleAtFixedRate(cpuHawk, 60, 60, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
