@@ -28,12 +28,13 @@ public class CpuStats implements Command {
 
     @NotNull
     public static String genMessage() {
-        OperatingSystemMXBean osBean = Aspect.osBean;
+        OperatingSystemMXBean osBean = Aspect.OS_BEAN;
         Runtime r = Runtime.getRuntime();
         double maxM = r.maxMemory() / 1E6;
 
         return "```                                                     \n" +
-                "System Load:  \t\t" + osBean.getSystemLoadAverage()*100 + " %" +
+                "Instance ID: \t\t" + Aspect.INSTANCE_ID.toString() +
+                "\nSystem Load:  \t\t" + osBean.getSystemLoadAverage()*100 + " %" +
                 "\nRam (MB): \t\t\t" + (int) (maxM - r.freeMemory() / 1E6) + " / " + (int) maxM +
                 "\nArch: \t\t\t\t" + osBean.getArch() +
                 "\nName: \t\t\t\t" + osBean.getName() +

@@ -228,6 +228,7 @@ public class CommandManager {
         commandMap.put("uptime", new Uptime());
         commandMap.put("write", new Testing());
         commandMap.put("reboot", new Reboot());
+        commandMap.put("guilds", new ListGuilds());
 
         //League of Legends -- Showcase
         commandMap.put("lollevel", new BasicLeague());

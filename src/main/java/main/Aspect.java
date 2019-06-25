@@ -14,6 +14,7 @@ import java.lang.management.OperatingSystemMXBean;
 import java.time.Instant;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Aspect -- Discord bot built with love
@@ -28,8 +29,11 @@ public class Aspect {
     // Timekeeping
     public static Instant startInstant;
 
+    // Unique INSTANCE_ID ID
+    public static final UUID INSTANCE_ID = UUID.randomUUID();
+
     // System statistics
-    public static OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
+    public static final OperatingSystemMXBean OS_BEAN = ManagementFactory.getOperatingSystemMXBean();
 
     // IBM Translator
     public static LanguageTranslator translator;

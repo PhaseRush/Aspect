@@ -45,6 +45,7 @@ public class Reboot implements Command {
         long pid = Long.valueOf(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
 
         try {
+            BotUtils.send(channel, "Attempting to reboot INSTANCE_ID:\t" + Aspect.INSTANCE_ID.toString());
             Runtime.getRuntime().exec(new String[]{"bash", "-c", System.getenv("HOME") + "/reboot_aspect.sh " + pid});
         } catch (IOException e) {
             BotUtils.send(channel, "Error rebooting:\n" + e.getMessage());

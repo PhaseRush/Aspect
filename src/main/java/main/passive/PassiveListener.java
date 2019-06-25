@@ -31,10 +31,8 @@ import java.awt.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -48,6 +46,8 @@ public class PassiveListener {
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
     private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
+
+    private static Set<Long> videoAnalyticsOptIn = Collections.emptySet();
 
 
     @EventSubscriber
@@ -255,6 +255,9 @@ public class PassiveListener {
      */
     @EventSubscriber
     public void youtubeStats(MessageReceivedEvent event) {
+        // check for valid guild
+        if (!videoAnalyticsOptIn.contains(event.getGuild().getLongID())) return; // opt out
+
         Matcher matcher = youtubeIdRegex.matcher(event.getMessage().getFormattedContent());
         String videoId = matcher.matches() ? matcher.group(2) : null;
         if (videoId == null) return; // weird edge case so return

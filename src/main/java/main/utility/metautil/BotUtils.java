@@ -184,7 +184,7 @@ public class BotUtils {
     // Handles the creation and getting of a IDiscordClient object for a token
     public static IDiscordClient getBuiltDiscordClient(String token) {
 
-        // The ClientBuilder object is where you will attach your params for configuring the instance of your bot.
+        // The ClientBuilder object is where you will attach your params for configuring the INSTANCE_ID of your bot.
         // Such as withToken, setDaemon etc
         return new ClientBuilder()
                 .withToken(token)

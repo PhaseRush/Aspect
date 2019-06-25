@@ -88,7 +88,7 @@ public class ScheduledActions {
     @EventSubscriber
     public void cpuLoadWatcher(ReadyEvent event) {
         final Runnable cpuHawk = () -> {
-            if (Aspect.osBean.getSystemLoadAverage() > 1) {
+            if (Aspect.OS_BEAN.getSystemLoadAverage() > 1) {
                 if (!sentMessage.get()) {
                     BotUtils.send(
                             Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
