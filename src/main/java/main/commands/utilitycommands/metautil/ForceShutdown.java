@@ -37,7 +37,7 @@ public class ForceShutdown implements Command {
      */
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return event.getAuthor().getStringID().equals("264213620026638336");
+        return BotUtils.isDev(event);
     }
 
     @Override

@@ -9,6 +9,7 @@ import sx.blah.discord.handle.obj.IChannel;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +30,7 @@ public class Reboot implements Command {
                 try {
                     int seconds = Integer.parseInt(args.get(0));
                     Executors.newScheduledThreadPool(1).schedule(runReboot, seconds, TimeUnit.SECONDS);
+                    return; // doesnt run the instant reboot at end of this function
                 } catch (NumberFormatException e) {
                     BotUtils.send(event.getChannel(), "Number format exception for " + args.get(0));
                 }
@@ -41,14 +43,19 @@ public class Reboot implements Command {
         reboot(Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel());
     }
 
-    public static void reboot(IChannel channel) {
+
+    public static void reboot(IChannel... channels) {
         long pid = Long.valueOf(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
 
+        // use sendget to block
+        Arrays.asList(channels).forEach(ch -> BotUtils.sendGet(ch,
+                "Aspect is now rebooting due to lag. Feel free to queue up more music in a few moments."));
+
         try {
-            BotUtils.send(channel, "Attempting to reboot INSTANCE_ID:\t" + Aspect.INSTANCE_ID.toString());
+            BotUtils.msgDev("Attempting to reboot INSTANCE_ID:\t" + Aspect.INSTANCE_ID.toString());
             Runtime.getRuntime().exec(new String[]{"bash", "-c", System.getenv("HOME") + "/reboot_aspect.sh " + pid});
         } catch (IOException e) {
-            BotUtils.send(channel, "Error rebooting:\n" + e.getMessage());
+            BotUtils.msgDev("Error rebooting:\n" + e.getMessage());
             e.printStackTrace();
         }
     }

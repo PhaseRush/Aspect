@@ -33,7 +33,7 @@ public class CpuStats implements Command {
         double maxM = r.maxMemory() / 1E6;
 
         return "```                                                     \n" +
-                "Instance ID: \t\t" + Aspect.INSTANCE_ID.toString() +
+                "Instance ID:  \t\t" + Aspect.INSTANCE_ID.toString() +
                 "\nSystem Load:  \t\t" + osBean.getSystemLoadAverage()*100 + " %" +
                 "\nRam (MB): \t\t\t" + (int) (maxM - r.freeMemory() / 1E6) + " / " + (int) maxM +
                 "\nArch: \t\t\t\t" + osBean.getArch() +

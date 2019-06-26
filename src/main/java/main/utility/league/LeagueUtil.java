@@ -39,16 +39,16 @@ public class LeagueUtil {
         tier = tier.toLowerCase();
         switch (tier) {
             case "bronze":
-                return BotUtils.getRandFromList(helpBronze);
+                return BotUtils.getRandFromCollection(helpBronze);
             case "silver":
-                return BotUtils.getRandFromList(helpSilver);
+                return BotUtils.getRandFromCollection(helpSilver);
             case "gold":
-                return BotUtils.getRandFromList(helpGold);
+                return BotUtils.getRandFromCollection(helpGold);
             case "platinum":
-                return BotUtils.getRandFromList(helpPlatinum);
-            case "diamond": return BotUtils.getRandFromList(helpDiamond);
-            case "master": return BotUtils.getRandFromList(helpMaster);
-            case "challenger": return BotUtils.getRandFromList(helpChallenger);
+                return BotUtils.getRandFromCollection(helpPlatinum);
+            case "diamond": return BotUtils.getRandFromCollection(helpDiamond);
+            case "master": return BotUtils.getRandFromCollection(helpMaster);
+            case "challenger": return BotUtils.getRandFromCollection(helpChallenger);
             default: return "Kat is really bad at coding and you should never see this";
         }
     }

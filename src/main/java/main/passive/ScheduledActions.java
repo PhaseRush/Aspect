@@ -92,7 +92,7 @@ public class ScheduledActions {
                 if (!sentMessage.get()) {
                     BotUtils.send(
                             Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel(),
-                            "Rebooting due to CPU overloading");
+                            willRebootOnMax.get() ? "Rebooting due to CPU overloading" : "CPU overloading");
 
                     sentMessage.set(true);
                 }

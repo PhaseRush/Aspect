@@ -23,10 +23,12 @@ public class CommandTimer implements Command {
             return;
         }
 
+
         long start = System.nanoTime();
         cmd.runCommand(event, targetParams);
         long end = System.nanoTime();
-        double durationMillis = (end - start)/1E6;
+        double durationMillis = Math.round((end - start)/1E6);
+        String duration = durationMillis == 0d ? (end - start) + " ns" : durationMillis + " ms";
 
 //        try { // try to make sure this sends AFTER all output of target command
 //            Thread.sleep(1000);
@@ -35,8 +37,8 @@ public class CommandTimer implements Command {
 
         BotUtils.send(event.getChannel(),
                 "Runtime for `" + targetCmd +  "/" +cmd.getClass().getName() + "` : " +
-                        (durationMillis < 60000?
-                                Math.round(durationMillis) + " ms" :
+                        (durationMillis < 60000 ?
+                                duration :
                                 BotUtils.millisToMS((long)durationMillis)
                         ));
     }

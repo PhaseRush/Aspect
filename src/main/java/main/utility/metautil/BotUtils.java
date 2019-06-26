@@ -223,6 +223,10 @@ public class BotUtils {
         return text;
     }
 
+    public static void msgDev(String msg) {
+        send(Aspect.client.getUserByID(DEV_DISCORD_LONG_ID).getOrCreatePMChannel(), msg);
+    }
+
     // Helper functions to make certain aspects of the bot easier to use.
     public static void send(IChannel channel, String message) {
         RequestBuffer.request(() -> {
@@ -576,8 +580,12 @@ public class BotUtils {
         RequestBuffer.request(() -> iMessage.addReaction(ReactionEmoji.of("\u274C")));
     }
 
-    public static <T> T getRandFromList(List<T> list) {
-        return list.get(tlr.nextInt(list.size()));
+    public static <T> T getRandFromCollection(Collection<T> collection) {
+//        if (collection instanceof List) {
+//            return (T) ((List) collection).get(tlr.nextInt(collection.size()));
+//        }
+        List<T> tempList = new ArrayList<>(collection);
+        return tempList.get(tlr.nextInt(tempList.size()));
     }
 
     public static <T> T getRandFromArray(T[] array) {
@@ -894,8 +902,7 @@ public class BotUtils {
      * @return EmbedBuilder with quote, champ, and stauts information
      */
     public static EmbedBuilder getRandLeagueQuoteEmbed() {
-        final List<String> champs = new ArrayList<>(leagueQuoteMap.keySet());
-        final String champName = champs.get(ThreadLocalRandom.current().nextInt(champs.size()));
+        final String champName = getRandFromCollection(leagueQuoteMap.keySet());// champs.get(ThreadLocalRandom.current().nextInt(champs.size()));
 
         return getLeagueQuoteForChamp(champName);
     }
@@ -903,13 +910,13 @@ public class BotUtils {
     public static EmbedBuilder getLeagueQuoteForChamp(String champName) {
         final LeagueQuoteContainer quoteObj = leagueQuoteMap.get(champName);
         final List<Map.Entry<String, Map<String, String>>> statusListMap = new ArrayList<>(quoteObj.getQuotes().entrySet());
-        Map.Entry<String, Map<String, String>> randStatusQuote = getRandFromList(statusListMap);
+        Map.Entry<String, Map<String, String>> randStatusQuote = getRandFromCollection(statusListMap);
 
-        while (randStatusQuote.getValue().values().isEmpty()) {
-            randStatusQuote = getRandFromList(statusListMap);
+        while (randStatusQuote.getValue().values().isEmpty()) { // skip null/empty quotes
+            randStatusQuote = getRandFromCollection(statusListMap);
         }
 
-        final String statusQuote = getRandFromList(new ArrayList<>(randStatusQuote.getValue().values()));
+        final String statusQuote = getRandFromCollection(randStatusQuote.getValue().values());
 
         return new EmbedBuilder()
                 .withColor(Visuals.getRandVibrantColour())

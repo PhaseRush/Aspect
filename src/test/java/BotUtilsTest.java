@@ -43,7 +43,7 @@ class BotUtilsTest {
     void getRandomFromListString_Const() {
         List<String> list = Arrays.asList("Hello", "World", "How are you doing?");
 
-        String random = BotUtils.getRandFromList(list);
+        String random = BotUtils.getRandFromCollection(list);
         assertNotNull(random);
         assertTrue(list.contains(random));
     }
