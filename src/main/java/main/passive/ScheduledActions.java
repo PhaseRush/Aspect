@@ -14,12 +14,10 @@ import java.lang.management.ManagementFactory;
 import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScheduledActions {
-    private static ScheduledFuture<?> scheduledFuture = null;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     // kaitlyn quoter
@@ -45,7 +43,7 @@ public class ScheduledActions {
         // initialize channel
         kaitQuoteChannel = event.getClient().getChannelByID(kaitQuoteChannelId);
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000 * 60 * 60 * 24, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000 * 60 * 60 * 24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("Kait morning greeter scheduled for " + Instant.now().plusMillis(BotUtils.millisToNextHour24(7, "America/Los_Angeles")).toString());
     }
 
@@ -60,7 +58,7 @@ public class ScheduledActions {
         pantsuGenChannel = event.getClient().getChannelByID(pantsuGenId);
         kaitLeagueChannel = event.getClient().getChannelByID(kaitLeagueChannelId);
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000 * 60 * 60 * 24, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(quoter, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), 1000 * 60 * 60 * 24, TimeUnit.MILLISECONDS);
         Aspect.LOG.info("League quoter scheduled");
     }
 
@@ -77,7 +75,7 @@ public class ScheduledActions {
 
         //long initDelay = BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT");
         long initDelay2 = BotUtils.millisToNextHHMMSSMMMM(16, 40, 0, 0, "America/Los_Angeles");
-        scheduledFuture = scheduler.scheduleAtFixedRate(streaker,
+        scheduler.scheduleAtFixedRate(streaker,
                 initDelay2,
                 24 * 60 * 60 * 1000,
                 TimeUnit.MILLISECONDS);
@@ -104,7 +102,7 @@ public class ScheduledActions {
 
         };
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(cpuHawk, 60, 60, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
+        scheduler.scheduleAtFixedRate(cpuHawk, 60, 60, TimeUnit.SECONDS); // start with more offset so doesnt trigger off reboot
     }
 
     @EventSubscriber
@@ -115,7 +113,7 @@ public class ScheduledActions {
             memQueue.push((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1E6);
         };
 
-        scheduledFuture = scheduler.scheduleAtFixedRate(systemProber, 3, 30, TimeUnit.SECONDS); // start with more offset to not collide with other process
+        scheduler.scheduleAtFixedRate(systemProber, 3, 30, TimeUnit.SECONDS); // start with more offset to not collide with other process
     }
 
 

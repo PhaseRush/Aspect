@@ -83,9 +83,16 @@ public class CommandManager {
     public static Map<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
             prefixMapType);
+    private static Type cmdFreqMapType = new TypeToken<Map<String, Integer>>() {
+    }.getType();
+    public static Map<String, Integer> cmdFreqMap = BotUtils.gson.fromJson(
+            BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/cmd_freq_map.json"),
+            cmdFreqMapType);
+
 
     //talked to hec about using a static initializer but constructor is fine
     public CommandManager() {
+
         //Actual Testing
         //commandMap.put("bulba", new BulbapediaScraper());
         //commandMap.put("transpose", new ImageTransposer());
@@ -240,6 +247,7 @@ public class CommandManager {
         commandMap.put("lolrecent", new PreviousMatch());
         commandMap.put("lolign", new LeagueIgnCheck());
         commandMap.put("lolquote", new LeagueQuote());
+        commandMap.put("loltft", new TftItems());
 
         //Warframe
         commandMap.put("wfdaily", new WfDailyDeals());
@@ -342,11 +350,15 @@ public class CommandManager {
             if (cmd.canRun(event, argsList)) {
                 cmd.runCommand(event, argsList);
 
-                if (cmd.loggable()) cmdPrintLog(event, finalCommandStr, argsList);
+                if (cmd.loggable()) {
+                    cmdPrintLog(event, finalCommandStr, argsList);
+                    cmdFreqMap.put(finalCommandStr, cmdFreqMap.getOrDefault(finalCommandStr, 0) + 1);
+                    writeFreqMap();
+                }
             } else {
                 BotUtils.send(event.getChannel(),
                         "Cannot run command due to either incorrect arguments or user's status too low. " +
-                                "Here is the command's description:\n" + cmd.getDesc());
+                                "Here is the command's description:\n" + cmd.getSyntax());
             }
 
             // Handle state json
@@ -391,6 +403,12 @@ public class CommandManager {
                 .append((argsList.size() != 0 ? " args:  " + commandArgs.toString() : ""));
 
         Aspect.LOG.info(commandPrint.toString());
+    }
+
+
+    private synchronized void writeFreqMap() {
+        BotUtils.writeToFile(System.getProperty("user.dir") + "/data/cmd_freq_map.json",
+                BotUtils.gson.toJson(cmdFreqMap), false);
     }
 
     @Override

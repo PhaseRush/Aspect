@@ -16,6 +16,7 @@ public class ListGuilds implements Command {
         BotUtils.send(event.getChannel(),
                 Aspect.client.getGuilds().stream()
                         .map(IGuild::getName)
+                        .sorted()
                         .collect(Collectors.joining("\n"))
         );
     }

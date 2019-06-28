@@ -226,6 +226,9 @@ public class BotUtils {
     public static void msgDev(String msg) {
         send(Aspect.client.getUserByID(DEV_DISCORD_LONG_ID).getOrCreatePMChannel(), msg);
     }
+    public static IMessage msgDevGet(String msg) {
+        return sendGet(Aspect.client.getUserByID(DEV_DISCORD_LONG_ID).getOrCreatePMChannel(), msg);
+    }
 
     // Helper functions to make certain aspects of the bot easier to use.
     public static void send(IChannel channel, String message) {
@@ -992,6 +995,7 @@ public class BotUtils {
         };
         listenerExecuter.execute(removeListener);
     }
+
 
     /**
      * @param inputStr input string to perform spell correction on

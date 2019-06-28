@@ -1,14 +1,13 @@
 package main.commands.dontopendeadinside.imaging.deepAI;
 
 import com.google.gson.JsonSyntaxException;
-import main.Command;
 import main.utility.metautil.BotUtils;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.util.EmbedBuilder;
 
 import java.util.List;
 
-public class Colourer extends DeepAI implements Command {
+public class Colourer extends DeepAI {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         String targetUrl = getTargetUrl(event, args);
