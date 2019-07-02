@@ -174,6 +174,7 @@ sweep :: minesweeper game
 - [ ] use [FFT](https://en.wikipedia.org/wiki/Fast_Fourier_transform) to detect "beat drops" etc.
 - [ ] Passively listen for hashtag. Excl channels, search via twitter api.
 - [ ] Word and Frequency Counter - regex to english translator for the layman
+- [ ] Anime/Manga quick fact/links. Passive and/or active feature.
 
 #### Other Features:
 - Warframe :: Automatically updates alerts and posts to channel every 30 minutes
