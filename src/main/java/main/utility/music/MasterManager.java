@@ -10,10 +10,13 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import main.Aspect;
 import main.utility.GoogleUtil;
 import main.utility.Visuals;
 import main.utility.metautil.BotUtils;
+import main.utility.music.converter.SpotifyHandler;
+import main.utility.structures.Pair;
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.reaction.ReactionAddEvent;
@@ -32,7 +35,7 @@ import java.util.Map;
 
 public class MasterManager {
     private static final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-    private static final Map<Long, GuildMusicManager> musicManagers  = new HashMap<>();
+    private static final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
 
     //thanks to decc the hecc
     static {
@@ -60,13 +63,40 @@ public class MasterManager {
     public synchronized static void loadAndPlay(final IChannel channel, final String trackUrl, MessageReceivedEvent event, boolean insertFront, String confirmMsg) {
         //MasterState json;
 
+        // check if trackurl is a spotify
+        System.out.println("checked");
+        if (trackUrl.contains("spotify")) {
+            if (trackUrl.contains("playlist")) { // spotify playlist
+                try {
+                    Pair<List<String>, List<String>> pair = SpotifyHandler.spotifyToYT(trackUrl);
+                    pair.getKey().forEach(vid -> loadAndPlay(
+                            channel,
+                            "https://www.youtube.com/watch?v=" + vid,
+                            event,
+                            false,
+                            null
+                    ));
+                    BotUtils.send(channel,
+                            "Could not find the following videos on youtube:\n" +
+                                    String.join("\n", pair.getValue()));
+                } catch (IOException | SpotifyWebApiException e) {
+                    e.printStackTrace();
+                    BotUtils.send(channel, "there has been an error processing this playlist");
+                    return;
+                }
+            }
+            return; // dont check anything else
+        }
+
         GuildMusicManager musicManager = getGuildAudioPlayer(channel.getGuild());
         musicManager.getScheduler().lastEmbedChannel = channel; //set embed channel for floating player
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                BotUtils.send(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
+                if (confirmMsg != null) {
+                    BotUtils.send(channel, (confirmMsg.equals("") ? "Playing: " + track.getInfo().title : confirmMsg));
+                }
                 play(musicManager, track, insertFront);
 //                try {
 //                    MasterJsonUtil.jsonObj.getUserMap().get(event.getAuthor().getStringID()).getMusicStats().incrNumSongsQueued();
@@ -75,6 +105,7 @@ public class MasterManager {
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
+                System.out.println("test1");
                 int counter = 0;
                 long duration = 0;
                 List<AudioTrack> audioTrackList = playlist.getTracks();

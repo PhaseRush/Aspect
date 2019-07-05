@@ -4,11 +4,13 @@ import com.ibm.watson.developer_cloud.language_translator.v3.LanguageTranslator;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import main.utility.metautil.BotUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.IDiscordClient;
 
+import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.lang.management.OperatingSystemMXBean;
 import java.time.Instant;
@@ -41,17 +43,20 @@ public class Aspect {
     // SLF4J logger
     public static final Logger LOG = LoggerFactory.getLogger("AspectLog");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, SpotifyWebApiException {
         startInstant = Instant.now();
         Aspect.LOG.info("Aspect Launching");
         Locale.setDefault(Locale.US);
         Aspect.LOG.info("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));
         Aspect.LOG.info("Millis until 18:00 CDT " + BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"));
 
+
+
+
+
         // ------------------------------------------------------------ //
 
-
-        if (args.length != 22) {
+        if (args.length != 24) {
             LOG.error("You screwed up the runtime config params!\targs: {}", args.length);
             System.exit(9001);
             return; // :)
@@ -116,6 +121,13 @@ public class Aspect {
         // Github for Git and Gist
         BotUtils.DEV_GITHUB_NAME = args[13];
         BotUtils.DEV_GITHUB_PASSWORD = args[14];
+
+        // Fortnite Scout API
+
+        // Spotify API
+        BotUtils.SPOTIFY_CLIENT_ID = args[22];
+        BotUtils.SPOTIFY_CLIENT_SECRET = args[23];
+
 
         LOG.info("All API keys set");
         // ------------------------------------------------------------ //

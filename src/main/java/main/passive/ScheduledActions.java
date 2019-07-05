@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ScheduledActions {
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
+    public static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     // kaitlyn quoter
     private static final long kaitQuoteChannelId = 562375333807128576L; // Vowed's#questions-or-ranting
@@ -82,6 +82,15 @@ public class ScheduledActions {
 
         Aspect.LOG.info("Streak Scheduler has been init to " + initDelay2 + " ms");
     }
+
+//    @EventSubscriber
+//    public void july4(ReadyEvent event) {
+//        final Runnable runnable = () -> Aspect.client.getGuilds().forEach(
+//                g -> BotUtils.send(g.getDefaultChannel(), "Happy 4th of July! Go out and eat lots of food :3")
+//        );
+//
+//        scheduler.schedule(runnable, BotUtils.millisToNextHour24(7, "America/Los_Angeles"), TimeUnit.MILLISECONDS);
+//    }
 
     @EventSubscriber
     public void cpuLoadWatcher(ReadyEvent event) {

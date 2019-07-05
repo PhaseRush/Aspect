@@ -6,7 +6,7 @@ Revamped. V2.0
 To add Aspect to your discord server, shoot me a dm on Discord **@Requiem#8148**, and I'll provide an OAuth2 URL
 
 All commands are prefixed by "$", unless manually changed by the discord server admin.
-All commands are formatted as: "$\[command name\] param1, param2, ....". Note the space between the command name and the first param
+All commands are formatted as: "$\[command id\] param1, param2, ....". Note the space between the command id and the first param
 
 
 ## All available commands:
@@ -84,7 +84,7 @@ All commands are formatted as: "$\[command name\] param1, param2, ....". Note th
 
 | Command | #Params | Description | Example |
 | --- | --- | --- | --- |
-| lolign | 1 | shows availability of summoner name | `$lolign AKatHelicopter` |
+| lolign | 1 | shows availability of summoner id | `$lolign AKatHelicopter` |
 | lollevel | 1 | shows level of summoner | `$lollevel SchrödingersKat` |
 | lolsum | 1 | shows info of summoner | `$lolsum SchrödingersKat` |
 | lolregions | 0 | shows available regions | `$lolregions` | 

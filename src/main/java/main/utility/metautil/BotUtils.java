@@ -33,6 +33,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -46,7 +47,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,13 +55,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class BotUtils {
 
     //meta util -- Gson now public
-    private static Random tlr = ThreadLocalRandom.current();
-    public static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static JsonParser jsonParser = new JsonParser();
-    private static OkHttpClient client = new OkHttpClient();
+    private static final Random random = new Random();
+    public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final JsonParser jsonParser = new JsonParser();
+    private static final OkHttpClient client = new OkHttpClient();
 
     //leven
-    private static Levenshtein leven = new Levenshtein();
+    private static final Levenshtein leven = new Levenshtein();
 
     //encryption
     private static MessageDigest messageDigest;
@@ -100,6 +100,11 @@ public class BotUtils {
     //dev meta -- USE FOR GIST GENERATION
     public static String DEV_GITHUB_NAME;
     public static String DEV_GITHUB_PASSWORD;
+
+    // spotify api
+    public static String SPOTIFY_CLIENT_ID;
+    public static String SPOTIFY_CLIENT_SECRET;
+
 
 
     //lock Util
@@ -585,14 +590,14 @@ public class BotUtils {
 
     public static <T> T getRandFromCollection(Collection<T> collection) {
 //        if (collection instanceof List) {
-//            return (T) ((List) collection).get(tlr.nextInt(collection.size()));
+//            return (T) ((List) collection).get(random.nextInt(collection.size()));
 //        }
         List<T> tempList = new ArrayList<>(collection);
-        return tempList.get(tlr.nextInt(tempList.size()));
+        return tempList.get(random.nextInt(tempList.size()));
     }
 
     public static <T> T getRandFromArray(T[] array) {
-        return array[tlr.nextInt(array.length)];
+        return array[random.nextInt(array.length)];
     }
 
     public static void joinVC(MessageReceivedEvent event) {
@@ -660,7 +665,7 @@ public class BotUtils {
         }
         try (Response response = client.newCall(request.build()).execute()) {
             return response.body().string();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             //kys
             return "error - url status request - getstringfromurl - with header";
         }
@@ -790,8 +795,8 @@ public class BotUtils {
             byte[] hash = messageDigest.digest(input.getBytes(UTF_8));
             StringBuilder hexString = new StringBuilder();
 
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
                 if (hex.length() == 1) hexString.append('0');
                 hexString.append(hex);
             }
@@ -1063,6 +1068,39 @@ public class BotUtils {
 
     public static String concatArgs(String[] args) {
         return concatArgs(Arrays.stream(args).collect(Collectors.toList()));
+    }
+
+    /**
+     * https://stackoverflow.com/a/611117/10583298
+     * Encodes the passed String as UTF-8 using an algorithm that's compatible
+     * with JavaScript's <code>encodeURIComponent</code> function. Returns
+     * <code>null</code> if the String is <code>null</code>.
+     *
+     * @param s The String to be encoded
+     * @return the encoded String
+     */
+    public static String encodeURIComponent(String s)
+    {
+        String result = null;
+
+        try
+        {
+            result = URLEncoder.encode(s, "UTF-8")
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("%21", "!")
+                    .replaceAll("%27", "'")
+                    .replaceAll("%28", "(")
+                    .replaceAll("%29", ")")
+                    .replaceAll("%7E", "~");
+        }
+
+        // This exception should never occur.
+        catch (UnsupportedEncodingException e)
+        {
+            result = s;
+        }
+
+        return result;
     }
 
     public static String concatArgs(String[] args, String delim) {

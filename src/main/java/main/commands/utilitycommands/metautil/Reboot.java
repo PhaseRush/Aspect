@@ -30,13 +30,13 @@ public class Reboot implements Command {
                 try {
                     int seconds = Integer.parseInt(args.get(0));
                     Executors.newScheduledThreadPool(1).schedule(runReboot, seconds, TimeUnit.SECONDS);
-                    return; // doesnt run the instant reboot at end of this function
                 } catch (NumberFormatException e) {
                     BotUtils.send(event.getChannel(), "Number format exception for " + args.get(0));
                 }
             }
+        } else { // empty args
+            reboot(event.getChannel());
         }
-        reboot(event.getChannel());
     }
 
     public static void reboot() {
