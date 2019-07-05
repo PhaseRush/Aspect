@@ -4,15 +4,18 @@ import main.Aspect;
 import main.Command;
 import main.passive.ScheduledActions;
 import main.utility.metautil.BotUtils;
+import main.utility.music.MasterManager;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class Reboot implements Command {
     private static final Runnable runReboot = Reboot::reboot;
@@ -35,20 +38,26 @@ public class Reboot implements Command {
                 }
             }
         } else { // empty args
-            reboot(event.getChannel());
+            reboot(Collections.singletonList(event.getChannel()));
         }
     }
 
     public static void reboot() {
-        reboot(Aspect.client.getUserByID(BotUtils.DEV_DISCORD_LONG_ID).getOrCreatePMChannel());
+        reboot(Aspect.client.getGuilds().stream()
+                .filter(MasterManager::hasPlayer)
+                .map(g -> MasterManager.getGuildAudioPlayer(g).getScheduler().lastEmbedChannel)
+                .collect(Collectors.toCollection(ArrayList::new))
+        );
     }
 
-
-    public static void reboot(IChannel... channels) {
+    /**
+     * @param channels to alert
+     */
+    private static void reboot(List<IChannel> channels) {
         long pid = Long.valueOf(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
 
         // use sendget to block
-        Arrays.asList(channels).forEach(ch -> BotUtils.sendGet(ch,
+        channels.forEach(ch -> BotUtils.sendGet(ch,
                 "Aspect is now rebooting due to lag. Feel free to queue up more music in a few moments."));
 
         try {

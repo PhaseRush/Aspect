@@ -46,6 +46,10 @@ public class MasterManager {
         AudioSourceManagers.registerLocalSource(playerManager);
     }
 
+    public static boolean hasPlayer(IGuild guild) {
+        return musicManagers.containsKey(guild.getLongID());
+    }
+
     public static synchronized GuildMusicManager getGuildAudioPlayer(IGuild guild) {
         long guildId = guild.getLongID();
         GuildMusicManager musicManager = musicManagers.get(guildId);
