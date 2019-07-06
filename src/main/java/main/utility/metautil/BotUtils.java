@@ -102,8 +102,8 @@ public class BotUtils {
     public static String DEV_GITHUB_PASSWORD;
 
     // spotify api
-    public static String SPOTIFY_CLIENT_ID;
-    public static String SPOTIFY_CLIENT_SECRET;
+    public static String SPOTIFY_CLIENT_ID = "";
+    public static String SPOTIFY_CLIENT_SECRET = "";
 
 
 

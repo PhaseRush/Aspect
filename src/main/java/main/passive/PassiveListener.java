@@ -105,6 +105,7 @@ public class PassiveListener {
 
     @EventSubscriber
     public void unexpectedFactorial(MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
         Matcher matcher = unexpFactRegex.matcher(event.getMessage().getFormattedContent());
 
         String group;

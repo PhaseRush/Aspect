@@ -56,7 +56,7 @@ public class Aspect {
 
         // ------------------------------------------------------------ //
 
-        if (args.length != 24) {
+        if (args.length != 22) { // 24 with spotify
             LOG.error("You screwed up the runtime config params!\targs: {}", args.length);
             System.exit(9001);
             return; // :)
@@ -125,8 +125,10 @@ public class Aspect {
         // Fortnite Scout API
 
         // Spotify API
-        BotUtils.SPOTIFY_CLIENT_ID = args[22];
-        BotUtils.SPOTIFY_CLIENT_SECRET = args[23];
+        try {
+            BotUtils.SPOTIFY_CLIENT_ID = args[22];
+            BotUtils.SPOTIFY_CLIENT_SECRET = args[23];
+        } catch (Exception ignored){}
 
 
         LOG.info("All API keys set");
