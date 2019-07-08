@@ -175,6 +175,7 @@ sweep :: minesweeper game
 - [ ] Passively listen for hashtag. Excl channels, search via twitter api.
 - [ ] Word and Frequency Counter - regex to english translator for the layman
 - [ ] Anime/Manga quick fact/links. Passive and/or active feature.
+- [ ] Upgrade fornite api (current one broke :\[)
 
 #### Other Features:
 - Warframe :: Automatically updates alerts and posts to channel every 30 minutes
@@ -192,14 +193,14 @@ sweep :: minesweeper game
 - ... and much, much more.
 
 #### Notes
-- music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer). Supports YouTube, SoundCloud, Bandcamp, Vimeo, and Twitch.
+- music player uses [LavaPlayer](https://github.com/sedmelluq/lavaplayer)
 - $bulkdelete (and certain other commands) restricted to people with a certain role/privileges
 - League of Legends - due to riot's policy on api keys, the private key needs to be updated daily. Message me to update it.
 
 
 #### Special thanks: 
 
-[decyg](https://github.com/decyg) for help with [basically everything](src/main/java/main/commands/dontopendeadinside/Imaging.java).
+[decyg](https://github.com/decyg) for help with [basically everything](src/main/java/main/commands/dontopendeadinside/imaging/Imaging.java).
 
 [Drew Cornfield](https://github.com/Resoona) for the private channel/role/password idea.
 
