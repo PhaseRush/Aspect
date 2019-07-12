@@ -37,6 +37,9 @@ public class ScreenShare implements Command {
                         .get(0);
             } catch (NoSuchElementException e) { // used id
                 targetVC = event.getGuild().getVoiceChannelByID(Long.valueOf(args.get(0)));
+            } catch (IndexOutOfBoundsException e) {
+                BotUtils.send(event.getChannel(), "Please join or specify a voice channel");
+                return;
             }
         }
         eb.withDesc("[Click to join screen share for " + targetVC + "](https://discordapp.com/channels/" + event.getGuild().getStringID() + "/" + targetVC.getStringID() + "/)");

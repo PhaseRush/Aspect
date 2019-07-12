@@ -62,7 +62,6 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 import sx.blah.discord.handle.obj.ActivityType;
 import sx.blah.discord.handle.obj.StatusType;
 
-import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -78,16 +77,16 @@ public class CommandManager {
 
     public static Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
 
-    private static Type prefixMapType = new TypeToken<Map<String, String>>() {
-    }.getType();
+
     public static Map<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
-            prefixMapType);
-    private static Type cmdFreqMapType = new TypeToken<Map<String, Integer>>() {
-    }.getType();
-    public static Map<String, Integer> cmdFreqMap = BotUtils.gson.fromJson(
+            new TypeToken<Map<String, String>>() {
+            }.getType());
+
+    private static Map<String, Integer> cmdFreqMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/cmd_freq_map.json"),
-            cmdFreqMapType);
+            new TypeToken<Map<String, Integer>>() {
+            }.getType());
 
 
     //talked to hec about using a static initializer but constructor is fine

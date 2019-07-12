@@ -211,13 +211,13 @@
             <version>1.1.0</version>
         </dependency>
 
-<!--        fortnite stats tracker V 2 SCOUT-->
-<!--        <dependency>-->
-<!--            <groupId>com.scoutsdk.sdk</groupId>-->
-<!--            <artifactId>sdk</artifactId>-->
-<!--            <version>0.1.3</version>-->
-<!--            <type>pom</type>-->
-<!--        </dependency>-->
+        <!--        fortnite stats tracker V 2 SCOUT-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.scoutsdk.sdk</groupId>-->
+        <!--            <artifactId>sdk</artifactId>-->
+        <!--            <version>0.1.3</version>-->
+        <!--            <type>pom</type>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>se.michaelthelin.spotify</groupId>
@@ -242,6 +242,14 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.7</version>
         </dependency>
+
+        <!--        scout sdk for fortnite stats-->
+<!--        <dependency>-->
+<!--            <groupId>com.scoutsdk.sdk</groupId>-->
+<!--            <artifactId>sdk</artifactId>-->
+<!--            <version>[0.1.0,)</version>-->
+<!--            <type>pom</type>-->
+<!--        </dependency>-->
 
     </dependencies>
 
