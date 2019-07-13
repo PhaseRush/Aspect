@@ -210,6 +210,7 @@ public class CommandManager {
 
         //Fortnite -- Showcase
         commandMap.put("fn", new FortniteStats());
+        commandMap.put("fnstats", new main.commands.fortnite.fortnitev3.FortniteStats());
         //commandMap.put("fnshop", new FortniteShopSelect());
         //commandMap.put("fnselect", new FortniteShopDetail());
 

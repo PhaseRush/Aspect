@@ -256,6 +256,7 @@ public class PassiveListener {
      */
     @EventSubscriber
     public void youtubeStats(MessageReceivedEvent event) {
+        if (event.getChannel().isPrivate()) return;
         // check for valid guild
         if (!videoAnalyticsOptIn.contains(event.getGuild().getLongID())) return; // opt out
 

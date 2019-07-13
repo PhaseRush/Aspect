@@ -106,6 +106,7 @@ public class BotUtils {
     public static String SPOTIFY_CLIENT_SECRET = "";
 
 
+    public static String FORTNITE_V2;
 
     //lock Util
     public static Set<IUser> bannedUsers = new LinkedHashSet<>();
