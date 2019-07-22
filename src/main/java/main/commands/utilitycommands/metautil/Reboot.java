@@ -45,6 +45,7 @@ public class Reboot implements Command {
     public static void reboot() {
         reboot(Aspect.client.getGuilds().stream()
                 .filter(MasterManager::hasPlayer)
+                .peek(g -> Aspect.client.getOurUser().getVoiceStateForGuild(g).getChannel().leave())
                 .map(g -> MasterManager.getGuildAudioPlayer(g).getScheduler().lastEmbedChannel)
                 .collect(Collectors.toCollection(ArrayList::new))
         );

@@ -43,10 +43,10 @@ public class Visuals {
     }
 
     public enum Fonts {
-        MONTSERRAT();
+        MONTSERRAT(),
+        SHADOWSINTOLIGHT();
 
         private Font font;
-
 
         public Font getFont() {
             return font;

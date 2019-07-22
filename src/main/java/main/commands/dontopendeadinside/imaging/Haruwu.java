@@ -32,7 +32,7 @@ public class Haruwu implements Command {
     private BufferedImage overlay(BufferedImage old, String text) {
         BufferedImage img = new BufferedImage(old.getWidth(), old.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
-        g2d.drawImage(old, 0,0, null);
+        g2d.drawImage(old, 0, 0, null);
         g2d.setFont(Visuals.Fonts.MONTSERRAT.getFont().deriveFont(20f));
 
         Visuals.optimizeGraphics2dForText(g2d);
