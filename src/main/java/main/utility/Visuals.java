@@ -30,11 +30,13 @@ public class Visuals {
     static {
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         try {
-            Font mont = Font.createFont(Font.PLAIN, new File(System.getProperty("user.dir") + "/data/Montserrat.ttf"))
-                    .deriveFont(20f);
-            ge.registerFont(mont);
+            String base = System.getProperty("user.dir") + "/data/fonts/";
+            Arrays.asList(
+                    Font.createFont(Font.PLAIN, new File(base + "Montserrat.ttf")).deriveFont(20f),
+                    Font.createFont(Font.PLAIN, new File(base + "ShadowsIntoLight.ttf")).deriveFont(20f)
+            ).forEach(ge::registerFont);
 
-            Aspect.LOG.info("Mont size: " + mont.getSize());
+
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
         }

@@ -28,6 +28,9 @@ public class Aspect {
     // Aspect client
     public static IDiscordClient client;
 
+    // Main thread
+    private final Thread MAIN = Thread.currentThread();
+
     // Timekeeping
     public static Instant startInstant;
 
@@ -49,9 +52,6 @@ public class Aspect {
         Locale.setDefault(Locale.US);
         Aspect.LOG.info("Millis until 19:00 Van " + BotUtils.millisToNextHHMMSSMMMM(19, 0, 0, 0, "America/Los_Angeles"));
         Aspect.LOG.info("Millis until 18:00 CDT " + BotUtils.millisToNextHHMMSSMMMM(18, 40, 0, 0, "CST6CDT"));
-
-
-
 
 
         // ------------------------------------------------------------ //
@@ -130,7 +130,8 @@ public class Aspect {
         try {
             BotUtils.SPOTIFY_CLIENT_ID = args[22];
             BotUtils.SPOTIFY_CLIENT_SECRET = args[23];
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
 
         LOG.info("All API keys set");

@@ -71,12 +71,12 @@ import java.util.concurrent.Executors;
 
 public class CommandManager {
     private long readyTime = System.currentTimeMillis();
+
     public static ExecutorService commandExecutors = Executors.newCachedThreadPool();
 
     public static Map<String, Command> commandMap = new LinkedHashMap<>();
 
     public static Map<String, ExecutorService> syncExecuteMap = new HashMap<>();
-
 
     public static Map<String, String> prefixMap = BotUtils.gson.fromJson(
             BotUtils.readFromFileToString(System.getProperty("user.dir") + "/data/prefix_map.json"),
