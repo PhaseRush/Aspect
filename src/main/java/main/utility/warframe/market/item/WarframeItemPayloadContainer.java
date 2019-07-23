@@ -1,7 +1,7 @@
 package main.utility.warframe.market.item;
 
 public class WarframeItemPayloadContainer {
-    WarframeItemPayload payload;
+    private WarframeItemPayload payload;
 
     public WarframeItemPayload getPayload() {
         return payload;

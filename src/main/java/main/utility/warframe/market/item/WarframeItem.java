@@ -4,6 +4,7 @@ public class WarframeItem {
     String url_name;
     String id;
     String item_name;
+    String thumb;
 
     public String getId() {
         return id;
@@ -15,5 +16,9 @@ public class WarframeItem {
 
     public String getItem_name() {
         return item_name;
+    }
+
+    public String getThumb() {
+        return thumb;
     }
 }

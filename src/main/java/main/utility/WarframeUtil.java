@@ -108,7 +108,7 @@ public class WarframeUtil {
         String s = "";
         String json = BotUtils.getStringFromUrl("https://api.warframe.market/v1/items");
         WarframeItemPayloadContainer obj = new Gson().fromJson(json, WarframeItemPayloadContainer.class);
-        for (WarframeItem i : obj.getPayload().getItems().getEn()) {
+        for (WarframeItem i : obj.getPayload().getItems()) {
             if (i.getItem_name().equals(intended))
                 s = i.getUrl_name();
         }
@@ -160,7 +160,7 @@ public class WarframeUtil {
         List<String> allItemNames = new ArrayList<>();
         String json = BotUtils.getStringFromUrl("https://api.warframe.market/v1/items");
         WarframeItemPayloadContainer obj = new Gson().fromJson(json, WarframeItemPayloadContainer.class);
-        for (WarframeItem i : obj.getPayload().getItems().getEn()) {
+        for (WarframeItem i : obj.getPayload().getItems()) {
             allItemNames.add(i.getItem_name());
         }
         return allItemNames;
