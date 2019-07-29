@@ -13,27 +13,25 @@ public class UpdatePresence implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        if (args.get(0).equals("warframe")) WfPassive.cetusTimePresense();
+        if (args.get(0).equals("warframe")) WfPassive.warframeOpenWorldPresence();
         else {
             ActivityType activity = null;
             switch (args.get(0).toLowerCase()) {
                 case "p":
                     activity = ActivityType.PLAYING;
-                    WfPassive.killCetusUpdater();
                     break;
                 case "s":
                     activity = ActivityType.STREAMING;
-                    WfPassive.killCetusUpdater();
                     break;
                 case "l":
                     activity = ActivityType.LISTENING;
-                    WfPassive.killCetusUpdater();
                     break;
                 case "w":
                     activity = ActivityType.WATCHING;
-                    WfPassive.killCetusUpdater();
                     break;
             }
+
+            WfPassive.killCetusUpdater();
 
             event.getClient().changePresence(StatusType.ONLINE, activity, args.get(1));
         }

@@ -2,6 +2,7 @@ package main.utility;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import info.debatty.java.stringsimilarity.Levenshtein;
 import main.utility.metautil.BotUtils;
 import main.utility.warframe.market.item.WarframeItem;
@@ -9,6 +10,7 @@ import main.utility.warframe.market.item.WarframeItemPayloadContainer;
 import main.utility.warframe.market.itemdetail.WarframeDetailedItem;
 import main.utility.warframe.market.itemdetail.WarframeItemDetailPayloadContainer;
 import main.utility.warframe.wfstatus.WarframeCetusTimeObject;
+import main.utility.warframe.wfstatus.WarframeOrbVallisCycle;
 import main.utility.warframe.wfstatus.alerts.WarframeAlert;
 import main.utility.warframe.wfstatus.alerts.WarframeMission;
 import okhttp3.OkHttpClient;
@@ -168,15 +170,26 @@ public class WarframeUtil {
 
     //Cetus cycle
     public static String cetusCycleString() {
-        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
-        WarframeCetusTimeObject cetus = new Gson().fromJson(json, WarframeCetusTimeObject.class);
+        WarframeCetusTimeObject cetus = getCetus();
         return "It is currently " + (cetus.isDay() ?
                 "day. It will be night in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandStrArr(dayActivities) :
                 "night. It will be day in " + cetus.getTimeLeft() + "\n" + BotUtils.getRandStrArr(nightActivities));
     }
 
+    public static String orbVallisCycleString() {
+        WarframeOrbVallisCycle orbVallis = getOrbVallis();
+        return "It is currently " + (orbVallis.isWarm() ?
+                "warm. It will be cold in " :
+                "cold. It will be warm in ") + orbVallis.getTimeLeft();
+    }
+
     public static WarframeCetusTimeObject getCetus() {
         String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
-        return new Gson().fromJson(json, WarframeCetusTimeObject.class);
+        return BotUtils.gson.fromJson(json, WarframeCetusTimeObject.class);
+    }
+
+    public static WarframeOrbVallisCycle getOrbVallis() {
+        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/vallisCycle");
+        return BotUtils.gson.fromJson(json, WarframeOrbVallisCycle.class);
     }
 }

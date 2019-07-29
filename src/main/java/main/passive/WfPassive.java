@@ -5,6 +5,7 @@ import main.utility.Visuals;
 import main.utility.WarframeUtil;
 import main.utility.metautil.BotUtils;
 import main.utility.warframe.wfstatus.WarframeCetusTimeObject;
+import main.utility.warframe.wfstatus.WarframeOrbVallisCycle;
 import main.utility.warframe.wfstatus.alerts.WarframeAlert;
 import main.utility.warframe.wfstatus.alerts.WarframeMission;
 import sx.blah.discord.api.events.EventSubscriber;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -29,26 +32,23 @@ public class WfPassive {
         // cetusTimePresense();
     }
 
-    public static void cetusTimePresense() {
-        BotUtils.setBottomText();
+    public static void warframeOpenWorldPresence() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        final AtomicLong toggle = new AtomicLong(0L);
 
-        try {
-            final Runnable cetusTimeRunner = () -> {
+
+        final Runnable updater = () -> {
+            if (toggle.getAndIncrement() % 2 == 0) {
                 WarframeCetusTimeObject cetus = WarframeUtil.getCetus();
-
-                //BotUtils.send(BotUtils.BOTTOM_TEXT, WarframeUtil.cetusCycleString());
                 Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
+            } else {
+                WarframeOrbVallisCycle orbVallis = WarframeUtil.getOrbVallis();
+                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, " the thermometer. " + orbVallis.getTimeLeft() + " m until" + (orbVallis.isWarm() ? " cold" : " warm"));
+            }
+        };
 
-                //int minute = LocalDateTime.now().getMinute();
-                //Aspect.LOG.info("Updated Cetus Status " + LocalDateTime.now().getHour() + ":" + (minute < 10 ? "0" + minute : minute));
-            };
+        cetusStatusUpdater = scheduler.scheduleAtFixedRate(updater, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
 
-            cetusStatusUpdater = scheduler.scheduleAtFixedRate(cetusTimeRunner, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Aspect.LOG.info("warframe cetus passive time error");
-        }
     }
 
     public static boolean killCetusUpdater() {
@@ -70,8 +70,10 @@ public class WfPassive {
             alerts.removeIf(warframeAlert -> {
                 boolean containsKeyword = false;
                 for (String s : WarframeUtil.alertFilters)
-                    if (warframeAlert.getMission().getReward().getAsString().contains(s))
+                    if (warframeAlert.getMission().getReward().getAsString().contains(s)) {
                         containsKeyword = true;
+                        break;
+                    }
 
                 return !containsKeyword;
             });

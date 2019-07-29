@@ -56,6 +56,7 @@ import main.commands.webquery.Wikipedia;
 import main.commands.wolfram.WolframAdvanced;
 import main.commands.wolfram.WolframBasic;
 import main.utility.metautil.BotUtils;
+import main.utility.warframe.wfstatus.WarframeOrbVallisCycle;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -252,6 +253,7 @@ public class CommandManager {
         //Warframe
         commandMap.put("wfdaily", new WfDailyDeals());
         commandMap.put("wfcetus", new WfCetusCycle());
+        commandMap.put("wforb", new WfOrbVallisCycle());
         commandMap.put("wfalerts", new WfAlerts());
         commandMap.put("wfvoid", new WfVoidFissures());
         //commandMap.put("wfitems", new WfItems()); //dev use
