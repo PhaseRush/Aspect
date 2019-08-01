@@ -56,7 +56,6 @@ import main.commands.webquery.Wikipedia;
 import main.commands.wolfram.WolframAdvanced;
 import main.commands.wolfram.WolframBasic;
 import main.utility.metautil.BotUtils;
-import main.utility.warframe.wfstatus.WarframeOrbVallisCycle;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -299,6 +298,11 @@ public class CommandManager {
         Aspect.LOG.info("Aspect is online and ready at " + LocalTime.now().toString());
     }
 
+    /**
+     * Message parser and command dispatcher
+     *
+     * @param event evennnnntttttttt
+     */
     @EventSubscriber
     public void onMessageReceived(MessageReceivedEvent event) {
         String[] argArray;

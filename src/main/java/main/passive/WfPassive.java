@@ -18,19 +18,14 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class WfPassive {
-    public static ScheduledFuture<?> cetusStatusUpdater = null, alertFilterUpdater = null;
+    private static ScheduledFuture<?> cetusStatusUpdater = null, alertFilterUpdater = null;
 
-    @EventSubscriber
-    public void warframeCetusUpdater(ReadyEvent event) {
-        // cetusTimePresense();
-    }
 
     public static void warframeOpenWorldPresence() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -43,7 +38,7 @@ public class WfPassive {
                 Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
             } else {
                 WarframeOrbVallisCycle orbVallis = WarframeUtil.getOrbVallis();
-                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, " the thermometer. " + orbVallis.getTimeLeft() + " m until" + (orbVallis.isWarm() ? " cold" : " warm"));
+                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, " the thermometer. :: " + orbVallis.getTimeLeft() + "m until" + (orbVallis.isWarm() ? " cold" : " warm"));
             }
         };
 

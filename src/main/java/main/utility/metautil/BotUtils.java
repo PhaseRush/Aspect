@@ -232,6 +232,7 @@ public class BotUtils {
     public static void msgDev(String msg) {
         send(Aspect.client.getUserByID(DEV_DISCORD_LONG_ID).getOrCreatePMChannel(), msg);
     }
+
     public static IMessage msgDevGet(String msg) {
         return sendGet(Aspect.client.getUserByID(DEV_DISCORD_LONG_ID).getOrCreatePMChannel(), msg);
     }
@@ -328,7 +329,7 @@ public class BotUtils {
         }).get();
     }
 
-    public static void send(IChannel channel, List<String> messages) {
+    public static void send(IChannel channel, Collection<String> messages) {
         try {
             for (String s : messages) {
                 RequestBuffer.request(() -> {
@@ -590,9 +591,6 @@ public class BotUtils {
     }
 
     public static <T> T getRandFromCollection(Collection<T> collection) {
-//        if (collection instanceof List) {
-//            return (T) ((List) collection).get(random.nextInt(collection.size()));
-//        }
         List<T> tempList = new ArrayList<>(collection);
         return tempList.get(random.nextInt(tempList.size()));
     }
@@ -622,7 +620,7 @@ public class BotUtils {
     public static String getStringFromUrl(String url) {
         Request request = new Request.Builder()
                 .url(url)
-                .build();//Response response = client.newCall(request).execute()
+                .build();
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
         } catch (IOException e) {
@@ -635,7 +633,7 @@ public class BotUtils {
         Request request = new Request.Builder()
                 .url(url)
                 .header(headerName, headerValue)
-                .build();//Response response = client.newCall(request).execute()
+                .build();
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
         } catch (IOException e) {
@@ -649,7 +647,7 @@ public class BotUtils {
                 .url(url)
                 .header(headerName1, headerValue1)
                 .post(requestBody)
-                .build();//Response response = client.newCall(request).execute()
+                .build();
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
         } catch (IOException e) {
@@ -864,7 +862,7 @@ public class BotUtils {
      * credit to https://github.com/Lmperatoreq/HastebinAPI
      */
     public static String makeHasteGetUrl(String contents) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) new URL("https://hastebin.com/documents").openConnection(); // might want to try hasteb.in
+        HttpURLConnection connection = (HttpURLConnection) new URL("https://hasteb.in").openConnection(); // might want to try hasteb.in
 
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
@@ -988,6 +986,13 @@ public class BotUtils {
         return nextInst.toEpochMilli() - now.toEpochMilli();
     }
 
+    /**
+     * unregisteres a event listener after 10 seconds
+     *
+     * @param embedMessage
+     * @param reactionListener
+     * @param event
+     */
     public static void unregListenerAfter10sec(IMessage embedMessage, IListener reactionListener, MessageReceivedEvent event) {
         Runnable removeListener = () -> {                        // unregister listener after x ms
             try {
@@ -1026,6 +1031,13 @@ public class BotUtils {
                 .orElse(null);
     }
 
+    /**
+     * dont use empty list plz
+     *
+     * @param input string to spell check
+     * @param pool  pool of strings to check from
+     * @return closest string from the pool by levenshtein distance
+     */
     public static String autoCorrect(String input, Collection<String> pool) {
         return pool.stream()
                 .min(Comparator.comparingDouble(str -> leven.distance(str, input)))
@@ -1080,12 +1092,10 @@ public class BotUtils {
      * @param s The String to be encoded
      * @return the encoded String
      */
-    public static String encodeURIComponent(String s)
-    {
+    public static String encodeURIComponent(String s) {
         String result = null;
 
-        try
-        {
+        try {
             result = URLEncoder.encode(s, "UTF-8")
                     .replaceAll("\\+", "%20")
                     .replaceAll("%21", "!")
@@ -1096,8 +1106,7 @@ public class BotUtils {
         }
 
         // This exception should never occur.
-        catch (UnsupportedEncodingException e)
-        {
+        catch (UnsupportedEncodingException e) {
             result = s;
         }
 
@@ -1106,6 +1115,10 @@ public class BotUtils {
 
     public static String concatArgs(String[] args, String delim) {
         return concatArgs(Arrays.stream(args).collect(Collectors.toList()), delim);
+    }
+
+    public static <T> T jsonUrlToPojo(String url, Class<T> klass) {
+        return gson.fromJson(getStringFromUrl(url), klass);
     }
 
     @Override

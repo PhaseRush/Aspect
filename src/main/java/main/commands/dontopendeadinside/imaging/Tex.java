@@ -12,11 +12,15 @@ import java.util.List;
 public class Tex implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        BotUtils.send(event.getChannel(),
-                new EmbedBuilder().withImage("attachment://tex.png"),
-                new ByteArrayInputStream(Visuals.renderTex(sanitize(args)).toByteArray()),
-                "tex.png"
-        );
+        try {
+            BotUtils.send(event.getChannel(),
+                    new EmbedBuilder().withImage("attachment://tex.png"),
+                    new ByteArrayInputStream(Visuals.renderTex(sanitize(args)).toByteArray()),
+                    "tex.png"
+            );
+        } catch (Exception e) {
+            BotUtils.send(event.getChannel(), "There has been an error with the rendering process:\n" + e.getMessage());
+        }
     }
 
     private String sanitize(List<String> args) {

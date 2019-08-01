@@ -2,7 +2,6 @@ package main.utility;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import info.debatty.java.stringsimilarity.Levenshtein;
 import main.utility.metautil.BotUtils;
 import main.utility.warframe.market.item.WarframeItem;
@@ -184,12 +183,10 @@ public class WarframeUtil {
     }
 
     public static WarframeCetusTimeObject getCetus() {
-        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/cetusCycle");
-        return BotUtils.gson.fromJson(json, WarframeCetusTimeObject.class);
+        return BotUtils.jsonUrlToPojo("https://api.warframestat.us/pc/cetusCycle", WarframeCetusTimeObject.class);
     }
 
     public static WarframeOrbVallisCycle getOrbVallis() {
-        String json = BotUtils.getStringFromUrl("https://api.warframestat.us/pc/vallisCycle");
-        return BotUtils.gson.fromJson(json, WarframeOrbVallisCycle.class);
+        return BotUtils.jsonUrlToPojo("https://api.warframestat.us/pc/vallisCycle", WarframeOrbVallisCycle.class);
     }
 }

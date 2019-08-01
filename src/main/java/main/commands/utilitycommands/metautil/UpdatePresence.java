@@ -13,7 +13,7 @@ public class UpdatePresence implements Command {
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
-        if (args.get(0).equals("warframe")) WfPassive.warframeOpenWorldPresence();
+        if (args.get(0).equalsIgnoreCase("warframe")) WfPassive.warframeOpenWorldPresence();
         else {
             ActivityType activity = null;
             switch (args.get(0).toLowerCase()) {

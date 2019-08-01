@@ -11,7 +11,6 @@ public class WfOrbVallisCycle implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         BotUtils.send(event.getChannel(), WarframeUtil.orbVallisCycleString());
-
     }
 
     @Override
