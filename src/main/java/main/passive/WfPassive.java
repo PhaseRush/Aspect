@@ -29,7 +29,7 @@ public class WfPassive {
 
     public static void warframeOpenWorldPresence() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        final AtomicLong toggle = new AtomicLong(0L);
+        final AtomicLong toggle = new AtomicLong(0L); // emulate atomic boolean
 
 
         final Runnable updater = () -> {
@@ -84,8 +84,7 @@ public class WfPassive {
                 eb.appendField(mission.getNode() + " | " + mission.getType() + " | " + alert.getEta() + " remaining", mission.getReward().getAsString(), false);
             }
 
-            if (BotUtils.BOTTOM_TEXT != null) //bottom text is null on startup, throwing NPE.
-                BotUtils.send(BotUtils.BOTTOM_TEXT, eb);
+            if (BotUtils.BOTTOM_TEXT != null) BotUtils.send(BotUtils.BOTTOM_TEXT, eb); //bottom text is null on startup, throwing NPE.
         };
 
         alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);

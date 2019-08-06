@@ -23,7 +23,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Predicate;
+
+import static main.utility.WarframeUtil.PlayerState.*;
 
 public class WfMarketListing implements Command {
     //might declare a field MessageReceivedEvent e;
@@ -55,32 +56,22 @@ public class WfMarketListing implements Command {
 
         // default : filter out users that are not ingame
         // if user provides second argument, do not filter.
-        if (filterParam.equals("ingame"))
+        if (filterParam.equals(INGAME.val()))
             listings.removeIf(warframeTradeListing -> {
                 WarframeListingUser user = warframeTradeListing.getUser();
                 return !user.getStatus().equals("ingame");
             });
 
         //filter out the wtb
-        listings.removeIf(new Predicate<WarframeTradeListing>() {
-            @Override
-            public boolean test(WarframeTradeListing warframeTradeListing) {
-                return warframeTradeListing.getOrder_type().equals("buy");
-            }
-        });
+        listings.removeIf(warframeTradeListing -> warframeTradeListing.getOrder_type().equals("buy"));
 
-        listings.sort(new Comparator<WarframeTradeListing>() {
-            @Override
-            public int compare(WarframeTradeListing o1, WarframeTradeListing o2) {
-                return Integer.compare(o1.getPlatinum(), o2.getPlatinum()); //i actaully have no idea if this is what youre supposed to do. I will now assume it is correct and move on
-            }
-        });
+        listings.sort(Comparator.comparingInt(WarframeTradeListing::getPlatinum));
 
         for (int i = 0; i < (listings.size() < 11 ? listings.size() : 10); i++) { //display 10 cheapest listings
             WarframeTradeListing listing = listings.get(i);
             WarframeListingUser seller = listing.getUser();
             eb.appendField(seller.getIngame_nmae() + " | " + seller.getStatus() + " | plat: " + listing.getPlatinum(),
-                    ///w HyperfluousKat Hi! I want to buy: Nano-Applicator for 100 platinum. (warframe.market)
+                    ///w HyperfluousKat Hi! I want to buy your Nano-Applicator for 100 platinum. (warframe.market)
                     "/w " + seller.getIngame_nmae() + " Hi! I want to buy your " + intendedItemName + " for " + listing.getPlatinum() + " platinum.", false);
         }
 
@@ -149,17 +140,14 @@ public class WfMarketListing implements Command {
         e.getClient().getDispatcher().registerListener(reactionListener);
 
         ExecutorService executorService = Executors.newFixedThreadPool(1);//no idea how many i need. seems like a relatively simple task?
-        Runnable removeListener = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(secondsTimeout * 1000);
-                } catch (InterruptedException e1) {
-                    Aspect.LOG.info("guess this is fucked");
-                } finally { //please just execute this no matter what
-                    e.getClient().getDispatcher().unregisterListener(reactionListener);
-                    Aspect.LOG.info("Listener Deleted");
-                }
+        Runnable removeListener = () -> {
+            try {
+                Thread.sleep(secondsTimeout * 1000);
+            } catch (InterruptedException e1) {
+                Aspect.LOG.info("guess this is fucked");
+            } finally { //please just execute this no matter what
+                e.getClient().getDispatcher().unregisterListener(reactionListener);
+                Aspect.LOG.info("Listener Deleted");
             }
         };
         executorService.execute(removeListener);

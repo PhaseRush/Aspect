@@ -22,23 +22,41 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class WarframeUtil {
-    public static String[] dayActivities = {
+    private static final String[] dayActivities = {
             "Go mining",
             "Go do bounties", //finally fixed this fucking typo
             "Go catch some Tralok.",
             "Go catch some Mawfish."};
 
-    public static String[] nightActivities = {
+    private static final String[] nightActivities = {
             "Go hunt some eidolons.",
             "Go catch some Cuthol",
             "Go catch some Glappid."
     };
-    public static String[] alertFilters = {
+    public static final String[] alertFilters = {
             "Nitain",
             "Riven",
             "Kavat"
             //"skin"
     };
+
+    /**
+     * will add more states to use
+     */
+    public enum PlayerState {
+        ONLINE("online"),
+        INGAME("ingame");
+
+        private String state;
+
+        PlayerState(String s) {
+            this.state = s;
+        }
+
+        public String val() {
+            return state;
+        }
+    }
 
     public static List<String> getIntendedStrings(String userString) {
         Map<String, Double> levenMap = new HashMap<>();
