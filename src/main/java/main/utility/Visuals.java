@@ -66,6 +66,10 @@ public class Visuals {
         return Color.getHSBColor(rs.nextFloat(), .9f, 1.0f);
     }
 
+    public static Color getWolframColour() {
+        return Color.getHSBColor(28, 98, 99); // https://rgb.to/color/4813/bright-orange
+    }
+
     /*
     generate random vibrant color with seed
      */
