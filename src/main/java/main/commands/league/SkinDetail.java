@@ -31,7 +31,7 @@ public class SkinDetail implements Command {
                 .sorted(Comparator.comparingInt((Skin::getNumber)))
                 .forEachOrdered(skin -> BotUtils.sendGet(channel,
                         new EmbedBuilder()
-                                .withTitle(skin.getNumber() + " : " + skin.getName())
+                                .withTitle(skin.getNumber() + " : " + skin.getName() + " : ")
                                 .withImage(skin.getSplashImageURL())
                                 .withColor(Visuals.analyzeImageColor(Visuals.urlToBufferedImage(skin.getSplashImageURL())))));
     }

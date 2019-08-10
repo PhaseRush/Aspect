@@ -29,7 +29,7 @@ public class WolframUtil {
 
         EmbedBuilder eb = new EmbedBuilder()
                 .withTitle("Wolfram Alpha Query")
-                .withColor(Visuals.getRandVibrantColour());
+                .withColor(Visuals.getWolframColour());
 
         List<EmbedField> embedFields;
         try {
@@ -47,6 +47,7 @@ public class WolframUtil {
                 Aspect.LOG.info("  error message: " + queryResult.getErrorMessage());
             } else if (!queryResult.isSuccess()) {
                 Aspect.LOG.info("Query was not understood; no results available.");
+                eb.withDesc("Query was not understood; no results available.");
             } else {
                 // Have result, check if advanced
                 embedFields = addFields(queryResult, formatVerticalBar, advanced);
@@ -59,7 +60,7 @@ public class WolframUtil {
                     }
                 }
 
-                eb.withFooterText("This operation took " + Math.round(queryResult.getTiming() * 1000 * 1000)/1000 + " ms");
+                eb.withFooterText("This operation took " + Math.round(queryResult.getTiming() * 1000 * 1000) / 1000 + " ms");
             }
         } catch (WAException e) {
             e.printStackTrace();
