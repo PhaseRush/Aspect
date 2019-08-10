@@ -34,6 +34,7 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
@@ -49,8 +50,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BotUtils {
 
@@ -168,7 +167,7 @@ public class BotUtils {
 
 
     public static void setBottomText() {
-        BOTTOM_TEXT = Aspect.client.getChannelByID(Long.valueOf(WF_BOTTOM_TEXT_ID));
+        BOTTOM_TEXT = Aspect.client.getChannelByID(Long.parseLong(WF_BOTTOM_TEXT_ID));
     }
 
     public static List<String> insults = Arrays.asList(
@@ -698,8 +697,8 @@ public class BotUtils {
      * @param map               to sort
      * @param smallestToLargest sort from smallest to largest?
      * @param sortByValue       sort by value?
-     * @param <K>
-     * @param <V>
+     * @param <K>               key in map
+     * @param <V>               value in map
      * @return sorted initDataMap
      */
     public static <K, V extends Comparable<? super V>> Map<K, V> sortMap(Map<K, V> map, boolean smallestToLargest, boolean sortByValue) {
@@ -791,7 +790,7 @@ public class BotUtils {
      */
     public static String SHA256(String input) {
         try {
-            byte[] hash = messageDigest.digest(input.getBytes(UTF_8));
+            byte[] hash = messageDigest.digest(input.getBytes(StandardCharsets.UTF_8));
             StringBuilder hexString = new StringBuilder();
 
             for (byte b : hash) {
@@ -807,10 +806,6 @@ public class BotUtils {
 
         }
     }
-
-//    public static <T extends Number> getMin(T first, T second) {
-//        return (first > second? second : first);
-//    }
 
     public static List<Object> createListeners() {
         List<Object> dispatchListeners = new ArrayList<>();
