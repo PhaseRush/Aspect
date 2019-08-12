@@ -17,14 +17,11 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static main.utility.RedditUtil.*;
 
 public class ScheduledSubreddits {
-    private static ScheduledFuture<?> scheduledFuture = null;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(2);
 
     @EventSubscriber
@@ -64,7 +61,6 @@ public class ScheduledSubreddits {
 
             };
 
-            scheduledFuture = scheduler.scheduleAtFixedRate(runner, 3, periodSeconds, TimeUnit.SECONDS);
             Aspect.LOG.info("Scheduled : r/" + entry.getKey() + " in " + map.entrySet().size() + " channels");
         }
     }

@@ -106,7 +106,7 @@ public class WolframUtil {
 
         //append values as necessary
         for (EmbedField ef : embedFields) {
-            map.get(ef.getName()).append(ef.getValue() + '\n');
+            map.get(ef.getName()).append(ef.getValue()).append('\n');
         }
 
         //format as table only if the it contains a vertical bar "|"

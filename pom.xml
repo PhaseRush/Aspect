@@ -36,11 +36,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>WolframAlpha-1.1</groupId>
-            <artifactId>WolframAlpha</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.discord4j</groupId> <!-- However our packages are all under sx.blah in version 2.x! -->
             <artifactId>Discord4J</artifactId>
             <version>2.10.1</version>
