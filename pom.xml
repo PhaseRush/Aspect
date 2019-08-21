@@ -53,7 +53,7 @@
             <artifactId>Discord4J</artifactId>
             <version>2.10.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.tritonus/tritonus-dsp -->
+        <!-- https://mvnrepository.com/artifact/org.tritonus/tritonus-dsp dunno what this is for-->
         <dependency>
             <groupId>org.tritonus</groupId>
             <artifactId>tritonus-dsp</artifactId>

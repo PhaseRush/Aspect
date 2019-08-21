@@ -15,6 +15,7 @@ public class UpdatePresence implements Command {
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (args.get(0).equalsIgnoreCase("warframe")) WfPassive.warframeOpenWorldPresence();
         else {
+            WfPassive.killCetusUpdater();
             ActivityType activity = null;
             switch (args.get(0).toLowerCase()) {
                 case "p":
@@ -30,9 +31,6 @@ public class UpdatePresence implements Command {
                     activity = ActivityType.WATCHING;
                     break;
             }
-
-            WfPassive.killCetusUpdater();
-
             event.getClient().changePresence(StatusType.ONLINE, activity, args.get(1));
         }
     }

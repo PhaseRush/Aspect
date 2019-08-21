@@ -9,3 +9,5 @@ Aspection.ahk
 .update.sh.swp
 
 *.txt
+
+Aspect_logs/*

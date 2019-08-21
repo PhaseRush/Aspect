@@ -74,7 +74,7 @@ public class Visuals {
     generate random vibrant color with seed
      */
     public static Color getRandVibrantColour(String seed) {
-        return Color.getHSBColor(new Random(Long.valueOf(seed)).nextFloat(), .9f, 1.0f);
+        return Color.getHSBColor(new Random(Long.parseLong(seed)).nextFloat(), .9f, 1.0f);
     }
 
     public static BufferedImage urlToBufferedImage(String url) {
@@ -111,7 +111,7 @@ public class Visuals {
             InputStream inputStream = connection.getInputStream();
             return ImageIO.read(inputStream);
         } catch (IOException e) {
-            Aspect.LOG.info("url to buff img w/agent header - visuals");
+            Aspect.LOG.info("IOE: url to buff img w/agent header - visuals");
             e.printStackTrace();
         }
 

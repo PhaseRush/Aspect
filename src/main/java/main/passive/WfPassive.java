@@ -35,7 +35,7 @@ public class WfPassive {
         final Runnable updater = () -> {
             if (toggle.getAndIncrement() % 2 == 0) {
                 WarframeCetusTimeObject cetus = WarframeUtil.getCetus();
-                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " the Sun " : " Lua ") + " :: " + cetus.getShortString());
+                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " Sol " : " Lua ") + " :: " + cetus.getShortString());
             } else {
                 WarframeOrbVallisCycle orbVallis = WarframeUtil.getOrbVallis();
                 Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, " the thermometer. :: " + orbVallis.getTimeLeft() + "m until" + (orbVallis.isWarm() ? " cold" : " warm"));
@@ -43,9 +43,9 @@ public class WfPassive {
         };
 
         cetusStatusUpdater = scheduler.scheduleAtFixedRate(updater, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
-
     }
 
+    //todo make this more robust
     public static boolean killCetusUpdater() {
         try {
             return cetusStatusUpdater.cancel(true);
@@ -77,14 +77,15 @@ public class WfPassive {
                     .withTitle("Warframe :: Filtered Alerts")
                     .withColor(Visuals.getRandVibrantColour());
 
-            if (alerts.size() == 0) return;
+            if (alerts.isEmpty()) return;
 
             for (WarframeAlert alert : alerts) {
                 WarframeMission mission = alert.getMission();
                 eb.appendField(mission.getNode() + " | " + mission.getType() + " | " + alert.getEta() + " remaining", mission.getReward().getAsString(), false);
             }
 
-            if (BotUtils.BOTTOM_TEXT != null) BotUtils.send(BotUtils.BOTTOM_TEXT, eb); //bottom text is null on startup, throwing NPE.
+            if (BotUtils.BOTTOM_TEXT != null)
+                BotUtils.send(BotUtils.BOTTOM_TEXT, eb); //bottom text is null on startup, throwing NPE.
         };
 
         alertFilterUpdater = scheduler.scheduleAtFixedRate(alertFilter, 0, 15, MINUTES);
