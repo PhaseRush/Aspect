@@ -10,15 +10,17 @@ import sx.blah.discord.handle.obj.IChannel;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Reboot implements Command {
     private static final Runnable runReboot = Reboot::reboot;
+    private static Set<Long> whiteList = new HashSet<>(Arrays.asList(
+            167418444067766273L,
+            BotUtils.DEV_DISCORD_LONG_ID)
+    );
 
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
@@ -72,7 +74,7 @@ public class Reboot implements Command {
 
     @Override
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
-        return BotUtils.isDev(event);
+        return whiteList.contains(event.getAuthor().getLongID());
     }
 
     @Override
