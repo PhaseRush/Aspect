@@ -57,11 +57,12 @@ public class Reboot implements Command {
      * @param channels to alert
      */
     private static void reboot(List<IChannel> channels) {
-        long pid = Long.valueOf(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
+        long pid = Long.parseLong(ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
 
         // use sendget to block
-        channels.forEach(ch -> BotUtils.sendGet(ch,
-                "Aspect is now rebooting due to lag. Feel free to queue up more music in a few moments."));
+        channels.parallelStream()
+                .forEach(ch -> BotUtils.sendGet(ch,
+                        "Aspect is now rebooting due to lag. Feel free to queue up more music in a few moments."));
 
         try {
             BotUtils.msgDev("Attempting to reboot INSTANCE_ID:\t" + Aspect.INSTANCE_ID.toString());

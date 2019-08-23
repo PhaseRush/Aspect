@@ -233,15 +233,18 @@ public class PassiveListener {
      */
     @EventSubscriber
     public void viviStopSleeping(UserVoiceChannelEvent event) {
-        if (event.getUser().getStringID().equals("167418444067766273"))
-            event.getGuild().getAFKChannel().getConnectedUsers().stream()
-                    .filter(u -> u.getStringID().equals("167418444067766273"))
-                    .findFirst()
-                    .ifPresent(u -> event.getClient().getConnectedVoiceChannels().stream()
-                            .filter(ch -> event.getGuild().getVoiceChannels().contains(ch))
-                            .findFirst()
-                            .ifPresent(u::moveToVoiceChannel)
-                    );
+        try {
+            if (event.getUser().getStringID().equals("167418444067766273"))
+                event.getGuild().getAFKChannel().getConnectedUsers().stream()
+                        .filter(u -> u.getStringID().equals("167418444067766273"))
+                        .findFirst()
+                        .ifPresent(u -> event.getClient().getConnectedVoiceChannels().stream()
+                                .filter(ch -> event.getGuild().getVoiceChannels().contains(ch))
+                                .findFirst()
+                                .ifPresent(u::moveToVoiceChannel)
+                        );
+        } catch (NullPointerException e) { // ignored
+        }
     }
 
     /**
