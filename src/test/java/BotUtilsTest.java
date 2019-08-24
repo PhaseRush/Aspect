@@ -27,10 +27,11 @@ class BotUtilsTest {
     @Test
     void populateInsults_Init() {
         List<String> insults = BotUtils.insults;
-        assertEquals(insults.get(12), "I was pro-life before I met you");
+        assertEquals("I was pro-life before I met you", insults.get(12));
     }
 
-    @Test //wip
+    @Test
+        //wip
     void writeToFIle_Const() {
         String text = "Text";
         String fileName = "BotUtilsTest_writeToFile_Const.txt";
@@ -143,7 +144,6 @@ class BotUtilsTest {
     void isLinux_Const() {
         assertFalse(BotUtils.isLinux());
     }
-
 
     @Test
     void toString_JOKE() {

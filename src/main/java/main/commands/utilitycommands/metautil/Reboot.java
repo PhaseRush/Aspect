@@ -40,7 +40,7 @@ public class Reboot implements Command {
                 }
             }
         } else { // empty args
-            reboot(Collections.singletonList(event.getChannel()));
+            reboot();
         }
     }
 
@@ -49,6 +49,7 @@ public class Reboot implements Command {
                 .filter(MasterManager::hasPlayer)
                 .peek(g -> Aspect.client.getOurUser().getVoiceStateForGuild(g).getChannel().leave())
                 .map(g -> MasterManager.getGuildAudioPlayer(g).getScheduler().lastEmbedChannel)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toCollection(ArrayList::new))
         );
     }
