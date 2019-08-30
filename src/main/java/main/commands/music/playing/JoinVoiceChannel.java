@@ -10,7 +10,7 @@ public class JoinVoiceChannel implements Command {
     @Override
     public void runCommand(MessageReceivedEvent event, List<String> args) {
         if (args.get(0).matches("\\d.*")) {
-            event.getClient().getVoiceChannelByID(Long.valueOf(args.get(0))).join();
+            event.getClient().getVoiceChannelByID(Long.parseLong(args.get(0))).join();
         } else {
             BotUtils.fuzzyVoiceMatch(event, args.get(0)).join();
         }
@@ -20,7 +20,7 @@ public class JoinVoiceChannel implements Command {
     public boolean canRun(MessageReceivedEvent event, List<String> args) {
         if (args.get(0).matches("\\d.*")) {
             try {
-                event.getClient().getVoiceChannelByID(Long.valueOf(args.get(0)));
+                event.getClient().getVoiceChannelByID(Long.parseLong(args.get(0)));
             } catch (Exception e) {
                 return false;
             }

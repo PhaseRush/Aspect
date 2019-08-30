@@ -165,7 +165,7 @@ public class PassiveListener {
                 BotUtils.stringSimilarity(msg, "insert pikachu face"),
                 BotUtils.stringSimilarity(msg, "surprised pikachu face"));
 
-        if (similarity < 3)
+        if (similarity < 5)
             BotUtils.send(event.getChannel(), new EmbedBuilder().withImage("https://i.imgur.com/sohWhy9.png"));
     }
 

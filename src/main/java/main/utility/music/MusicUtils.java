@@ -37,6 +37,7 @@ public class MusicUtils {
         customUrls.put("dank", "https://www.youtube.com/playlist?list=PLSbBQFh_CUqufnCqVuAfjw7pwJzuu2UNe");
         customUrls.put("piano", "https://www.youtube.com/playlist?list=PLszZ0xXW9BjpSwpNLmRJ7dtOlf-qLDP0g");
         customUrls.put("star", "https://www.youtube.com/playlist?list=PLszZ0xXW9BjoX6r2ZRqPwF9wAlcxZSvgI");
+        customUrls.put("xi", "https://www.youtube.com/playlist?list=PLszZ0xXW9BjqGuovNjdnMsM7xcNxOut23");
         customUrls.put("kpop", "https://www.youtube.com/watch?v=u6unJQownW4&list=RD5HMOkfE3kno");
 
         //youtube defaults
