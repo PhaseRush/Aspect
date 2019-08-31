@@ -65,11 +65,11 @@ public class ScheduledActions {
 
     @EventSubscriber
     public void streak(ReadyEvent event) {
-        IUser resuna = Aspect.client.getUserByID(105688694219886592L);
+        //IUser resuna = Aspect.client.getUserByID(105688694219886592L);
         IUser kait = Aspect.client.getUserByID(187328584698953728L);
 
         final Runnable streaker = () -> {
-            BotUtils.send(resuna.getOrCreatePMChannel(), "Streak");
+            //BotUtils.send(resuna.getOrCreatePMChannel(), "Streak");
             BotUtils.send(kait.getOrCreatePMChannel(), "Streak");
         };
 
