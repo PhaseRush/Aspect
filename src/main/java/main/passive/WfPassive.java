@@ -24,7 +24,7 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class WfPassive {
-    private static ScheduledFuture<?> cetusStatusUpdater = null, alertFilterUpdater = null;
+    private static ScheduledFuture<?> statusUpdater = null, alertFilterUpdater = null;
 
 
     public static void warframeOpenWorldPresence() {
@@ -38,17 +38,17 @@ public class WfPassive {
                 Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, (cetus.isDay() ? " Sol " : " Lua ") + " :: " + cetus.getShortString());
             } else {
                 WarframeOrbVallisCycle orbVallis = WarframeUtil.getOrbVallis();
-                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, " the thermometer. :: " + orbVallis.getTimeLeft() + "m until" + (orbVallis.isWarm() ? " cold" : " warm"));
+                Aspect.client.changePresence(StatusType.ONLINE, ActivityType.WATCHING, " Venus. :: " + orbVallis.getTimeLeft() + "m until" + (orbVallis.isWarm() ? " cold" : " warm"));
             }
         };
 
-        cetusStatusUpdater = scheduler.scheduleAtFixedRate(updater, 0/*elapseMillis/1000*/, 60/*150*60*/, SECONDS);
+        statusUpdater = scheduler.scheduleAtFixedRate(updater, 0/*elapseMillis/1000*/, 30/*150*60*/, SECONDS);
     }
 
     //todo make this more robust
     public static boolean killCetusUpdater() {
         try {
-            return cetusStatusUpdater.cancel(true);
+            return statusUpdater.cancel(true);
         } catch (NullPointerException ignored) {
         } // throws if not running in the first place
 

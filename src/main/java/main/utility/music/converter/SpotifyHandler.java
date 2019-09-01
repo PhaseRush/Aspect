@@ -78,7 +78,7 @@ public class SpotifyHandler {
                                 .get(0)
                                 .getId()
                                 .getVideoId());
-                    } catch (IOException | IndexOutOfBoundsException e) { // some youtube error, just add to ommited
+                    } catch (IOException | IndexOutOfBoundsException e) { // some youtube error, just add to omitted
                         ommited.add(query);
                     }
                 }
