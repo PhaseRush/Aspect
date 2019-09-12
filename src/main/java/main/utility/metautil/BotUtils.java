@@ -765,6 +765,12 @@ public class BotUtils {
         return s.substring(0, cutIndex) + (useDotDotDot ? " ...\n" : "\n");
     }
 
+    /**
+     * returns the levenshtein distance between two strings
+     * @param s1 first string
+     * @param s2 secpnd string
+     * @return levenshtein distance between s1 and s2
+     */
     public static double stringSimilarity(String s1, String s2) {
         return leven.distance(s1, s2);
     }
