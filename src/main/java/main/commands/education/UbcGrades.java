@@ -110,9 +110,9 @@ public class UbcGrades implements Command {
 
     private class Response {
         Grades grades;
-        Stats stats;
-        String id, yearsession, session, subject, course, section, title, instructor;
-        int year, enrolled;
+//        Stats stats;
+          String id, yearsession, session, subject, course, section, title, instructor;
+//        int year, enrolled;
     }
 
     private class Grades {
