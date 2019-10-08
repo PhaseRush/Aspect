@@ -83,7 +83,7 @@
         <dependency>
             <groupId>info.debatty</groupId>
             <artifactId>java-string-similarity</artifactId>
-            <version>1.1.0</version>
+            <version>RELEASE</version>
         </dependency>
 
         <!-- Google stuff -->

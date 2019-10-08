@@ -79,7 +79,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-joda:2.9.6" level="project" />
     <orderEntry type="library" name="Maven: org.cache2k:cache2k-core:1.0.2.Final" level="project" />
     <orderEntry type="library" name="Maven: org.cache2k:cache2k-api:1.0.2.Final" level="project" />
-    <orderEntry type="library" name="Maven: info.debatty:java-string-similarity:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: info.debatty:java-string-similarity:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.api-client:google-api-client:1.25.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.oauth-client:google-oauth-client:1.25.0" level="project" />

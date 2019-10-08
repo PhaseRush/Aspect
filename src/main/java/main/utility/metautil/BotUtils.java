@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import info.debatty.java.stringsimilarity.Damerau;
+import info.debatty.java.stringsimilarity.JaroWinkler;
 import info.debatty.java.stringsimilarity.Levenshtein;
 import main.Aspect;
 import main.CommandManager;
@@ -59,8 +61,10 @@ public class BotUtils {
     private static final JsonParser jsonParser = new JsonParser();
     private static final OkHttpClient client = new OkHttpClient();
 
-    //leven
+    // Autocorrect
     private static final Levenshtein leven = new Levenshtein();
+    private static final Damerau damerau = new Damerau();
+    private static final JaroWinkler jaroWinkler = new JaroWinkler();
 
     //encryption
     private static MessageDigest messageDigest;
@@ -768,11 +772,11 @@ public class BotUtils {
     /**
      * returns the levenshtein distance between two strings
      * @param s1 first string
-     * @param s2 secpnd string
-     * @return levenshtein distance between s1 and s2
+     * @param s2 second string
+     * @return damerau - levenshtein distance between s1 and s2
      */
     public static double stringSimilarity(String s1, String s2) {
-        return leven.distance(s1, s2);
+        return damerau.distance(s1, s2);
     }
 
     public static int stringSimilarityInt(String s1, String s2) {
