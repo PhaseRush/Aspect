@@ -424,7 +424,7 @@ public class CommandManager {
 
     @Override
     public int hashCode() {
-        return Integer.valueOf("no u");
+        return Integer.parseInt("no u");
     }
 
 }

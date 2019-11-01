@@ -113,7 +113,7 @@ public class PassiveListener {
             group = matcher.group();
         } else return;
 
-        int num = Integer.valueOf(group.substring(0, group.length() - 1));
+        int num = Integer.parseInt(group.substring(0, group.length() - 1));
         if (num > 797) return;
         BigInteger fact = BigIntegerMath.factorial(num);
 
