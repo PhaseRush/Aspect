@@ -149,10 +149,5 @@ public class Aspect {
         // Self Client login - finalize setup
         // Only login after all events are registered - otherwise some may be missed.
         client.login();
-
-        LOG.info("Client logged into Discord");
-        // ------------------------------------------------------------ //
-
-        LOG.info("Initialization time: " + (System.currentTimeMillis() - startInstant.toEpochMilli()) + " ms");
     }
 }
