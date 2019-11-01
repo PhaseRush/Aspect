@@ -45,7 +45,7 @@ public class PassiveListener {
     private static Pattern youtubeIdRegex = Pattern.compile("^.*(youtu\\.be/|v/|u/\\w/|embed/|watch\\?v=|&v=)([^#&?]*).*");
 
     private static Map<Long, Long> lastThanksgivingMap = new LinkedHashMap<>();
-    private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L); //for Ohra's private server
+    private static List<Long> reactionsBlacklist = Arrays.asList(402728027223490572L, 208023865127862272L, 518248058396606474L); //for Ohra's private server
 
     private static Set<Long> videoAnalyticsOptIn = Collections.emptySet();
 
