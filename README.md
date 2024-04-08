@@ -1,3 +1,15 @@
+## This project has been discontinued. 
+
+The process of building this project has given me more than I could have hoped for, but at this point there is no longer a reason to maintain it.
+
+The V3 bot found on my github is developed for personal use. That one I work on depending on my needs, but this V2 will be here for others to refer to.
+
+Thanks again to those mentioned in the footnotes. They made everything possible.
+
+-- Requiem
+
+---
+
 # ASPECT
 ## Discord Bot built using [D4J](https://github.com/Discord4J/Discord4J)
 
